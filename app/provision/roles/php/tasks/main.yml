@@ -1,0 +1,32 @@
+---
+- name: "php repository"
+  become: yes
+  apt_repository:
+    repo: "ppa:{{ item.repo }}"
+    state: "{{ item.state | default('present') }}"
+    update_cache: "{{ item.update_cache | default('yes') }}"
+    validate_certs: "{{ item.validate_certs | default('yes') }}"
+  with_items: "{{ php_ppa_repos }}"
+  when: item.repo is defined
+
+- name: "php packages"
+  become: yes
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items: "{{ php_packages }}"
+  when: item.name is defined
+
+- include: "cli-config.yml"
+- include: "cli-opcache.yml"
+- include: "fpm-config.yml"
+- include: "fpm-opcache.yml"
+
+- name: "php-fpm enabled"
+  become: yes
+  service:
+    name: "{{ php_fpm_service }}"
+    state: started
+    enabled: yes

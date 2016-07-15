@@ -1,0 +1,5 @@
+---
+composer_local_dir: "/home/{{ ansible_user_id }}"
+composer_global_path: "/usr/bin/composer"
+composer_global_install: true
+composer_keep_updated: true

@@ -1,0 +1,40 @@
+---
+- name: "iptables installed"
+  become: yes
+  apt:
+    name: "iptables"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: "iptables flush"
+  become: yes
+  command: "iptables -F"
+  args:
+    creates: "/etc/init.d/firewall"
+
+- name: "firewall script"
+  become: yes
+  template:
+    src: "firewall.j2"
+    dest: "/usr/local/bin/firewall"
+    owner: "root"
+    group: "root"
+    mode: "0744"
+  notify: "firewall restart"
+
+- name: "firewall service"
+  become: yes
+  copy:
+    src: "firewall.init"
+    dest: "/etc/init.d/firewall"
+    owner: "root"
+    group: "root"
+    mode: "0744"
+
+- name: "firewall enabled"
+  become: yes
+  service:
+    name: "firewall"
+    state: started
+    enabled: yes

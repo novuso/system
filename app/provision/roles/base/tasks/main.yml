@@ -1,0 +1,23 @@
+---
+- name: "base repositories"
+  become: yes
+  apt_repository:
+    repo: "ppa:{{ item.repo }}"
+    state: "{{ item.state | default('present') }}"
+    update_cache: "{{ item.update_cache | default('yes') }}"
+    validate_certs: "{{ item.validate_certs | default('yes') }}"
+  with_items: "{{ base_repositories }}"
+  when: item.repo is defined
+
+- name: "base packages"
+  become: yes
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    update_cache: "{{ item.update_cache | default('yes') }}"
+    cache_valid_time: "{{ item.cache_valid_time | default(3600) }}"
+    force: "{{ item.force | default(omit) }}"
+    install_recommends: "{{ item.install_recommends | default('yes') }}"
+    purge: "{{ item.purge | default(omit) }}"
+  with_items: "{{ base_packages }}"
+  when: item.name is defined

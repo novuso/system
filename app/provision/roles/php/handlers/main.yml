@@ -1,0 +1,6 @@
+---
+- name: "php-fpm restart"
+  become: yes
+  service:
+    name: "{{ php_fpm_service }}"
+    state: restarted

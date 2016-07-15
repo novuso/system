@@ -1,0 +1,11 @@
+---
+- hosts: all
+  roles:
+  - upgrade
+  - time
+  - swap
+  - base
+  - firewall
+  - php
+  - composer
+  - app

@@ -1,0 +1,63 @@
+---
+- name: "opcache enabled"
+  become: yes
+  lineinfile:
+    dest: "{{ php_fpm_config_path }}"
+    regexp: "^;?opcache.enable="
+    line: "opcache.enable={{ php_fpm_opcache_enable }}"
+    state: present
+  notify: "php-fpm restart"
+
+- name: "opcache memory consumption"
+  become: yes
+  lineinfile:
+    dest: "{{ php_fpm_config_path }}"
+    regexp: "^;?opcache.memory_consumption="
+    line: "opcache.memory_consumption={{ php_fpm_opcache_memory_consumption }}"
+    state: present
+  notify: "php-fpm restart"
+
+- name: "opcache interned strings buffer"
+  become: yes
+  lineinfile:
+    dest: "{{ php_fpm_config_path }}"
+    regexp: "^;?opcache.interned_strings_buffer="
+    line: "opcache.interned_strings_buffer={{ php_fpm_opcache_interned_strings_buffer }}"
+    state: present
+  notify: "php-fpm restart"
+
+- name: "opcache max accelerated files"
+  become: yes
+  lineinfile:
+    dest: "{{ php_fpm_config_path }}"
+    regexp: "^;?opcache.max_accelerated_files="
+    line: "opcache.max_accelerated_files={{ php_fpm_opcache_max_accelerated_files }}"
+    state: present
+  notify: "php-fpm restart"
+
+- name: "opcache validate timestamps"
+  become: yes
+  lineinfile:
+    dest: "{{ php_fpm_config_path }}"
+    regexp: "^;?opcache.validate_timestamps="
+    line: "opcache.validate_timestamps={{ php_fpm_opcache_validate_timestamps }}"
+    state: present
+  notify: "php-fpm restart"
+
+- name: "opcache revalidate frequency"
+  become: yes
+  lineinfile:
+    dest: "{{ php_fpm_config_path }}"
+    regexp: "^;?opcache.revalidate_freq="
+    line: "opcache.revalidate_freq={{ php_fpm_opcache_revalidate_freq }}"
+    state: present
+  notify: "php-fpm restart"
+
+- name: "opcache fast shutdown"
+  become: yes
+  lineinfile:
+    dest: "{{ php_fpm_config_path }}"
+    regexp: "^;?opcache.fast_shutdown="
+    line: "opcache.fast_shutdown={{ php_fpm_opcache_fast_shutdown }}"
+    state: present
+  notify: "php-fpm restart"

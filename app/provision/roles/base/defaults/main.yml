@@ -1,0 +1,25 @@
+---
+# base_repositories
+# - repo: "ondrej/php"                           #required
+#   state: present                               #default
+#   update_cache: yes                            #default
+#   validate_certs: yes                          #default
+base_repositories: []
+# base_packages
+# - name: "curl"                                 #required
+#   state: present                               #default
+#   update_cache: yes                            #default
+#   cache_valid_time: 3600                       #default
+#   force: no                                    #omitted
+#   install_recommends: yes                      #default
+#   purge: no                                    #omitted
+base_packages:
+- name: "curl"
+- name: "git"
+- name: "wget"
+- name: "unzip"
+- name: "ack-grep"
+- name: "build-essential"
+- name: "software-properties-common"
+- name: "debconf-utils"
+- name: "keychain"

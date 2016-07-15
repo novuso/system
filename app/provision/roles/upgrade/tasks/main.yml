@@ -1,0 +1,21 @@
+---
+- name: "aptitude installed"
+  become: yes
+  apt:
+    name: "aptitude"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: "safe upgrade"
+  become: yes
+  apt:
+    upgrade: safe
+    update_cache: yes
+    cache_valid_time: 3600
+  ignore_errors: yes
+  notify:
+  - "autoremove"
+  - "autoclean"
+  - "clean packages"
+  - "update grub"

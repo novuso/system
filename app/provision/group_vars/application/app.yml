@@ -1,0 +1,2 @@
+---
+app_root_dir: "{{ project_root }}"

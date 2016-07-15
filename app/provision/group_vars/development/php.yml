@@ -1,0 +1,9 @@
+---
+php_cli_error_reporting: "E_ALL"
+php_cli_display_errors: "On"
+php_cli_display_startup_errors: "On"
+php_cli_assert_enable: "1"
+php_fpm_error_reporting: "E_ALL"
+php_fpm_display_errors: "On"
+php_fpm_display_startup_errors: "On"
+php_fpm_assert_enable: "1"

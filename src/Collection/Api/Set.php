@@ -1,0 +1,97 @@
+<?php declare(strict_types=1);
+
+namespace Novuso\System\Collection\Api;
+
+/**
+ * Set is the interface for the set type
+ *
+ * @copyright Copyright (c) 2016, Novuso. <http://novuso.com>
+ * @license   http://opensource.org/licenses/MIT The MIT License
+ * @author    John Nickell <email@johnnickell.com>
+ */
+interface Set extends ItemCollection
+{
+    /**
+     * Adds an item
+     *
+     * @param mixed $item The item
+     *
+     * @return void
+     */
+    public function add($item);
+
+    /**
+     * Checks if an item is in the set
+     *
+     * @param mixed $item The item
+     *
+     * @return bool
+     */
+    public function contains($item): bool;
+
+    /**
+     * Removes an item
+     *
+     * @param mixed $item The item
+     *
+     * @return void
+     */
+    public function remove($item);
+
+    /**
+     * Retrieves the symmetric difference
+     *
+     * Creates a new set that contains items in the current set that are not in
+     * the provided set, as well as items in the provided set that are not in
+     * the current set.
+     *
+     * A âˆ† B = {x : (x âˆˆ A) âŠ• (x âˆˆ B)}
+     *
+     * @param Set $other The other set
+     *
+     * @return Set
+     */
+    public function difference(Set $other): Set;
+
+    /**
+     * Retrieves the intersection
+     *
+     * Creates a new set that contains items that are found in both the current
+     * set and the provided set.
+     *
+     * A âˆ© B = {x : x âˆˆ A âˆ§ x âˆˆ B}
+     *
+     * @param Set $other The other set
+     *
+     * @return Set
+     */
+    public function intersection(Set $other): Set;
+
+    /**
+     * Retrieves the relative complement
+     *
+     * Creates a new set that contains items in the provided set that are not
+     * found in the current set.
+     *
+     * B \ A = {x: x âˆˆ B âˆ§ x âˆ‰ A}
+     *
+     * @param Set $other The other set
+     *
+     * @return Set
+     */
+    public function complement(Set $other): Set;
+
+    /**
+     * Retrieves the union
+     *
+     * Creates a new set that contains items found in either the current set or
+     * the provided set.
+     *
+     * A âˆª B = {x : x âˆˆ A âˆ¨ x âˆˆ B}
+     *
+     * @param Set $other The other set
+     *
+     * @return Set
+     */
+    public function union(Set $other): Set;
+}

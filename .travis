@@ -1,0 +1,18 @@
+---
+language: php
+
+php:
+    - 7.0
+
+notifications:
+    email: false
+
+before_install:
+    - composer self-update
+    - composer install --prefer-dist
+
+script:
+    - php bin/task build
+
+after_script:
+    - php vendor/bin/coveralls

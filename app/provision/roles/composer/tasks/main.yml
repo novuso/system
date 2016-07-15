@@ -1,0 +1,46 @@
+---
+- name: "check global composer"
+  stat:
+    path: "{{ composer_global_path }}"
+  register: _composer_global
+
+- name: "curl installed"
+  become: yes
+  apt:
+    name: "curl"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: "composer local directory"
+  file:
+    dest: "{{ composer_local_dir }}"
+    state: directory
+
+- name: "composer installed"
+  shell: "curl -sS https://getcomposer.org/installer | php"
+  args:
+    chdir: "{{ composer_local_dir }}"
+    creates: "{{ composer_local_dir }}/composer.phar"
+  when: _composer_global.stat.exists == false
+
+- name: "composer global"
+  become: yes
+  shell: "mv composer.phar {{ composer_global_path }}"
+  args:
+    chdir: "{{ composer_local_dir }}"
+    creates: "{{ composer_global_path }}"
+  when: composer_global_install
+
+- name: "update local composer"
+  shell: "php composer.phar self-update"
+  args:
+    chdir: "{{ composer_local_dir }}"
+  when: composer_keep_updated and not composer_global_install
+  changed_when: false
+
+- name: "update global composer"
+  become: yes
+  shell: "composer self-update"
+  when: composer_keep_updated and composer_global_install
+  changed_when: false

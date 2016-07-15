@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+# {{ ansible_managed }}
+
+# No spoofing
+if [ -e /proc/sys/net/ipv4/conf/all/rp_filter ]; then
+for filter in /proc/sys/net/ipv4/conf/*/rp_filter
+do
+echo 1 > $filter
+done
+fi
+
+# Set a known state
+iptables -P INPUT   {{ firewall_policy_input }}
+iptables -P FORWARD {{ firewall_policy_forward }}
+iptables -P OUTPUT  {{ firewall_policy_output }}
+
+# These lines are here in case rules are already in place and the
+# script is ever rerun on the fly. We want to remove all rules and
+# pre-existing user defined chains before we implement new rules
+iptables -F
+iptables -X
+iptables -Z
+iptables -t nat -F
+
+# Localhost connections
+iptables -A INPUT -i lo -j ACCEPT
+
+# Permit answers on already established connections
+# and permit new connections related to established ones
+# (e.g. port mode ftp)
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+{% if firewall_ssh_port is number %}
+
+    # SSH port
+    iptables -A INPUT -p tcp -m tcp --dport {{ firewall_ssh_port }} -j ACCEPT
+{% endif %}
+{% if firewall_forwarded_tcp_ports|length %}
+
+    # Forwarded tcp ports
+    {% for forwarded_port in firewall_forwarded_tcp_ports %}
+        iptables -t nat -I PREROUTING -p tcp --dport {{ forwarded_port.src }} -j REDIRECT --to-port {{ forwarded_port.dest }}
+        iptables -t nat -I OUTPUT -p tcp -o lo --dport {{ forwarded_port.src }} -j REDIRECT --to-port {{ forwarded_port.dest }}
+    {% endfor %}
+{% endif %}
+{% if firewall_forwarded_udp_ports|length %}
+
+    # Forwarded udp ports
+    {% for forwarded_port in firewall_forwarded_udp_ports %}
+        iptables -t nat -I PREROUTING -p udp --dport {{ forwarded_port.src }} -j REDIRECT --to-port {{ forwarded_port.dest }}
+        iptables -t nat -I OUTPUT -p udp -o lo --dport {{ forwarded_port.src }} -j REDIRECT --to-port {{ forwarded_port.dest }}
+    {% endfor %}
+{% endif %}
+{% if firewall_allowed_tcp_ports|length %}
+
+    # Open tcp ports
+    {% for port in firewall_allowed_tcp_ports %}
+        iptables -A INPUT -p tcp -m tcp --dport {{ port }} -j ACCEPT
+    {% endfor %}
+{% endif %}
+{% if firewall_allowed_udp_ports|length %}
+
+    # Open udp ports
+    {% for port in firewall_allowed_udp_ports %}
+        iptables -A INPUT -p udp -m udp --dport {{ port }} -j ACCEPT
+    {% endfor %}
+{% endif %}
+
+# Accept icmp ping requests
+iptables -A INPUT -p icmp -j ACCEPT
+
+# Allow NTP traffic for time synchronization
+iptables -A OUTPUT -p udp --dport 123 -j ACCEPT
+iptables -A INPUT -p udp --sport 123 -j ACCEPT
+{% if firewall_additional_rules|length %}
+
+    # Additional custom rules
+    {% for rule in firewall_additional_rules %}
+        {{ rule }}
+    {% endfor %}
+{% endif %}
+{% if firewall_log_dropped_packets %}
+
+    # Log other incoming requests (all of which are dropped) at 15/minute max.
+    iptables -N LOGGING
+    iptables -A INPUT -j LOGGING
+    iptables -A LOGGING -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "IPTables Packet Dropped: "
+    iptables -A LOGGING -j DROP
+{% else %}
+
+    iptables -A INPUT -j DROP
+{% endif %}

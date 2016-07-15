@@ -1,0 +1,41 @@
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:          firewall
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start firewall at boot time.
+# Description:       Enable the firewall.
+### END INIT INFO
+
+case "$1" in
+  start)
+    echo "Starting firewall"
+    /usr/local/bin/firewall
+    ;;
+  stop)
+    echo "Stopping firewall"
+    iptables -P INPUT ACCEPT
+    iptables -P FORWARD ACCEPT
+    iptables -P OUTPUT ACCEPT
+    iptables -F
+    iptables -X
+    iptables -Z
+    iptables -t nat -F
+    ;;
+  restart)
+    echo "Restarting firewall"
+    /usr/local/bin/firewall
+    ;;
+  status)
+    echo -e "`iptables -L -n`"
+    ;;
+  *)
+    echo "Usage: /etc/init.d/firewall {start|stop|status|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0

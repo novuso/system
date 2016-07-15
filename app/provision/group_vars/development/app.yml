@@ -1,0 +1,4 @@
+---
+app_packages:
+- name: "graphviz"
+- name: "php-xdebug"
