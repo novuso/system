@@ -8,8 +8,11 @@ notifications:
     email: false
 
 before_install:
-    - composer self-update
-    - composer install --prefer-dist
+    - composer install
+
+before_script:
+    - echo 'zend.assertions = 1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+    - echo 'assert.exception = 1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 script:
     - php bin/task build
