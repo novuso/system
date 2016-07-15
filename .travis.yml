@@ -17,5 +17,5 @@ before_script:
 script:
     - php bin/task build
 
-after_script:
-    - php vendor/bin/coveralls
+after_success:
+    - travis_retry php vendor/bin/coveralls
