@@ -205,7 +205,7 @@ class Test
      */
     public static function isBlank($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -221,7 +221,7 @@ class Test
      */
     public static function isNotBlank($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -237,7 +237,7 @@ class Test
      */
     public static function isAlpha($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -253,7 +253,7 @@ class Test
      */
     public static function isAlnum($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -271,7 +271,7 @@ class Test
      */
     public static function isAlphaDash($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -289,7 +289,7 @@ class Test
      */
     public static function isAlnumDash($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -305,7 +305,7 @@ class Test
      */
     public static function isDigits($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -321,7 +321,7 @@ class Test
      */
     public static function isNumeric($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -337,7 +337,7 @@ class Test
      */
     public static function isEmail($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -353,7 +353,7 @@ class Test
      */
     public static function isIpAddress($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -369,7 +369,7 @@ class Test
      */
     public static function isIpV4Address($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -385,7 +385,7 @@ class Test
      */
     public static function isIpV6Address($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -401,7 +401,7 @@ class Test
      */
     public static function isUri($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -436,7 +436,7 @@ class Test
      */
     public static function isUrn($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -498,7 +498,7 @@ class Test
      */
     public static function isUuid($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -547,7 +547,7 @@ class Test
             return true;
         }
 
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -563,7 +563,7 @@ class Test
      */
     public static function isJson($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -584,7 +584,7 @@ class Test
      */
     public static function isMatch($value, string $pattern): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -602,7 +602,7 @@ class Test
      */
     public static function contains($value, string $search, string $encoding = 'UTF-8'): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -620,7 +620,7 @@ class Test
      */
     public static function startsWith($value, string $search, string $encoding = 'UTF-8'): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -641,7 +641,7 @@ class Test
      */
     public static function endsWith($value, string $search, string $encoding = 'UTF-8'): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -663,7 +663,7 @@ class Test
      */
     public static function exactLength($value, int $length, string $encoding = 'UTF-8'): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -683,7 +683,7 @@ class Test
      */
     public static function minLength($value, int $minLength, string $encoding = 'UTF-8'): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -703,7 +703,7 @@ class Test
      */
     public static function maxLength($value, int $maxLength, string $encoding = 'UTF-8'): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -724,7 +724,7 @@ class Test
      */
     public static function rangeLength($value, int $minLength, int $maxLength, string $encoding = 'UTF-8'): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -827,7 +827,7 @@ class Test
      */
     public static function wholeNumber($value): bool
     {
-        if (!self::intValue($value)) {
+        if (!static::intValue($value)) {
             return false;
         }
 
@@ -845,7 +845,7 @@ class Test
      */
     public static function naturalNumber($value): bool
     {
-        if (!self::intValue($value)) {
+        if (!static::intValue($value)) {
             return false;
         }
 
@@ -881,7 +881,7 @@ class Test
      */
     public static function exactCount($value, int $count): bool
     {
-        if (!self::isCountable($value)) {
+        if (!static::isCountable($value)) {
             return false;
         }
 
@@ -898,7 +898,7 @@ class Test
      */
     public static function minCount($value, int $minCount): bool
     {
-        if (!self::isCountable($value)) {
+        if (!static::isCountable($value)) {
             return false;
         }
 
@@ -915,7 +915,7 @@ class Test
      */
     public static function maxCount($value, int $maxCount): bool
     {
-        if (!self::isCountable($value)) {
+        if (!static::isCountable($value)) {
             return false;
         }
 
@@ -933,7 +933,7 @@ class Test
      */
     public static function rangeCount($value, int $minCount, int $maxCount): bool
     {
-        if (!self::isCountable($value)) {
+        if (!static::isCountable($value)) {
             return false;
         }
 
@@ -960,7 +960,7 @@ class Test
     public static function isOneOf($value, $choices): bool
     {
         assert(
-            self::isTraversable($choices),
+            static::isTraversable($choices),
             sprintf('%s expects $choices to be traversable', __METHOD__)
         );
 
@@ -983,7 +983,7 @@ class Test
      */
     public static function keyIsset($value, $key): bool
     {
-        if (!self::isArrayAccessible($value)) {
+        if (!static::isArrayAccessible($value)) {
             return false;
         }
 
@@ -1000,7 +1000,7 @@ class Test
      */
     public static function keyNotEmpty($value, $key): bool
     {
-        if (!self::isArrayAccessible($value)) {
+        if (!static::isArrayAccessible($value)) {
             return false;
         }
 
@@ -1017,7 +1017,7 @@ class Test
      */
     public static function areEqual($value1, $value2): bool
     {
-        if (self::isEquatable($value1) && self::areSameType($value1, $value2)) {
+        if (static::isEquatable($value1) && static::areSameType($value1, $value2)) {
             return $value1->equals($value2);
         }
 
@@ -1034,7 +1034,7 @@ class Test
      */
     public static function areNotEqual($value1, $value2): bool
     {
-        if (self::isEquatable($value1) && self::areSameType($value1, $value2)) {
+        if (static::isEquatable($value1) && static::areSameType($value1, $value2)) {
             return !$value1->equals($value2);
         }
 
@@ -1125,7 +1125,7 @@ class Test
      */
     public static function isListOf($value, string $type = null): bool
     {
-        if (!self::isTraversable($value)) {
+        if (!static::isTraversable($value)) {
             return false;
         }
 
@@ -1136,7 +1136,7 @@ class Test
         $result = true;
 
         foreach ($value as $val) {
-            if (!self::isType($val, $type)) {
+            if (!static::isType($val, $type)) {
                 $result = false;
                 break;
             }
@@ -1319,7 +1319,7 @@ class Test
     public static function implementsInterface($value, string $interface): bool
     {
         if (!is_object($value)) {
-            if (!(self::classExists($value) || self::interfaceExists($value))) {
+            if (!(static::classExists($value) || static::interfaceExists($value))) {
                 return false;
             }
             $value = (string) $value;
@@ -1365,7 +1365,7 @@ class Test
      */
     public static function classExists($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -1381,7 +1381,7 @@ class Test
      */
     public static function interfaceExists($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -1398,7 +1398,7 @@ class Test
      */
     public static function methodExists($value, $object): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -1414,7 +1414,7 @@ class Test
      */
     public static function isPath($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -1430,7 +1430,7 @@ class Test
      */
     public static function isFile($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -1446,7 +1446,7 @@ class Test
      */
     public static function isDir($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -1462,7 +1462,7 @@ class Test
      */
     public static function isReadable($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -1478,7 +1478,7 @@ class Test
      */
     public static function isWritable($value): bool
     {
-        if (!self::isStringCastable($value)) {
+        if (!static::isStringCastable($value)) {
             return false;
         }
 
@@ -1832,25 +1832,25 @@ class Test
     {
         switch ($type) {
             case 'array':
-                return self::isArray($value);
+                return static::isArray($value);
                 break;
             case 'object':
-                return self::isObject($value);
+                return static::isObject($value);
                 break;
             case 'bool':
-                return self::isBool($value);
+                return static::isBool($value);
                 break;
             case 'int':
-                return self::isInt($value);
+                return static::isInt($value);
                 break;
             case 'float':
-                return self::isFloat($value);
+                return static::isFloat($value);
                 break;
             case 'string':
-                return self::isString($value);
+                return static::isString($value);
                 break;
             case 'callable':
-                return self::isCallable($value);
+                return static::isCallable($value);
                 break;
             default:
                 break;
