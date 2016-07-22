@@ -156,7 +156,7 @@ class EnumTest extends UnitTestCase
     }
 
     /**
-     * @expectedException AssertionError
+     * @expectedException \AssertionError
      */
     public function test_that_compare_to_throws_exception_for_invalid_argument()
     {
