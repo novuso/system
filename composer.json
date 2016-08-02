@@ -16,7 +16,16 @@
     "autoload": {
         "psr-4": {
             "Novuso\\System\\": "src",
-            "Novuso\\Test\\System\\": "test"
+            "Novuso\\Test\\System\\TestCase\\": "test/TestCase",
+            "Novuso\\Test\\System\\Traits\\": "test/Traits"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Novuso\\Test\\System\\Collection\\": "test/Collection",
+            "Novuso\\Test\\System\\Resources\\": "test/Resources",
+            "Novuso\\Test\\System\\Type\\": "test/Type",
+            "Novuso\\Test\\System\\Utility\\": "test/Utility"
         }
     },
     "config": {
