@@ -63,7 +63,7 @@ class ArrayList implements Arrayable, IndexedList
      */
     public static function of(string $itemType = null): ArrayList
     {
-        return new self($itemType);
+        return new static($itemType);
     }
 
     /**
@@ -337,7 +337,7 @@ class ArrayList implements Arrayable, IndexedList
      */
     public function map(callable $callback, string $itemType = null): ArrayList
     {
-        $list = self::of($itemType);
+        $list = static::of($itemType);
 
         foreach ($this->getIterator() as $item) {
             $list->add(call_user_func($callback, $item));
@@ -365,7 +365,7 @@ class ArrayList implements Arrayable, IndexedList
      */
     public function filter(callable $predicate): ArrayList
     {
-        $list = self::of($this->itemType());
+        $list = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (call_user_func($predicate, $item)) {
@@ -381,7 +381,7 @@ class ArrayList implements Arrayable, IndexedList
      */
     public function reject(callable $predicate): ArrayList
     {
-        $list = self::of($this->itemType());
+        $list = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (!call_user_func($predicate, $item)) {
@@ -425,8 +425,8 @@ class ArrayList implements Arrayable, IndexedList
      */
     public function partition(callable $predicate): array
     {
-        $list1 = self::of($this->itemType());
-        $list2 = self::of($this->itemType());
+        $list1 = static::of($this->itemType());
+        $list2 = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (call_user_func($predicate, $item)) {

@@ -75,7 +75,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public static function create(Comparator $comparator, string $itemType = null): SortedSet
     {
-        return new self($comparator, $itemType);
+        return new static($comparator, $itemType);
     }
 
     /**
@@ -97,7 +97,7 @@ class SortedSet implements Arrayable, OrderedSet
             sprintf('%s expects $itemType to implement %s', __METHOD__, Comparable::class)
         );
 
-        return new self(new ComparableComparator(), $itemType);
+        return new static(new ComparableComparator(), $itemType);
     }
 
     /**
@@ -107,7 +107,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public static function float(): SortedSet
     {
-        return new self(new FloatComparator(), 'float');
+        return new static(new FloatComparator(), 'float');
     }
 
     /**
@@ -117,7 +117,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public static function integer(): SortedSet
     {
-        return new self(new IntegerComparator(), 'int');
+        return new static(new IntegerComparator(), 'int');
     }
 
     /**
@@ -127,7 +127,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public static function string(): SortedSet
     {
-        return new self(new StringComparator(), 'string');
+        return new static(new StringComparator(), 'string');
     }
 
     /**
@@ -180,7 +180,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function difference(OrderedSet $other): OrderedSet
     {
-        $difference = self::create($this->comparator, $this->itemType());
+        $difference = static::create($this->comparator, $this->itemType());
 
         if ($this === $other) {
             return $difference;
@@ -197,7 +197,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function intersection(OrderedSet $other): OrderedSet
     {
-        $intersection = self::create($this->comparator, $this->itemType());
+        $intersection = static::create($this->comparator, $this->itemType());
 
         $this->filter([$other, 'contains'])->each([$intersection, 'add']);
 
@@ -209,7 +209,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function complement(OrderedSet $other): OrderedSet
     {
-        $complement = self::create($this->comparator, $this->itemType());
+        $complement = static::create($this->comparator, $this->itemType());
 
         if ($this === $other) {
             return $complement;
@@ -225,7 +225,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function union(OrderedSet $other): OrderedSet
     {
-        $union = self::create($this->comparator, $this->itemType());
+        $union = static::create($this->comparator, $this->itemType());
 
         $this->each([$union, 'add']);
         $other->each([$union, 'add']);
@@ -328,7 +328,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function map(callable $callback, Comparator $comparator, string $itemType = null): SortedSet
     {
-        $set = self::create($comparator, $itemType);
+        $set = static::create($comparator, $itemType);
 
         foreach ($this->getIterator() as $item) {
             $set->add(call_user_func($callback, $item));
@@ -356,7 +356,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function filter(callable $predicate): SortedSet
     {
-        $set = self::create($this->comparator, $this->itemType());
+        $set = static::create($this->comparator, $this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (call_user_func($predicate, $item)) {
@@ -372,7 +372,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function reject(callable $predicate): SortedSet
     {
-        $set = self::create($this->comparator, $this->itemType());
+        $set = static::create($this->comparator, $this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (!call_user_func($predicate, $item)) {
@@ -416,8 +416,8 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function partition(callable $predicate): array
     {
-        $set1 = self::create($this->comparator, $this->itemType());
-        $set2 = self::create($this->comparator, $this->itemType());
+        $set1 = static::create($this->comparator, $this->itemType());
+        $set2 = static::create($this->comparator, $this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (call_user_func($predicate, $item)) {

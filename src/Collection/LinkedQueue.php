@@ -63,7 +63,7 @@ class LinkedQueue implements Arrayable, Queue
      */
     public static function of(string $itemType = null): LinkedQueue
     {
-        return new self($itemType);
+        return new static($itemType);
     }
 
     /**
@@ -134,7 +134,7 @@ class LinkedQueue implements Arrayable, Queue
      */
     public function map(callable $callback, string $itemType = null): LinkedQueue
     {
-        $queue = self::of($itemType);
+        $queue = static::of($itemType);
 
         foreach ($this->getIterator() as $item) {
             $queue->enqueue(call_user_func($callback, $item));
@@ -162,7 +162,7 @@ class LinkedQueue implements Arrayable, Queue
      */
     public function filter(callable $predicate): LinkedQueue
     {
-        $queue = self::of($this->itemType());
+        $queue = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (call_user_func($predicate, $item)) {
@@ -178,7 +178,7 @@ class LinkedQueue implements Arrayable, Queue
      */
     public function reject(callable $predicate): LinkedQueue
     {
-        $queue = self::of($this->itemType());
+        $queue = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (!call_user_func($predicate, $item)) {
@@ -222,8 +222,8 @@ class LinkedQueue implements Arrayable, Queue
      */
     public function partition(callable $predicate): array
     {
-        $queue1 = self::of($this->itemType());
-        $queue2 = self::of($this->itemType());
+        $queue1 = static::of($this->itemType());
+        $queue2 = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (call_user_func($predicate, $item)) {

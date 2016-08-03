@@ -69,7 +69,7 @@ class HashSet implements Arrayable, Set
      */
     public static function of(string $itemType = null): HashSet
     {
-        return new self($itemType);
+        return new static($itemType);
     }
 
     /**
@@ -145,7 +145,7 @@ class HashSet implements Arrayable, Set
      */
     public function difference(Set $other): Set
     {
-        $difference = self::of($this->itemType());
+        $difference = static::of($this->itemType());
 
         if ($this === $other) {
             return $difference;
@@ -162,7 +162,7 @@ class HashSet implements Arrayable, Set
      */
     public function intersection(Set $other): Set
     {
-        $intersection = self::of($this->itemType());
+        $intersection = static::of($this->itemType());
 
         $this->filter([$other, 'contains'])->each([$intersection, 'add']);
 
@@ -174,7 +174,7 @@ class HashSet implements Arrayable, Set
      */
     public function complement(Set $other): Set
     {
-        $complement = self::of($this->itemType());
+        $complement = static::of($this->itemType());
 
         if ($this === $other) {
             return $complement;
@@ -190,7 +190,7 @@ class HashSet implements Arrayable, Set
      */
     public function union(Set $other): Set
     {
-        $union = self::of($this->itemType());
+        $union = static::of($this->itemType());
 
         $this->each([$union, 'add']);
         $other->each([$union, 'add']);
@@ -213,7 +213,7 @@ class HashSet implements Arrayable, Set
      */
     public function map(callable $callback, string $itemType = null): HashSet
     {
-        $set = self::of($itemType);
+        $set = static::of($itemType);
 
         foreach ($this->getIterator() as $item) {
             $set->add(call_user_func($callback, $item));
@@ -241,7 +241,7 @@ class HashSet implements Arrayable, Set
      */
     public function filter(callable $predicate): HashSet
     {
-        $set = self::of($this->itemType());
+        $set = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (call_user_func($predicate, $item)) {
@@ -257,7 +257,7 @@ class HashSet implements Arrayable, Set
      */
     public function reject(callable $predicate): HashSet
     {
-        $set = self::of($this->itemType());
+        $set = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (!call_user_func($predicate, $item)) {
@@ -301,8 +301,8 @@ class HashSet implements Arrayable, Set
      */
     public function partition(callable $predicate): array
     {
-        $set1 = self::of($this->itemType());
-        $set2 = self::of($this->itemType());
+        $set1 = static::of($this->itemType());
+        $set2 = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (call_user_func($predicate, $item)) {

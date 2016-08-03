@@ -63,7 +63,7 @@ class LinkedDeque implements Arrayable, Deque
      */
     public static function of(string $itemType = null): LinkedDeque
     {
-        return new self($itemType);
+        return new static($itemType);
     }
 
     /**
@@ -171,7 +171,7 @@ class LinkedDeque implements Arrayable, Deque
      */
     public function map(callable $callback, string $itemType = null): LinkedDeque
     {
-        $deque = self::of($itemType);
+        $deque = static::of($itemType);
 
         foreach ($this->getIterator() as $item) {
             $deque->addLast(call_user_func($callback, $item));
@@ -199,7 +199,7 @@ class LinkedDeque implements Arrayable, Deque
      */
     public function filter(callable $predicate): LinkedDeque
     {
-        $deque = self::of($this->itemType());
+        $deque = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (call_user_func($predicate, $item)) {
@@ -215,7 +215,7 @@ class LinkedDeque implements Arrayable, Deque
      */
     public function reject(callable $predicate): LinkedDeque
     {
-        $deque = self::of($this->itemType());
+        $deque = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (!call_user_func($predicate, $item)) {
@@ -259,8 +259,8 @@ class LinkedDeque implements Arrayable, Deque
      */
     public function partition(callable $predicate): array
     {
-        $deque1 = self::of($this->itemType());
-        $deque2 = self::of($this->itemType());
+        $deque1 = static::of($this->itemType());
+        $deque2 = static::of($this->itemType());
 
         foreach ($this->getIterator() as $item) {
             if (call_user_func($predicate, $item)) {

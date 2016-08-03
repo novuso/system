@@ -29,7 +29,7 @@ class Merge
     public static function sort(array &$arr, callable $comp)
     {
         $aux = $arr;
-        self::partition($aux, $arr, 0, count($arr) - 1, $comp);
+        static::partition($aux, $arr, 0, count($arr) - 1, $comp);
     }
 
     /**
@@ -45,17 +45,17 @@ class Merge
      */
     protected static function partition(array &$src, array &$dst, int $lo, int $hi, callable $comp)
     {
-        if ($hi <= $lo + self::SORT_CUTOFF) {
-            self::insertionSort($dst, $lo, $hi, $comp);
+        if ($hi <= $lo + static::SORT_CUTOFF) {
+            static::insertionSort($dst, $lo, $hi, $comp);
 
             return;
         }
 
         $mid = (int) ($lo + ($hi - $lo) / 2);
-        self::partition($dst, $src, $lo, $mid, $comp);
-        self::partition($dst, $src, $mid + 1, $hi, $comp);
+        static::partition($dst, $src, $lo, $mid, $comp);
+        static::partition($dst, $src, $mid + 1, $hi, $comp);
 
-        if (!self::lt($src[$mid + 1], $src[$mid], $comp)) {
+        if (!static::lt($src[$mid + 1], $src[$mid], $comp)) {
             for ($i = $lo; $i <= $hi; $i++) {
                 $dst[$i] = $src[$i];
             }
@@ -63,7 +63,7 @@ class Merge
             return;
         }
 
-        self::merge($src, $dst, $lo, $mid, $hi, $comp);
+        static::merge($src, $dst, $lo, $mid, $hi, $comp);
     }
 
     /**
@@ -87,7 +87,7 @@ class Merge
                 $dst[$k] = $src[$j++];
             } elseif ($j > $hi) {
                 $dst[$k] = $src[$i++];
-            } elseif (self::lt($src[$j], $src[$i], $comp)) {
+            } elseif (static::lt($src[$j], $src[$i], $comp)) {
                 $dst[$k] = $src[$j++];
             } else {
                 $dst[$k] = $src[$i++];
@@ -108,8 +108,8 @@ class Merge
     protected static function insertionSort(array &$arr, int $lo, int $hi, callable $comp)
     {
         for ($i = $lo; $i <= $hi; $i++) {
-            for ($j = $i; $j > $lo && self::lt($arr[$j], $arr[$j - 1], $comp); $j--) {
-                self::exch($arr, $j, $j - 1);
+            for ($j = $i; $j > $lo && static::lt($arr[$j], $arr[$j - 1], $comp); $j--) {
+                static::exch($arr, $j, $j - 1);
             }
         }
     }
