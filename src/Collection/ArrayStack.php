@@ -68,7 +68,7 @@ class ArrayStack implements Arrayable, Stack
      */
     public static function of(string $itemType = null): ArrayStack
     {
-        return new self($itemType);
+        return new static($itemType);
     }
 
     /**
@@ -147,7 +147,7 @@ class ArrayStack implements Arrayable, Stack
      */
     public function map(callable $callback, string $itemType = null): ArrayStack
     {
-        $stack = self::of($itemType);
+        $stack = static::of($itemType);
 
         for ($i = 0; $i < $this->count; $i++) {
             $stack->push(call_user_func($callback, $this->items[$i]));
@@ -175,7 +175,7 @@ class ArrayStack implements Arrayable, Stack
      */
     public function filter(callable $predicate): ArrayStack
     {
-        $stack = self::of($this->itemType());
+        $stack = static::of($this->itemType());
 
         for ($i = 0; $i < $this->count; $i++) {
             if (call_user_func($predicate, $this->items[$i])) {
@@ -191,7 +191,7 @@ class ArrayStack implements Arrayable, Stack
      */
     public function reject(callable $predicate): ArrayStack
     {
-        $stack = self::of($this->itemType());
+        $stack = static::of($this->itemType());
 
         for ($i = 0; $i < $this->count; $i++) {
             if (!call_user_func($predicate, $this->items[$i])) {
@@ -235,8 +235,8 @@ class ArrayStack implements Arrayable, Stack
      */
     public function partition(callable $predicate): array
     {
-        $stack1 = self::of($this->itemType());
-        $stack2 = self::of($this->itemType());
+        $stack1 = static::of($this->itemType());
+        $stack2 = static::of($this->itemType());
 
         for ($i = 0; $i < $this->count; $i++) {
             if (call_user_func($predicate, $this->items[$i])) {

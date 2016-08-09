@@ -2,10 +2,12 @@
 
 namespace Novuso\Test\System\Resources;
 
+use Novuso\System\Exception\DomainException;
+use Novuso\System\Serialization\Serializable;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Utility\Test;
 
-class User implements Comparable
+class User implements Comparable, Serializable
 {
     protected $lastName;
     protected $firstName;
@@ -20,6 +22,24 @@ class User implements Comparable
         $this->username = $data['username'];
         $this->email = $data['email'];
         $this->birthDate = $data['birthDate'];
+    }
+
+    public static function deserialize(array $data)
+    {
+        $keys = ['lastName', 'firstName', 'username', 'email', 'birthDate'];
+        foreach ($keys as $key) {
+            if (!array_key_exists($key, $data)) {
+                $message = sprintf('Serialization key missing: %s', $key);
+                throw new DomainException($message);
+            }
+        }
+
+        return new static($data);
+    }
+
+    public function serialize(): array
+    {
+        return $this->toArray();
     }
 
     public function lastName()

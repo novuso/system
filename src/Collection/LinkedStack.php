@@ -63,7 +63,7 @@ class LinkedStack implements Arrayable, Stack
      */
     public static function of(string $itemType = null): LinkedStack
     {
-        return new self($itemType);
+        return new static($itemType);
     }
 
     /**
@@ -134,7 +134,7 @@ class LinkedStack implements Arrayable, Stack
      */
     public function map(callable $callback, string $itemType = null): LinkedStack
     {
-        $stack = self::of($itemType);
+        $stack = static::of($itemType);
 
         $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
         foreach ($this->getIterator() as $item) {
@@ -164,7 +164,7 @@ class LinkedStack implements Arrayable, Stack
      */
     public function filter(callable $predicate): LinkedStack
     {
-        $stack = self::of($this->itemType());
+        $stack = static::of($this->itemType());
 
         $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
         foreach ($this->getIterator() as $item) {
@@ -182,7 +182,7 @@ class LinkedStack implements Arrayable, Stack
      */
     public function reject(callable $predicate): LinkedStack
     {
-        $stack = self::of($this->itemType());
+        $stack = static::of($this->itemType());
 
         $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
         foreach ($this->getIterator() as $item) {
@@ -228,8 +228,8 @@ class LinkedStack implements Arrayable, Stack
      */
     public function partition(callable $predicate): array
     {
-        $stack1 = self::of($this->itemType());
-        $stack2 = self::of($this->itemType());
+        $stack1 = static::of($this->itemType());
+        $stack2 = static::of($this->itemType());
 
         $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
         foreach ($this->getIterator() as $item) {

@@ -55,7 +55,7 @@ class ClassName
      */
     public static function canonical($object): string
     {
-        return str_replace('\\', '.', self::full($object));
+        return str_replace('\\', '.', static::full($object));
     }
 
     /**
@@ -68,7 +68,7 @@ class ClassName
      */
     public static function underscore($object): string
     {
-        return strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', self::canonical($object)));
+        return strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', static::canonical($object)));
     }
 
     /**
@@ -81,7 +81,7 @@ class ClassName
      */
     public static function short($object): string
     {
-        $parts = explode('\\', self::full($object));
+        $parts = explode('\\', static::full($object));
 
         return end($parts);
     }

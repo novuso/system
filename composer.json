@@ -24,6 +24,7 @@
         "psr-4": {
             "Novuso\\Test\\System\\Collection\\": "test/Collection",
             "Novuso\\Test\\System\\Resources\\": "test/Resources",
+            "Novuso\\Test\\System\\Serialization\\": "test/Serialization",
             "Novuso\\Test\\System\\Type\\": "test/Type",
             "Novuso\\Test\\System\\Utility\\": "test/Utility"
         }

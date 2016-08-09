@@ -73,7 +73,7 @@ class HashTable implements SymbolTable
      */
     public static function of(string $keyType = null, string $valueType = null): HashTable
     {
-        return new self($keyType, $valueType);
+        return new static($keyType, $valueType);
     }
 
     /**
@@ -224,7 +224,7 @@ class HashTable implements SymbolTable
      */
     public function map(callable $callback, string $valueType = null): HashTable
     {
-        $table = self::of($this->keyType(), $valueType);
+        $table = static::of($this->keyType(), $valueType);
 
         foreach ($this->getIterator() as $key => $value) {
             $table->set($key, call_user_func($callback, $value, $key));
@@ -252,7 +252,7 @@ class HashTable implements SymbolTable
      */
     public function filter(callable $predicate): HashTable
     {
-        $table = self::of($this->keyType(), $this->valueType());
+        $table = static::of($this->keyType(), $this->valueType());
 
         foreach ($this->getIterator() as $key => $value) {
             if (call_user_func($predicate, $value, $key)) {
@@ -268,7 +268,7 @@ class HashTable implements SymbolTable
      */
     public function reject(callable $predicate): HashTable
     {
-        $table = self::of($this->keyType(), $this->valueType());
+        $table = static::of($this->keyType(), $this->valueType());
 
         foreach ($this->getIterator() as $key => $value) {
             if (!call_user_func($predicate, $value, $key)) {
@@ -312,8 +312,8 @@ class HashTable implements SymbolTable
      */
     public function partition(callable $predicate): array
     {
-        $table1 = self::of($this->keyType(), $this->valueType());
-        $table2 = self::of($this->keyType(), $this->valueType());
+        $table1 = static::of($this->keyType(), $this->valueType());
+        $table2 = static::of($this->keyType(), $this->valueType());
 
         foreach ($this->getIterator() as $key => $value) {
             if (call_user_func($predicate, $value, $key)) {
