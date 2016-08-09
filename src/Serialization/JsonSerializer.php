@@ -4,6 +4,7 @@ namespace Novuso\System\Serialization;
 
 use Novuso\System\Exception\DomainException;
 use Novuso\System\Utility\ClassName;
+use Novuso\System\Utility\Test;
 
 /**
  * JsonSerializer is a JSON encoding serializer
@@ -29,9 +30,14 @@ class JsonSerializer implements Serializer
             }
         }
 
-        /** @var Serializable $class */
         $class = ClassName::full($data['@']);
 
+        assert(
+            Test::implementsInterface($class, Serializable::class),
+            sprintf('Unable to deserialize: %s', $class)
+        );
+
+        /** @var Serializable $class */
         return $class::deserialize($data['$']);
     }
 
