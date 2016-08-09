@@ -37,7 +37,6 @@ class JsonSerializer implements Serializer
             sprintf('Unable to deserialize: %s', $class)
         );
 
-        /** @var Serializable $class */
         return $class::deserialize($data['$']);
     }
 
