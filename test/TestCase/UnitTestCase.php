@@ -2,6 +2,9 @@
 
 namespace Novuso\Test\System\TestCase;
 
+use Mockery;
+use Novuso\Test\System\Traits\MockObjects;
+use Novuso\Test\System\Traits\VirtualFileSystem;
 use PHPUnit_Framework_TestCase;
 use ReflectionObject;
 
@@ -14,6 +17,9 @@ use ReflectionObject;
  */
 class UnitTestCase extends PHPUnit_Framework_TestCase
 {
+    use MockObjects;
+    use VirtualFileSystem;
+
     /**
      * Handles clean-up after tests
      *
@@ -28,5 +34,6 @@ class UnitTestCase extends PHPUnit_Framework_TestCase
                 $prop->setValue($this, null);
             }
         }
+        Mockery::close();
     }
 }
