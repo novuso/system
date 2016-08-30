@@ -12,7 +12,7 @@ use Novuso\System\Collection\Traits\KeyValueTypeMethods;
 use Novuso\System\Collection\Tree\RedBlackSearchTree;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Type\Comparator;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use Traversable;
 
 /**
@@ -95,7 +95,7 @@ class SortedTable implements OrderedTable
     public static function comparable(string $keyType = null, string $valueType = null): SortedTable
     {
         assert(
-            Test::isNull($keyType) || Test::implementsInterface($keyType, Comparable::class),
+            Validate::isNull($keyType) || Validate::implementsInterface($keyType, Comparable::class),
             sprintf('%s expects $keyType to implement %s', __METHOD__, Comparable::class)
         );
 
@@ -178,11 +178,11 @@ class SortedTable implements OrderedTable
     public function set($key, $value)
     {
         assert(
-            Test::isType($key, $this->keyType()),
+            Validate::isType($key, $this->keyType()),
             $this->keyTypeError('set', $key)
         );
         assert(
-            Test::isType($value, $this->valueType()),
+            Validate::isType($value, $this->valueType()),
             $this->valueTypeError('set', $value)
         );
 

@@ -8,7 +8,7 @@ use Novuso\System\Collection\Iterator\GeneratorIterator;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Type\Arrayable;
 use Novuso\System\Utility\Hasher;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use Traversable;
 
 /**
@@ -94,7 +94,7 @@ class HashSet implements Arrayable, Set
     public function add($item)
     {
         assert(
-            Test::isType($item, $this->itemType()),
+            Validate::isType($item, $this->itemType()),
             $this->itemTypeError('add', $item)
         );
 

@@ -9,7 +9,7 @@ use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Exception\IndexException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Type\Arrayable;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use Novuso\System\Utility\VarPrinter;
 use Traversable;
 
@@ -88,7 +88,7 @@ class ArrayList implements Arrayable, IndexedList
     public function add($item)
     {
         assert(
-            Test::isType($item, $this->itemType()),
+            Validate::isType($item, $this->itemType()),
             $this->itemTypeError('add', $item)
         );
 
@@ -101,7 +101,7 @@ class ArrayList implements Arrayable, IndexedList
     public function set(int $index, $item)
     {
         assert(
-            Test::isType($item, $this->itemType()),
+            Validate::isType($item, $this->itemType()),
             $this->itemTypeError('set', $item)
         );
 
@@ -182,7 +182,7 @@ class ArrayList implements Arrayable, IndexedList
         }
 
         assert(
-            Test::isInt($index),
+            Validate::isInt($index),
             sprintf('Invalid list index: %s', VarPrinter::toString($index))
         );
 
@@ -195,7 +195,7 @@ class ArrayList implements Arrayable, IndexedList
     public function offsetGet($index)
     {
         assert(
-            Test::isInt($index),
+            Validate::isInt($index),
             sprintf('Invalid list index: %s', VarPrinter::toString($index))
         );
 
@@ -208,7 +208,7 @@ class ArrayList implements Arrayable, IndexedList
     public function offsetExists($index): bool
     {
         assert(
-            Test::isInt($index),
+            Validate::isInt($index),
             sprintf('Invalid list index: %s', VarPrinter::toString($index))
         );
 
@@ -221,7 +221,7 @@ class ArrayList implements Arrayable, IndexedList
     public function offsetUnset($index)
     {
         assert(
-            Test::isInt($index),
+            Validate::isInt($index),
             sprintf('Invalid list index: %s', VarPrinter::toString($index))
         );
 

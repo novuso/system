@@ -8,7 +8,7 @@ use Novuso\System\Collection\Iterator\GeneratorIterator;
 use Novuso\System\Collection\Traits\KeyValueTypeMethods;
 use Novuso\System\Exception\KeyException;
 use Novuso\System\Utility\Hasher;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use Novuso\System\Utility\VarPrinter;
 use Traversable;
 
@@ -98,11 +98,11 @@ class HashTable implements SymbolTable
     public function set($key, $value)
     {
         assert(
-            Test::isType($key, $this->keyType()),
+            Validate::isType($key, $this->keyType()),
             $this->keyTypeError('set', $key)
         );
         assert(
-            Test::isType($value, $this->valueType()),
+            Validate::isType($value, $this->valueType()),
             $this->valueTypeError('set', $value)
         );
 

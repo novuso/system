@@ -7,7 +7,7 @@ use Novuso\System\Collection\Api\Queue;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Type\Arrayable;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use Traversable;
 
 /**
@@ -117,7 +117,7 @@ class ArrayQueue implements Arrayable, Queue
     public function enqueue($item)
     {
         assert(
-            Test::isType($item, $this->itemType()),
+            Validate::isType($item, $this->itemType()),
             $this->itemTypeError('enqueue', $item)
         );
 

@@ -5,7 +5,7 @@ namespace Novuso\Test\System\Resources;
 use Novuso\System\Exception\DomainException;
 use Novuso\System\Serialization\Serializable;
 use Novuso\System\Type\Comparable;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 
 class User implements Comparable, Serializable
 {
@@ -85,7 +85,7 @@ class User implements Comparable, Serializable
         }
 
         assert(
-            Test::areSameType($this, $object),
+            Validate::areSameType($this, $object),
             sprintf('Comparison requires instance of %s', static::class)
         );
 

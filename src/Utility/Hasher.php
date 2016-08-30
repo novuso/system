@@ -25,7 +25,7 @@ class Hasher
 
         switch ($type) {
             case 'object':
-                if (Test::isEquatable($value)) {
+                if (Validate::isEquatable($value)) {
                     $string = sprintf('e_%s', $value->hashValue());
                 } else {
                     $string = sprintf('o_%s', spl_object_hash($value));

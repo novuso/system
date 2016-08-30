@@ -4,7 +4,7 @@ namespace Novuso\System\Collection\Chain;
 
 use Countable;
 use Novuso\System\Exception\KeyException;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use Novuso\System\Utility\VarPrinter;
 
 /**
@@ -310,7 +310,7 @@ class TableBucketChain implements Countable
         for ($this->rewind(); $this->valid(); $this->next()) {
             /** @var KeyValueBucket $current */
             $current = $this->current;
-            if (Test::areEqual($key, $current->key())) {
+            if (Validate::areEqual($key, $current->key())) {
                 return $current;
             }
         }

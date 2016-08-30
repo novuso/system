@@ -3,7 +3,7 @@
 namespace Novuso\System\Collection\Chain;
 
 use Countable;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 
 /**
  * SetBucketChain is list of item buckets supporting set operations
@@ -281,7 +281,7 @@ class SetBucketChain implements Countable
         for ($this->rewind(); $this->valid(); $this->next()) {
             /** @var ItemBucket $current */
             $current = $this->current;
-            if (Test::areEqual($item, $current->item())) {
+            if (Validate::areEqual($item, $current->item())) {
                 return $current;
             }
         }

@@ -4,7 +4,7 @@ namespace Novuso\System\Type;
 
 use JsonSerializable;
 use Novuso\System\Utility\ClassName;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use Serializable;
 
 /**
@@ -120,7 +120,7 @@ class Type implements Equatable, JsonSerializable, Serializable
             return true;
         }
 
-        if (!Test::areSameType($this, $object)) {
+        if (!Validate::areSameType($this, $object)) {
             return false;
         }
 
