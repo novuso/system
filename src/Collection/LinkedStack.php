@@ -7,7 +7,7 @@ use Novuso\System\Collection\Api\Stack;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Type\Arrayable;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use SplDoublyLinkedList;
 use Traversable;
 
@@ -88,7 +88,7 @@ class LinkedStack implements Arrayable, Stack
     public function push($item)
     {
         assert(
-            Test::isType($item, $this->itemType()),
+            Validate::isType($item, $this->itemType()),
             $this->itemTypeError('push', $item)
         );
 

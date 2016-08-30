@@ -6,7 +6,7 @@ use JsonSerializable;
 use Novuso\System\Exception\TypeException;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Type\Equatable;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use Serializable;
 
 class StringObject implements Comparable, Equatable, JsonSerializable, Serializable
@@ -61,7 +61,7 @@ class StringObject implements Comparable, Equatable, JsonSerializable, Serializa
         }
 
         assert(
-            Test::areSameType($this, $object),
+            Validate::areSameType($this, $object),
             sprintf('Comparison requires instance of %s', static::class)
         );
 
@@ -83,7 +83,7 @@ class StringObject implements Comparable, Equatable, JsonSerializable, Serializa
             return true;
         }
 
-        if (!Test::areSameType($this, $object)) {
+        if (!Validate::areSameType($this, $object)) {
             return false;
         }
 

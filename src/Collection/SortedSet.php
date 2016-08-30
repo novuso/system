@@ -12,7 +12,7 @@ use Novuso\System\Collection\Tree\RedBlackSearchTree;
 use Novuso\System\Type\Arrayable;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Type\Comparator;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use Traversable;
 
 /**
@@ -93,7 +93,7 @@ class SortedSet implements Arrayable, OrderedSet
     public static function comparable(string $itemType = null): SortedSet
     {
         assert(
-            Test::isNull($itemType) || Test::implementsInterface($itemType, Comparable::class),
+            Validate::isNull($itemType) || Validate::implementsInterface($itemType, Comparable::class),
             sprintf('%s expects $itemType to implement %s', __METHOD__, Comparable::class)
         );
 
@@ -152,7 +152,7 @@ class SortedSet implements Arrayable, OrderedSet
     public function add($item)
     {
         assert(
-            Test::isType($item, $this->itemType()),
+            Validate::isType($item, $this->itemType()),
             $this->itemTypeError('add', $item)
         );
 

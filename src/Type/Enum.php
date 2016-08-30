@@ -5,7 +5,7 @@ namespace Novuso\System\Type;
 use JsonSerializable;
 use Novuso\System\Exception\DomainException;
 use Novuso\System\Utility\ClassName;
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use Novuso\System\Utility\VarPrinter;
 use ReflectionClass;
 use Serializable;
@@ -272,7 +272,7 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
         }
 
         assert(
-            Test::areSameType($this, $object),
+            Validate::areSameType($this, $object),
             sprintf('Comparison requires instance of %s', static::class)
         );
 
@@ -288,7 +288,7 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
             return true;
         }
 
-        if (!Test::areSameType($this, $object)) {
+        if (!Validate::areSameType($this, $object)) {
             return false;
         }
 

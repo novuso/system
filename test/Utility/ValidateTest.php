@@ -2,13 +2,14 @@
 
 namespace Novuso\Test\System\Utility;
 
-use Novuso\System\Utility\Test;
+use Novuso\System\Utility\Validate;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
+ * @covers Novuso\System\Utility\Validate
  * @covers Novuso\System\Utility\Test
  */
-class TestTest extends UnitTestCase
+class ValidateTest extends UnitTestCase
 {
     use TestDataProvider;
 
@@ -17,7 +18,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_scalar_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isScalar($value));
+        $this->assertTrue(Validate::isScalar($value));
     }
 
     /**
@@ -25,7 +26,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_scalar_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isScalar($value));
+        $this->assertFalse(Validate::isScalar($value));
     }
 
     /**
@@ -33,7 +34,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_bool_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isBool($value));
+        $this->assertTrue(Validate::isBool($value));
     }
 
     /**
@@ -41,7 +42,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_bool_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isBool($value));
+        $this->assertFalse(Validate::isBool($value));
     }
 
     /**
@@ -49,7 +50,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_float_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isFloat($value));
+        $this->assertTrue(Validate::isFloat($value));
     }
 
     /**
@@ -57,7 +58,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_float_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isFloat($value));
+        $this->assertFalse(Validate::isFloat($value));
     }
 
     /**
@@ -65,7 +66,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_int_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isInt($value));
+        $this->assertTrue(Validate::isInt($value));
     }
 
     /**
@@ -73,7 +74,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_int_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isInt($value));
+        $this->assertFalse(Validate::isInt($value));
     }
 
     /**
@@ -81,7 +82,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_string_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isString($value));
+        $this->assertTrue(Validate::isString($value));
     }
 
     /**
@@ -89,7 +90,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_string_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isString($value));
+        $this->assertFalse(Validate::isString($value));
     }
 
     /**
@@ -97,7 +98,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_array_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isArray($value));
+        $this->assertTrue(Validate::isArray($value));
     }
 
     /**
@@ -105,7 +106,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_array_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isArray($value));
+        $this->assertFalse(Validate::isArray($value));
     }
 
     /**
@@ -113,7 +114,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_object_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isObject($value));
+        $this->assertTrue(Validate::isObject($value));
     }
 
     /**
@@ -121,7 +122,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_object_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isObject($value));
+        $this->assertFalse(Validate::isObject($value));
     }
 
     /**
@@ -129,7 +130,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_callable_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isCallable($value));
+        $this->assertTrue(Validate::isCallable($value));
     }
 
     /**
@@ -137,7 +138,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_callable_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isCallable($value));
+        $this->assertFalse(Validate::isCallable($value));
     }
 
     /**
@@ -145,7 +146,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_null_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isNull($value));
+        $this->assertTrue(Validate::isNull($value));
     }
 
     /**
@@ -153,7 +154,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_null_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isNull($value));
+        $this->assertFalse(Validate::isNull($value));
     }
 
     /**
@@ -161,7 +162,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_not_null_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isNotNull($value));
+        $this->assertTrue(Validate::isNotNull($value));
     }
 
     /**
@@ -169,7 +170,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_not_null_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isNotNull($value));
+        $this->assertFalse(Validate::isNotNull($value));
     }
 
     /**
@@ -177,7 +178,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_true_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isTrue($value));
+        $this->assertTrue(Validate::isTrue($value));
     }
 
     /**
@@ -185,7 +186,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_true_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isTrue($value));
+        $this->assertFalse(Validate::isTrue($value));
     }
 
     /**
@@ -193,7 +194,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_false_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isFalse($value));
+        $this->assertTrue(Validate::isFalse($value));
     }
 
     /**
@@ -201,7 +202,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_false_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isFalse($value));
+        $this->assertFalse(Validate::isFalse($value));
     }
 
     /**
@@ -209,7 +210,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_empty_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isEmpty($value));
+        $this->assertTrue(Validate::isEmpty($value));
     }
 
     /**
@@ -217,7 +218,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_empty_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isEmpty($value));
+        $this->assertFalse(Validate::isEmpty($value));
     }
 
     /**
@@ -225,7 +226,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_not_empty_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isNotEmpty($value));
+        $this->assertTrue(Validate::isNotEmpty($value));
     }
 
     /**
@@ -233,7 +234,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_not_empty_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isNotEmpty($value));
+        $this->assertFalse(Validate::isNotEmpty($value));
     }
 
     /**
@@ -241,7 +242,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_blank_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isBlank($value));
+        $this->assertTrue(Validate::isBlank($value));
     }
 
     /**
@@ -249,7 +250,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_blank_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isBlank($value));
+        $this->assertFalse(Validate::isBlank($value));
     }
 
     /**
@@ -257,7 +258,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_not_blank_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isNotBlank($value));
+        $this->assertTrue(Validate::isNotBlank($value));
     }
 
     /**
@@ -265,7 +266,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_not_blank_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isNotBlank($value));
+        $this->assertFalse(Validate::isNotBlank($value));
     }
 
     /**
@@ -273,7 +274,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_alpha_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isAlpha($value));
+        $this->assertTrue(Validate::isAlpha($value));
     }
 
     /**
@@ -281,7 +282,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_alpha_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isAlpha($value));
+        $this->assertFalse(Validate::isAlpha($value));
     }
 
     /**
@@ -289,7 +290,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_alnum_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isAlnum($value));
+        $this->assertTrue(Validate::isAlnum($value));
     }
 
     /**
@@ -297,7 +298,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_alnum_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isAlnum($value));
+        $this->assertFalse(Validate::isAlnum($value));
     }
 
     /**
@@ -305,7 +306,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_alpha_dash_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isAlphaDash($value));
+        $this->assertTrue(Validate::isAlphaDash($value));
     }
 
     /**
@@ -313,7 +314,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_alpha_dash_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isAlphaDash($value));
+        $this->assertFalse(Validate::isAlphaDash($value));
     }
 
     /**
@@ -321,7 +322,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_alnum_dash_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isAlnumDash($value));
+        $this->assertTrue(Validate::isAlnumDash($value));
     }
 
     /**
@@ -329,7 +330,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_alnum_dash_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isAlnumDash($value));
+        $this->assertFalse(Validate::isAlnumDash($value));
     }
 
     /**
@@ -337,7 +338,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_digits_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isDigits($value));
+        $this->assertTrue(Validate::isDigits($value));
     }
 
     /**
@@ -345,7 +346,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_digits_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isDigits($value));
+        $this->assertFalse(Validate::isDigits($value));
     }
 
     /**
@@ -353,7 +354,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_numeric_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isNumeric($value));
+        $this->assertTrue(Validate::isNumeric($value));
     }
 
     /**
@@ -361,7 +362,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_numeric_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isNumeric($value));
+        $this->assertFalse(Validate::isNumeric($value));
     }
 
     /**
@@ -369,7 +370,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_email_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isEmail($value));
+        $this->assertTrue(Validate::isEmail($value));
     }
 
     /**
@@ -377,7 +378,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_email_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isEmail($value));
+        $this->assertFalse(Validate::isEmail($value));
     }
 
     /**
@@ -385,7 +386,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_ip_address_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isIpAddress($value));
+        $this->assertTrue(Validate::isIpAddress($value));
     }
 
     /**
@@ -393,7 +394,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_ip_address_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isIpAddress($value));
+        $this->assertFalse(Validate::isIpAddress($value));
     }
 
     /**
@@ -401,7 +402,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_ip_v4_address_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isIpV4Address($value));
+        $this->assertTrue(Validate::isIpV4Address($value));
     }
 
     /**
@@ -409,7 +410,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_ip_v4_address_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isIpV4Address($value));
+        $this->assertFalse(Validate::isIpV4Address($value));
     }
 
     /**
@@ -417,7 +418,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_ip_v6_address_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isIpV6Address($value));
+        $this->assertTrue(Validate::isIpV6Address($value));
     }
 
     /**
@@ -425,7 +426,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_ip_v6_address_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isIpV6Address($value));
+        $this->assertFalse(Validate::isIpV6Address($value));
     }
 
     /**
@@ -433,7 +434,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_uri_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isUri($value));
+        $this->assertTrue(Validate::isUri($value));
     }
 
     /**
@@ -441,7 +442,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_uri_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isUri($value));
+        $this->assertFalse(Validate::isUri($value));
     }
 
     /**
@@ -449,7 +450,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_urn_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isUrn($value));
+        $this->assertTrue(Validate::isUrn($value));
     }
 
     /**
@@ -457,7 +458,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_urn_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isUrn($value));
+        $this->assertFalse(Validate::isUrn($value));
     }
 
     /**
@@ -465,7 +466,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_uuid_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isUuid($value));
+        $this->assertTrue(Validate::isUuid($value));
     }
 
     /**
@@ -473,7 +474,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_uuid_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isUuid($value));
+        $this->assertFalse(Validate::isUuid($value));
     }
 
     /**
@@ -481,7 +482,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_timezone_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isTimezone($value));
+        $this->assertTrue(Validate::isTimezone($value));
     }
 
     /**
@@ -489,7 +490,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_timezone_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isTimezone($value));
+        $this->assertFalse(Validate::isTimezone($value));
     }
 
     /**
@@ -497,7 +498,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_json_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isJson($value));
+        $this->assertTrue(Validate::isJson($value));
     }
 
     /**
@@ -505,7 +506,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_json_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isJson($value));
+        $this->assertFalse(Validate::isJson($value));
     }
 
     /**
@@ -513,7 +514,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_match_returns_true_for_valid_value($value, $pattern)
     {
-        $this->assertTrue(Test::isMatch($value, $pattern));
+        $this->assertTrue(Validate::isMatch($value, $pattern));
     }
 
     /**
@@ -521,7 +522,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_match_returns_false_for_invalid_value($value, $pattern)
     {
-        $this->assertFalse(Test::isMatch($value, $pattern));
+        $this->assertFalse(Validate::isMatch($value, $pattern));
     }
 
     /**
@@ -529,7 +530,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_contains_returns_true_for_valid_value($value, $search)
     {
-        $this->assertTrue(Test::contains($value, $search));
+        $this->assertTrue(Validate::contains($value, $search));
     }
 
     /**
@@ -537,7 +538,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_contains_returns_false_for_invalid_value($value, $search)
     {
-        $this->assertFalse(Test::contains($value, $search));
+        $this->assertFalse(Validate::contains($value, $search));
     }
 
     /**
@@ -545,7 +546,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_starts_with_returns_true_for_valid_value($value, $search)
     {
-        $this->assertTrue(Test::startsWith($value, $search));
+        $this->assertTrue(Validate::startsWith($value, $search));
     }
 
     /**
@@ -553,7 +554,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_starts_with_returns_false_for_invalid_value($value, $search)
     {
-        $this->assertFalse(Test::startsWith($value, $search));
+        $this->assertFalse(Validate::startsWith($value, $search));
     }
 
     /**
@@ -561,7 +562,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_ends_with_returns_true_for_valid_value($value, $search)
     {
-        $this->assertTrue(Test::endsWith($value, $search));
+        $this->assertTrue(Validate::endsWith($value, $search));
     }
 
     /**
@@ -569,7 +570,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_ends_with_returns_false_for_invalid_value($value, $search)
     {
-        $this->assertFalse(Test::endsWith($value, $search));
+        $this->assertFalse(Validate::endsWith($value, $search));
     }
 
     /**
@@ -577,7 +578,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_exact_length_returns_true_for_valid_value($value, $length)
     {
-        $this->assertTrue(Test::exactLength($value, $length));
+        $this->assertTrue(Validate::exactLength($value, $length));
     }
 
     /**
@@ -585,7 +586,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_exact_length_returns_false_for_invalid_value($value, $length)
     {
-        $this->assertFalse(Test::exactLength($value, $length));
+        $this->assertFalse(Validate::exactLength($value, $length));
     }
 
     /**
@@ -593,7 +594,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_min_length_returns_true_for_valid_value($value, $minLength)
     {
-        $this->assertTrue(Test::minLength($value, $minLength));
+        $this->assertTrue(Validate::minLength($value, $minLength));
     }
 
     /**
@@ -601,7 +602,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_min_length_returns_false_for_invalid_value($value, $minLength)
     {
-        $this->assertFalse(Test::minLength($value, $minLength));
+        $this->assertFalse(Validate::minLength($value, $minLength));
     }
 
     /**
@@ -609,7 +610,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_max_length_returns_true_for_valid_value($value, $maxLength)
     {
-        $this->assertTrue(Test::maxLength($value, $maxLength));
+        $this->assertTrue(Validate::maxLength($value, $maxLength));
     }
 
     /**
@@ -617,7 +618,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_max_length_returns_false_for_invalid_value($value, $maxLength)
     {
-        $this->assertFalse(Test::maxLength($value, $maxLength));
+        $this->assertFalse(Validate::maxLength($value, $maxLength));
     }
 
     /**
@@ -625,7 +626,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_range_length_returns_true_for_valid_value($value, $minLength, $maxLength)
     {
-        $this->assertTrue(Test::rangeLength($value, $minLength, $maxLength));
+        $this->assertTrue(Validate::rangeLength($value, $minLength, $maxLength));
     }
 
     /**
@@ -633,7 +634,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_range_length_returns_false_for_invalid_value($value, $minLength, $maxLength)
     {
-        $this->assertFalse(Test::rangeLength($value, $minLength, $maxLength));
+        $this->assertFalse(Validate::rangeLength($value, $minLength, $maxLength));
     }
 
     /**
@@ -641,7 +642,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_exact_number_returns_true_for_valid_value($value, $number)
     {
-        $this->assertTrue(Test::exactNumber($value, $number));
+        $this->assertTrue(Validate::exactNumber($value, $number));
     }
 
     /**
@@ -649,7 +650,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_exact_number_returns_false_for_invalid_value($value, $number)
     {
-        $this->assertFalse(Test::exactNumber($value, $number));
+        $this->assertFalse(Validate::exactNumber($value, $number));
     }
 
     /**
@@ -657,7 +658,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_min_number_returns_true_for_valid_value($value, $minNumber)
     {
-        $this->assertTrue(Test::minNumber($value, $minNumber));
+        $this->assertTrue(Validate::minNumber($value, $minNumber));
     }
 
     /**
@@ -665,7 +666,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_min_number_returns_false_for_invalid_value($value, $minNumber)
     {
-        $this->assertFalse(Test::minNumber($value, $minNumber));
+        $this->assertFalse(Validate::minNumber($value, $minNumber));
     }
 
     /**
@@ -673,7 +674,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_max_number_returns_true_for_valid_value($value, $maxNumber)
     {
-        $this->assertTrue(Test::maxNumber($value, $maxNumber));
+        $this->assertTrue(Validate::maxNumber($value, $maxNumber));
     }
 
     /**
@@ -681,7 +682,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_max_number_returns_false_for_invalid_value($value, $maxNumber)
     {
-        $this->assertFalse(Test::maxNumber($value, $maxNumber));
+        $this->assertFalse(Validate::maxNumber($value, $maxNumber));
     }
 
     /**
@@ -689,7 +690,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_range_number_returns_true_for_valid_value($value, $minNumber, $maxNumber)
     {
-        $this->assertTrue(Test::rangeNumber($value, $minNumber, $maxNumber));
+        $this->assertTrue(Validate::rangeNumber($value, $minNumber, $maxNumber));
     }
 
     /**
@@ -697,7 +698,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_range_number_returns_false_for_invalid_value($value, $minNumber, $maxNumber)
     {
-        $this->assertFalse(Test::rangeNumber($value, $minNumber, $maxNumber));
+        $this->assertFalse(Validate::rangeNumber($value, $minNumber, $maxNumber));
     }
 
     /**
@@ -705,7 +706,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_whole_number_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::wholeNumber($value));
+        $this->assertTrue(Validate::wholeNumber($value));
     }
 
     /**
@@ -713,7 +714,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_whole_number_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::wholeNumber($value));
+        $this->assertFalse(Validate::wholeNumber($value));
     }
 
     /**
@@ -721,7 +722,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_natural_number_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::naturalNumber($value));
+        $this->assertTrue(Validate::naturalNumber($value));
     }
 
     /**
@@ -729,7 +730,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_natural_number_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::naturalNumber($value));
+        $this->assertFalse(Validate::naturalNumber($value));
     }
 
     /**
@@ -737,7 +738,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_int_value_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::intValue($value));
+        $this->assertTrue(Validate::intValue($value));
     }
 
     /**
@@ -745,7 +746,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_int_value_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::intValue($value));
+        $this->assertFalse(Validate::intValue($value));
     }
 
     /**
@@ -753,7 +754,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_exact_count_returns_true_for_valid_value($value, $count)
     {
-        $this->assertTrue(Test::exactCount($value, $count));
+        $this->assertTrue(Validate::exactCount($value, $count));
     }
 
     /**
@@ -761,7 +762,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_exact_count_returns_false_for_invalid_value($value, $count)
     {
-        $this->assertFalse(Test::exactCount($value, $count));
+        $this->assertFalse(Validate::exactCount($value, $count));
     }
 
     /**
@@ -769,7 +770,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_min_count_returns_true_for_valid_value($value, $minCount)
     {
-        $this->assertTrue(Test::minCount($value, $minCount));
+        $this->assertTrue(Validate::minCount($value, $minCount));
     }
 
     /**
@@ -777,7 +778,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_min_count_returns_false_for_invalid_value($value, $minCount)
     {
-        $this->assertFalse(Test::minCount($value, $minCount));
+        $this->assertFalse(Validate::minCount($value, $minCount));
     }
 
     /**
@@ -785,7 +786,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_max_count_returns_true_for_valid_value($value, $maxCount)
     {
-        $this->assertTrue(Test::maxCount($value, $maxCount));
+        $this->assertTrue(Validate::maxCount($value, $maxCount));
     }
 
     /**
@@ -793,7 +794,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_max_count_returns_false_for_invalid_value($value, $maxCount)
     {
-        $this->assertFalse(Test::maxCount($value, $maxCount));
+        $this->assertFalse(Validate::maxCount($value, $maxCount));
     }
 
     /**
@@ -801,7 +802,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_range_count_returns_true_for_valid_value($value, $minCount, $maxCount)
     {
-        $this->assertTrue(Test::rangeCount($value, $minCount, $maxCount));
+        $this->assertTrue(Validate::rangeCount($value, $minCount, $maxCount));
     }
 
     /**
@@ -809,7 +810,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_range_count_returns_false_for_invalid_value($value, $minCount, $maxCount)
     {
-        $this->assertFalse(Test::rangeCount($value, $minCount, $maxCount));
+        $this->assertFalse(Validate::rangeCount($value, $minCount, $maxCount));
     }
 
     /**
@@ -817,7 +818,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_one_of_returns_true_for_valid_value($value, $choices)
     {
-        $this->assertTrue(Test::isOneOf($value, $choices));
+        $this->assertTrue(Validate::isOneOf($value, $choices));
     }
 
     /**
@@ -825,7 +826,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_one_of_returns_false_for_invalid_value($value, $choices)
     {
-        $this->assertFalse(Test::isOneOf($value, $choices));
+        $this->assertFalse(Validate::isOneOf($value, $choices));
     }
 
     /**
@@ -833,7 +834,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_key_isset_returns_true_for_valid_value($value, $key)
     {
-        $this->assertTrue(Test::keyIsset($value, $key));
+        $this->assertTrue(Validate::keyIsset($value, $key));
     }
 
     /**
@@ -841,7 +842,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_key_isset_returns_false_for_invalid_value($value, $key)
     {
-        $this->assertFalse(Test::keyIsset($value, $key));
+        $this->assertFalse(Validate::keyIsset($value, $key));
     }
 
     /**
@@ -849,7 +850,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_key_not_empty_returns_true_for_valid_value($value, $key)
     {
-        $this->assertTrue(Test::keyNotEmpty($value, $key));
+        $this->assertTrue(Validate::keyNotEmpty($value, $key));
     }
 
     /**
@@ -857,7 +858,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_key_not_empty_returns_false_for_invalid_value($value, $key)
     {
-        $this->assertFalse(Test::keyNotEmpty($value, $key));
+        $this->assertFalse(Validate::keyNotEmpty($value, $key));
     }
 
     /**
@@ -865,7 +866,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_are_equal_returns_true_for_valid_value($value1, $value2)
     {
-        $this->assertTrue(Test::areEqual($value1, $value2));
+        $this->assertTrue(Validate::areEqual($value1, $value2));
     }
 
     /**
@@ -873,7 +874,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_are_equal_returns_false_for_invalid_value($value1, $value2)
     {
-        $this->assertFalse(Test::areEqual($value1, $value2));
+        $this->assertFalse(Validate::areEqual($value1, $value2));
     }
 
     /**
@@ -881,7 +882,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_are_not_equal_returns_true_for_valid_value($value1, $value2)
     {
-        $this->assertTrue(Test::areNotEqual($value1, $value2));
+        $this->assertTrue(Validate::areNotEqual($value1, $value2));
     }
 
     /**
@@ -889,7 +890,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_are_not_equal_returns_false_for_invalid_value($value1, $value2)
     {
-        $this->assertFalse(Test::areNotEqual($value1, $value2));
+        $this->assertFalse(Validate::areNotEqual($value1, $value2));
     }
 
     /**
@@ -897,7 +898,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_are_same_returns_true_for_valid_value($value1, $value2)
     {
-        $this->assertTrue(Test::areSame($value1, $value2));
+        $this->assertTrue(Validate::areSame($value1, $value2));
     }
 
     /**
@@ -905,7 +906,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_are_same_returns_false_for_invalid_value($value1, $value2)
     {
-        $this->assertFalse(Test::areSame($value1, $value2));
+        $this->assertFalse(Validate::areSame($value1, $value2));
     }
 
     /**
@@ -913,7 +914,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_are_not_same_returns_true_for_valid_value($value1, $value2)
     {
-        $this->assertTrue(Test::areNotSame($value1, $value2));
+        $this->assertTrue(Validate::areNotSame($value1, $value2));
     }
 
     /**
@@ -921,7 +922,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_are_not_same_returns_false_for_invalid_value($value1, $value2)
     {
-        $this->assertFalse(Test::areNotSame($value1, $value2));
+        $this->assertFalse(Validate::areNotSame($value1, $value2));
     }
 
     /**
@@ -929,7 +930,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_are_same_type_returns_true_for_valid_value($value1, $value2)
     {
-        $this->assertTrue(Test::areSameType($value1, $value2));
+        $this->assertTrue(Validate::areSameType($value1, $value2));
     }
 
     /**
@@ -937,7 +938,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_are_same_type_returns_false_for_invalid_value($value1, $value2)
     {
-        $this->assertFalse(Test::areSameType($value1, $value2));
+        $this->assertFalse(Validate::areSameType($value1, $value2));
     }
 
     /**
@@ -945,7 +946,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_type_returns_true_for_valid_value($value, $type)
     {
-        $this->assertTrue(Test::isType($value, $type));
+        $this->assertTrue(Validate::isType($value, $type));
     }
 
     /**
@@ -953,7 +954,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_type_returns_false_for_invalid_value($value, $type)
     {
-        $this->assertFalse(Test::isType($value, $type));
+        $this->assertFalse(Validate::isType($value, $type));
     }
 
     /**
@@ -961,7 +962,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_list_of_returns_true_for_valid_value($value, $type)
     {
-        $this->assertTrue(Test::isListOf($value, $type));
+        $this->assertTrue(Validate::isListOf($value, $type));
     }
 
     /**
@@ -969,7 +970,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_list_of_returns_false_for_invalid_value($value, $type)
     {
-        $this->assertFalse(Test::isListOf($value, $type));
+        $this->assertFalse(Validate::isListOf($value, $type));
     }
 
     /**
@@ -977,7 +978,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_json_encodable_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isJsonEncodable($value));
+        $this->assertTrue(Validate::isJsonEncodable($value));
     }
 
     /**
@@ -985,7 +986,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_json_encodable_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isJsonEncodable($value));
+        $this->assertFalse(Validate::isJsonEncodable($value));
     }
 
     /**
@@ -993,7 +994,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_serializable_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isSerializable($value));
+        $this->assertTrue(Validate::isSerializable($value));
     }
 
     /**
@@ -1001,7 +1002,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_serializable_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isSerializable($value));
+        $this->assertFalse(Validate::isSerializable($value));
     }
 
     /**
@@ -1009,7 +1010,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_traversable_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isTraversable($value));
+        $this->assertTrue(Validate::isTraversable($value));
     }
 
     /**
@@ -1017,7 +1018,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_traversable_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isTraversable($value));
+        $this->assertFalse(Validate::isTraversable($value));
     }
 
     /**
@@ -1025,7 +1026,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_countable_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isCountable($value));
+        $this->assertTrue(Validate::isCountable($value));
     }
 
     /**
@@ -1033,7 +1034,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_countable_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isCountable($value));
+        $this->assertFalse(Validate::isCountable($value));
     }
 
     /**
@@ -1041,7 +1042,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_array_accessible_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isArrayAccessible($value));
+        $this->assertTrue(Validate::isArrayAccessible($value));
     }
 
     /**
@@ -1049,7 +1050,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_array_accessible_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isArrayAccessible($value));
+        $this->assertFalse(Validate::isArrayAccessible($value));
     }
 
     /**
@@ -1057,7 +1058,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_comparable_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isComparable($value));
+        $this->assertTrue(Validate::isComparable($value));
     }
 
     /**
@@ -1065,7 +1066,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_comparable_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isComparable($value));
+        $this->assertFalse(Validate::isComparable($value));
     }
 
     /**
@@ -1073,7 +1074,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_equatable_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::isEquatable($value));
+        $this->assertTrue(Validate::isEquatable($value));
     }
 
     /**
@@ -1081,7 +1082,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_equatable_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::isEquatable($value));
+        $this->assertFalse(Validate::isEquatable($value));
     }
 
     /**
@@ -1089,7 +1090,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_implements_interface_returns_true_for_valid_value($value, $interface)
     {
-        $this->assertTrue(Test::implementsInterface($value, $interface));
+        $this->assertTrue(Validate::implementsInterface($value, $interface));
     }
 
     /**
@@ -1097,7 +1098,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_implements_interface_returns_false_for_invalid_value($value, $interface)
     {
-        $this->assertFalse(Test::implementsInterface($value, $interface));
+        $this->assertFalse(Validate::implementsInterface($value, $interface));
     }
 
     /**
@@ -1105,7 +1106,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_instance_of_returns_true_for_valid_value($value, $className)
     {
-        $this->assertTrue(Test::isInstanceOf($value, $className));
+        $this->assertTrue(Validate::isInstanceOf($value, $className));
     }
 
     /**
@@ -1113,7 +1114,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_instance_of_returns_false_for_invalid_value($value, $className)
     {
-        $this->assertFalse(Test::isInstanceOf($value, $className));
+        $this->assertFalse(Validate::isInstanceOf($value, $className));
     }
 
     /**
@@ -1121,7 +1122,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_subclass_of_returns_true_for_valid_value($value, $className)
     {
-        $this->assertTrue(Test::isSubclassOf($value, $className));
+        $this->assertTrue(Validate::isSubclassOf($value, $className));
     }
 
     /**
@@ -1129,7 +1130,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_is_subclass_of_returns_false_for_invalid_value($value, $className)
     {
-        $this->assertFalse(Test::isSubclassOf($value, $className));
+        $this->assertFalse(Validate::isSubclassOf($value, $className));
     }
 
     /**
@@ -1137,7 +1138,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_class_exists_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::classExists($value));
+        $this->assertTrue(Validate::classExists($value));
     }
 
     /**
@@ -1145,7 +1146,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_class_exists_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::classExists($value));
+        $this->assertFalse(Validate::classExists($value));
     }
 
     /**
@@ -1153,7 +1154,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_interface_exists_returns_true_for_valid_value($value)
     {
-        $this->assertTrue(Test::interfaceExists($value));
+        $this->assertTrue(Validate::interfaceExists($value));
     }
 
     /**
@@ -1161,7 +1162,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_interface_exists_returns_false_for_invalid_value($value)
     {
-        $this->assertFalse(Test::interfaceExists($value));
+        $this->assertFalse(Validate::interfaceExists($value));
     }
 
     /**
@@ -1169,7 +1170,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_method_exists_returns_true_for_valid_value($value, $object)
     {
-        $this->assertTrue(Test::methodExists($value, $object));
+        $this->assertTrue(Validate::methodExists($value, $object));
     }
 
     /**
@@ -1177,7 +1178,7 @@ class TestTest extends UnitTestCase
      */
     public function test_that_method_exists_returns_false_for_invalid_value($value, $object)
     {
-        $this->assertFalse(Test::methodExists($value, $object));
+        $this->assertFalse(Validate::methodExists($value, $object));
     }
 
     /**
@@ -1186,7 +1187,7 @@ class TestTest extends UnitTestCase
     public function test_that_is_path_returns_true_for_valid_value($value)
     {
         $this->createFilesystem();
-        $this->assertTrue(Test::isPath($value));
+        $this->assertTrue(Validate::isPath($value));
     }
 
     /**
@@ -1195,7 +1196,7 @@ class TestTest extends UnitTestCase
     public function test_that_is_path_returns_false_for_invalid_value($value)
     {
         $this->createFilesystem();
-        $this->assertFalse(Test::isPath($value));
+        $this->assertFalse(Validate::isPath($value));
     }
 
     /**
@@ -1204,7 +1205,7 @@ class TestTest extends UnitTestCase
     public function test_that_is_file_returns_true_for_valid_value($value)
     {
         $this->createFilesystem();
-        $this->assertTrue(Test::isFile($value));
+        $this->assertTrue(Validate::isFile($value));
     }
 
     /**
@@ -1213,7 +1214,7 @@ class TestTest extends UnitTestCase
     public function test_that_is_file_returns_false_for_invalid_value($value)
     {
         $this->createFilesystem();
-        $this->assertFalse(Test::isFile($value));
+        $this->assertFalse(Validate::isFile($value));
     }
 
     /**
@@ -1222,7 +1223,7 @@ class TestTest extends UnitTestCase
     public function test_that_is_dir_returns_true_for_valid_value($value)
     {
         $this->createFilesystem();
-        $this->assertTrue(Test::isDir($value));
+        $this->assertTrue(Validate::isDir($value));
     }
 
     /**
@@ -1231,7 +1232,7 @@ class TestTest extends UnitTestCase
     public function test_that_is_dir_returns_false_for_invalid_value($value)
     {
         $this->createFilesystem();
-        $this->assertFalse(Test::isDir($value));
+        $this->assertFalse(Validate::isDir($value));
     }
 
     /**
@@ -1240,7 +1241,7 @@ class TestTest extends UnitTestCase
     public function test_that_is_readable_returns_true_for_valid_value($value)
     {
         $this->createFilesystem();
-        $this->assertTrue(Test::isReadable($value));
+        $this->assertTrue(Validate::isReadable($value));
     }
 
     /**
@@ -1249,7 +1250,7 @@ class TestTest extends UnitTestCase
     public function test_that_is_readable_returns_false_for_invalid_value($value)
     {
         $this->createFilesystem();
-        $this->assertFalse(Test::isReadable($value));
+        $this->assertFalse(Validate::isReadable($value));
     }
 
     /**
@@ -1258,7 +1259,7 @@ class TestTest extends UnitTestCase
     public function test_that_is_writable_returns_true_for_valid_value($value)
     {
         $this->createFilesystem();
-        $this->assertTrue(Test::isWritable($value));
+        $this->assertTrue(Validate::isWritable($value));
     }
 
     /**
@@ -1267,6 +1268,6 @@ class TestTest extends UnitTestCase
     public function test_that_is_writable_returns_false_for_invalid_value($value)
     {
         $this->createFilesystem();
-        $this->assertFalse(Test::isWritable($value));
+        $this->assertFalse(Validate::isWritable($value));
     }
 }
