@@ -7,7 +7,9 @@ use Novuso\System\Type\Comparator;
 /**
  * OrderedKeyCollection is the interface for ordered key/value collections
  *
- * @author John Nickell <jnickell@rategenius.com>
+ * @copyright Copyright (c) 2016, Novuso. <http://novuso.com>
+ * @license   http://opensource.org/licenses/MIT The MIT License
+ * @author    John Nickell <email@johnnickell.com>
  */
 interface OrderedKeyCollection extends Collection
 {
