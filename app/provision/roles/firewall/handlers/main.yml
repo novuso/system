@@ -1,6 +1,0 @@
----
-- name: "firewall restart"
-  become: yes
-  service:
-    name: "firewall"
-    state: restarted

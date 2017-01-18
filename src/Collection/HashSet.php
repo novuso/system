@@ -14,7 +14,7 @@ use Traversable;
 /**
  * HashSet is an implementation of the set type
  *
- * @copyright Copyright (c) 2016, Novuso. <http://novuso.com>
+ * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
@@ -320,13 +320,13 @@ class HashSet implements Arrayable, Set
      */
     public function getIterator(): Traversable
     {
-        return new GeneratorIterator(function (array $buckets) {
+        return call_user_func(function (array $buckets) {
             foreach ($buckets as $chain) {
                 for ($chain->rewind(); $chain->valid(); $chain->next()) {
                     yield $chain->current();
                 }
             }
-        }, [$this->buckets]);
+        }, $this->buckets);
     }
 
     /**

@@ -4,23 +4,11 @@ project_hostname = "system.dev"
 project_root = "/vagrant"
 
 # server settings
-server_box = "ubuntu/trusty64"
+server_box = "bento/ubuntu-16.04"
 server_ip = "192.168.50.20"
 server_cpus = "1"
 server_memory = "1024"
 server_swap = "2048"
-
-# windows test
-def which(cmd)
-    exts = ENV["PATHEXT"] ? ENV["PATHEXT"].split(";") : [""]
-    ENV["PATH"].split(File::PATH_SEPARATOR).each do |path|
-        exts.each { |ext|
-            exe = File.join(path, "#{cmd}#{ext}")
-            return exe if File.executable? exe
-        }
-    end
-    return nil
-end
 
 # vagrant config
 Vagrant.configure(2) do |config|
@@ -60,31 +48,19 @@ Vagrant.configure(2) do |config|
     end
 
     # provisioning
-    if which("ansible-playbook")
-        config.vm.provision :ansible do |ansible|
-            ansible.playbook = "app/provision/playbook.yml"
-            ansible.limit = "all"
-            ansible.groups = {
-                "application"          => ["default"],
-                "development:children" => ["application"]
-            }
-            ansible.extra_vars = {
-                project_name: project_name,
-                project_hostname: project_hostname,
-                project_root: project_root,
-                server_swap: server_swap
-            }
-        end
-    else
-        config.vm.provision :shell,
-            path: "app/provision/windows.sh",
-            args: [
-                project_name,
-                project_hostname,
-                project_root,
-                server_swap
-            ],
-            privileged: false
+    config.vm.provision :ansible do |ansible|
+        ansible.playbook = "app/provision/playbook.yml"
+        ansible.limit = "all"
+        ansible.groups = {
+            "application"          => ["default"],
+            "development:children" => ["application"]
+        }
+        ansible.extra_vars = {
+            project_name: project_name,
+            project_hostname: project_hostname,
+            project_root: project_root,
+            server_swap: server_swap
+        }
     end
 
 end

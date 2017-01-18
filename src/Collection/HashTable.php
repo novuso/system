@@ -15,7 +15,7 @@ use Traversable;
 /**
  * HashTable is an implementation of the symbol table type
  *
- * @copyright Copyright (c) 2016, Novuso. <http://novuso.com>
+ * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
@@ -200,13 +200,13 @@ class HashTable implements SymbolTable
      */
     public function keys(): Traversable
     {
-        return new GeneratorIterator(function (array $buckets) {
+        return call_user_func(function (array $buckets) {
             foreach ($buckets as $chain) {
                 for ($chain->rewind(); $chain->valid(); $chain->next()) {
                     yield $chain->key();
                 }
             }
-        }, [$this->buckets]);
+        }, $this->buckets);
     }
 
     /**
