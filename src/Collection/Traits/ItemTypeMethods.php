@@ -7,7 +7,7 @@ use Novuso\System\Utility\VarPrinter;
 /**
  * ItemTypeMethods provides type methods for item collections
  *
- * @copyright Copyright (c) 2016, Novuso. <http://novuso.com>
+ * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */

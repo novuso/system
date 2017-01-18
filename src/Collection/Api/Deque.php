@@ -7,7 +7,7 @@ use Novuso\System\Exception\UnderflowException;
 /**
  * Deque is the interface for the deque type
  *
- * @copyright Copyright (c) 2016, Novuso. <http://novuso.com>
+ * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
