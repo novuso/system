@@ -200,13 +200,13 @@ class HashTable implements SymbolTable
      */
     public function keys(): Traversable
     {
-        return new GeneratorIterator(function (array $buckets) {
+        return call_user_func(function (array $buckets) {
             foreach ($buckets as $chain) {
                 for ($chain->rewind(); $chain->valid(); $chain->next()) {
                     yield $chain->key();
                 }
             }
-        }, [$this->buckets]);
+        }, $this->buckets);
     }
 
     /**

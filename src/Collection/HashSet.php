@@ -320,13 +320,13 @@ class HashSet implements Arrayable, Set
      */
     public function getIterator(): Traversable
     {
-        return new GeneratorIterator(function (array $buckets) {
+        return call_user_func(function (array $buckets) {
             foreach ($buckets as $chain) {
                 for ($chain->rewind(); $chain->valid(); $chain->next()) {
                     yield $chain->current();
                 }
             }
-        }, [$this->buckets]);
+        }, $this->buckets);
     }
 
     /**
