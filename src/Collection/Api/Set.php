@@ -45,7 +45,7 @@ interface Set extends ItemCollection
      * the provided set, as well as items in the provided set that are not in
      * the current set.
      *
-     * A âˆ† B = {x : (x âˆˆ A) âŠ• (x âˆˆ B)}
+     * A ∆ B = {x : (x ∈ A) ⊕ (x ∈ B)}
      *
      * @param Set $other The other set
      *
@@ -59,7 +59,7 @@ interface Set extends ItemCollection
      * Creates a new set that contains items that are found in both the current
      * set and the provided set.
      *
-     * A âˆ© B = {x : x âˆˆ A âˆ§ x âˆˆ B}
+     * A ∩ B = {x : x ∈ A ∧ x ∈ B}
      *
      * @param Set $other The other set
      *
@@ -73,7 +73,7 @@ interface Set extends ItemCollection
      * Creates a new set that contains items in the provided set that are not
      * found in the current set.
      *
-     * B \ A = {x: x âˆˆ B âˆ§ x âˆ‰ A}
+     * B \ A = {x : x ∈ B ∧ x ∉ A}
      *
      * @param Set $other The other set
      *
@@ -87,7 +87,7 @@ interface Set extends ItemCollection
      * Creates a new set that contains items found in either the current set or
      * the provided set.
      *
-     * A âˆª B = {x : x âˆˆ A âˆ¨ x âˆˆ B}
+     * A ∪ B = {x : x ∈ A ∨ x ∈ B}
      *
      * @param Set $other The other set
      *
