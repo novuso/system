@@ -4,8 +4,7 @@
 #   state: present                               #default
 #   update_cache: yes                            #default
 #   validate_certs: yes                          #default
-php_ppa_repos:
-- repo: "ondrej/php"
+php_ppa_repos: []
 # php_packages
 # - name: "php7.0-curl"                          #required
 #   state: present                               #default
