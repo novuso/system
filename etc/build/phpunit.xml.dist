@@ -12,7 +12,7 @@
     stopOnError="false"
     stopOnFailure="false"
     verbose="false"
-    bootstrap="../autoload.php">
+    bootstrap="../../app/autoload.php">
     <testsuites>
         <testsuite name="complete">
             <directory>../../test</directory>

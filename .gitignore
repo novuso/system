@@ -1,5 +1,5 @@
 /.vagrant/
-/app/build/phpunit.xml
+/etc/build/phpunit.xml
 /composer.phar
 /composer.lock
 /vendor/

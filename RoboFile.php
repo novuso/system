@@ -290,7 +290,7 @@ class RoboFile extends Tasks
      */
     private function info($message)
     {
-        $this->say(sprintf('<%s>%s</>', 'fg=blue', $message));
+        $this->say(sprintf('<%s>%s</>', 'fg=green', $message));
     }
 
     /**
