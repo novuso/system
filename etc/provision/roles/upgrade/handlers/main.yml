@@ -1,15 +1,15 @@
 ---
 - name: "autoremove"
   become: yes
-  command: "apt-get -y autoremove"
+  command: "apt -y autoremove"
 
 - name: "autoclean"
   become: yes
-  command: "apt-get -y autoclean"
+  command: "apt -y autoclean"
 
 - name: "clean packages"
   become: yes
-  command: "apt-get -y clean"
+  command: "apt -y clean"
 
 - name: "update grub"
   become: yes

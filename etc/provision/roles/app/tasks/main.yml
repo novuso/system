@@ -1,3 +1,9 @@
 ---
 - include: "base.yml"
 - include: "gitconfig.yml"
+
+- name: "vagrant directory change"
+  lineinfile:
+    dest: "/home/{{ ansible_user_id }}/.bashrc"
+    line: "cd /vagrant"
+    state: present

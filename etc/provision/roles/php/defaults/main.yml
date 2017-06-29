@@ -4,32 +4,30 @@
 #   state: present                               #default
 #   update_cache: yes                            #default
 #   validate_certs: yes                          #default
-php_ppa_repos: []
+php_ppa_repos:
+- repo: "ondrej/php"
 # php_packages
 # - name: "php7.0-curl"                          #required
 #   state: present                               #default
 php_packages:
-- name: "php7.0-common"
-- name: "php7.0-cli"
-- name: "php7.0-fpm"
-- name: "php7.0-bz2"
-- name: "php7.0-curl"
-- name: "php7.0-gd"
-- name: "php7.0-gmp"
-- name: "php7.0-intl"
-- name: "php7.0-json"
-- name: "php7.0-mbstring"
-- name: "php7.0-mcrypt"
-- name: "php7.0-mysql"
-- name: "php7.0-opcache"
-- name: "php7.0-pdo"
-- name: "php7.0-pgsql"
-- name: "php7.0-phar"
-- name: "php7.0-readline"
-- name: "php7.0-sqlite3"
-- name: "php7.0-xml"
-- name: "php7.0-zip"
-php_cli_config_path: "/etc/php/7.0/cli/php.ini"
+- name: "php7.1-common"
+- name: "php7.1-cli"
+- name: "php7.1-fpm"
+- name: "php7.1-bz2"
+- name: "php7.1-curl"
+- name: "php7.1-gd"
+- name: "php7.1-gmp"
+- name: "php7.1-intl"
+- name: "php7.1-json"
+- name: "php7.1-mbstring"
+- name: "php7.1-mcrypt"
+- name: "php7.1-mysql"
+- name: "php7.1-opcache"
+- name: "php7.1-readline"
+- name: "php7.1-sqlite3"
+- name: "php7.1-xml"
+- name: "php7.1-zip"
+php_cli_config_path: "/etc/php/7.1/cli/php.ini"
 php_cli_short_open_tag: "Off"
 php_cli_expose_php: "Off"
 php_cli_max_execution_time: "0"
@@ -63,9 +61,9 @@ php_cli_opcache_fast_shutdown: "1"
 # - setting: "xdebug.max_nesting_level=250"      #required
 #   state: present                               #default
 php_cli_extra_settings: []
-php_fpm_service: "php7.0-fpm"
-php_fpm_config_path: "/etc/php/7.0/fpm/php.ini"
-php_fpm_pool_path: "/etc/php/7.0/fpm/pool.d/www.conf"
+php_fpm_service: "php7.1-fpm"
+php_fpm_config_path: "/etc/php/7.1/fpm/php.ini"
+php_fpm_pool_path: "/etc/php/7.1/fpm/pool.d/www.conf"
 php_fpm_user: "www-data"
 php_fpm_group: "www-data"
 php_fpm_listen: "127.0.0.1:9000"
