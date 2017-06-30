@@ -83,7 +83,7 @@ class Type implements Equatable, JsonSerializable, Serializable
      *
      * @return string
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): string
     {
         return $this->name;
     }
@@ -93,7 +93,7 @@ class Type implements Equatable, JsonSerializable, Serializable
      *
      * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize(['name' => $this->name]);
     }
@@ -105,7 +105,7 @@ class Type implements Equatable, JsonSerializable, Serializable
      *
      * @return void
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
         $data = unserialize($serialized);
         $this->__construct($data['name']);

@@ -7,7 +7,7 @@ use Novuso\Test\System\Resources\StringObject;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Utility\VarPrinter
+ * @covers \Novuso\System\Utility\VarPrinter
  */
 class VarPrinterTest extends UnitTestCase
 {

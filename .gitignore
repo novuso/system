@@ -1,5 +1,6 @@
 /.vagrant/
 /etc/build/phpunit.xml
+/etc/provision/playbook.retry
 /composer.phar
 /composer.lock
 /vendor/

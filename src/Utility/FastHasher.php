@@ -3,13 +3,13 @@
 namespace Novuso\System\Utility;
 
 /**
- * Hasher is a non-cryptographic hashing utility
+ * FastHasher is a non-cryptographic hashing utility
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class Hasher
+class FastHasher
 {
     /**
      * Creates a string hash for a value

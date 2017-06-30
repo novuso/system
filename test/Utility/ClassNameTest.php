@@ -6,7 +6,7 @@ use Novuso\System\Utility\ClassName;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Utility\ClassName
+ * @covers \Novuso\System\Utility\ClassName
  */
 class ClassNameTest extends UnitTestCase
 {

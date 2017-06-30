@@ -7,7 +7,7 @@ use Novuso\System\Collection\Chain\TableBucketChain;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
 use Novuso\System\Collection\Traits\KeyValueTypeMethods;
 use Novuso\System\Exception\KeyException;
-use Novuso\System\Utility\Hasher;
+use Novuso\System\Utility\FastHasher;
 use Novuso\System\Utility\Validate;
 use Novuso\System\Utility\VarPrinter;
 use Traversable;
@@ -106,7 +106,7 @@ class HashTable implements SymbolTable
             $this->valueTypeError('set', $value)
         );
 
-        $hash = Hasher::hash($key);
+        $hash = FastHasher::hash($key);
 
         if (!isset($this->buckets[$hash])) {
             $this->buckets[$hash] = new TableBucketChain();
@@ -122,7 +122,7 @@ class HashTable implements SymbolTable
      */
     public function get($key)
     {
-        $hash = Hasher::hash($key);
+        $hash = FastHasher::hash($key);
 
         if (!isset($this->buckets[$hash])) {
             $message = sprintf('Key not found: %s', VarPrinter::toString($key));
@@ -137,7 +137,7 @@ class HashTable implements SymbolTable
      */
     public function has($key): bool
     {
-        $hash = Hasher::hash($key);
+        $hash = FastHasher::hash($key);
 
         if (!isset($this->buckets[$hash])) {
             return false;
@@ -151,7 +151,7 @@ class HashTable implements SymbolTable
      */
     public function remove($key)
     {
-        $hash = Hasher::hash($key);
+        $hash = FastHasher::hash($key);
 
         if (isset($this->buckets[$hash])) {
             if ($this->buckets[$hash]->remove($key)) {

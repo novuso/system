@@ -7,7 +7,7 @@ use Novuso\System\Collection\Chain\SetBucketChain;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Type\Arrayable;
-use Novuso\System\Utility\Hasher;
+use Novuso\System\Utility\FastHasher;
 use Novuso\System\Utility\Validate;
 use Traversable;
 
@@ -98,7 +98,7 @@ class HashSet implements Arrayable, Set
             $this->itemTypeError('add', $item)
         );
 
-        $hash = Hasher::hash($item);
+        $hash = FastHasher::hash($item);
 
         if (!isset($this->buckets[$hash])) {
             $this->buckets[$hash] = new SetBucketChain();
@@ -114,7 +114,7 @@ class HashSet implements Arrayable, Set
      */
     public function contains($item): bool
     {
-        $hash = Hasher::hash($item);
+        $hash = FastHasher::hash($item);
 
         if (!isset($this->buckets[$hash])) {
             return false;
@@ -128,7 +128,7 @@ class HashSet implements Arrayable, Set
      */
     public function remove($item)
     {
-        $hash = Hasher::hash($item);
+        $hash = FastHasher::hash($item);
 
         if (isset($this->buckets[$hash])) {
             if ($this->buckets[$hash]->remove($item)) {
@@ -320,13 +320,13 @@ class HashSet implements Arrayable, Set
      */
     public function getIterator(): Traversable
     {
-        return call_user_func(function (array $buckets) {
+        return new GeneratorIterator(function (array $buckets) {
             foreach ($buckets as $chain) {
                 for ($chain->rewind(); $chain->valid(); $chain->next()) {
                     yield $chain->current();
                 }
             }
-        }, $this->buckets);
+        }, [$this->buckets]);
     }
 
     /**

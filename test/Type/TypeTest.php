@@ -6,7 +6,7 @@ use Novuso\System\Type\Type;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Type\Type
+ * @covers \Novuso\System\Type\Type
  */
 class TypeTest extends UnitTestCase
 {
