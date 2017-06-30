@@ -2,13 +2,11 @@
 
 namespace Novuso\System\Type;
 
-use JsonSerializable;
 use Novuso\System\Exception\DomainException;
 use Novuso\System\Utility\ClassName;
 use Novuso\System\Utility\Validate;
 use Novuso\System\Utility\VarPrinter;
 use ReflectionClass;
-use Serializable;
 
 /**
  * Enum is the base class for enum types
@@ -17,7 +15,7 @@ use Serializable;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializable
+abstract class Enum extends ValueObject implements Comparable
 {
     /**
      * Enum value
@@ -333,7 +331,7 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
     {
         $duplicates = [];
         foreach ($constants as $value) {
-            $names = array_keys($constants, $value, true);
+            $names = array_keys($constants, $value, $strict = true);
             if (count($names) > 1) {
                 $duplicates[VarPrinter::toString($value)] = $names;
             }
