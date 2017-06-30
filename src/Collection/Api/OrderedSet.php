@@ -53,7 +53,7 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @param OrderedSet $other The other set
      *
-     * @return static
+     * @return OrderedSet
      */
     public function difference(OrderedSet $other);
 
@@ -67,7 +67,7 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @param OrderedSet $other The other set
      *
-     * @return static
+     * @return OrderedSet
      */
     public function intersection(OrderedSet $other);
 
@@ -81,7 +81,7 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @param OrderedSet $other The other set
      *
-     * @return static
+     * @return OrderedSet
      */
     public function complement(OrderedSet $other);
 
@@ -95,7 +95,7 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @param OrderedSet $other The other set
      *
-     * @return static
+     * @return OrderedSet
      */
     public function union(OrderedSet $other);
 

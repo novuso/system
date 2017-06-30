@@ -49,7 +49,7 @@ interface Set extends ItemCollection
      *
      * @param Set $other The other set
      *
-     * @return static
+     * @return Set
      */
     public function difference(Set $other);
 
@@ -63,7 +63,7 @@ interface Set extends ItemCollection
      *
      * @param Set $other The other set
      *
-     * @return static
+     * @return Set
      */
     public function intersection(Set $other);
 
@@ -77,7 +77,7 @@ interface Set extends ItemCollection
      *
      * @param Set $other The other set
      *
-     * @return static
+     * @return Set
      */
     public function complement(Set $other);
 
@@ -91,7 +91,7 @@ interface Set extends ItemCollection
      *
      * @param Set $other The other set
      *
-     * @return static
+     * @return Set
      */
     public function union(Set $other);
 }

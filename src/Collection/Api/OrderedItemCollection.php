@@ -25,7 +25,7 @@ interface OrderedItemCollection extends Collection
      * @param Comparator  $comparator The comparator
      * @param string|null $itemType   The item type
      *
-     * @return static
+     * @return OrderedItemCollection
      */
     public static function create(Comparator $comparator, ?string $itemType = null);
 
@@ -39,28 +39,28 @@ interface OrderedItemCollection extends Collection
      *
      * @param string|null $itemType The item type
      *
-     * @return static
+     * @return OrderedItemCollection
      */
     public static function comparable(?string $itemType = null);
 
     /**
      * Creates collection of floats
      *
-     * @return static
+     * @return OrderedItemCollection
      */
     public static function float();
 
     /**
      * Creates collection of integers
      *
-     * @return static
+     * @return OrderedItemCollection
      */
     public static function integer();
 
     /**
      * Creates collection of strings
      *
-     * @return static
+     * @return OrderedItemCollection
      */
     public static function string();
 
@@ -101,7 +101,7 @@ interface OrderedItemCollection extends Collection
      * @param Comparator  $comparator The comparator
      * @param string|null $itemType   The item type for the new collection
      *
-     * @return static
+     * @return OrderedItemCollection
      */
     public function map(callable $callback, Comparator $comparator, ?string $itemType = null);
 
@@ -133,7 +133,7 @@ interface OrderedItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static
+     * @return OrderedItemCollection
      */
     public function filter(callable $predicate);
 
@@ -148,7 +148,7 @@ interface OrderedItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static
+     * @return OrderedItemCollection
      */
     public function reject(callable $predicate);
 
@@ -197,7 +197,7 @@ interface OrderedItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static[]
+     * @return OrderedItemCollection[]
      */
     public function partition(callable $predicate): array;
 }

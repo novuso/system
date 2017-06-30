@@ -26,7 +26,7 @@ interface OrderedKeyCollection extends Collection
      * @param string|null $keyType    The key type
      * @param string|null $valueType  The value type
      *
-     * @return static
+     * @return OrderedKeyCollection
      */
     public static function create(Comparator $comparator, ?string $keyType = null, ?string $valueType = null);
 
@@ -45,7 +45,7 @@ interface OrderedKeyCollection extends Collection
      * @param string|null $keyType   The key type
      * @param string|null $valueType The value type
      *
-     * @return static
+     * @return OrderedKeyCollection
      */
     public static function comparable(?string $keyType = null, ?string $valueType = null);
 
@@ -60,7 +60,7 @@ interface OrderedKeyCollection extends Collection
      *
      * @param string|null $valueType The value type
      *
-     * @return static
+     * @return OrderedKeyCollection
      */
     public static function float(?string $valueType = null);
 
@@ -75,7 +75,7 @@ interface OrderedKeyCollection extends Collection
      *
      * @param string|null $valueType The value type
      *
-     * @return static
+     * @return OrderedKeyCollection
      */
     public static function integer(?string $valueType = null);
 
@@ -90,7 +90,7 @@ interface OrderedKeyCollection extends Collection
      *
      * @param string|null $valueType The value type
      *
-     * @return static
+     * @return OrderedKeyCollection
      */
     public static function string(?string $valueType = null);
 
@@ -141,7 +141,7 @@ interface OrderedKeyCollection extends Collection
      * @param callable    $callback  The callback
      * @param string|null $valueType The value type for the new collection
      *
-     * @return static
+     * @return OrderedKeyCollection
      */
     public function map(callable $callback, ?string $valueType = null);
 
@@ -173,7 +173,7 @@ interface OrderedKeyCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static
+     * @return OrderedKeyCollection
      */
     public function filter(callable $predicate);
 
@@ -188,7 +188,7 @@ interface OrderedKeyCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static
+     * @return OrderedKeyCollection
      */
     public function reject(callable $predicate);
 
@@ -237,7 +237,7 @@ interface OrderedKeyCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static[]
+     * @return OrderedKeyCollection[]
      */
     public function partition(callable $predicate): array;
 }

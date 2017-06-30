@@ -23,7 +23,7 @@ interface KeyValueCollection extends Collection
      * @param string|null $keyType   The key type
      * @param string|null $valueType The value type
      *
-     * @return static
+     * @return KeyValueCollection
      */
     public static function of(?string $keyType = null, ?string $valueType = null);
 
@@ -74,7 +74,7 @@ interface KeyValueCollection extends Collection
      * @param callable    $callback  The callback
      * @param string|null $valueType The value type for the new collection
      *
-     * @return static
+     * @return KeyValueCollection
      */
     public function map(callable $callback, ?string $valueType = null);
 
@@ -106,7 +106,7 @@ interface KeyValueCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static
+     * @return KeyValueCollection
      */
     public function filter(callable $predicate);
 
@@ -121,7 +121,7 @@ interface KeyValueCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static
+     * @return KeyValueCollection
      */
     public function reject(callable $predicate);
 
@@ -170,7 +170,7 @@ interface KeyValueCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static[]
+     * @return KeyValueCollection[]
      */
     public function partition(callable $predicate): array;
 }

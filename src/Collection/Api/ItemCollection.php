@@ -22,7 +22,7 @@ interface ItemCollection extends Collection
      *
      * @param string|null $itemType The item type
      *
-     * @return static
+     * @return ItemCollection
      */
     public static function of(?string $itemType = null);
 
@@ -62,7 +62,7 @@ interface ItemCollection extends Collection
      * @param callable    $callback The callback
      * @param string|null $itemType The item type for the new collection
      *
-     * @return static
+     * @return ItemCollection
      */
     public function map(callable $callback, ?string $itemType = null);
 
@@ -94,7 +94,7 @@ interface ItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static
+     * @return ItemCollection
      */
     public function filter(callable $predicate);
 
@@ -109,7 +109,7 @@ interface ItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static
+     * @return ItemCollection
      */
     public function reject(callable $predicate);
 
@@ -158,7 +158,7 @@ interface ItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return static[]
+     * @return ItemCollection[]
      */
     public function partition(callable $predicate): array;
 }
