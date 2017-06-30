@@ -14,12 +14,12 @@ class FastHasher
     /**
      * Creates a string hash for a value
      *
-     * @param mixed  $value The value
-     * @param string $algo  The hash algorithm
+     * @param mixed  $value     The value
+     * @param string $algorithm The hash algorithm
      *
      * @return string
      */
-    public static function hash($value, string $algo = 'fnv1a32'): string
+    public static function hash($value, string $algorithm = 'fnv1a32'): string
     {
         $type = gettype($value);
 
@@ -54,6 +54,6 @@ class FastHasher
                 break;
         }
 
-        return hash($algo, $string);
+        return hash($algorithm, $string);
     }
 }

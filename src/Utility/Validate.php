@@ -952,18 +952,13 @@ class Validate
     /**
      * Checks if value is one of a set of choices
      *
-     * @param mixed             $value   The value
-     * @param array|Traversable $choices The choices
+     * @param mixed    $value   The value
+     * @param iterable $choices The choices
      *
      * @return bool
      */
-    public static function isOneOf($value, $choices): bool
+    public static function isOneOf($value, iterable $choices): bool
     {
-        assert(
-            static::isTraversable($choices),
-            sprintf('%s expects $choices to be traversable', __METHOD__)
-        );
-
         foreach ($choices as $choice) {
             if ($value === $choice) {
                 return true;
@@ -1096,7 +1091,7 @@ class Validate
      *
      * @return bool
      */
-    public static function isType($value, string $type = null): bool
+    public static function isType($value, ?string $type): bool
     {
         if ($type === null) {
             return true;
@@ -1123,7 +1118,7 @@ class Validate
      *
      * @return bool
      */
-    public static function isListOf($value, string $type = null): bool
+    public static function isListOf($value, ?string $type): bool
     {
         if (!static::isTraversable($value)) {
             return false;
@@ -1509,8 +1504,6 @@ class Validate
     /**
      * Retrieves URI components from regex matches
      *
-     * @SuppressWarnings(PHPMD)
-     *
      * @param array $matches The regex matches
      *
      * @return array
@@ -1583,7 +1576,7 @@ class Validate
      *
      * @return bool
      */
-    private static function isValidUriScheme(string $scheme = null): bool
+    private static function isValidUriScheme(?string $scheme): bool
     {
         // http://tools.ietf.org/html/rfc3986#section-3
         // The scheme and path components are required, though the path may be
@@ -1606,7 +1599,7 @@ class Validate
      *
      * @return bool
      */
-    private static function isValidUriAuthority(string $authority = null): bool
+    private static function isValidUriAuthority(?string $authority): bool
     {
         if ($authority === null || $authority === '') {
             return true;
@@ -1676,7 +1669,7 @@ class Validate
      *
      * @return bool
      */
-    private static function isValidUriQuery(string $query = null): bool
+    private static function isValidUriQuery(?string $query): bool
     {
         if ($query === null || $query === '') {
             return true;
@@ -1702,7 +1695,7 @@ class Validate
      *
      * @return bool
      */
-    private static function isValidUriFragment(string $fragment = null): bool
+    private static function isValidUriFragment(?string $fragment): bool
     {
         if ($fragment === null || $fragment === '') {
             return true;
@@ -1728,7 +1721,7 @@ class Validate
      *
      * @return bool
      */
-    private static function isValidAuthUser(string $userinfo = null): bool
+    private static function isValidAuthUser(?string $userinfo): bool
     {
         if ($userinfo === null) {
             return true;
@@ -1828,7 +1821,7 @@ class Validate
      *
      * @return bool|null
      */
-    private static function isSimpleType($value, string $type)
+    private static function isSimpleType($value, string $type): ?bool
     {
         switch ($type) {
             case 'array':
