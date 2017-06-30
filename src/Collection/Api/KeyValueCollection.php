@@ -23,9 +23,9 @@ interface KeyValueCollection extends Collection
      * @param string|null $keyType   The key type
      * @param string|null $valueType The value type
      *
-     * @return KeyValueCollection
+     * @return static
      */
-    public static function of(string $keyType = null, string $valueType = null);
+    public static function of(?string $keyType = null, ?string $valueType = null);
 
     /**
      * Retrieves the key type
@@ -34,7 +34,7 @@ interface KeyValueCollection extends Collection
      *
      * @return string|null
      */
-    public function keyType();
+    public function keyType(): ?string;
 
     /**
      * Retrieves the value type
@@ -43,7 +43,7 @@ interface KeyValueCollection extends Collection
      *
      * @return string|null
      */
-    public function valueType();
+    public function valueType(): ?string;
 
     /**
      * Applies a callback function to every value
@@ -58,7 +58,7 @@ interface KeyValueCollection extends Collection
      *
      * @return void
      */
-    public function each(callable $callback);
+    public function each(callable $callback): void;
 
     /**
      * Creates a collection from the results of a function
@@ -74,9 +74,9 @@ interface KeyValueCollection extends Collection
      * @param callable    $callback  The callback
      * @param string|null $valueType The value type for the new collection
      *
-     * @return KeyValueCollection
+     * @return static
      */
-    public function map(callable $callback, string $valueType = null);
+    public function map(callable $callback, ?string $valueType = null);
 
     /**
      * Retrieves the first key for a value that passes a truth test
@@ -106,7 +106,7 @@ interface KeyValueCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return KeyValueCollection
+     * @return static
      */
     public function filter(callable $predicate);
 
@@ -121,7 +121,7 @@ interface KeyValueCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return KeyValueCollection
+     * @return static
      */
     public function reject(callable $predicate);
 
@@ -170,7 +170,7 @@ interface KeyValueCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return KeyValueCollection[]
+     * @return static[]
      */
     public function partition(callable $predicate): array;
 }

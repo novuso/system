@@ -20,7 +20,7 @@ class JsonSerializer implements Serializer
      */
     public function deserialize(string $state): Serializable
     {
-        $data = json_decode($state, true);
+        $data = json_decode($state, $array = true);
 
         $keys = ['@', '$'];
         foreach ($keys as $key) {
@@ -34,9 +34,10 @@ class JsonSerializer implements Serializer
 
         assert(
             Validate::implementsInterface($class, Serializable::class),
-            sprintf('Unable to deserialize: %s', $class)
+            sprintf('Unable to deserialize: %s; does not implement %s', $class, Serializable::class)
         );
 
+        /** @var Serializable|string $class */
         return $class::deserialize($data['$']);
     }
 

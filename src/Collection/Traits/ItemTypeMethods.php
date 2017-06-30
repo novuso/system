@@ -27,7 +27,7 @@ trait ItemTypeMethods
      *
      * @return string|null
      */
-    public function itemType()
+    public function itemType(): ?string
     {
         return $this->itemType;
     }
@@ -45,7 +45,7 @@ trait ItemTypeMethods
      *
      * @return void
      */
-    protected function setItemType(string $itemType = null)
+    protected function setItemType(?string $itemType = null): void
     {
         if ($itemType !== null) {
             $itemType = trim($itemType);

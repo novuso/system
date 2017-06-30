@@ -22,7 +22,7 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @return void
      */
-    public function add($item);
+    public function add($item): void;
 
     /**
      * Checks if an item is in the set
@@ -40,7 +40,7 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @return void
      */
-    public function remove($item);
+    public function remove($item): void;
 
     /**
      * Retrieves the symmetric difference
@@ -53,9 +53,9 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @param OrderedSet $other The other set
      *
-     * @return OrderedSet
+     * @return static
      */
-    public function difference(OrderedSet $other): OrderedSet;
+    public function difference(OrderedSet $other);
 
     /**
      * Retrieves the intersection
@@ -67,9 +67,9 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @param OrderedSet $other The other set
      *
-     * @return OrderedSet
+     * @return static
      */
-    public function intersection(OrderedSet $other): OrderedSet;
+    public function intersection(OrderedSet $other);
 
     /**
      * Retrieves the relative complement
@@ -81,9 +81,9 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @param OrderedSet $other The other set
      *
-     * @return OrderedSet
+     * @return static
      */
-    public function complement(OrderedSet $other): OrderedSet;
+    public function complement(OrderedSet $other);
 
     /**
      * Retrieves the union
@@ -95,9 +95,9 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @param OrderedSet $other The other set
      *
-     * @return OrderedSet
+     * @return static
      */
-    public function union(OrderedSet $other): OrderedSet;
+    public function union(OrderedSet $other);
 
     /**
      * Retrieves an inclusive list of items between given items
@@ -144,7 +144,7 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @throws UnderflowException When the set is empty
      */
-    public function removeMin();
+    public function removeMin(): void;
 
     /**
      * Removes the maximum item
@@ -153,7 +153,7 @@ interface OrderedSet extends OrderedItemCollection
      *
      * @throws UnderflowException When the set is empty
      */
-    public function removeMax();
+    public function removeMax(): void;
 
     /**
      * Retrieves the largest item less or equal to the given item

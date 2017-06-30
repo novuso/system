@@ -90,7 +90,7 @@ class RedBlackNode
      *
      * @return void
      */
-    public function setLeft(RedBlackNode $left = null)
+    public function setLeft(?RedBlackNode $left): void
     {
         $this->left = $left;
     }
@@ -100,7 +100,7 @@ class RedBlackNode
      *
      * @return RedBlackNode|null
      */
-    public function left()
+    public function left(): ?RedBlackNode
     {
         return $this->left;
     }
@@ -112,7 +112,7 @@ class RedBlackNode
      *
      * @return void
      */
-    public function setRight(RedBlackNode $right = null)
+    public function setRight(?RedBlackNode $right): void
     {
         $this->right = $right;
     }
@@ -122,7 +122,7 @@ class RedBlackNode
      *
      * @return RedBlackNode|null
      */
-    public function right()
+    public function right(): ?RedBlackNode
     {
         return $this->right;
     }
@@ -134,7 +134,7 @@ class RedBlackNode
      *
      * @return void
      */
-    public function setKey($key)
+    public function setKey($key): void
     {
         $this->key = $key;
     }
@@ -156,7 +156,7 @@ class RedBlackNode
      *
      * @return void
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = $value;
     }
@@ -178,7 +178,7 @@ class RedBlackNode
      *
      * @return void
      */
-    public function setSize(int $size)
+    public function setSize(int $size): void
     {
         $this->size = $size;
     }
@@ -200,7 +200,7 @@ class RedBlackNode
      *
      * @return void
      */
-    public function setColor(bool $color)
+    public function setColor(bool $color): void
     {
         $this->color = $color;
     }

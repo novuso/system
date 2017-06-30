@@ -39,7 +39,7 @@ interface BinarySearchTree extends Countable
      *
      * @return void
      */
-    public function set($key, $value);
+    public function set($key, $value): void;
 
     /**
      * Retrieves a value by key
@@ -68,7 +68,7 @@ interface BinarySearchTree extends Countable
      *
      * @return void
      */
-    public function remove($key);
+    public function remove($key): void;
 
     /**
      * Retrieves an iterator for keys
@@ -122,7 +122,7 @@ interface BinarySearchTree extends Countable
      *
      * @throws UnderflowException When the table is empty
      */
-    public function removeMin();
+    public function removeMin(): void;
 
     /**
      * Removes the key-value pair with the maximum key
@@ -131,7 +131,7 @@ interface BinarySearchTree extends Countable
      *
      * @throws UnderflowException When the table is empty
      */
-    public function removeMax();
+    public function removeMax(): void;
 
     /**
      * Retrieves the largest key less or equal to the given key

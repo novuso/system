@@ -25,9 +25,9 @@ interface OrderedItemCollection extends Collection
      * @param Comparator  $comparator The comparator
      * @param string|null $itemType   The item type
      *
-     * @return OrderedItemCollection
+     * @return static
      */
-    public static function create(Comparator $comparator, string $itemType = null);
+    public static function create(Comparator $comparator, ?string $itemType = null);
 
     /**
      * Creates collection of comparable items
@@ -39,28 +39,28 @@ interface OrderedItemCollection extends Collection
      *
      * @param string|null $itemType The item type
      *
-     * @return OrderedItemCollection
+     * @return static
      */
-    public static function comparable(string $itemType = null);
+    public static function comparable(?string $itemType = null);
 
     /**
      * Creates collection of floats
      *
-     * @return OrderedItemCollection
+     * @return static
      */
     public static function float();
 
     /**
      * Creates collection of integers
      *
-     * @return OrderedItemCollection
+     * @return static
      */
     public static function integer();
 
     /**
      * Creates collection of strings
      *
-     * @return OrderedItemCollection
+     * @return static
      */
     public static function string();
 
@@ -71,7 +71,7 @@ interface OrderedItemCollection extends Collection
      *
      * @return string|null
      */
-    public function itemType();
+    public function itemType(): ?string;
 
     /**
      * Applies a callback function to every item
@@ -86,7 +86,7 @@ interface OrderedItemCollection extends Collection
      *
      * @return void
      */
-    public function each(callable $callback);
+    public function each(callable $callback): void;
 
     /**
      * Creates a collection from the results of a function
@@ -101,9 +101,9 @@ interface OrderedItemCollection extends Collection
      * @param Comparator  $comparator The comparator
      * @param string|null $itemType   The item type for the new collection
      *
-     * @return OrderedItemCollection
+     * @return static
      */
-    public function map(callable $callback, Comparator $comparator, string $itemType = null);
+    public function map(callable $callback, Comparator $comparator, ?string $itemType = null);
 
     /**
      * Retrieves the first item that passes a truth test
@@ -133,7 +133,7 @@ interface OrderedItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return OrderedItemCollection
+     * @return static
      */
     public function filter(callable $predicate);
 
@@ -148,7 +148,7 @@ interface OrderedItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return OrderedItemCollection
+     * @return static
      */
     public function reject(callable $predicate);
 
@@ -197,7 +197,7 @@ interface OrderedItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return OrderedItemCollection[]
+     * @return static[]
      */
     public function partition(callable $predicate): array;
 }

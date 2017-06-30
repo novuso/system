@@ -47,7 +47,7 @@ class HashSet implements Arrayable, Set
      *
      * @param string|null $itemType The item type
      */
-    public function __construct(string $itemType = null)
+    public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
         $this->buckets = [];
@@ -67,7 +67,7 @@ class HashSet implements Arrayable, Set
      *
      * @return HashSet
      */
-    public static function of(string $itemType = null): HashSet
+    public static function of(?string $itemType = null): HashSet
     {
         return new static($itemType);
     }
@@ -91,7 +91,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function add($item)
+    public function add($item): void
     {
         assert(
             Validate::isType($item, $this->itemType()),
@@ -126,7 +126,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function remove($item)
+    public function remove($item): void
     {
         $hash = FastHasher::hash($item);
 
@@ -143,7 +143,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function difference(Set $other): Set
+    public function difference(Set $other): HashSet
     {
         $difference = static::of($this->itemType());
 
@@ -160,7 +160,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function intersection(Set $other): Set
+    public function intersection(Set $other): HashSet
     {
         $intersection = static::of($this->itemType());
 
@@ -172,7 +172,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function complement(Set $other): Set
+    public function complement(Set $other): HashSet
     {
         $complement = static::of($this->itemType());
 
@@ -188,7 +188,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function union(Set $other): Set
+    public function union(Set $other): HashSet
     {
         $union = static::of($this->itemType());
 
@@ -201,7 +201,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback)
+    public function each(callable $callback): void
     {
         foreach ($this->getIterator() as $item) {
             call_user_func($callback, $item);
@@ -211,7 +211,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, string $itemType = null): HashSet
+    public function map(callable $callback, ?string $itemType = null): HashSet
     {
         $set = static::of($itemType);
 

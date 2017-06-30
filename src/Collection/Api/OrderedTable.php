@@ -25,7 +25,7 @@ interface OrderedTable extends ArrayAccess, OrderedKeyCollection
      *
      * @return void
      */
-    public function set($key, $value);
+    public function set($key, $value): void;
 
     /**
      * Retrieves a value by key
@@ -54,7 +54,7 @@ interface OrderedTable extends ArrayAccess, OrderedKeyCollection
      *
      * @return void
      */
-    public function remove($key);
+    public function remove($key): void;
 
     /**
      * Sets a key-value pair
@@ -64,7 +64,7 @@ interface OrderedTable extends ArrayAccess, OrderedKeyCollection
      *
      * @return void
      */
-    public function offsetSet($key, $value);
+    public function offsetSet($key, $value): void;
 
     /**
      * Retrieves a value by key
@@ -93,7 +93,7 @@ interface OrderedTable extends ArrayAccess, OrderedKeyCollection
      *
      * @return void
      */
-    public function offsetUnset($key);
+    public function offsetUnset($key): void;
 
     /**
      * Retrieves an iterator for keys
@@ -147,7 +147,7 @@ interface OrderedTable extends ArrayAccess, OrderedKeyCollection
      *
      * @throws UnderflowException When the table is empty
      */
-    public function removeMin();
+    public function removeMin(): void;
 
     /**
      * Removes the key-value pair with the maximum key
@@ -156,7 +156,7 @@ interface OrderedTable extends ArrayAccess, OrderedKeyCollection
      *
      * @throws UnderflowException When the table is empty
      */
-    public function removeMax();
+    public function removeMax(): void;
 
     /**
      * Retrieves the largest key less or equal to the given key

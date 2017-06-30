@@ -42,7 +42,7 @@ class ArrayList implements Arrayable, IndexedList
      *
      * @param string|null $itemType The item type
      */
-    public function __construct(string $itemType = null)
+    public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
         $this->items = [];
@@ -61,7 +61,7 @@ class ArrayList implements Arrayable, IndexedList
      *
      * @return ArrayList
      */
-    public static function of(string $itemType = null): ArrayList
+    public static function of(?string $itemType = null): ArrayList
     {
         return new static($itemType);
     }
@@ -85,7 +85,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function add($item)
+    public function add($item): void
     {
         assert(
             Validate::isType($item, $this->itemType()),
@@ -98,7 +98,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function set(int $index, $item)
+    public function set(int $index, $item): void
     {
         assert(
             Validate::isType($item, $this->itemType()),
@@ -155,7 +155,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function remove(int $index)
+    public function remove(int $index): void
     {
         $count = count($this->items);
 
@@ -173,7 +173,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($index, $item)
+    public function offsetSet($index, $item): void
     {
         if ($index === null) {
             $this->add($item);
@@ -218,7 +218,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($index)
+    public function offsetUnset($index): void
     {
         assert(
             Validate::isInt($index),
@@ -231,7 +231,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function sort(callable $comparator)
+    public function sort(callable $comparator): void
     {
         Merge::sort($this->items, $comparator);
     }
@@ -265,7 +265,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->items);
     }
@@ -273,7 +273,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function end()
+    public function end(): void
     {
         end($this->items);
     }
@@ -289,7 +289,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function next(): void
     {
         next($this->items);
     }
@@ -297,7 +297,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function prev()
+    public function prev(): void
     {
         prev($this->items);
     }
@@ -305,7 +305,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function key()
+    public function key(): ?int
     {
         return key($this->items);
     }
@@ -325,7 +325,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback)
+    public function each(callable $callback): void
     {
         foreach ($this->getIterator() as $item) {
             call_user_func($callback, $item);
@@ -335,7 +335,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, string $itemType = null): ArrayList
+    public function map(callable $callback, ?string $itemType = null): ArrayList
     {
         $list = static::of($itemType);
 

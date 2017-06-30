@@ -45,7 +45,7 @@ class ItemBucket implements Bucket
     /**
      * {@inheritdoc}
      */
-    public function setNext(Bucket $next = null)
+    public function setNext(?Bucket $next): void
     {
         $this->next = $next;
     }
@@ -53,7 +53,7 @@ class ItemBucket implements Bucket
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function next(): ?Bucket
     {
         return $this->next;
     }
@@ -61,7 +61,7 @@ class ItemBucket implements Bucket
     /**
      * {@inheritdoc}
      */
-    public function setPrev(Bucket $prev = null)
+    public function setPrev(?Bucket $prev): void
     {
         $this->prev = $prev;
     }
@@ -69,7 +69,7 @@ class ItemBucket implements Bucket
     /**
      * {@inheritdoc}
      */
-    public function prev()
+    public function prev(): ?Bucket
     {
         return $this->prev;
     }

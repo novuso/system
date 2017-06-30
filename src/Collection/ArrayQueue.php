@@ -67,7 +67,7 @@ class ArrayQueue implements Arrayable, Queue
      *
      * @param string|null $itemType The item type
      */
-    public function __construct(string $itemType = null)
+    public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
         $this->items = [];
@@ -90,7 +90,7 @@ class ArrayQueue implements Arrayable, Queue
      *
      * @return ArrayQueue
      */
-    public static function of(string $itemType = null): ArrayQueue
+    public static function of(?string $itemType = null): ArrayQueue
     {
         return new static($itemType);
     }
@@ -114,7 +114,7 @@ class ArrayQueue implements Arrayable, Queue
     /**
      * {@inheritdoc}
      */
-    public function enqueue($item)
+    public function enqueue($item): void
     {
         assert(
             Validate::isType($item, $this->itemType()),
@@ -175,7 +175,7 @@ class ArrayQueue implements Arrayable, Queue
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback)
+    public function each(callable $callback): void
     {
         foreach ($this->getIterator() as $item) {
             call_user_func($callback, $item);
@@ -185,7 +185,7 @@ class ArrayQueue implements Arrayable, Queue
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, string $itemType = null): ArrayQueue
+    public function map(callable $callback, ?string $itemType = null): ArrayQueue
     {
         $queue = static::of($itemType);
 
@@ -355,7 +355,7 @@ class ArrayQueue implements Arrayable, Queue
              *
              * @return void
              */
-            public function rewind()
+            public function rewind(): void
             {
                 $this->index = 0;
             }
@@ -375,7 +375,7 @@ class ArrayQueue implements Arrayable, Queue
              *
              * @return int|null
              */
-            public function key()
+            public function key(): ?int
             {
                 if (!$this->valid()) {
                     return null;
@@ -408,7 +408,7 @@ class ArrayQueue implements Arrayable, Queue
              *
              * @return void
              */
-            public function next()
+            public function next(): void
             {
                 $this->index++;
             }
@@ -442,7 +442,7 @@ class ArrayQueue implements Arrayable, Queue
      *
      * @return void
      */
-    private function reindex(int $capacity)
+    private function reindex(int $capacity): void
     {
         $temp = [];
         for ($i = 0; $i < $this->count; $i++) {

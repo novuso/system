@@ -55,7 +55,7 @@ class GeneratorIterator implements Iterator
      *
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->generator = call_user_func_array($this->function, $this->args);
     }
@@ -107,7 +107,7 @@ class GeneratorIterator implements Iterator
      *
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         if (!$this->generator) {
             $this->rewind();

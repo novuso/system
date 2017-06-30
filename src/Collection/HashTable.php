@@ -49,7 +49,7 @@ class HashTable implements SymbolTable
      * @param string|null $keyType   The key type
      * @param string|null $valueType The value type
      */
-    public function __construct(string $keyType = null, string $valueType = null)
+    public function __construct(?string $keyType = null, ?string $valueType = null)
     {
         $this->setKeyType($keyType);
         $this->setValueType($valueType);
@@ -71,7 +71,7 @@ class HashTable implements SymbolTable
      *
      * @return HashTable
      */
-    public static function of(string $keyType = null, string $valueType = null): HashTable
+    public static function of(?string $keyType = null, ?string $valueType = null): HashTable
     {
         return new static($keyType, $valueType);
     }
@@ -95,7 +95,7 @@ class HashTable implements SymbolTable
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value)
+    public function set($key, $value): void
     {
         assert(
             Validate::isType($key, $this->keyType()),
@@ -149,7 +149,7 @@ class HashTable implements SymbolTable
     /**
      * {@inheritdoc}
      */
-    public function remove($key)
+    public function remove($key): void
     {
         $hash = FastHasher::hash($key);
 
@@ -166,7 +166,7 @@ class HashTable implements SymbolTable
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($key, $value): void
     {
         $this->set($key, $value);
     }
@@ -190,7 +190,7 @@ class HashTable implements SymbolTable
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($key)
+    public function offsetUnset($key): void
     {
         $this->remove($key);
     }
@@ -212,7 +212,7 @@ class HashTable implements SymbolTable
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback)
+    public function each(callable $callback): void
     {
         foreach ($this->getIterator() as $key => $value) {
             call_user_func($callback, $value, $key);
@@ -222,7 +222,7 @@ class HashTable implements SymbolTable
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, string $valueType = null): HashTable
+    public function map(callable $callback, ?string $valueType = null): HashTable
     {
         $table = static::of($this->keyType(), $valueType);
 

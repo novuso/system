@@ -73,7 +73,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @param mixed $value The value
      *
-     * @return $this
+     * @return ArrayCollection
      */
     public function add($value): ArrayCollection
     {
@@ -85,7 +85,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @param mixed $value The value
      *
-     * @return $this
+     * @return ArrayCollection
      */
     public function append($value): ArrayCollection
     {
@@ -97,7 +97,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @param mixed $value The value
      *
-     * @return $this
+     * @return ArrayCollection
      */
     public function push($value): ArrayCollection
     {
@@ -109,7 +109,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @param mixed $value The value
      *
-     * @return $this
+     * @return ArrayCollection
      */
     public function prepend($value): ArrayCollection
     {
@@ -124,7 +124,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      * @param mixed $key   The key
      * @param mixed $value The value
      *
-     * @return $this
+     * @return ArrayCollection
      */
     public function set($key, $value): ArrayCollection
     {
@@ -143,7 +143,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      * @param mixed $key   The key
      * @param mixed $value The value
      *
-     * @return $this
+     * @return ArrayCollection
      */
     public function put($key, $value): ArrayCollection
     {
@@ -156,7 +156,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      * @param mixed $key   The key
      * @param mixed $value The value
      *
-     * @return $this
+     * @return ArrayCollection
      */
     public function prependSet($key, $value): ArrayCollection
     {
@@ -199,7 +199,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @param mixed $key The key
      *
-     * @return $this
+     * @return ArrayCollection
      */
     public function remove($key): ArrayCollection
     {
@@ -216,7 +216,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return void
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($key, $value): void
     {
         $this->set($key, $value);
     }
@@ -252,7 +252,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return void
      */
-    public function offsetUnset($key)
+    public function offsetUnset($key): void
     {
         $this->remove($key);
     }
@@ -315,7 +315,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return ArrayCollection
      */
-    public function splice(int $offset, int $length = null, array $replacement = []): ArrayCollection
+    public function splice(int $offset, ?int $length = null, array $replacement = []): ArrayCollection
     {
         if ($length === null && empty($replacement)) {
             return new static(array_splice($this->items, $offset));
@@ -460,7 +460,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return mixed
      */
-    public function first(callable $predicate = null, $default = null)
+    public function first(?callable $predicate = null, $default = null)
     {
         if ($predicate === null) {
             return $this->isEmpty() ? $default : reset($this->items);
@@ -491,7 +491,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return mixed
      */
-    public function last(callable $predicate = null, $default = null)
+    public function last(?callable $predicate = null, $default = null)
     {
         if ($predicate === null) {
             return $this->isEmpty() ? $default : end($this->items);
@@ -670,7 +670,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @param callable $callback The callback function
      *
-     * @return $this
+     * @return ArrayCollection
      */
     public function each(callable $callback): ArrayCollection
     {
@@ -915,7 +915,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return ArrayCollection
      */
-    public function unique(callable $callback = null): ArrayCollection
+    public function unique(?callable $callback = null): ArrayCollection
     {
         if ($callback === null) {
             return new static(array_unique($this->items, SORT_REGULAR));
@@ -1069,7 +1069,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      * Creates a filtered collection by key and values
      *
      * @param mixed $key    The key
-     * @param array $value  The values
+     * @param array $values The values
      * @param bool  $strict Whether comparison should be strict
      *
      * @return ArrayCollection
@@ -1093,7 +1093,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return ArrayCollection
      */
-    public function slice(int $offset, int $length = null): ArrayCollection
+    public function slice(int $offset, ?int $length = null): ArrayCollection
     {
         return new static(array_slice($this->items, $offset, $length, true));
     }
@@ -1110,7 +1110,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
     public function take(int $limit): ArrayCollection
     {
         if ($limit < 0) {
-            return $this->slice($limit, abs($limit));
+            return $this->slice($limit, (int) abs($limit));
         }
 
         return $this->slice(0, $limit);
@@ -1240,7 +1240,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return string
      */
-    public function implode(string $glue = null, callable $callback = null): string
+    public function implode(?string $glue = null, ?callable $callback = null): string
     {
         if ($glue === null) {
             $glue = '';
@@ -1269,7 +1269,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return string
      */
-    public function join(string $glue = null, callable $callback = null): string
+    public function join(?string $glue = null, ?callable $callback = null): string
     {
         return $this->implode($glue, $callback);
     }
@@ -1316,7 +1316,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return mixed
      */
-    public function sum(callable $callback = null)
+    public function sum(?callable $callback = null)
     {
         if ($callback === null) {
             $callback = function ($value) {
@@ -1344,7 +1344,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return mixed
      */
-    public function avg(callable $callback = null)
+    public function avg(?callable $callback = null)
     {
         if ($this->isEmpty()) {
             return null;
@@ -1369,7 +1369,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return mixed
      */
-    public function average(callable $callback = null)
+    public function average(?callable $callback = null)
     {
         return $this->avg($callback);
     }
@@ -1389,7 +1389,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return mixed
      */
-    public function max(callable $callback = null)
+    public function max(?callable $callback = null)
     {
         return $this->reduce(function ($result, $value, $key) use ($callback) {
             if ($callback !== null) {
@@ -1415,7 +1415,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return mixed
      */
-    public function min(callable $callback = null)
+    public function min(?callable $callback = null)
     {
         return $this->reduce(function ($result, $value, $key) use ($callback) {
             if ($callback !== null) {
@@ -1486,7 +1486,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSeriali
      *
      * @return array
      */
-    protected static function flattenArray(array $array, int $depth = PHP_INT_MAX)
+    protected static function flattenArray(array $array, int $depth = PHP_INT_MAX): array
     {
         $items = [];
 

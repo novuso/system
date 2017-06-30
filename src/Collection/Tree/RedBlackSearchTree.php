@@ -63,7 +63,7 @@ class RedBlackSearchTree implements BinarySearchTree
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value)
+    public function set($key, $value): void
     {
         $this->root = $this->nodeSet($key, $value, $this->root);
         $this->root->setColor(RedBlackNode::BLACK);
@@ -95,7 +95,7 @@ class RedBlackSearchTree implements BinarySearchTree
     /**
      * {@inheritdoc}
      */
-    public function remove($key)
+    public function remove($key): void
     {
         if (!$this->has($key)) {
             return;
@@ -179,7 +179,7 @@ class RedBlackSearchTree implements BinarySearchTree
     /**
      * {@inheritdoc}
      */
-    public function removeMin()
+    public function removeMin(): void
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('Tree underflow');
@@ -199,7 +199,7 @@ class RedBlackSearchTree implements BinarySearchTree
     /**
      * {@inheritdoc}
      */
-    public function removeMax()
+    public function removeMax(): void
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('Tree underflow');
@@ -291,7 +291,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return bool
      */
-    protected function isRed(RedBlackNode $node = null): bool
+    protected function isRed(?RedBlackNode $node): bool
     {
         if ($node === null) {
             return false;
@@ -307,7 +307,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return int
      */
-    protected function nodeSize(RedBlackNode $node = null): int
+    protected function nodeSize(?RedBlackNode $node): int
     {
         if ($node === null) {
             return 0;
@@ -325,7 +325,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return RedBlackNode
      */
-    protected function nodeSet($key, $value, RedBlackNode $node = null): RedBlackNode
+    protected function nodeSet($key, $value, ?RedBlackNode $node): RedBlackNode
     {
         if ($node === null) {
             return new RedBlackNode($key, $value, 1, RedBlackNode::RED);
@@ -354,7 +354,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return RedBlackNode|null
      */
-    protected function nodeGet($key, RedBlackNode $node = null)
+    protected function nodeGet($key, ?RedBlackNode $node): ?RedBlackNode
     {
         while ($node !== null) {
             $comp = $this->comparator->compare($key, $node->key());
@@ -378,7 +378,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return RedBlackNode|null
      */
-    protected function nodeRemove($key, RedBlackNode $node)
+    protected function nodeRemove($key, RedBlackNode $node): ?RedBlackNode
     {
         $comp = $this->comparator->compare($key, $node->key());
         if ($comp < 0) {
@@ -453,7 +453,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return void
      */
-    protected function fillKeys(Queue $queue, $lo, $hi, RedBlackNode $node = null)
+    protected function fillKeys(Queue $queue, $lo, $hi, ?RedBlackNode $node): void
     {
         if ($node === null) {
             return;
@@ -512,7 +512,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return RedBlackNode|null
      */
-    protected function nodeRemoveMin(RedBlackNode $node)
+    protected function nodeRemoveMin(RedBlackNode $node): ?RedBlackNode
     {
         if ($node->left() === null) {
             return null;
@@ -534,7 +534,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return RedBlackNode|null
      */
-    protected function nodeRemoveMax(RedBlackNode $node)
+    protected function nodeRemoveMax(RedBlackNode $node): ?RedBlackNode
     {
         if ($this->isRed($node->left())) {
             $node = $this->rotateRight($node);
@@ -563,7 +563,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return RedBlackNode|null
      */
-    protected function nodeFloor($key, RedBlackNode $node = null)
+    protected function nodeFloor($key, ?RedBlackNode $node): ?RedBlackNode
     {
         if ($node === null) {
             return null;
@@ -595,7 +595,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return RedBlackNode|null
      */
-    protected function nodeCeiling($key, RedBlackNode $node = null)
+    protected function nodeCeiling($key, ?RedBlackNode $node): ?RedBlackNode
     {
         if ($node === null) {
             return null;
@@ -625,7 +625,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return int
      */
-    protected function nodeRank($key, RedBlackNode $node = null): int
+    protected function nodeRank($key, ?RedBlackNode $node): int
     {
         if ($node === null) {
             return 0;
@@ -719,7 +719,7 @@ class RedBlackSearchTree implements BinarySearchTree
      *
      * @return void
      */
-    protected function flipColors(RedBlackNode $node)
+    protected function flipColors(RedBlackNode $node): void
     {
         $node->setColor(!($node->color()));
         $node->left()->setColor(!($node->left()->color()));

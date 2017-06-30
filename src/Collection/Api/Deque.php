@@ -20,7 +20,7 @@ interface Deque extends ItemCollection
      *
      * @return void
      */
-    public function addFirst($item);
+    public function addFirst($item): void;
 
     /**
      * Adds an item to the end
@@ -29,7 +29,7 @@ interface Deque extends ItemCollection
      *
      * @return void
      */
-    public function addLast($item);
+    public function addLast($item): void;
 
     /**
      * Removes and returns the first item

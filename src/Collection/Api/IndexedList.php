@@ -22,7 +22,7 @@ interface IndexedList extends ArrayAccess, ItemCollection
      *
      * @return void
      */
-    public function add($item);
+    public function add($item): void;
 
     /**
      * Replaces an item at an index
@@ -34,7 +34,7 @@ interface IndexedList extends ArrayAccess, ItemCollection
      *
      * @throws IndexException When the index is not defined
      */
-    public function set(int $index, $item);
+    public function set(int $index, $item): void;
 
     /**
      * Retrieves an item by index
@@ -63,7 +63,7 @@ interface IndexedList extends ArrayAccess, ItemCollection
      *
      * @return void
      */
-    public function remove(int $index);
+    public function remove(int $index): void;
 
     /**
      * Sets or appends an item
@@ -75,7 +75,7 @@ interface IndexedList extends ArrayAccess, ItemCollection
      *
      * @throws IndexException When the index is not defined
      */
-    public function offsetSet($index, $item);
+    public function offsetSet($index, $item): void;
 
     /**
      * Retrieves an item by index
@@ -104,7 +104,7 @@ interface IndexedList extends ArrayAccess, ItemCollection
      *
      * @return void
      */
-    public function offsetUnset($index);
+    public function offsetUnset($index): void;
 
     /**
      * Sorts the list using a comparator function
@@ -123,7 +123,7 @@ interface IndexedList extends ArrayAccess, ItemCollection
      *
      * @return void
      */
-    public function sort(callable $comparator);
+    public function sort(callable $comparator): void;
 
     /**
      * Retrieves the first value
@@ -148,35 +148,35 @@ interface IndexedList extends ArrayAccess, ItemCollection
      *
      * @return void
      */
-    public function rewind();
+    public function rewind(): void;
 
     /**
      * Sets the internal pointer to the last item
      *
      * @return void
      */
-    public function end();
+    public function end(): void;
 
     /**
      * Checks if the internal pointer is at a valid index
      *
      * @return bool
      */
-    public function valid();
+    public function valid(): bool;
 
     /**
      * Moves the internal pointer to the next value
      *
      * @return void
      */
-    public function next();
+    public function next(): void;
 
     /**
      * Moves the internal pointer to the previous value
      *
      * @return void
      */
-    public function prev();
+    public function prev(): void;
 
     /**
      * Retrieves the index of the internal pointer
@@ -186,7 +186,7 @@ interface IndexedList extends ArrayAccess, ItemCollection
      *
      * @return int|null
      */
-    public function key();
+    public function key(): ?int;
 
     /**
      * Retrieves the value at the internal pointer

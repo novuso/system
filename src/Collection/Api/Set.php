@@ -18,7 +18,7 @@ interface Set extends ItemCollection
      *
      * @return void
      */
-    public function add($item);
+    public function add($item): void;
 
     /**
      * Checks if an item is in the set
@@ -36,7 +36,7 @@ interface Set extends ItemCollection
      *
      * @return void
      */
-    public function remove($item);
+    public function remove($item): void;
 
     /**
      * Retrieves the symmetric difference
@@ -49,9 +49,9 @@ interface Set extends ItemCollection
      *
      * @param Set $other The other set
      *
-     * @return Set
+     * @return static
      */
-    public function difference(Set $other): Set;
+    public function difference(Set $other);
 
     /**
      * Retrieves the intersection
@@ -63,9 +63,9 @@ interface Set extends ItemCollection
      *
      * @param Set $other The other set
      *
-     * @return Set
+     * @return static
      */
-    public function intersection(Set $other): Set;
+    public function intersection(Set $other);
 
     /**
      * Retrieves the relative complement
@@ -77,9 +77,9 @@ interface Set extends ItemCollection
      *
      * @param Set $other The other set
      *
-     * @return Set
+     * @return static
      */
-    public function complement(Set $other): Set;
+    public function complement(Set $other);
 
     /**
      * Retrieves the union
@@ -91,7 +91,7 @@ interface Set extends ItemCollection
      *
      * @param Set $other The other set
      *
-     * @return Set
+     * @return static
      */
-    public function union(Set $other): Set;
+    public function union(Set $other);
 }

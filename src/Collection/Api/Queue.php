@@ -20,7 +20,7 @@ interface Queue extends ItemCollection
      *
      * @return void
      */
-    public function enqueue($item);
+    public function enqueue($item): void;
 
     /**
      * Removes and returns the front item

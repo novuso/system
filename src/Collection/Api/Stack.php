@@ -20,7 +20,7 @@ interface Stack extends ItemCollection
      *
      * @return void
      */
-    public function push($item);
+    public function push($item): void;
 
     /**
      * Removes and returns the top item
