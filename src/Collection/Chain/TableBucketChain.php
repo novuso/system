@@ -173,7 +173,7 @@ class TableBucketChain implements Countable
      *
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->current = $this->head->next();
         $this->offset = 0;
@@ -184,7 +184,7 @@ class TableBucketChain implements Countable
      *
      * @return void
      */
-    public function end()
+    public function end(): void
     {
         $this->current = $this->tail->prev();
         $this->offset = $this->count - 1;
@@ -205,7 +205,7 @@ class TableBucketChain implements Countable
      *
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         if ($this->current instanceof TerminalBucket) {
             return;
@@ -220,7 +220,7 @@ class TableBucketChain implements Countable
      *
      * @return void
      */
-    public function prev()
+    public function prev(): void
     {
         if ($this->current instanceof TerminalBucket) {
             return;
@@ -305,7 +305,7 @@ class TableBucketChain implements Countable
      *
      * @return KeyValueBucket|null
      */
-    protected function locate($key)
+    protected function locate($key): ?KeyValueBucket
     {
         for ($this->rewind(); $this->valid(); $this->next()) {
             /** @var KeyValueBucket $current */
@@ -325,7 +325,7 @@ class TableBucketChain implements Countable
      *
      * @return void
      */
-    protected function removeBucket(Bucket $bucket)
+    protected function removeBucket(Bucket $bucket): void
     {
         $next = $bucket->next();
         $prev = $bucket->prev();
@@ -346,7 +346,7 @@ class TableBucketChain implements Countable
      *
      * @return void
      */
-    protected function insertBetween($key, $value, Bucket $prev, Bucket $next)
+    protected function insertBetween($key, $value, Bucket $prev, Bucket $next): void
     {
         $bucket = new KeyValueBucket($key, $value);
 

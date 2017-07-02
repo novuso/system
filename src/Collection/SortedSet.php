@@ -52,7 +52,7 @@ class SortedSet implements Arrayable, OrderedSet
      * @param Comparator  $comparator The comparator
      * @param string|null $itemType   The item type
      */
-    public function __construct(Comparator $comparator, string $itemType = null)
+    public function __construct(Comparator $comparator, ?string $itemType = null)
     {
         $this->comparator = $comparator;
         $this->tree = new RedBlackSearchTree($this->comparator);
@@ -73,7 +73,7 @@ class SortedSet implements Arrayable, OrderedSet
      *
      * @return SortedSet
      */
-    public static function create(Comparator $comparator, string $itemType = null): SortedSet
+    public static function create(Comparator $comparator, ?string $itemType = null): SortedSet
     {
         return new static($comparator, $itemType);
     }
@@ -90,7 +90,7 @@ class SortedSet implements Arrayable, OrderedSet
      *
      * @return SortedSet
      */
-    public static function comparable(string $itemType = null): SortedSet
+    public static function comparable(?string $itemType = null): SortedSet
     {
         assert(
             Validate::isNull($itemType) || Validate::implementsInterface($itemType, Comparable::class),
@@ -149,7 +149,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function add($item)
+    public function add($item): void
     {
         assert(
             Validate::isType($item, $this->itemType()),
@@ -170,7 +170,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function remove($item)
+    public function remove($item): void
     {
         $this->tree->remove($item);
     }
@@ -178,7 +178,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function difference(OrderedSet $other): OrderedSet
+    public function difference(OrderedSet $other): SortedSet
     {
         $difference = static::create($this->comparator, $this->itemType());
 
@@ -195,7 +195,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function intersection(OrderedSet $other): OrderedSet
+    public function intersection(OrderedSet $other): SortedSet
     {
         $intersection = static::create($this->comparator, $this->itemType());
 
@@ -207,7 +207,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function complement(OrderedSet $other): OrderedSet
+    public function complement(OrderedSet $other): SortedSet
     {
         $complement = static::create($this->comparator, $this->itemType());
 
@@ -223,7 +223,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function union(OrderedSet $other): OrderedSet
+    public function union(OrderedSet $other): SortedSet
     {
         $union = static::create($this->comparator, $this->itemType());
 
@@ -268,7 +268,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function removeMin()
+    public function removeMin(): void
     {
         $this->tree->removeMin();
     }
@@ -276,7 +276,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function removeMax()
+    public function removeMax(): void
     {
         $this->tree->removeMax();
     }
@@ -316,7 +316,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback)
+    public function each(callable $callback): void
     {
         foreach ($this->getIterator() as $item) {
             call_user_func($callback, $item);
@@ -326,7 +326,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, Comparator $comparator, string $itemType = null): SortedSet
+    public function map(callable $callback, Comparator $comparator, ?string $itemType = null): SortedSet
     {
         $set = static::create($comparator, $itemType);
 

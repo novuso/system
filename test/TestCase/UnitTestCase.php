@@ -5,7 +5,7 @@ namespace Novuso\Test\System\TestCase;
 use Mockery;
 use Novuso\Test\System\Traits\MockObjects;
 use Novuso\Test\System\Traits\VirtualFileSystem;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionObject;
 
 /**
@@ -15,7 +15,7 @@ use ReflectionObject;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class UnitTestCase extends PHPUnit_Framework_TestCase
+class UnitTestCase extends TestCase
 {
     use MockObjects;
     use VirtualFileSystem;
@@ -29,7 +29,7 @@ class UnitTestCase extends PHPUnit_Framework_TestCase
     {
         $reflection = new ReflectionObject($this);
         foreach ($reflection->getProperties() as $prop) {
-            if (!$prop->isStatic() && 0 !== strpos($prop->getDeclaringClass()->getName(), 'PHPUnit_')) {
+            if (!$prop->isStatic() && 0 !== strpos($prop->getDeclaringClass()->getName(), 'PHPUnit')) {
                 $prop->setAccessible(true);
                 $prop->setValue($this, null);
             }

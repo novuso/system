@@ -47,7 +47,7 @@ class SortedTable implements OrderedTable
      * @param string|null $keyType    The key type
      * @param string|null $valueType  The value type
      */
-    public function __construct(Comparator $comparator, string $keyType = null, string $valueType = null)
+    public function __construct(Comparator $comparator, ?string $keyType = null, ?string $valueType = null)
     {
         $this->comparator = $comparator;
         $this->tree = new RedBlackSearchTree($this->comparator);
@@ -70,8 +70,11 @@ class SortedTable implements OrderedTable
      *
      * @return SortedTable
      */
-    public static function create(Comparator $comparator, string $keyType = null, string $valueType = null): SortedTable
-    {
+    public static function create(
+        Comparator $comparator,
+        ?string $keyType = null,
+        ?string $valueType = null
+    ): SortedTable {
         return new static($comparator, $keyType, $valueType);
     }
 
@@ -92,7 +95,7 @@ class SortedTable implements OrderedTable
      *
      * @return SortedTable
      */
-    public static function comparable(string $keyType = null, string $valueType = null): SortedTable
+    public static function comparable(?string $keyType = null, ?string $valueType = null): SortedTable
     {
         assert(
             Validate::isNull($keyType) || Validate::implementsInterface($keyType, Comparable::class),
@@ -115,7 +118,7 @@ class SortedTable implements OrderedTable
      *
      * @return SortedTable
      */
-    public static function float(string $valueType = null): SortedTable
+    public static function float(?string $valueType = null): SortedTable
     {
         return new static(new FloatComparator(), 'float', $valueType);
     }
@@ -133,7 +136,7 @@ class SortedTable implements OrderedTable
      *
      * @return SortedTable
      */
-    public static function integer(string $valueType = null): SortedTable
+    public static function integer(?string $valueType = null): SortedTable
     {
         return new static(new IntegerComparator(), 'int', $valueType);
     }
@@ -151,7 +154,7 @@ class SortedTable implements OrderedTable
      *
      * @return SortedTable
      */
-    public static function string(string $valueType = null): SortedTable
+    public static function string(?string $valueType = null): SortedTable
     {
         return new static(new StringComparator(), 'string', $valueType);
     }
@@ -175,7 +178,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value)
+    public function set($key, $value): void
     {
         assert(
             Validate::isType($key, $this->keyType()),
@@ -208,7 +211,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function remove($key)
+    public function remove($key): void
     {
         $this->tree->remove($key);
     }
@@ -216,7 +219,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($key, $value): void
     {
         $this->set($key, $value);
     }
@@ -240,7 +243,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($key)
+    public function offsetUnset($key): void
     {
         $this->remove($key);
     }
@@ -288,7 +291,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function removeMin()
+    public function removeMin(): void
     {
         $this->tree->removeMin();
     }
@@ -296,7 +299,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function removeMax()
+    public function removeMax(): void
     {
         $this->tree->removeMax();
     }
@@ -336,7 +339,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback)
+    public function each(callable $callback): void
     {
         foreach ($this->getIterator() as $key => $value) {
             call_user_func($callback, $value, $key);
@@ -346,7 +349,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, string $valueType = null): SortedTable
+    public function map(callable $callback, ?string $valueType = null): SortedTable
     {
         $table = static::create($this->comparator, $this->keyType(), $valueType);
 

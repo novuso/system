@@ -24,7 +24,7 @@ interface ItemCollection extends Collection
      *
      * @return ItemCollection
      */
-    public static function of(string $itemType = null);
+    public static function of(?string $itemType = null);
 
     /**
      * Retrieves the item type
@@ -33,7 +33,7 @@ interface ItemCollection extends Collection
      *
      * @return string|null
      */
-    public function itemType();
+    public function itemType(): ?string;
 
     /**
      * Applies a callback function to every item
@@ -48,7 +48,7 @@ interface ItemCollection extends Collection
      *
      * @return void
      */
-    public function each(callable $callback);
+    public function each(callable $callback): void;
 
     /**
      * Creates a collection from the results of a function
@@ -64,7 +64,7 @@ interface ItemCollection extends Collection
      *
      * @return ItemCollection
      */
-    public function map(callable $callback, string $itemType = null);
+    public function map(callable $callback, ?string $itemType = null);
 
     /**
      * Retrieves the first item that passes a truth test

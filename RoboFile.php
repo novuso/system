@@ -108,7 +108,7 @@ class RoboFile extends Tasks
             $command->option('optimize-autoloader');
         }
         $command
-            ->printed(true)
+            ->printOutput(true)
             ->run();
         $this->info('Composer dependencies installed');
     }
@@ -135,7 +135,7 @@ class RoboFile extends Tasks
             $command->option('optimize-autoloader');
         }
         $command
-            ->printed(true)
+            ->printOutput(true)
             ->run();
         $this->info('Composer dependencies updated');
     }
@@ -154,7 +154,7 @@ class RoboFile extends Tasks
         $command
             ->arg('update')
             ->option('lock')
-            ->printed(true)
+            ->printOutput(true)
             ->run();
         $this->info('Composer lock file updated');
     }
@@ -225,7 +225,7 @@ class RoboFile extends Tasks
         $command
             ->option(sprintf('standard=%s/phpcs.xml', $paths['build']))
             ->arg($paths['src'])
-            ->printed($report ? false : true)
+            ->printOutput($report ? false : true)
             ->run();
         $this->info('PHP source files passed code style check');
     }
@@ -251,7 +251,7 @@ class RoboFile extends Tasks
             $command
                 ->arg('-l')
                 ->arg($file->getRealPath())
-                ->printed(false)
+                ->printOutput(false)
                 ->run();
         }
         $this->info('PHP source files passed syntax check');
@@ -272,7 +272,7 @@ class RoboFile extends Tasks
             ->arg(sprintf('%s/phpunit', $paths['lib']))
             ->option('configuration', $paths['build'])
             ->option('testsuite', 'complete')
-            ->printed(true)
+            ->printOutput(true)
             ->run();
         $this->info('Project passed all PHPUnit test suites');
     }
@@ -290,7 +290,7 @@ class RoboFile extends Tasks
      */
     private function info($message)
     {
-        $this->say(sprintf('<%s>%s</>', 'fg=blue', $message));
+        $this->say(sprintf('<%s>%s</>', 'fg=green', $message));
     }
 
     /**

@@ -8,7 +8,7 @@ use Novuso\Test\System\Resources\WeekDay;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Type\Enum
+ * @covers \Novuso\System\Type\Enum
  */
 class EnumTest extends UnitTestCase
 {
@@ -22,6 +22,12 @@ class EnumTest extends UnitTestCase
     {
         $weekDay = WeekDay::SUNDAY();
         $this->assertInstanceOf(WeekDay::class, $weekDay);
+    }
+
+    public function test_that_from_string_returns_expected_instance()
+    {
+        $weekDay = WeekDay::fromString('WeekDay::THURSDAY');
+        $this->assertSame('THURSDAY', $weekDay->name());
     }
 
     public function test_that_from_name_returns_instance_with_same_name()
@@ -44,12 +50,12 @@ class EnumTest extends UnitTestCase
 
     public function test_that_to_string_returns_expected_string()
     {
-        $this->assertSame('WeekDay.WEDNESDAY', WeekDay::WEDNESDAY()->toString());
+        $this->assertSame('WeekDay::WEDNESDAY', WeekDay::WEDNESDAY()->toString());
     }
 
     public function test_that_string_cast_returns_expected_string()
     {
-        $this->assertSame('WeekDay.FRIDAY', (string) WeekDay::FRIDAY());
+        $this->assertSame('WeekDay::FRIDAY', (string) WeekDay::FRIDAY());
     }
 
     public function test_that_it_is_json_encodable()
@@ -62,7 +68,7 @@ class EnumTest extends UnitTestCase
     {
         $state = serialize(WeekDay::FRIDAY());
         $weekDay = unserialize($state);
-        $this->assertSame('WeekDay.FRIDAY', (string) $weekDay);
+        $this->assertSame('WeekDay::FRIDAY', (string) $weekDay);
     }
 
     public function test_that_equals_returns_true_for_same_instance()

@@ -27,7 +27,7 @@ interface OrderedItemCollection extends Collection
      *
      * @return OrderedItemCollection
      */
-    public static function create(Comparator $comparator, string $itemType = null);
+    public static function create(Comparator $comparator, ?string $itemType = null);
 
     /**
      * Creates collection of comparable items
@@ -41,7 +41,7 @@ interface OrderedItemCollection extends Collection
      *
      * @return OrderedItemCollection
      */
-    public static function comparable(string $itemType = null);
+    public static function comparable(?string $itemType = null);
 
     /**
      * Creates collection of floats
@@ -71,7 +71,7 @@ interface OrderedItemCollection extends Collection
      *
      * @return string|null
      */
-    public function itemType();
+    public function itemType(): ?string;
 
     /**
      * Applies a callback function to every item
@@ -86,7 +86,7 @@ interface OrderedItemCollection extends Collection
      *
      * @return void
      */
-    public function each(callable $callback);
+    public function each(callable $callback): void;
 
     /**
      * Creates a collection from the results of a function
@@ -103,7 +103,7 @@ interface OrderedItemCollection extends Collection
      *
      * @return OrderedItemCollection
      */
-    public function map(callable $callback, Comparator $comparator, string $itemType = null);
+    public function map(callable $callback, Comparator $comparator, ?string $itemType = null);
 
     /**
      * Retrieves the first item that passes a truth test

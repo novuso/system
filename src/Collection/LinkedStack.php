@@ -40,7 +40,7 @@ class LinkedStack implements Arrayable, Stack
      *
      * @param string|null $itemType The item type
      */
-    public function __construct(string $itemType = null)
+    public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
         $this->list = new SplDoublyLinkedList();
@@ -61,7 +61,7 @@ class LinkedStack implements Arrayable, Stack
      *
      * @return LinkedStack
      */
-    public static function of(string $itemType = null): LinkedStack
+    public static function of(?string $itemType = null): LinkedStack
     {
         return new static($itemType);
     }
@@ -85,7 +85,7 @@ class LinkedStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function push($item)
+    public function push($item): void
     {
         assert(
             Validate::isType($item, $this->itemType()),
@@ -122,7 +122,7 @@ class LinkedStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback)
+    public function each(callable $callback): void
     {
         foreach ($this->getIterator() as $item) {
             call_user_func($callback, $item);
@@ -132,7 +132,7 @@ class LinkedStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, string $itemType = null): LinkedStack
+    public function map(callable $callback, ?string $itemType = null): LinkedStack
     {
         $stack = static::of($itemType);
 

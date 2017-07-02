@@ -40,7 +40,7 @@ class LinkedQueue implements Arrayable, Queue
      *
      * @param string|null $itemType The item type
      */
-    public function __construct(string $itemType = null)
+    public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
         $this->list = new SplDoublyLinkedList();
@@ -61,7 +61,7 @@ class LinkedQueue implements Arrayable, Queue
      *
      * @return LinkedQueue
      */
-    public static function of(string $itemType = null): LinkedQueue
+    public static function of(?string $itemType = null): LinkedQueue
     {
         return new static($itemType);
     }
@@ -85,7 +85,7 @@ class LinkedQueue implements Arrayable, Queue
     /**
      * {@inheritdoc}
      */
-    public function enqueue($item)
+    public function enqueue($item): void
     {
         assert(
             Validate::isType($item, $this->itemType()),
@@ -122,7 +122,7 @@ class LinkedQueue implements Arrayable, Queue
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback)
+    public function each(callable $callback): void
     {
         foreach ($this->getIterator() as $item) {
             call_user_func($callback, $item);
@@ -132,7 +132,7 @@ class LinkedQueue implements Arrayable, Queue
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, string $itemType = null): LinkedQueue
+    public function map(callable $callback, ?string $itemType = null): LinkedQueue
     {
         $queue = static::of($itemType);
 

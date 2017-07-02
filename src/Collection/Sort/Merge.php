@@ -26,7 +26,7 @@ class Merge
      *
      * @return void
      */
-    public static function sort(array &$arr, callable $comp)
+    public static function sort(array &$arr, callable $comp): void
     {
         $aux = $arr;
         static::partition($aux, $arr, 0, count($arr) - 1, $comp);
@@ -43,7 +43,7 @@ class Merge
      *
      * @return void
      */
-    protected static function partition(array &$src, array &$dst, int $lo, int $hi, callable $comp)
+    protected static function partition(array &$src, array &$dst, int $lo, int $hi, callable $comp): void
     {
         if ($hi <= $lo + static::SORT_CUTOFF) {
             static::insertionSort($dst, $lo, $hi, $comp);
@@ -78,7 +78,7 @@ class Merge
      *
      * @return void
      */
-    protected static function merge(array &$src, array &$dst, int $lo, int $mid, int $hi, callable $comp)
+    protected static function merge(array &$src, array &$dst, int $lo, int $mid, int $hi, callable $comp): void
     {
         $i = $lo;
         $j = $mid + 1;
@@ -105,7 +105,7 @@ class Merge
      *
      * @return void
      */
-    protected static function insertionSort(array &$arr, int $lo, int $hi, callable $comp)
+    protected static function insertionSort(array &$arr, int $lo, int $hi, callable $comp): void
     {
         for ($i = $lo; $i <= $hi; $i++) {
             for ($j = $i; $j > $lo && static::lt($arr[$j], $arr[$j - 1], $comp); $j--) {
@@ -123,7 +123,7 @@ class Merge
      *
      * @return void
      */
-    protected static function exch(array &$arr, int $i, int $j)
+    protected static function exch(array &$arr, int $i, int $j): void
     {
         $temp = $arr[$i];
         $arr[$i] = $arr[$j];

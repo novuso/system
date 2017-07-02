@@ -40,7 +40,7 @@ class LinkedDeque implements Arrayable, Deque
      *
      * @param string|null $itemType The item type
      */
-    public function __construct(string $itemType = null)
+    public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
         $this->list = new SplDoublyLinkedList();
@@ -61,7 +61,7 @@ class LinkedDeque implements Arrayable, Deque
      *
      * @return LinkedDeque
      */
-    public static function of(string $itemType = null): LinkedDeque
+    public static function of(?string $itemType = null): LinkedDeque
     {
         return new static($itemType);
     }
@@ -85,7 +85,7 @@ class LinkedDeque implements Arrayable, Deque
     /**
      * {@inheritdoc}
      */
-    public function addFirst($item)
+    public function addFirst($item): void
     {
         assert(
             Validate::isType($item, $this->itemType()),
@@ -98,7 +98,7 @@ class LinkedDeque implements Arrayable, Deque
     /**
      * {@inheritdoc}
      */
-    public function addLast($item)
+    public function addLast($item): void
     {
         assert(
             Validate::isType($item, $this->itemType()),
@@ -159,7 +159,7 @@ class LinkedDeque implements Arrayable, Deque
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback)
+    public function each(callable $callback): void
     {
         foreach ($this->getIterator() as $item) {
             call_user_func($callback, $item);
@@ -169,7 +169,7 @@ class LinkedDeque implements Arrayable, Deque
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, string $itemType = null): LinkedDeque
+    public function map(callable $callback, ?string $itemType = null): LinkedDeque
     {
         $deque = static::of($itemType);
 

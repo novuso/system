@@ -34,7 +34,7 @@ trait KeyValueTypeMethods
      *
      * @return string|null
      */
-    public function keyType()
+    public function keyType(): ?string
     {
         return $this->keyType;
     }
@@ -46,7 +46,7 @@ trait KeyValueTypeMethods
      *
      * @return string|null
      */
-    public function valueType()
+    public function valueType(): ?string
     {
         return $this->valueType;
     }
@@ -64,7 +64,7 @@ trait KeyValueTypeMethods
      *
      * @return void
      */
-    protected function setKeyType(string $keyType = null)
+    protected function setKeyType(?string $keyType = null): void
     {
         if ($keyType !== null) {
             $keyType = trim($keyType);
@@ -86,7 +86,7 @@ trait KeyValueTypeMethods
      *
      * @return void
      */
-    protected function setValueType(string $valueType = null)
+    protected function setValueType(?string $valueType = null): void
     {
         if ($valueType !== null) {
             $valueType = trim($valueType);

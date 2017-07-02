@@ -25,7 +25,7 @@ interface KeyValueCollection extends Collection
      *
      * @return KeyValueCollection
      */
-    public static function of(string $keyType = null, string $valueType = null);
+    public static function of(?string $keyType = null, ?string $valueType = null);
 
     /**
      * Retrieves the key type
@@ -34,7 +34,7 @@ interface KeyValueCollection extends Collection
      *
      * @return string|null
      */
-    public function keyType();
+    public function keyType(): ?string;
 
     /**
      * Retrieves the value type
@@ -43,7 +43,7 @@ interface KeyValueCollection extends Collection
      *
      * @return string|null
      */
-    public function valueType();
+    public function valueType(): ?string;
 
     /**
      * Applies a callback function to every value
@@ -58,7 +58,7 @@ interface KeyValueCollection extends Collection
      *
      * @return void
      */
-    public function each(callable $callback);
+    public function each(callable $callback): void;
 
     /**
      * Creates a collection from the results of a function
@@ -76,7 +76,7 @@ interface KeyValueCollection extends Collection
      *
      * @return KeyValueCollection
      */
-    public function map(callable $callback, string $valueType = null);
+    public function map(callable $callback, ?string $valueType = null);
 
     /**
      * Retrieves the first key for a value that passes a truth test

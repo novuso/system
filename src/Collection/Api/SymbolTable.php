@@ -23,7 +23,7 @@ interface SymbolTable extends ArrayAccess, KeyValueCollection
      *
      * @return void
      */
-    public function set($key, $value);
+    public function set($key, $value): void;
 
     /**
      * Retrieves a value by key
@@ -52,7 +52,7 @@ interface SymbolTable extends ArrayAccess, KeyValueCollection
      *
      * @return void
      */
-    public function remove($key);
+    public function remove($key): void;
 
     /**
      * Sets a key-value pair
@@ -62,7 +62,7 @@ interface SymbolTable extends ArrayAccess, KeyValueCollection
      *
      * @return void
      */
-    public function offsetSet($key, $value);
+    public function offsetSet($key, $value): void;
 
     /**
      * Retrieves a value by key
@@ -91,7 +91,7 @@ interface SymbolTable extends ArrayAccess, KeyValueCollection
      *
      * @return void
      */
-    public function offsetUnset($key);
+    public function offsetUnset($key): void;
 
     /**
      * Retrieves an iterator for keys

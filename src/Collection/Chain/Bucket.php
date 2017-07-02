@@ -18,14 +18,14 @@ interface Bucket
      *
      * @return void
      */
-    public function setNext(Bucket $next = null);
+    public function setNext(?Bucket $next): void;
 
     /**
      * Retrieves the next bucket
      *
      * @return Bucket|null
      */
-    public function next();
+    public function next(): ?Bucket;
 
     /**
      * Sets the previous bucket
@@ -34,12 +34,12 @@ interface Bucket
      *
      * @return void
      */
-    public function setPrev(Bucket $prev = null);
+    public function setPrev(?Bucket $prev): void;
 
     /**
      * Retrieves the previous bucket
      *
      * @return Bucket|null
      */
-    public function prev();
+    public function prev(): ?Bucket;
 }

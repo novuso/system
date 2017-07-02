@@ -149,7 +149,7 @@ class SetBucketChain implements Countable
      *
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->current = $this->head->next();
         $this->offset = 0;
@@ -160,7 +160,7 @@ class SetBucketChain implements Countable
      *
      * @return void
      */
-    public function end()
+    public function end(): void
     {
         $this->current = $this->tail->prev();
         $this->offset = $this->count - 1;
@@ -181,7 +181,7 @@ class SetBucketChain implements Countable
      *
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         if ($this->current instanceof TerminalBucket) {
             return;
@@ -196,7 +196,7 @@ class SetBucketChain implements Countable
      *
      * @return void
      */
-    public function prev()
+    public function prev(): void
     {
         if ($this->current instanceof TerminalBucket) {
             return;
@@ -213,7 +213,7 @@ class SetBucketChain implements Countable
      *
      * @return int|null
      */
-    public function key()
+    public function key(): ?int
     {
         if ($this->current instanceof TerminalBucket) {
             return null;
@@ -276,7 +276,7 @@ class SetBucketChain implements Countable
      *
      * @return ItemBucket|null
      */
-    protected function locate($item)
+    protected function locate($item): ?ItemBucket
     {
         for ($this->rewind(); $this->valid(); $this->next()) {
             /** @var ItemBucket $current */
@@ -296,7 +296,7 @@ class SetBucketChain implements Countable
      *
      * @return void
      */
-    protected function removeBucket(Bucket $bucket)
+    protected function removeBucket(Bucket $bucket): void
     {
         $next = $bucket->next();
         $prev = $bucket->prev();
@@ -316,7 +316,7 @@ class SetBucketChain implements Countable
      *
      * @return void
      */
-    protected function insertBetween($item, Bucket $prev, Bucket $next)
+    protected function insertBetween($item, Bucket $prev, Bucket $next): void
     {
         $bucket = new ItemBucket($item);
 

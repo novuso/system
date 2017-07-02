@@ -102,6 +102,22 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
     }
 
     /**
+     * Creates instance from a string representation
+     *
+     * @param string $string The string representation
+     *
+     * @return Enum
+     *
+     * @throws DomainException When the string is invalid
+     */
+    final public static function fromString(string $string): Enum
+    {
+        $parts = explode('::', $string);
+
+        return self::fromName(end($parts));
+    }
+
+    /**
      * Creates instance from an enum constant name
      *
      * @param string $name The enum constant name
@@ -112,7 +128,7 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      */
     final public static function fromName(string $name): Enum
     {
-        $constName = static::class.'::'.$name;
+        $constName = sprintf('%s::%s', static::class, $name);
 
         if (!defined($constName)) {
             $message = sprintf('%s is not a member constant of enum %s', $name, static::class);
@@ -156,8 +172,9 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
     {
         if (!isset(self::$constants[static::class])) {
             $reflection = new ReflectionClass(static::class);
-            self::guardConstants($reflection);
-            self::$constants[static::class] = self::sortConstants($reflection);
+            $constants = self::sortConstants($reflection);
+            self::guardConstants($constants);
+            self::$constants[static::class] = $constants;
         }
 
         return self::$constants[static::class];
@@ -216,7 +233,7 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      */
     final public function toString(): string
     {
-        return sprintf('%s.%s', ClassName::short(static::class), $this->name());
+        return sprintf('%s::%s', ClassName::short(static::class), $this->name());
     }
 
     /**
@@ -256,7 +273,7 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      *
      * @return void
      */
-    final public function unserialize($serialized)
+    final public function unserialize($serialized): void
     {
         $data = unserialize($serialized);
         $this->__construct($data['value']);
@@ -306,18 +323,17 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
     /**
      * Validates enum constants
      *
-     * @param ReflectionClass $reflection The reflection instance
+     * @param array $constants The enum constants
      *
      * @return void
      *
      * @throws DomainException When more than one constant has the same value
      */
-    final private static function guardConstants(ReflectionClass $reflection)
+    final private static function guardConstants(array $constants): void
     {
-        $constants = $reflection->getConstants();
         $duplicates = [];
         foreach ($constants as $value) {
-            $names = array_keys($constants, $value, true);
+            $names = array_keys($constants, $value, $strict = true);
             if (count($names) > 1) {
                 $duplicates[VarPrinter::toString($value)] = $names;
             }
@@ -342,9 +358,16 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
     {
         $constants = [];
         while ($reflection && __CLASS__ !== $reflection->getName()) {
-            $constants = $reflection->getConstants() + $constants;
+            $scope = [];
+            foreach ($reflection->getReflectionConstants() as $const) {
+                if ($const->isPublic()) {
+                    $scope[$const->getName()] = $const->getValue();
+                }
+            }
+            $constants = $scope + $constants;
             $reflection = $reflection->getParentClass();
         }
+
 
         return $constants;
     }

@@ -7,7 +7,7 @@ use Novuso\System\Collection\Chain\SetBucketChain;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Type\Arrayable;
-use Novuso\System\Utility\Hasher;
+use Novuso\System\Utility\FastHasher;
 use Novuso\System\Utility\Validate;
 use Traversable;
 
@@ -47,7 +47,7 @@ class HashSet implements Arrayable, Set
      *
      * @param string|null $itemType The item type
      */
-    public function __construct(string $itemType = null)
+    public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
         $this->buckets = [];
@@ -67,7 +67,7 @@ class HashSet implements Arrayable, Set
      *
      * @return HashSet
      */
-    public static function of(string $itemType = null): HashSet
+    public static function of(?string $itemType = null): HashSet
     {
         return new static($itemType);
     }
@@ -91,14 +91,14 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function add($item)
+    public function add($item): void
     {
         assert(
             Validate::isType($item, $this->itemType()),
             $this->itemTypeError('add', $item)
         );
 
-        $hash = Hasher::hash($item);
+        $hash = FastHasher::hash($item);
 
         if (!isset($this->buckets[$hash])) {
             $this->buckets[$hash] = new SetBucketChain();
@@ -114,7 +114,7 @@ class HashSet implements Arrayable, Set
      */
     public function contains($item): bool
     {
-        $hash = Hasher::hash($item);
+        $hash = FastHasher::hash($item);
 
         if (!isset($this->buckets[$hash])) {
             return false;
@@ -126,9 +126,9 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function remove($item)
+    public function remove($item): void
     {
-        $hash = Hasher::hash($item);
+        $hash = FastHasher::hash($item);
 
         if (isset($this->buckets[$hash])) {
             if ($this->buckets[$hash]->remove($item)) {
@@ -143,7 +143,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function difference(Set $other): Set
+    public function difference(Set $other): HashSet
     {
         $difference = static::of($this->itemType());
 
@@ -160,7 +160,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function intersection(Set $other): Set
+    public function intersection(Set $other): HashSet
     {
         $intersection = static::of($this->itemType());
 
@@ -172,7 +172,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function complement(Set $other): Set
+    public function complement(Set $other): HashSet
     {
         $complement = static::of($this->itemType());
 
@@ -188,7 +188,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function union(Set $other): Set
+    public function union(Set $other): HashSet
     {
         $union = static::of($this->itemType());
 
@@ -201,7 +201,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback)
+    public function each(callable $callback): void
     {
         foreach ($this->getIterator() as $item) {
             call_user_func($callback, $item);
@@ -211,7 +211,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, string $itemType = null): HashSet
+    public function map(callable $callback, ?string $itemType = null): HashSet
     {
         $set = static::of($itemType);
 
@@ -320,13 +320,13 @@ class HashSet implements Arrayable, Set
      */
     public function getIterator(): Traversable
     {
-        return call_user_func(function (array $buckets) {
+        return new GeneratorIterator(function (array $buckets) {
             foreach ($buckets as $chain) {
                 for ($chain->rewind(); $chain->valid(); $chain->next()) {
                     yield $chain->current();
                 }
             }
-        }, $this->buckets);
+        }, [$this->buckets]);
     }
 
     /**

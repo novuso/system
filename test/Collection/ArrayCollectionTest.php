@@ -7,7 +7,7 @@ use Novuso\Test\System\Resources\WeekDay;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\ArrayCollection
+ * @covers \Novuso\System\Collection\ArrayCollection
  */
 class ArrayCollectionTest extends UnitTestCase
 {
@@ -765,6 +765,19 @@ class ArrayCollectionTest extends UnitTestCase
         $this->assertSame($expected, $collection->where('last_name', 'Smith')->values()->toArray());
     }
 
+    public function test_that_where_returns_empty_set_for_invalid_key()
+    {
+        $data = [
+            ['first_name' => 'John', 'last_name' => 'Smith'],
+            ['first_name' => 'Jimmy', 'last_name' => 'Smith'],
+            ['first_name' => 'Sally', 'last_name' => 'Klien'],
+            ['first_name' => 'Leeroy', 'last_name' => 'Jenkins']
+        ];
+        $collection = ArrayCollection::create($data);
+        $expected = [];
+        $this->assertSame($expected, $collection->where('last', 'Smith')->values()->toArray());
+    }
+
     public function test_that_where_in_returns_expected_value()
     {
         $data = [
@@ -780,6 +793,19 @@ class ArrayCollectionTest extends UnitTestCase
             ['first_name' => 'Leeroy', 'last_name' => 'Jenkins']
         ];
         $this->assertSame($expected, $collection->whereIn('last_name', ['Smith', 'Jenkins'])->values()->toArray());
+    }
+
+    public function test_that_where_in_returns_empty_set_for_invalid_key()
+    {
+        $data = [
+            ['first_name' => 'John', 'last_name' => 'Smith'],
+            ['first_name' => 'Jimmy', 'last_name' => 'Smith'],
+            ['first_name' => 'Sally', 'last_name' => 'Klien'],
+            ['first_name' => 'Leeroy', 'last_name' => 'Jenkins']
+        ];
+        $collection = ArrayCollection::create($data);
+        $expected = [];
+        $this->assertSame($expected, $collection->whereIn('last', ['Smith', 'Jenkins'])->values()->toArray());
     }
 
     public function test_that_slice_returns_expected_value()

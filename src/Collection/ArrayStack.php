@@ -46,7 +46,7 @@ class ArrayStack implements Arrayable, Stack
      *
      * @param string|null $itemType The item type
      */
-    public function __construct(string $itemType = null)
+    public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
         $this->items = [];
@@ -66,7 +66,7 @@ class ArrayStack implements Arrayable, Stack
      *
      * @return ArrayStack
      */
-    public static function of(string $itemType = null): ArrayStack
+    public static function of(?string $itemType = null): ArrayStack
     {
         return new static($itemType);
     }
@@ -90,7 +90,7 @@ class ArrayStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function push($item)
+    public function push($item): void
     {
         assert(
             Validate::isType($item, $this->itemType()),
@@ -135,7 +135,7 @@ class ArrayStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback)
+    public function each(callable $callback): void
     {
         foreach ($this->getIterator() as $item) {
             call_user_func($callback, $item);
@@ -145,7 +145,7 @@ class ArrayStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, string $itemType = null): ArrayStack
+    public function map(callable $callback, ?string $itemType = null): ArrayStack
     {
         $stack = static::of($itemType);
 
@@ -297,7 +297,7 @@ class ArrayStack implements Arrayable, Stack
              *
              * @return void
              */
-            public function rewind()
+            public function rewind(): void
             {
                 $this->index = $this->count - 1;
             }
@@ -317,7 +317,7 @@ class ArrayStack implements Arrayable, Stack
              *
              * @return int|null
              */
-            public function key()
+            public function key(): ?int
             {
                 if (!$this->valid()) {
                     return null;
@@ -345,7 +345,7 @@ class ArrayStack implements Arrayable, Stack
              *
              * @return void
              */
-            public function next()
+            public function next(): void
             {
                 $this->index--;
             }

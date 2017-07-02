@@ -6,7 +6,7 @@ use Novuso\System\Utility\Validate;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Utility\Validate
+ * @covers \Novuso\System\Utility\Validate
  */
 class ValidateTest extends UnitTestCase
 {
