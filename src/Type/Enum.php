@@ -333,7 +333,7 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
     {
         $duplicates = [];
         foreach ($constants as $value) {
-            $names = array_keys($constants, $value, true);
+            $names = array_keys($constants, $value, $strict = true);
             if (count($names) > 1) {
                 $duplicates[VarPrinter::toString($value)] = $names;
             }

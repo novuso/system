@@ -7,3 +7,10 @@
     dest: "/home/{{ ansible_user_id }}/.bashrc"
     line: "cd /vagrant"
     state: present
+
+- name: "composer install"
+  composer:
+    command: "install"
+    working_dir: "{{ app_root_dir }}"
+    no_dev: false
+    optimize_autoloader: false
