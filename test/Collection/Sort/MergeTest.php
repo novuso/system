@@ -11,11 +11,11 @@ use Novuso\Test\System\Resources\User;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\Sort\Merge
- * @covers Novuso\System\Collection\Compare\ComparableComparator
- * @covers Novuso\System\Collection\Compare\FloatComparator
- * @covers Novuso\System\Collection\Compare\IntegerComparator
- * @covers Novuso\System\Collection\Compare\StringComparator
+ * @covers \Novuso\System\Collection\Sort\Merge
+ * @covers \Novuso\System\Collection\Compare\ComparableComparator
+ * @covers \Novuso\System\Collection\Compare\FloatComparator
+ * @covers \Novuso\System\Collection\Compare\IntegerComparator
+ * @covers \Novuso\System\Collection\Compare\StringComparator
  */
 class MergeTest extends UnitTestCase
 {

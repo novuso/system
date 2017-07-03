@@ -7,7 +7,7 @@ use Novuso\Test\System\Resources\WeekDay;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\SortedTable
+ * @covers \Novuso\System\Collection\SortedTable
  */
 class SortedTableTest extends UnitTestCase
 {

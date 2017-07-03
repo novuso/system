@@ -6,7 +6,7 @@ use Novuso\System\Collection\ArrayStack;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\ArrayStack
+ * @covers \Novuso\System\Collection\ArrayStack
  */
 class ArrayStackTest extends UnitTestCase
 {

@@ -6,7 +6,7 @@ use Novuso\System\Collection\Chain\KeyValueBucket;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\Chain\KeyValueBucket
+ * @covers \Novuso\System\Collection\Chain\KeyValueBucket
  */
 class KeyValueBucketTest extends UnitTestCase
 {

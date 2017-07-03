@@ -6,8 +6,8 @@ use Novuso\System\Collection\HashTable;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\HashTable
- * @covers Novuso\System\Collection\Traits\KeyValueTypeMethods
+ * @covers \Novuso\System\Collection\HashTable
+ * @covers \Novuso\System\Collection\Traits\KeyValueTypeMethods
  */
 class HashTableTest extends UnitTestCase
 {

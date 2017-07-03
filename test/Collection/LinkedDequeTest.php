@@ -6,7 +6,7 @@ use Novuso\System\Collection\LinkedDeque;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\LinkedDeque
+ * @covers \Novuso\System\Collection\LinkedDeque
  */
 class LinkedDequeTest extends UnitTestCase
 {

@@ -6,7 +6,7 @@ use Novuso\System\Collection\Chain\TerminalBucket;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\Chain\TerminalBucket
+ * @covers \Novuso\System\Collection\Chain\TerminalBucket
  */
 class TerminalBucketTest extends UnitTestCase
 {

@@ -7,7 +7,7 @@ use Novuso\Test\System\Resources\User;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Serialization\JsonSerializer
+ * @covers \Novuso\System\Serialization\JsonSerializer
  */
 class JsonSerializerTest extends UnitTestCase
 {
