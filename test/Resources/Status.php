@@ -6,6 +6,6 @@ use Novuso\System\Type\Enum;
 
 final class Status extends Enum
 {
-    const ON = 'on';
-    const OFF = 'off';
+    public const ON = 'on';
+    public const OFF = 'off';
 }

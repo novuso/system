@@ -16,14 +16,14 @@ class RedBlackNode
      *
      * @var bool
      */
-    const RED = true;
+    public const RED = true;
 
     /**
      * Black link
      *
      * @var bool
      */
-    const BLACK = false;
+    public const BLACK = false;
 
     /**
      * Left subtree
