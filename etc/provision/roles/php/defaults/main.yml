@@ -13,6 +13,7 @@ php_packages:
 - name: "php7.1-common"
 - name: "php7.1-cli"
 - name: "php7.1-fpm"
+- name: "php7.1-bcmath"
 - name: "php7.1-bz2"
 - name: "php7.1-curl"
 - name: "php7.1-gd"
