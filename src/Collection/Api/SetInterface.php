@@ -3,13 +3,13 @@
 namespace Novuso\System\Collection\Api;
 
 /**
- * Set is the interface for the set type
+ * SetInterface is the interface for the set type
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface Set extends ItemCollection
+interface SetInterface extends ItemCollectionInterface
 {
     /**
      * Adds an item
@@ -47,11 +47,11 @@ interface Set extends ItemCollection
      *
      * A ∆ B = {x : (x ∈ A) ⊕ (x ∈ B)}
      *
-     * @param Set $other The other set
+     * @param SetInterface $other The other set
      *
-     * @return Set
+     * @return SetInterface
      */
-    public function difference(Set $other);
+    public function difference(SetInterface $other);
 
     /**
      * Retrieves the intersection
@@ -61,11 +61,11 @@ interface Set extends ItemCollection
      *
      * A ∩ B = {x : x ∈ A ∧ x ∈ B}
      *
-     * @param Set $other The other set
+     * @param SetInterface $other The other set
      *
-     * @return Set
+     * @return SetInterface
      */
-    public function intersection(Set $other);
+    public function intersection(SetInterface $other);
 
     /**
      * Retrieves the relative complement
@@ -75,11 +75,11 @@ interface Set extends ItemCollection
      *
      * B \ A = {x : x ∈ B ∧ x ∉ A}
      *
-     * @param Set $other The other set
+     * @param SetInterface $other The other set
      *
-     * @return Set
+     * @return SetInterface
      */
-    public function complement(Set $other);
+    public function complement(SetInterface $other);
 
     /**
      * Retrieves the union
@@ -89,9 +89,9 @@ interface Set extends ItemCollection
      *
      * A ∪ B = {x : x ∈ A ∨ x ∈ B}
      *
-     * @param Set $other The other set
+     * @param SetInterface $other The other set
      *
-     * @return Set
+     * @return SetInterface
      */
-    public function union(Set $other);
+    public function union(SetInterface $other);
 }

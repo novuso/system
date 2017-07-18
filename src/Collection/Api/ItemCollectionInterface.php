@@ -3,55 +3,45 @@
 namespace Novuso\System\Collection\Api;
 
 /**
- * KeyValueCollection is the interface for key/value collections
+ * ItemCollectionInterface is the interface for item collections
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface KeyValueCollection extends Collection
+interface ItemCollectionInterface extends CollectionInterface
 {
     /**
-     * Creates collection with specific key and value types
+     * Creates collection of a specific item type
      *
-     * If types are not provided, the types are dynamic.
+     * If a type is not provided, the item type is dynamic.
      *
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      *
-     * @param string|null $keyType   The key type
-     * @param string|null $valueType The value type
+     * @param string|null $itemType The item type
      *
-     * @return KeyValueCollection
+     * @return ItemCollectionInterface
      */
-    public static function of(?string $keyType = null, ?string $valueType = null);
+    public static function of(?string $itemType = null);
 
     /**
-     * Retrieves the key type
+     * Retrieves the item type
      *
-     * Returns null if the key type is dynamic.
+     * Returns null if the collection type is dynamic.
      *
      * @return string|null
      */
-    public function keyType(): ?string;
+    public function itemType(): ?string;
 
     /**
-     * Retrieves the value type
-     *
-     * Returns null if the value type is dynamic.
-     *
-     * @return string|null
-     */
-    public function valueType(): ?string;
-
-    /**
-     * Applies a callback function to every value
+     * Applies a callback function to every item
      *
      * Callback signature:
      *
      * <code>
-     * function ($value, $key) {}
+     * function ($item) {}
      * </code>
      *
      * @param callable $callback The callback
@@ -63,30 +53,28 @@ interface KeyValueCollection extends Collection
     /**
      * Creates a collection from the results of a function
      *
-     * Keys are not affected.
-     *
      * Callback signature:
      *
      * <code>
-     * function ($value, $key): $newValue {}
+     * function ($item): $newItem {}
      * </code>
      *
-     * @param callable    $callback  The callback
-     * @param string|null $valueType The value type for the new collection
+     * @param callable    $callback The callback
+     * @param string|null $itemType The item type for the new collection
      *
-     * @return KeyValueCollection
+     * @return ItemCollectionInterface
      */
-    public function map(callable $callback, ?string $valueType = null);
+    public function map(callable $callback, ?string $itemType = null);
 
     /**
-     * Retrieves the first key for a value that passes a truth test
+     * Retrieves the first item that passes a truth test
      *
-     * Returns null if no key-value pair passes the test.
+     * Returns null if no item passes the test.
      *
      * Predicate signature:
      *
      * <code>
-     * function ($value, $key): bool {}
+     * function ($item): bool {}
      * </code>
      *
      * @param callable $predicate The predicate function
@@ -96,42 +84,42 @@ interface KeyValueCollection extends Collection
     public function find(callable $predicate);
 
     /**
-     * Creates a collection from values that pass a truth test
+     * Creates a collection from items that pass a truth test
      *
      * Predicate signature:
      *
      * <code>
-     * function ($value, $key): bool {}
+     * function ($item): bool {}
      * </code>
      *
      * @param callable $predicate The predicate function
      *
-     * @return KeyValueCollection
+     * @return ItemCollectionInterface
      */
     public function filter(callable $predicate);
 
     /**
-     * Creates a collection from values that fail a truth test
+     * Creates a collection from items that fail a truth test
      *
      * Predicate signature:
      *
      * <code>
-     * function ($value, $key): bool {}
+     * function ($item): bool {}
      * </code>
      *
      * @param callable $predicate The predicate function
      *
-     * @return KeyValueCollection
+     * @return ItemCollectionInterface
      */
     public function reject(callable $predicate);
 
     /**
-     * Checks if any values pass a truth test
+     * Checks if any items pass a truth test
      *
      * Predicate signature:
      *
      * <code>
-     * function ($value, $key): bool {}
+     * function ($item): bool {}
      * </code>
      *
      * @param callable $predicate The predicate function
@@ -141,12 +129,12 @@ interface KeyValueCollection extends Collection
     public function any(callable $predicate): bool;
 
     /**
-     * Checks if all values pass a truth test
+     * Checks if all items pass a truth test
      *
      * Predicate signature:
      *
      * <code>
-     * function ($value, $key): bool {}
+     * function ($item): bool {}
      * </code>
      *
      * @param callable $predicate The predicate function
@@ -158,19 +146,19 @@ interface KeyValueCollection extends Collection
     /**
      * Creates two collections based on a truth test
      *
-     * Values that pass the truth test are placed in the first collection.
+     * Items that pass the truth test are placed in the first collection.
      *
-     * Values that fail the truth test are placed in the second collection.
+     * Items that fail the truth test are placed in the second collection.
      *
      * Predicate signature:
      *
      * <code>
-     * function ($value, $key): bool {}
+     * function ($item): bool {}
      * </code>
      *
      * @param callable $predicate The predicate function
      *
-     * @return KeyValueCollection[]
+     * @return ItemCollectionInterface[]
      */
     public function partition(callable $predicate): array;
 }

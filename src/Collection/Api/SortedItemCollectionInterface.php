@@ -5,13 +5,13 @@ namespace Novuso\System\Collection\Api;
 use Novuso\System\Type\Comparator;
 
 /**
- * OrderedItemCollection is the interface for ordered item collections
+ * SortedItemCollectionInterface is the interface for sorted item collections
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface OrderedItemCollection extends Collection
+interface SortedItemCollectionInterface extends CollectionInterface
 {
     /**
      * Creates collection with a custom comparator
@@ -25,7 +25,7 @@ interface OrderedItemCollection extends Collection
      * @param Comparator  $comparator The comparator
      * @param string|null $itemType   The item type
      *
-     * @return OrderedItemCollection
+     * @return SortedItemCollectionInterface
      */
     public static function create(Comparator $comparator, ?string $itemType = null);
 
@@ -39,28 +39,28 @@ interface OrderedItemCollection extends Collection
      *
      * @param string|null $itemType The item type
      *
-     * @return OrderedItemCollection
+     * @return SortedItemCollectionInterface
      */
     public static function comparable(?string $itemType = null);
 
     /**
      * Creates collection of floats
      *
-     * @return OrderedItemCollection
+     * @return SortedItemCollectionInterface
      */
     public static function float();
 
     /**
      * Creates collection of integers
      *
-     * @return OrderedItemCollection
+     * @return SortedItemCollectionInterface
      */
     public static function integer();
 
     /**
      * Creates collection of strings
      *
-     * @return OrderedItemCollection
+     * @return SortedItemCollectionInterface
      */
     public static function string();
 
@@ -101,7 +101,7 @@ interface OrderedItemCollection extends Collection
      * @param Comparator  $comparator The comparator
      * @param string|null $itemType   The item type for the new collection
      *
-     * @return OrderedItemCollection
+     * @return SortedItemCollectionInterface
      */
     public function map(callable $callback, Comparator $comparator, ?string $itemType = null);
 
@@ -133,7 +133,7 @@ interface OrderedItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return OrderedItemCollection
+     * @return SortedItemCollectionInterface
      */
     public function filter(callable $predicate);
 
@@ -148,7 +148,7 @@ interface OrderedItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return OrderedItemCollection
+     * @return SortedItemCollectionInterface
      */
     public function reject(callable $predicate);
 
@@ -197,7 +197,7 @@ interface OrderedItemCollection extends Collection
      *
      * @param callable $predicate The predicate function
      *
-     * @return OrderedItemCollection[]
+     * @return SortedItemCollectionInterface[]
      */
     public function partition(callable $predicate): array;
 }

@@ -5,20 +5,20 @@ namespace Novuso\System\Serialization;
 use Novuso\System\Exception\DomainException;
 
 /**
- * Serializable is the interface for serializable types
+ * SerializableInterface is the interface for serializable types
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface Serializable
+interface SerializableInterface
 {
     /**
      * Creates instance from a serialized representation
      *
      * @param array $data The serialized representation
      *
-     * @return Serializable
+     * @return SerializableInterface
      *
      * @throws DomainException When the data is not valid
      */

@@ -3,7 +3,7 @@
 namespace Novuso\System\Collection;
 
 use Iterator;
-use Novuso\System\Collection\Api\Queue;
+use Novuso\System\Collection\Api\QueueInterface;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Type\Arrayable;
@@ -17,7 +17,7 @@ use Traversable;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class ArrayQueue implements Arrayable, Queue
+class ArrayQueue implements Arrayable, QueueInterface
 {
     use ItemTypeMethods;
 

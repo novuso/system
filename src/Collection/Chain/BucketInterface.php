@@ -3,43 +3,43 @@
 namespace Novuso\System\Collection\Chain;
 
 /**
- * Bucket is the interface for a bucket chain node
+ * BucketInterface is the interface for a bucket chain node
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface Bucket
+interface BucketInterface
 {
     /**
      * Sets the next bucket
      *
-     * @param Bucket|null $next The next bucket or null to unset
+     * @param BucketInterface|null $next The next bucket or null to unset
      *
      * @return void
      */
-    public function setNext(?Bucket $next): void;
+    public function setNext(?BucketInterface $next): void;
 
     /**
      * Retrieves the next bucket
      *
-     * @return Bucket|null
+     * @return BucketInterface|null
      */
-    public function next(): ?Bucket;
+    public function next(): ?BucketInterface;
 
     /**
      * Sets the previous bucket
      *
-     * @param Bucket|null $prev The previous bucket or null to unset
+     * @param BucketInterface|null $prev The previous bucket or null to unset
      *
      * @return void
      */
-    public function setPrev(?Bucket $prev): void;
+    public function setPrev(?BucketInterface $prev): void;
 
     /**
      * Retrieves the previous bucket
      *
-     * @return Bucket|null
+     * @return BucketInterface|null
      */
-    public function prev(): ?Bucket;
+    public function prev(): ?BucketInterface;
 }

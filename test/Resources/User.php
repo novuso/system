@@ -3,11 +3,11 @@
 namespace Novuso\Test\System\Resources;
 
 use Novuso\System\Exception\DomainException;
-use Novuso\System\Serialization\Serializable;
+use Novuso\System\Serialization\SerializableInterface;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Utility\Validate;
 
-class User implements Comparable, Serializable
+class User implements Comparable, SerializableInterface
 {
     protected $lastName;
     protected $firstName;
