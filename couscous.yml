@@ -1,0 +1,24 @@
+---
+template:
+    url: https://github.com/CouscousPHP/Template-Dark.git
+    index: index.md
+include:
+    - doc
+exclude:
+    - app
+    - bin
+    - etc
+    - src
+    - test
+    - var
+    - vendor
+    - %gitignore%
+branch: gh-pages
+
+title: Novuso System
+subTitle: System library for the Novuso Framework
+github:
+    user: novuso
+    repo: system
+
+baseUrl: http://novuso.github.io/system

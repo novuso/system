@@ -9,6 +9,8 @@ notifications:
 
 before_install:
     - composer install
+    - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.0/coveralls.phar
+    - chmod +x coveralls.phar
 
 before_script:
     - echo 'zend.assertions = 1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
@@ -18,4 +20,4 @@ script:
     - php bin/task build
 
 after_success:
-    - travis_retry php vendor/bin/coveralls
+    - travis_retry php coveralls.phar
