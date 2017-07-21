@@ -1,7 +1,6 @@
 ---
 template:
     url: https://github.com/CouscousPHP/Template-Dark.git
-    index: index.md
 include:
     - doc
 exclude:
