@@ -53,11 +53,11 @@ menu:
             name: API Documentation
             items:
                 namespaces:
-                    text: Namespaces
+                    text: Developer API
                     relativeUrl: api/index.html
         coverage:
-            name: Code Coverage
+            name: Test Documentation
             items:
                 coverage:
-                    text: Report
+                    text: Code Coverage
                     relativeUrl: coverage/index.html
