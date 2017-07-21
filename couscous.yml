@@ -32,7 +32,7 @@ menu:
             name: Main Documentation
             items:
                 home:
-                    text: Home
+                    text: Overview
                     relativeUrl: ""
                 collection:
                     text: Collection
