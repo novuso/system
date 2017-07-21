@@ -1,0 +1,5 @@
+---
+currentMenu: collection
+---
+
+# LinkedQueue

@@ -30,32 +30,32 @@ baseUrl: https://novuso.github.io/system
 menu:
     sections:
         main:
-            name: Main documentation
+            name: Main Documentation
             items:
                 home:
-                    text: Home page
+                    text: Home
                     relativeUrl: ""
+                collection:
+                    text: Collection
+                    relativeUrl: collection/index.html
+                exception:
+                    text: Exception
+                    relativeUrl: exception/index.html
+                serialization:
+                    text: Serialization
+                    relativeUrl: serialization/index.html
+                type:
+                    text: Type
+                    relativeUrl: type/index.html
+                utility:
+                    text: Utility
+                    relativeUrl: utility/index.html
         api:
-            name: API documentation
+            name: API Documentation
             items:
-                home:
+                namespaces:
                     text: Namespaces
                     relativeUrl: api/index.html
-                classes:
-                    text: Classes
-                    relativeUrl: api/classes.html
-                interfaces:
-                    text: Interfaces
-                    relativeUrl: api/interfaces.html
-                traits:
-                    text: Traits
-                    relativeUrl: api/traits.html
-                index:
-                    text: Index
-                    relativeUrl: api/doc-index.html
-                search:
-                    text: Search
-                    relativeUrl: api/search.html
         coverage:
             name: Code Coverage
             items:

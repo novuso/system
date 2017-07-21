@@ -1,0 +1,5 @@
+---
+currentMenu: type
+---
+
+# Comparator

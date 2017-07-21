@@ -1,1 +1,5 @@
+---
+currentMenu: home
+---
+
 # Novuso System
