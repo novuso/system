@@ -7,6 +7,7 @@ use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Collection\ArrayStack
+ * @covers \Novuso\System\Collection\Iterator\ArrayStackIterator
  */
 class ArrayStackTest extends UnitTestCase
 {

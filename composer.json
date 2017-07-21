@@ -6,8 +6,6 @@
         "php": ">=7.1"
     },
     "require-dev": {
-        "apigen/apigen": "5.0.0-RC3",
-        "roave/better-reflection": "@dev",
         "fzaninotto/faker": "1.6.*",
         "mikey179/vfsStream": "1.6.*",
         "mockery/mockery": "0.9.*",

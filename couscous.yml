@@ -14,6 +14,10 @@ exclude:
     - vendor
     - %gitignore%
 branch: gh-pages
+scripts:
+    after:
+        - cp -R var/build/api .couscous/generated/api/
+        - cp -R var/build/coverage .couscous/generated/coverage/
 
 title: Novuso System
 subTitle: System library for the Novuso Framework
@@ -21,4 +25,40 @@ github:
     user: novuso
     repo: system
 
-baseUrl: http://novuso.github.io/system
+baseUrl: https://novuso.github.io/system
+
+menu:
+    sections:
+        main:
+            name: Main documentation
+            items:
+                home:
+                    text: Home page
+                    relativeUrl: ""
+        api:
+            name: API documentation
+            items:
+                home:
+                    text: Namespaces
+                    relativeUrl: api/index.html
+                classes:
+                    text: Classes
+                    relativeUrl: api/classes.html
+                interfaces:
+                    text: Interfaces
+                    relativeUrl: api/interfaces.html
+                traits:
+                    text: Traits
+                    relativeUrl: api/traits.html
+                index:
+                    text: Index
+                    relativeUrl: api/doc-index.html
+                search:
+                    text: Search
+                    relativeUrl: api/search.html
+        coverage:
+            name: Code Coverage
+            items:
+                coverage:
+                    text: Report
+                    relativeUrl: coverage/index.html
