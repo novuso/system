@@ -6,8 +6,8 @@ use Novuso\System\Collection\ArrayList;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\ArrayList
- * @covers Novuso\System\Collection\Traits\ItemTypeMethods
+ * @covers \Novuso\System\Collection\ArrayList
+ * @covers \Novuso\System\Collection\Traits\ItemTypeMethods
  */
 class ArrayListTest extends UnitTestCase
 {

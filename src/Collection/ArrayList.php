@@ -3,7 +3,7 @@
 namespace Novuso\System\Collection;
 
 use ArrayIterator;
-use Novuso\System\Collection\Api\IndexedList;
+use Novuso\System\Collection\Api\ListInterface;
 use Novuso\System\Collection\Sort\Merge;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Exception\IndexException;
@@ -20,7 +20,7 @@ use Traversable;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class ArrayList implements Arrayable, IndexedList
+class ArrayList implements Arrayable, ListInterface
 {
     use ItemTypeMethods;
 

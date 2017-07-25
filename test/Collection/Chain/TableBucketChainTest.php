@@ -6,7 +6,7 @@ use Novuso\System\Collection\Chain\TableBucketChain;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\Chain\TableBucketChain
+ * @covers \Novuso\System\Collection\Chain\TableBucketChain
  */
 class TableBucketChainTest extends UnitTestCase
 {

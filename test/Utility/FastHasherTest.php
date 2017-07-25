@@ -11,7 +11,7 @@ use Novuso\Test\System\TestCase\UnitTestCase;
  */
 class FastHasherTest extends UnitTestCase
 {
-    const HASH_ALGO = 'fnv1a32';
+    public const HASH_ALGO = 'fnv1a32';
 
     public function test_that_hash_returns_expected_value_for_null()
     {

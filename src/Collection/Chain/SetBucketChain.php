@@ -31,7 +31,7 @@ class SetBucketChain implements Countable
     /**
      * Current bucket
      *
-     * @var Bucket
+     * @var BucketInterface
      */
     protected $current;
 
@@ -292,11 +292,11 @@ class SetBucketChain implements Countable
     /**
      * Removes a bucket
      *
-     * @param Bucket $bucket A Bucket instance
+     * @param BucketInterface $bucket A Bucket instance
      *
      * @return void
      */
-    protected function removeBucket(Bucket $bucket): void
+    protected function removeBucket(BucketInterface $bucket): void
     {
         $next = $bucket->next();
         $prev = $bucket->prev();
@@ -310,13 +310,13 @@ class SetBucketChain implements Countable
     /**
      * Inserts an item between two nodes
      *
-     * @param mixed  $item The item
-     * @param Bucket $prev The previous bucket
-     * @param Bucket $next The next bucket
+     * @param mixed           $item The item
+     * @param BucketInterface $prev The previous bucket
+     * @param BucketInterface $next The next bucket
      *
      * @return void
      */
-    protected function insertBetween($item, Bucket $prev, Bucket $next): void
+    protected function insertBetween($item, BucketInterface $prev, BucketInterface $next): void
     {
         $bucket = new ItemBucket($item);
 

@@ -7,7 +7,7 @@ use Novuso\System\Collection\Iterator\GeneratorIterator;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\Iterator\GeneratorIterator
+ * @covers \Novuso\System\Collection\Iterator\GeneratorIterator
  */
 class GeneratorIteratorTest extends UnitTestCase
 {

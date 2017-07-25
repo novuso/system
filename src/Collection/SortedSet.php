@@ -2,7 +2,7 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Api\OrderedSet;
+use Novuso\System\Collection\Api\SortedSetInterface;
 use Novuso\System\Collection\Compare\ComparableComparator;
 use Novuso\System\Collection\Compare\FloatComparator;
 use Novuso\System\Collection\Compare\IntegerComparator;
@@ -16,13 +16,13 @@ use Novuso\System\Utility\Validate;
 use Traversable;
 
 /**
- * SortedSet is an implementation of the ordered set type
+ * SortedSet is an implementation of the sorted set type
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class SortedSet implements Arrayable, OrderedSet
+class SortedSet implements Arrayable, SortedSetInterface
 {
     use ItemTypeMethods;
 
@@ -178,7 +178,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function difference(OrderedSet $other): SortedSet
+    public function difference(SortedSetInterface $other): SortedSet
     {
         $difference = static::create($this->comparator, $this->itemType());
 
@@ -195,7 +195,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function intersection(OrderedSet $other): SortedSet
+    public function intersection(SortedSetInterface $other): SortedSet
     {
         $intersection = static::create($this->comparator, $this->itemType());
 
@@ -207,7 +207,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function complement(OrderedSet $other): SortedSet
+    public function complement(SortedSetInterface $other): SortedSet
     {
         $complement = static::create($this->comparator, $this->itemType());
 
@@ -223,7 +223,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function union(OrderedSet $other): SortedSet
+    public function union(SortedSetInterface $other): SortedSet
     {
         $union = static::create($this->comparator, $this->itemType());
 

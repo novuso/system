@@ -7,7 +7,7 @@ use Novuso\System\Collection\HashSet;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\HashSet
+ * @covers \Novuso\System\Collection\HashSet
  */
 class HashSetTest extends UnitTestCase
 {

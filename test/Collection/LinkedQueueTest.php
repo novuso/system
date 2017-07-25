@@ -6,7 +6,7 @@ use Novuso\System\Collection\LinkedQueue;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\LinkedQueue
+ * @covers \Novuso\System\Collection\LinkedQueue
  */
 class LinkedQueueTest extends UnitTestCase
 {

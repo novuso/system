@@ -6,10 +6,10 @@ use Novuso\System\Type\Enum;
 
 final class InvalidStatus extends Enum
 {
-    const CREATED = 0;
-    const IN_REVIEW = 1;
-    const APPROVED = true;
-    const DENIED = false;
-    const DELETED = 'deleted';
-    const PUBLISHED = true;
+    public const CREATED = 0;
+    public const IN_REVIEW = 1;
+    public const APPROVED = true;
+    public const DENIED = false;
+    public const DELETED = 'deleted';
+    public const PUBLISHED = true;
 }

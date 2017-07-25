@@ -6,7 +6,7 @@ use Novuso\System\Collection\LinkedStack;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\LinkedStack
+ * @covers \Novuso\System\Collection\LinkedStack
  */
 class LinkedStackTest extends UnitTestCase
 {

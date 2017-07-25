@@ -16,7 +16,7 @@ class Merge
      *
      * @var int
      */
-    const SORT_CUTOFF = 8;
+    public const SORT_CUTOFF = 8;
 
     /**
      * Sorts an array with a stable sort

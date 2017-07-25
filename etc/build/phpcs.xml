@@ -3,4 +3,7 @@
     <description>Coding Standard</description>
     <rule ref="PSR1" />
     <rule ref="PSR2" />
+    <rule ref="PSR2">
+        <exclude name="PSR2.Namespaces.UseDeclaration" />
+    </rule>
 </ruleset>

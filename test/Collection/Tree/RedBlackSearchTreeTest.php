@@ -8,7 +8,7 @@ use Novuso\Test\System\Resources\WeekDay;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\Tree\RedBlackSearchTree
+ * @covers \Novuso\System\Collection\Tree\RedBlackSearchTree
  */
 class RedBlackSearchTreeTest extends UnitTestCase
 {

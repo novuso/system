@@ -1,0 +1,15 @@
+---
+- name: "download couscous"
+  get_url:
+    url: "{{ couscous_phar_url }}"
+    dest: "/home/{{ ansible_user_id }}/couscous.phar"
+
+- name: "move couscous to bin"
+  become: yes
+  copy:
+    src: "/home/{{ ansible_user_id }}/couscous.phar"
+    dest: "{{ couscous_bin_path }}"
+    remote_src: true
+    owner: "root"
+    group: "root"
+    mode: 0755

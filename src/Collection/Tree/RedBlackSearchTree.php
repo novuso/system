@@ -2,7 +2,7 @@
 
 namespace Novuso\System\Collection\Tree;
 
-use Novuso\System\Collection\Api\Queue;
+use Novuso\System\Collection\Api\QueueInterface;
 use Novuso\System\Collection\LinkedQueue;
 use Novuso\System\Exception\KeyException;
 use Novuso\System\Exception\LookupException;
@@ -18,7 +18,7 @@ use Traversable;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class RedBlackSearchTree implements BinarySearchTree
+class RedBlackSearchTree implements BinarySearchTreeInterface
 {
     /**
      * Comparator
@@ -446,14 +446,14 @@ class RedBlackSearchTree implements BinarySearchTree
     /**
      * Fills a queue with keys between lo and hi in a subtree
      *
-     * @param Queue             $queue The queue
+     * @param QueueInterface    $queue The queue
      * @param mixed             $lo    The lower bound
      * @param mixed             $hi    The upper bound
      * @param RedBlackNode|null $node  The subtree root
      *
      * @return void
      */
-    protected function fillKeys(Queue $queue, $lo, $hi, ?RedBlackNode $node): void
+    protected function fillKeys(QueueInterface $queue, $lo, $hi, ?RedBlackNode $node): void
     {
         if ($node === null) {
             return;

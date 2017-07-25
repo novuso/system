@@ -6,7 +6,7 @@ use Novuso\System\Collection\Chain\ItemBucket;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Collection\Chain\ItemBucket
+ * @covers \Novuso\System\Collection\Chain\ItemBucket
  */
 class ItemBucketTest extends UnitTestCase
 {

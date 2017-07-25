@@ -7,7 +7,7 @@ use Novuso\Test\System\Resources\User;
 use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
- * @covers Novuso\System\Serialization\JsonSerializer
+ * @covers \Novuso\System\Serialization\JsonSerializer
  */
 class JsonSerializerTest extends UnitTestCase
 {
@@ -68,8 +68,8 @@ class JsonSerializerTest extends UnitTestCase
     protected function getUserState()
     {
         return json_encode([
-            '@' => 'Novuso.Test.System.Resources.User',
-            '$' => [
+            'type' => 'Novuso.Test.System.Resources.User',
+            'data' => [
                 'lastName'  => 'Wood',
                 'firstName' => 'James',
                 'username'  => 'jwood',
