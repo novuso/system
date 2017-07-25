@@ -1,0 +1,65 @@
+---
+template:
+    url: https://github.com/CouscousPHP/Template-Dark.git
+include:
+    - doc
+exclude:
+    - app
+    - bin
+    - etc
+    - src
+    - test
+    - var
+    - vendor
+    - %gitignore%
+branch: gh-pages
+scripts:
+    after:
+        - rm -rf .couscous/generated/api
+        - rm -rf .couscous/generated/coverage
+        - cp -R var/build/api .couscous/generated/api/
+        - cp -R var/build/coverage .couscous/generated/coverage/
+
+title: Novuso System
+subTitle: System library for the Novuso Framework
+github:
+    user: novuso
+    repo: system
+
+baseUrl: https://novuso.github.io/system
+
+menu:
+    sections:
+        main:
+            name: Main Documentation
+            items:
+                home:
+                    text: Overview
+                    relativeUrl: ""
+                collection:
+                    text: Collection
+                    relativeUrl: collection/index.html
+                exception:
+                    text: Exception
+                    relativeUrl: exception/index.html
+                serialization:
+                    text: Serialization
+                    relativeUrl: serialization/index.html
+                type:
+                    text: Type
+                    relativeUrl: type/index.html
+                utility:
+                    text: Utility
+                    relativeUrl: utility/index.html
+        api:
+            name: API Documentation
+            items:
+                namespaces:
+                    text: Developer API
+                    relativeUrl: api/index.html
+        coverage:
+            name: Test Documentation
+            items:
+                coverage:
+                    text: Code Coverage
+                    relativeUrl: coverage/index.html

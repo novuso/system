@@ -309,7 +309,7 @@ class ArrayCollectionTest extends UnitTestCase
     {
         $data = ['foo', 'bar', 'baz', 'buz'];
         $collection = ArrayCollection::create($data);
-        $shuffled = $collection->shuffle();
+        $collection->shuffle();
         $this->assertSame($data, $collection->toArray());
     }
 
@@ -361,9 +361,10 @@ class ArrayCollectionTest extends UnitTestCase
             'SATURDAY'
         ];
         $collection = ArrayCollection::create($this->getWeekDays());
-        $collection = $collection->sortBy(function ($weekDay) {
+        /** @var ArrayCollection $collection */
+        $collection = $collection->sortBy(function (WeekDay $weekDay) {
             return $weekDay->ordinal();
-        })->map(function ($weekDay) {
+        })->map(function (WeekDay $weekDay) {
             return $weekDay->name();
         });
         $this->assertSame($expected, $collection->values()->toArray());
@@ -381,9 +382,10 @@ class ArrayCollectionTest extends UnitTestCase
             'SUNDAY'
         ];
         $collection = ArrayCollection::create($this->getWeekDays());
-        $collection = $collection->sortByDesc(function ($weekDay) {
+        /** @var ArrayCollection $collection */
+        $collection = $collection->sortByDesc(function (WeekDay $weekDay) {
             return $weekDay->ordinal();
-        })->map(function ($weekDay) {
+        })->map(function (WeekDay $weekDay) {
             return $weekDay->name();
         });
         $this->assertSame($expected, $collection->values()->toArray());
@@ -393,7 +395,8 @@ class ArrayCollectionTest extends UnitTestCase
     {
         $data = ['foo' => 'bar', 'baz' => 'buz'];
         $collection = ArrayCollection::create($data);
-        $collection = $collection->pipe(function ($collection) {
+        /** @var ArrayCollection $collection */
+        $collection = $collection->pipe(function (ArrayCollection $collection) {
             // allows chaining while using procedural functions
             return ArrayCollection::create(array_map(function ($value) {
                 return str_replace('b', 'f', $value);

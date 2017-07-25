@@ -1,0 +1,5 @@
+---
+currentMenu: serialization
+---
+
+# SerializerInterface

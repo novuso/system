@@ -7,6 +7,7 @@ use Novuso\Test\System\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Collection\ArrayQueue
+ * @covers \Novuso\System\Collection\Iterator\ArrayQueueIterator
  */
 class ArrayQueueTest extends UnitTestCase
 {

@@ -9,19 +9,19 @@ namespace Novuso\System\Collection\Chain;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class ItemBucket implements Bucket
+class ItemBucket implements BucketInterface
 {
     /**
      * Next bucket
      *
-     * @var Bucket|null
+     * @var BucketInterface|null
      */
     protected $next;
 
     /**
      * Previous bucket
      *
-     * @var Bucket|null
+     * @var BucketInterface|null
      */
     protected $prev;
 
@@ -45,7 +45,7 @@ class ItemBucket implements Bucket
     /**
      * {@inheritdoc}
      */
-    public function setNext(?Bucket $next): void
+    public function setNext(?BucketInterface $next): void
     {
         $this->next = $next;
     }
@@ -53,7 +53,7 @@ class ItemBucket implements Bucket
     /**
      * {@inheritdoc}
      */
-    public function next(): ?Bucket
+    public function next(): ?BucketInterface
     {
         return $this->next;
     }
@@ -61,7 +61,7 @@ class ItemBucket implements Bucket
     /**
      * {@inheritdoc}
      */
-    public function setPrev(?Bucket $prev): void
+    public function setPrev(?BucketInterface $prev): void
     {
         $this->prev = $prev;
     }
@@ -69,7 +69,7 @@ class ItemBucket implements Bucket
     /**
      * {@inheritdoc}
      */
-    public function prev(): ?Bucket
+    public function prev(): ?BucketInterface
     {
         return $this->prev;
     }

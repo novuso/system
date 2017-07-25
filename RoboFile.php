@@ -49,6 +49,23 @@ class RoboFile extends Tasks
         $this->phpLint();
         $this->phpTestComplete();
         $this->phpCodeStyle();
+        $this->apiGenerate();
+        $this->yell('Build complete');
+    }
+
+    /**
+     * Runs the build process for continuous integration
+     *
+     * @return void
+     */
+    public function integration()
+    {
+        $this->yell('Starting continuous integration build');
+        $this->dirRemove();
+        $this->dirPrepare();
+        $this->phpLint();
+        $this->phpTestComplete();
+        $this->phpCodeStyle();
         $this->yell('Build complete');
     }
 
@@ -80,6 +97,28 @@ class RoboFile extends Tasks
         $this->info('Updating project dependencies');
         $this->composerUpdate(['prod' => $prod]);
         $this->info('Project dependencies updated');
+    }
+
+    //===================================================//
+    // ApiGen Targets                                    //
+    //===================================================//
+
+    /**
+     * Generates API documentation
+     *
+     * @return void
+     */
+    public function apiGenerate()
+    {
+        $paths = $this->getPaths();
+        $this->stopOnFail(true);
+        $this->info('Generating API documentation');
+        $this->taskExec(sprintf('%s/sami', $paths['bin']))
+            ->arg('update')
+            ->arg(sprintf('%s/sami.php', $paths['build']))
+            ->printOutput(true)
+            ->run();
+        $this->info('API documentation generated');
     }
 
     //===================================================//
