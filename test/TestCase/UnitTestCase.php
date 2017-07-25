@@ -34,6 +34,9 @@ class UnitTestCase extends TestCase
                 $prop->setValue($this, null);
             }
         }
+        if ($container = Mockery::getContainer()) {
+            $this->addToAssertionCount($container->mockery_getExpectationCount());
+        }
         Mockery::close();
     }
 }
