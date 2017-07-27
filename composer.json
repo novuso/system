@@ -6,11 +6,11 @@
         "php": ">=7.1"
     },
     "require-dev": {
-        "fzaninotto/faker": "1.6.*",
-        "mikey179/vfsStream": "1.6.*",
+        "fzaninotto/faker": "1.*",
+        "mikey179/vfsStream": "1.*",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "6.2.*",
-        "squizlabs/php_codesniffer": "3.0.*"
+        "phpunit/phpunit": "6.*",
+        "squizlabs/php_codesniffer": "3.*"
     },
     "autoload": {
         "psr-4": {
