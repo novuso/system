@@ -340,7 +340,7 @@ class RoboFile extends Tasks
     private function getPaths()
     {
         if ($this->paths === null) {
-            $this->paths = require __DIR__.'/app/paths.php';
+            $this->paths = require __DIR__.'/paths.php';
         }
 
         return $this->paths;

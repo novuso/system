@@ -4,7 +4,8 @@ engines:
     enabled: true
     config:
       languages:
-      - php
+        php:
+          mass_threshold: 50
   fixme:
     enabled: true
   phpmd:
@@ -36,7 +37,6 @@ ratings:
   paths:
   - "src/**.php"
 exclude_paths:
-- "Robofile.php"
 - "app/"
 - "bin/"
 - "doc/"
