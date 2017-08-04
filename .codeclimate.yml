@@ -36,6 +36,7 @@ ratings:
   paths:
   - "**.php"
 exclude_paths:
+- Robofile.php
 - app/
 - bin/
 - doc/
