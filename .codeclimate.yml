@@ -36,10 +36,10 @@ ratings:
   paths:
   - "**.php"
 exclude_paths:
-- Robofile.php
-- app/
-- bin/
-- doc/
-- etc/
-- test/
-- var/
+- "Robofile.php"
+- "app/"
+- "bin/"
+- "doc/"
+- "etc/"
+- "test/"
+- "var/"
