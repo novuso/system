@@ -1,0 +1,45 @@
+---
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+  fixme:
+    enabled: true
+  phpmd:
+    enabled: true
+    checks:
+      ExcessivePublicCount:
+        enabled: false
+      CleanCode/BooleanArgumentFlag:
+        enabled: false
+      CleanCode/StaticAccess:
+        enabled: false
+      Design/WeightedMethodCount:
+        enabled: false
+      Design/TooManyMethods:
+        enabled: false
+      Design/TooManyPublicMethods:
+        enabled: false
+      Design/LongClass:
+        enabled: false
+      Naming/ShortMethodName:
+        enabled: false
+      Naming/ShortVariable:
+        enabled: false
+  phpcodesniffer:
+    enabled: true
+    config:
+      standard: "PSR1,PSR2"
+ratings:
+  paths:
+  - "**.php"
+exclude_paths:
+- Robofile.php
+- app/
+- bin/
+- doc/
+- etc/
+- test/
+- var/

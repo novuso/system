@@ -1,4 +1,8 @@
 ---
+addons:
+    code_climate:
+        repo_token: 8a31756520b4665c07eec8778fafca9d37380ed1258e088c23b76716a891382c
+
 language: php
 
 php:
@@ -21,3 +25,4 @@ script:
 
 after_success:
     - travis_retry php coveralls.phar
+    - vendor/bin/test-reporter --coverage-report=var/build/logs/clover.xml
