@@ -335,11 +335,17 @@ class RedBlackSearchTree implements BinarySearchTreeInterface
 
         if ($comp < 0) {
             $node->setLeft($this->nodeSet($key, $value, $node->left()));
-        } elseif ($comp > 0) {
-            $node->setRight($this->nodeSet($key, $value, $node->right()));
-        } else {
-            $node->setValue($value);
+
+            return $this->balanceOnInsert($node);
         }
+
+        if ($comp > 0) {
+            $node->setRight($this->nodeSet($key, $value, $node->right()));
+
+            return $this->balanceOnInsert($node);
+        }
+
+        $node->setValue($value);
 
         return $this->balanceOnInsert($node);
     }
@@ -358,13 +364,18 @@ class RedBlackSearchTree implements BinarySearchTreeInterface
     {
         while ($node !== null) {
             $comp = $this->comparator->compare($key, $node->key());
+
             if ($comp < 0) {
                 $node = $node->left();
-            } elseif ($comp > 0) {
-                $node = $node->right();
-            } else {
-                return $node;
+                continue;
             }
+
+            if ($comp > 0) {
+                $node = $node->right();
+                continue;
+            }
+
+            return $node;
         }
 
         return null;
@@ -381,17 +392,22 @@ class RedBlackSearchTree implements BinarySearchTreeInterface
     protected function nodeRemove($key, RedBlackNode $node): ?RedBlackNode
     {
         $comp = $this->comparator->compare($key, $node->key());
+
         if ($comp < 0) {
             $node = $this->nodeRemoveLeft($key, $node);
-        } else {
-            if ($this->isRed($node->left())) {
-                $node = $this->rotateRight($node);
-            }
-            if ($comp === 0 && $node->right() === null) {
-                return null;
-            }
-            $node = $this->nodeRemoveRight($key, $node);
+
+            return $this->balanceOnRemove($node);
         }
+
+        if ($this->isRed($node->left())) {
+            $node = $this->rotateRight($node);
+        }
+
+        if ($comp === 0 && $node->right() === null) {
+            return null;
+        }
+
+        $node = $this->nodeRemoveRight($key, $node);
 
         return $this->balanceOnRemove($node);
     }
@@ -411,6 +427,7 @@ class RedBlackSearchTree implements BinarySearchTreeInterface
         if (!$this->isRed($node->left()) && !$this->isRed($node->left()->left())) {
             $node = $this->moveRedLeft($node);
         }
+
         $node->setLeft($this->nodeRemove($key, $node->left()));
 
         return $node;
@@ -431,14 +448,17 @@ class RedBlackSearchTree implements BinarySearchTreeInterface
         if (!$this->isRed($node->right()) && !$this->isRed($node->right()->left())) {
             $node = $this->moveRedRight($node);
         }
+
         if ($this->comparator->compare($key, $node->key()) === 0) {
             $link = $this->nodeMin($node->right());
             $node->setKey($link->key());
             $node->setValue($link->value());
             $node->setRight($this->nodeRemoveMin($node->right()));
-        } else {
-            $node->setRight($this->nodeRemove($key, $node->right()));
+
+            return $node;
         }
+
+        $node->setRight($this->nodeRemove($key, $node->right()));
 
         return $node;
     }
@@ -447,29 +467,31 @@ class RedBlackSearchTree implements BinarySearchTreeInterface
      * Fills a queue with keys between lo and hi in a subtree
      *
      * @param QueueInterface    $queue The queue
-     * @param mixed             $lo    The lower bound
-     * @param mixed             $hi    The upper bound
+     * @param mixed             $low   The lower bound
+     * @param mixed             $high  The upper bound
      * @param RedBlackNode|null $node  The subtree root
      *
      * @return void
      */
-    protected function fillKeys(QueueInterface $queue, $lo, $hi, ?RedBlackNode $node): void
+    protected function fillKeys(QueueInterface $queue, $low, $high, ?RedBlackNode $node): void
     {
         if ($node === null) {
             return;
         }
 
-        $complo = $this->comparator->compare($lo, $node->key());
-        $comphi = $this->comparator->compare($hi, $node->key());
+        $complo = $this->comparator->compare($low, $node->key());
+        $comphi = $this->comparator->compare($high, $node->key());
 
         if ($complo < 0) {
-            $this->fillKeys($queue, $lo, $hi, $node->left());
+            $this->fillKeys($queue, $low, $high, $node->left());
         }
+
         if ($complo <= 0 && $comphi >= 0) {
             $queue->enqueue($node->key());
         }
+
         if ($comphi > 0) {
-            $this->fillKeys($queue, $lo, $hi, $node->right());
+            $this->fillKeys($queue, $low, $high, $node->right());
         }
     }
 
