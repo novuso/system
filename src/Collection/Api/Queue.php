@@ -5,38 +5,38 @@ namespace Novuso\System\Collection\Api;
 use Novuso\System\Exception\UnderflowException;
 
 /**
- * StackInterface is the interface for the stack type
+ * Queue is the interface for the queue type
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface StackInterface extends ItemCollectionInterface
+interface Queue extends ItemCollection
 {
     /**
-     * Adds an item to the top
+     * Adds an item to the end
      *
      * @param mixed $item The item
      *
      * @return void
      */
-    public function push($item): void;
+    public function enqueue($item): void;
 
     /**
-     * Removes and returns the top item
+     * Removes and returns the front item
      *
      * @return mixed
      *
-     * @throws UnderflowException When the stack is empty
+     * @throws UnderflowException When the queue is empty
      */
-    public function pop();
+    public function dequeue();
 
     /**
-     * Retrieves the top item without removal
+     * Retrieves the front item without removal
      *
      * @return mixed
      *
-     * @throws UnderflowException When the stack is empty
+     * @throws UnderflowException When the queue is empty
      */
-    public function top();
+    public function front();
 }

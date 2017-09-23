@@ -2,7 +2,7 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Api\SortedSetInterface;
+use Novuso\System\Collection\Api\OrderedSet;
 use Novuso\System\Collection\Compare\ComparableComparator;
 use Novuso\System\Collection\Compare\FloatComparator;
 use Novuso\System\Collection\Compare\IntegerComparator;
@@ -22,7 +22,7 @@ use Traversable;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class SortedSet implements Arrayable, SortedSetInterface
+class SortedSet implements Arrayable, OrderedSet
 {
     use ItemTypeMethods;
 
@@ -178,7 +178,7 @@ class SortedSet implements Arrayable, SortedSetInterface
     /**
      * {@inheritdoc}
      */
-    public function difference(SortedSetInterface $other): SortedSet
+    public function difference(OrderedSet $other): SortedSet
     {
         $difference = static::create($this->comparator, $this->itemType());
 
@@ -195,7 +195,7 @@ class SortedSet implements Arrayable, SortedSetInterface
     /**
      * {@inheritdoc}
      */
-    public function intersection(SortedSetInterface $other): SortedSet
+    public function intersection(OrderedSet $other): SortedSet
     {
         $intersection = static::create($this->comparator, $this->itemType());
 
@@ -207,7 +207,7 @@ class SortedSet implements Arrayable, SortedSetInterface
     /**
      * {@inheritdoc}
      */
-    public function complement(SortedSetInterface $other): SortedSet
+    public function complement(OrderedSet $other): SortedSet
     {
         $complement = static::create($this->comparator, $this->itemType());
 
@@ -223,7 +223,7 @@ class SortedSet implements Arrayable, SortedSetInterface
     /**
      * {@inheritdoc}
      */
-    public function union(SortedSetInterface $other): SortedSet
+    public function union(OrderedSet $other): SortedSet
     {
         $union = static::create($this->comparator, $this->itemType());
 

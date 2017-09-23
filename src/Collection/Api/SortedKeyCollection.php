@@ -2,17 +2,19 @@
 
 namespace Novuso\System\Collection\Api;
 
+use Novuso\System\Type\Comparator;
+
 /**
- * KeyValueCollectionInterface is the interface for key/value collections
+ * SortedKeyCollection is the interface for sorted key/value collections
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface KeyValueCollectionInterface extends CollectionInterface
+interface SortedKeyCollection extends Collection
 {
     /**
-     * Creates collection with specific key and value types
+     * Creates collection with a custom comparator
      *
      * If types are not provided, the types are dynamic.
      *
@@ -20,12 +22,77 @@ interface KeyValueCollectionInterface extends CollectionInterface
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      *
+     * @param Comparator  $comparator The comparator
+     * @param string|null $keyType    The key type
+     * @param string|null $valueType  The value type
+     *
+     * @return SortedKeyCollection
+     */
+    public static function create(Comparator $comparator, ?string $keyType = null, ?string $valueType = null);
+
+    /**
+     * Creates collection with comparable keys
+     *
+     * If types are not provided, the types are dynamic.
+     *
+     * The key type must be a fully-qualified class name that implements:
+     * `Novuso\System\Type\Comparable`
+     *
+     * The value type can be any fully-qualified class or interface name,
+     * or one of the following type strings:
+     * [array, object, bool, int, float, string, callable]
+     *
      * @param string|null $keyType   The key type
      * @param string|null $valueType The value type
      *
-     * @return KeyValueCollectionInterface
+     * @return SortedKeyCollection
      */
-    public static function of(?string $keyType = null, ?string $valueType = null);
+    public static function comparable(?string $keyType = null, ?string $valueType = null);
+
+    /**
+     * Creates collection with float keys
+     *
+     * If a type is not provided, the value type is dynamic.
+     *
+     * The type can be any fully-qualified class or interface name,
+     * or one of the following type strings:
+     * [array, object, bool, int, float, string, callable]
+     *
+     * @param string|null $valueType The value type
+     *
+     * @return SortedKeyCollection
+     */
+    public static function float(?string $valueType = null);
+
+    /**
+     * Creates collection with integer keys
+     *
+     * If a type is not provided, the value type is dynamic.
+     *
+     * The type can be any fully-qualified class or interface name,
+     * or one of the following type strings:
+     * [array, object, bool, int, float, string, callable]
+     *
+     * @param string|null $valueType The value type
+     *
+     * @return SortedKeyCollection
+     */
+    public static function integer(?string $valueType = null);
+
+    /**
+     * Creates collection with string keys
+     *
+     * If a type is not provided, the value type is dynamic.
+     *
+     * The type can be any fully-qualified class or interface name,
+     * or one of the following type strings:
+     * [array, object, bool, int, float, string, callable]
+     *
+     * @param string|null $valueType The value type
+     *
+     * @return SortedKeyCollection
+     */
+    public static function string(?string $valueType = null);
 
     /**
      * Retrieves the key type
@@ -74,7 +141,7 @@ interface KeyValueCollectionInterface extends CollectionInterface
      * @param callable    $callback  The callback
      * @param string|null $valueType The value type for the new collection
      *
-     * @return KeyValueCollectionInterface
+     * @return SortedKeyCollection
      */
     public function map(callable $callback, ?string $valueType = null);
 
@@ -106,7 +173,7 @@ interface KeyValueCollectionInterface extends CollectionInterface
      *
      * @param callable $predicate The predicate function
      *
-     * @return KeyValueCollectionInterface
+     * @return SortedKeyCollection
      */
     public function filter(callable $predicate);
 
@@ -121,7 +188,7 @@ interface KeyValueCollectionInterface extends CollectionInterface
      *
      * @param callable $predicate The predicate function
      *
-     * @return KeyValueCollectionInterface
+     * @return SortedKeyCollection
      */
     public function reject(callable $predicate);
 
@@ -170,7 +237,7 @@ interface KeyValueCollectionInterface extends CollectionInterface
      *
      * @param callable $predicate The predicate function
      *
-     * @return KeyValueCollectionInterface[]
+     * @return SortedKeyCollection[]
      */
     public function partition(callable $predicate): array;
 }

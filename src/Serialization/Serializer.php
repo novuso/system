@@ -5,31 +5,31 @@ namespace Novuso\System\Serialization;
 use Novuso\System\Exception\DomainException;
 
 /**
- * SerializerInterface is the interface for a serializer
+ * Serializer is the interface for a serializer
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface SerializerInterface
+interface Serializer
 {
     /**
      * Creates instance from a serialized state
      *
      * @param string $state The serialized state
      *
-     * @return SerializableInterface
+     * @return Serializable
      *
      * @throws DomainException When the state is not valid
      */
-    public function deserialize(string $state): SerializableInterface;
+    public function deserialize(string $state): Serializable;
 
     /**
      * Retrieves serialized state from an object
      *
-     * @param SerializableInterface $object A SerializableInterface instance
+     * @param Serializable $object A Serializable instance
      *
      * @return string
      */
-    public function serialize(SerializableInterface $object): string;
+    public function serialize(Serializable $object): string;
 }

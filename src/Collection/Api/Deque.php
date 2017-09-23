@@ -5,13 +5,13 @@ namespace Novuso\System\Collection\Api;
 use Novuso\System\Exception\UnderflowException;
 
 /**
- * DequeInterface is the interface for the deque type
+ * Deque is the interface for the deque type
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface DequeInterface extends ItemCollectionInterface
+interface Deque extends ItemCollection
 {
     /**
      * Adds an item to the front

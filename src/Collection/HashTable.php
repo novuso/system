@@ -2,7 +2,7 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Api\TableInterface;
+use Novuso\System\Collection\Api\Table;
 use Novuso\System\Collection\Chain\TableBucketChain;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
 use Novuso\System\Collection\Traits\KeyValueTypeMethods;
@@ -19,7 +19,7 @@ use Traversable;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class HashTable implements TableInterface
+class HashTable implements Table
 {
     use KeyValueTypeMethods;
 
@@ -331,7 +331,7 @@ class HashTable implements TableInterface
      */
     public function getIterator(): Traversable
     {
-        return new GeneratorIterator(function (TableInterface $table) {
+        return new GeneratorIterator(function (Table $table) {
             foreach ($table->keys() as $key) {
                 yield $key => $table->get($key);
             }

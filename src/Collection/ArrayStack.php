@@ -2,7 +2,7 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Api\StackInterface;
+use Novuso\System\Collection\Api\Stack;
 use Novuso\System\Collection\Iterator\ArrayStackIterator;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Exception\UnderflowException;
@@ -17,7 +17,7 @@ use Traversable;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class ArrayStack implements Arrayable, StackInterface
+class ArrayStack implements Arrayable, Stack
 {
     use ItemTypeMethods;
 

@@ -7,13 +7,13 @@ use Novuso\System\Exception\IndexException;
 use Novuso\System\Exception\UnderflowException;
 
 /**
- * ListInterface is the interface for the list type
+ * IndexedList is the interface for the list type
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface ListInterface extends ArrayAccess, ItemCollectionInterface
+interface IndexedList extends ArrayAccess, ItemCollection
 {
     /**
      * Adds an item to the end

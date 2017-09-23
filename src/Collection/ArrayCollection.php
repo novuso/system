@@ -5,7 +5,7 @@ namespace Novuso\System\Collection;
 use ArrayAccess;
 use ArrayIterator;
 use JsonSerializable;
-use Novuso\System\Collection\Api\CollectionInterface;
+use Novuso\System\Collection\Api\Collection;
 use Novuso\System\Exception\DomainException;
 use Novuso\System\Type\Arrayable;
 use Traversable;
@@ -17,7 +17,7 @@ use Traversable;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class ArrayCollection implements Arrayable, ArrayAccess, CollectionInterface, JsonSerializable
+class ArrayCollection implements Arrayable, ArrayAccess, Collection, JsonSerializable
 {
     /**
      * Collection items
@@ -1319,7 +1319,7 @@ class ArrayCollection implements Arrayable, ArrayAccess, CollectionInterface, Js
     public function sum(?callable $callback = null)
     {
         if ($callback === null) {
-            $callback = function ($value) {
+            $callback = function ($value, $key) {
                 return $value;
             };
         }

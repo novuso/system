@@ -3,7 +3,7 @@
 namespace Novuso\System\Collection;
 
 use IteratorIterator;
-use Novuso\System\Collection\Api\DequeInterface;
+use Novuso\System\Collection\Api\Deque;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Type\Arrayable;
@@ -18,7 +18,7 @@ use Traversable;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class LinkedDeque implements Arrayable, DequeInterface
+class LinkedDeque implements Arrayable, Deque
 {
     use ItemTypeMethods;
 

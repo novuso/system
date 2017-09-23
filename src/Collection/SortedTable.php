@@ -2,7 +2,7 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Api\SortedTableInterface;
+use Novuso\System\Collection\Api\OrderedTable;
 use Novuso\System\Collection\Compare\ComparableComparator;
 use Novuso\System\Collection\Compare\FloatComparator;
 use Novuso\System\Collection\Compare\IntegerComparator;
@@ -16,13 +16,13 @@ use Novuso\System\Utility\Validate;
 use Traversable;
 
 /**
- * SortedTable is an implementation of the ordered table type
+ * SortedTable is an implementation of the sorted table type
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class SortedTable implements SortedTableInterface
+class SortedTable implements OrderedTable
 {
     use KeyValueTypeMethods;
 
@@ -458,7 +458,7 @@ class SortedTable implements SortedTableInterface
      */
     public function getIterator(): Traversable
     {
-        return new GeneratorIterator(function (SortedTableInterface $table) {
+        return new GeneratorIterator(function (OrderedTable $table) {
             foreach ($table->keys() as $key) {
                 yield $key => $table->get($key);
             }

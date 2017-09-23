@@ -7,13 +7,13 @@ use Novuso\System\Exception\UnderflowException;
 use Traversable;
 
 /**
- * SortedSetInterface is the interface for the sorted set type
+ * OrderedSet is the interface for the ordered set type
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface SortedSetInterface extends SortedItemCollectionInterface
+interface OrderedSet extends SortedItemCollection
 {
     /**
      * Adds an item
@@ -51,11 +51,11 @@ interface SortedSetInterface extends SortedItemCollectionInterface
      *
      * A ∆ B = {x : (x ∈ A) ⊕ (x ∈ B)}
      *
-     * @param SortedSetInterface $other The other set
+     * @param OrderedSet $other The other set
      *
-     * @return SortedSetInterface
+     * @return OrderedSet
      */
-    public function difference(SortedSetInterface $other);
+    public function difference(OrderedSet $other);
 
     /**
      * Retrieves the intersection
@@ -65,11 +65,11 @@ interface SortedSetInterface extends SortedItemCollectionInterface
      *
      * A ∩ B = {x : x ∈ A ∧ x ∈ B}
      *
-     * @param SortedSetInterface $other The other set
+     * @param OrderedSet $other The other set
      *
-     * @return SortedSetInterface
+     * @return OrderedSet
      */
-    public function intersection(SortedSetInterface $other);
+    public function intersection(OrderedSet $other);
 
     /**
      * Retrieves the relative complement
@@ -79,11 +79,11 @@ interface SortedSetInterface extends SortedItemCollectionInterface
      *
      * B \ A = {x : x ∈ B ∧ x ∉ A}
      *
-     * @param SortedSetInterface $other The other set
+     * @param OrderedSet $other The other set
      *
-     * @return SortedSetInterface
+     * @return OrderedSet
      */
-    public function complement(SortedSetInterface $other);
+    public function complement(OrderedSet $other);
 
     /**
      * Retrieves the union
@@ -93,11 +93,11 @@ interface SortedSetInterface extends SortedItemCollectionInterface
      *
      * A ∪ B = {x : x ∈ A ∨ x ∈ B}
      *
-     * @param SortedSetInterface $other The other set
+     * @param OrderedSet $other The other set
      *
-     * @return SortedSetInterface
+     * @return OrderedSet
      */
-    public function union(SortedSetInterface $other);
+    public function union(OrderedSet $other);
 
     /**
      * Retrieves an inclusive list of items between given items
