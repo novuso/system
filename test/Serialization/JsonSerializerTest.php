@@ -68,8 +68,8 @@ class JsonSerializerTest extends UnitTestCase
     protected function getUserState()
     {
         return json_encode([
-            'type' => 'Novuso.Test.System.Resources.User',
-            'data' => [
+            '@' => 'Novuso.Test.System.Resources.User',
+            '$' => [
                 'lastName'  => 'Wood',
                 'firstName' => 'James',
                 'username'  => 'jwood',

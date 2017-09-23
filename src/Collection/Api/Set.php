@@ -3,13 +3,13 @@
 namespace Novuso\System\Collection\Api;
 
 /**
- * SetInterface is the interface for the set type
+ * Set is the interface for the set type
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface SetInterface extends ItemCollectionInterface
+interface Set extends ItemCollection
 {
     /**
      * Adds an item
@@ -47,11 +47,11 @@ interface SetInterface extends ItemCollectionInterface
      *
      * A ∆ B = {x : (x ∈ A) ⊕ (x ∈ B)}
      *
-     * @param SetInterface $other The other set
+     * @param Set $other The other set
      *
-     * @return SetInterface
+     * @return Set
      */
-    public function difference(SetInterface $other);
+    public function difference(Set $other);
 
     /**
      * Retrieves the intersection
@@ -61,11 +61,11 @@ interface SetInterface extends ItemCollectionInterface
      *
      * A ∩ B = {x : x ∈ A ∧ x ∈ B}
      *
-     * @param SetInterface $other The other set
+     * @param Set $other The other set
      *
-     * @return SetInterface
+     * @return Set
      */
-    public function intersection(SetInterface $other);
+    public function intersection(Set $other);
 
     /**
      * Retrieves the relative complement
@@ -75,11 +75,11 @@ interface SetInterface extends ItemCollectionInterface
      *
      * B \ A = {x : x ∈ B ∧ x ∉ A}
      *
-     * @param SetInterface $other The other set
+     * @param Set $other The other set
      *
-     * @return SetInterface
+     * @return Set
      */
-    public function complement(SetInterface $other);
+    public function complement(Set $other);
 
     /**
      * Retrieves the union
@@ -89,9 +89,9 @@ interface SetInterface extends ItemCollectionInterface
      *
      * A ∪ B = {x : x ∈ A ∨ x ∈ B}
      *
-     * @param SetInterface $other The other set
+     * @param Set $other The other set
      *
-     * @return SetInterface
+     * @return Set
      */
-    public function union(SetInterface $other);
+    public function union(Set $other);
 }

@@ -33,7 +33,7 @@ class TableBucketChain implements Countable
     /**
      * Current bucket
      *
-     * @var BucketInterface
+     * @var Bucket
      */
     protected $current;
 
@@ -321,11 +321,11 @@ class TableBucketChain implements Countable
     /**
      * Removes a bucket
      *
-     * @param BucketInterface $bucket A Bucket instance
+     * @param Bucket $bucket A Bucket instance
      *
      * @return void
      */
-    protected function removeBucket(BucketInterface $bucket): void
+    protected function removeBucket(Bucket $bucket): void
     {
         $next = $bucket->next();
         $prev = $bucket->prev();
@@ -339,14 +339,14 @@ class TableBucketChain implements Countable
     /**
      * Inserts a key-value pair between two nodes
      *
-     * @param mixed           $key   The key
-     * @param mixed           $value The value
-     * @param BucketInterface $prev  The previous bucket
-     * @param BucketInterface $next  The next bucket
+     * @param mixed  $key   The key
+     * @param mixed  $value The value
+     * @param Bucket $prev  The previous bucket
+     * @param Bucket $next  The next bucket
      *
      * @return void
      */
-    protected function insertBetween($key, $value, BucketInterface $prev, BucketInterface $next): void
+    protected function insertBetween($key, $value, Bucket $prev, Bucket $next): void
     {
         $bucket = new KeyValueBucket($key, $value);
 

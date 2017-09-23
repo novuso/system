@@ -2,7 +2,7 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Api\SetInterface;
+use Novuso\System\Collection\Api\Set;
 use Novuso\System\Collection\Chain\SetBucketChain;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
@@ -18,7 +18,7 @@ use Traversable;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class HashSet implements Arrayable, SetInterface
+class HashSet implements Arrayable, Set
 {
     use ItemTypeMethods;
 
@@ -143,7 +143,7 @@ class HashSet implements Arrayable, SetInterface
     /**
      * {@inheritdoc}
      */
-    public function difference(SetInterface $other): HashSet
+    public function difference(Set $other): HashSet
     {
         $difference = static::of($this->itemType());
 
@@ -160,7 +160,7 @@ class HashSet implements Arrayable, SetInterface
     /**
      * {@inheritdoc}
      */
-    public function intersection(SetInterface $other): HashSet
+    public function intersection(Set $other): HashSet
     {
         $intersection = static::of($this->itemType());
 
@@ -172,7 +172,7 @@ class HashSet implements Arrayable, SetInterface
     /**
      * {@inheritdoc}
      */
-    public function complement(SetInterface $other): HashSet
+    public function complement(Set $other): HashSet
     {
         $complement = static::of($this->itemType());
 
@@ -188,7 +188,7 @@ class HashSet implements Arrayable, SetInterface
     /**
      * {@inheritdoc}
      */
-    public function union(SetInterface $other): HashSet
+    public function union(Set $other): HashSet
     {
         $union = static::of($this->itemType());
 

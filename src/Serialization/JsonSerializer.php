@@ -13,16 +13,16 @@ use Novuso\System\Utility\Validate;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class JsonSerializer implements SerializerInterface
+class JsonSerializer implements Serializer
 {
     /**
      * {@inheritdoc}
      */
-    public function deserialize(string $state): SerializableInterface
+    public function deserialize(string $state): Serializable
     {
         $data = json_decode($state, $array = true);
 
-        $keys = ['type', 'data'];
+        $keys = ['@', '$'];
         foreach ($keys as $key) {
             if (!isset($data[$key])) {
                 $message = sprintf('Invalid serialization format: %s', $state);
@@ -30,25 +30,25 @@ class JsonSerializer implements SerializerInterface
             }
         }
 
-        $class = ClassName::full($data['type']);
+        $class = ClassName::full($data['@']);
 
         assert(
-            Validate::implementsInterface($class, SerializableInterface::class),
-            sprintf('Unable to deserialize: %s; does not implement %s', $class, SerializableInterface::class)
+            Validate::implementsInterface($class, Serializable::class),
+            sprintf('Unable to deserialize: %s; does not implement %s', $class, Serializable::class)
         );
 
-        /** @var SerializableInterface|string $class */
-        return $class::deserialize($data['data']);
+        /** @var Serializable|string $class */
+        return $class::arrayDeserialize($data['$']);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function serialize(SerializableInterface $object): string
+    public function serialize(Serializable $object): string
     {
         $data = [
-            'type' => ClassName::canonical($object),
-            'data' => $object->serialize()
+            '@' => ClassName::canonical($object),
+            '$' => $object->arraySerialize()
         ];
 
         return json_encode($data, JSON_UNESCAPED_SLASHES);

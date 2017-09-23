@@ -7,13 +7,13 @@ use Novuso\System\Exception\KeyException;
 use Traversable;
 
 /**
- * TableInterface is the interface for the symbol table type
+ * Table is the interface for the symbol table type
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface TableInterface extends ArrayAccess, KeyValueCollectionInterface
+interface Table extends ArrayAccess, KeyValueCollection
 {
     /**
      * Sets a key-value pair

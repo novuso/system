@@ -3,11 +3,11 @@
 namespace Novuso\Test\System\Resources;
 
 use Novuso\System\Exception\DomainException;
-use Novuso\System\Serialization\SerializableInterface;
+use Novuso\System\Serialization\Serializable;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Utility\Validate;
 
-class User implements Comparable, SerializableInterface
+class User implements Comparable, Serializable
 {
     protected $lastName;
     protected $firstName;
@@ -24,7 +24,7 @@ class User implements Comparable, SerializableInterface
         $this->birthDate = $data['birthDate'];
     }
 
-    public static function deserialize(array $data)
+    public static function arrayDeserialize(array $data)
     {
         $keys = ['lastName', 'firstName', 'username', 'email', 'birthDate'];
         foreach ($keys as $key) {
@@ -37,7 +37,7 @@ class User implements Comparable, SerializableInterface
         return new static($data);
     }
 
-    public function serialize(): array
+    public function arraySerialize(): array
     {
         return $this->toArray();
     }

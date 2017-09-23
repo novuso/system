@@ -9,19 +9,19 @@ namespace Novuso\System\Collection\Chain;
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-class KeyValueBucket implements BucketInterface
+class KeyValueBucket implements Bucket
 {
     /**
      * Next bucket
      *
-     * @var BucketInterface|null
+     * @var Bucket|null
      */
     protected $next;
 
     /**
      * Previous bucket
      *
-     * @var BucketInterface|null
+     * @var Bucket|null
      */
     protected $prev;
 
@@ -54,7 +54,7 @@ class KeyValueBucket implements BucketInterface
     /**
      * {@inheritdoc}
      */
-    public function setNext(?BucketInterface $next): void
+    public function setNext(?Bucket $next): void
     {
         $this->next = $next;
     }
@@ -62,7 +62,7 @@ class KeyValueBucket implements BucketInterface
     /**
      * {@inheritdoc}
      */
-    public function next(): ?BucketInterface
+    public function next(): ?Bucket
     {
         return $this->next;
     }
@@ -70,7 +70,7 @@ class KeyValueBucket implements BucketInterface
     /**
      * {@inheritdoc}
      */
-    public function setPrev(?BucketInterface $prev): void
+    public function setPrev(?Bucket $prev): void
     {
         $this->prev = $prev;
     }
@@ -78,7 +78,7 @@ class KeyValueBucket implements BucketInterface
     /**
      * {@inheritdoc}
      */
-    public function prev(): ?BucketInterface
+    public function prev(): ?Bucket
     {
         return $this->prev;
     }

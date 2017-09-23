@@ -7,13 +7,13 @@ use IteratorAggregate;
 use Traversable;
 
 /**
- * CollectionInterface is the base interface for collection types
+ * Collection is the base interface for collection types
  *
  * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
  * @license   http://opensource.org/licenses/MIT The MIT License
  * @author    John Nickell <email@johnnickell.com>
  */
-interface CollectionInterface extends Countable, IteratorAggregate
+interface Collection extends Countable, IteratorAggregate
 {
     /**
      * Checks if empty
