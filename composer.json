@@ -1,31 +1,26 @@
 {
     "name": "novuso/system",
-    "description": "System library for the Novuso Framework",
+    "description": "Novuso System library",
     "license": "MIT",
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.3"
     },
     "require-dev": {
-        "fzaninotto/faker": "1.*",
-        "mikey179/vfsStream": "1.*",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "6.*",
-        "squizlabs/php_codesniffer": "3.*"
+        "codedungeon/phpunit-result-printer": "0.*",
+        "consolidation/robo": "^1.0",
+        "mikey179/vfsstream": "^1.0",
+        "mockery/mockery": "^1.1",
+        "phpunit/phpunit": "^8.0",
+        "squizlabs/php_codesniffer": "^3.0"
     },
     "autoload": {
         "psr-4": {
-            "Novuso\\System\\": "src",
-            "Novuso\\Test\\System\\TestCase\\": "test/TestCase",
-            "Novuso\\Test\\System\\Traits\\": "test/Traits"
+            "Novuso\\System\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Novuso\\Test\\System\\Collection\\": "test/Collection",
-            "Novuso\\Test\\System\\Resources\\": "test/Resources",
-            "Novuso\\Test\\System\\Serialization\\": "test/Serialization",
-            "Novuso\\Test\\System\\Type\\": "test/Type",
-            "Novuso\\Test\\System\\Utility\\": "test/Utility"
+            "Novuso\\System\\Test\\": "tests"
         }
     },
     "config": {

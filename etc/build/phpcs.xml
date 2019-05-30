@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="Coding Standard">
-    <description>Coding Standard</description>
-    <rule ref="PSR1" />
-    <rule ref="PSR2" />
-    <rule ref="PSR2">
-        <exclude name="PSR2.Namespaces.UseDeclaration" />
-    </rule>
-</ruleset>
