@@ -2,12 +2,12 @@
 
 namespace Novuso\System\Test\Type;
 
+use Novuso\System\Exception\AssertionException;
 use Novuso\System\Exception\DomainException;
 use Novuso\System\Test\Resources\TestInvalidStatus;
 use Novuso\System\Test\Resources\TestStatus;
 use Novuso\System\Test\Resources\TestWeekDay;
 use Novuso\System\Test\UnitTestCase;
-use PHPUnit\Framework\Error\Error;
 
 /**
  * @covers \Novuso\System\Type\Enum
@@ -157,7 +157,7 @@ class EnumTest extends UnitTestCase
 
     public function test_that_compare_to_throws_exception_for_invalid_argument()
     {
-        $this->expectException(Error::class);
+        $this->expectException(AssertionException::class);
         $weekDay1 = TestWeekDay::FRIDAY();
         $weekDay2 = TestWeekDay::SUNDAY;
         $weekDay1->compareTo($weekDay2);

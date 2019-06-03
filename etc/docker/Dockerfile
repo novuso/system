@@ -19,3 +19,6 @@ RUN apt-get update \
     && docker-php-ext-install bcmath \
     && docker-php-ext-install sockets \
     && rm -rf /var/lib/apt/lists/*
+
+RUN echo 'zend.assertions = 1' >> /usr/local/etc/php/conf.d/custom.ini \
+    && echo 'assert.exception = 1' >> /usr/local/etc/php/conf.d/custom.ini
