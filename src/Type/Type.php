@@ -6,12 +6,11 @@ use JsonSerializable;
 use Novuso\System\Exception\TypeException;
 use Novuso\System\Utility\ClassName;
 use Novuso\System\Utility\Validate;
-use Serializable;
 
 /**
  * Class Type
  */
-final class Type implements Equatable, JsonSerializable, Serializable
+final class Type implements Equatable, JsonSerializable
 {
     /**
      * Type name
@@ -109,28 +108,6 @@ final class Type implements Equatable, JsonSerializable, Serializable
     public function __unserialize(array $data): void
     {
         $this->name = $data['name'];
-    }
-
-    /**
-     * Retrieves a serialized representation
-     *
-     * @return string
-     */
-    public function serialize(): string
-    {
-        return serialize($this->__serialize());
-    }
-
-    /**
-     * Handles construction from a serialized representation
-     *
-     * @param string $serialized The serialized representation
-     *
-     * @return void
-     */
-    public function unserialize($serialized)
-    {
-        $this->__unserialize(unserialize($serialized));
     }
 
     /**

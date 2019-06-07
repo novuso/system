@@ -1005,22 +1005,6 @@ class ValidateTest extends UnitTestCase
     }
 
     /**
-     * @dataProvider validSerializableProvider
-     */
-    public function test_that_is_serializable_returns_true_for_valid_value($value)
-    {
-        $this->assertTrue(Validate::isSerializable($value));
-    }
-
-    /**
-     * @dataProvider invalidSerializableProvider
-     */
-    public function test_that_is_serializable_returns_false_for_invalid_value($value)
-    {
-        $this->assertFalse(Validate::isSerializable($value));
-    }
-
-    /**
      * @dataProvider validTraversableProvider
      */
     public function test_that_is_traversable_returns_true_for_valid_value($value)

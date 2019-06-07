@@ -1326,24 +1326,6 @@ trait TestDataProvider
         ];
     }
 
-    public function validSerializableProvider()
-    {
-        return [
-            [null],
-            ['foo'],
-            [['foo' => 'bar']],
-            [new TestStringObject('hello')]
-        ];
-    }
-
-    public function invalidSerializableProvider()
-    {
-        return [
-            [new \DateTime()],
-            [function () {}]
-        ];
-    }
-
     public function validTraversableProvider()
     {
         return [

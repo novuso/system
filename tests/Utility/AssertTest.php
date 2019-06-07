@@ -1130,24 +1130,6 @@ class AssertTest extends UnitTestCase
     }
 
     /**
-     * @dataProvider validSerializableProvider
-     */
-    public function test_that_is_serializable_passes_for_valid_value($value)
-    {
-        Assert::isSerializable($value);
-        $this->assertTrue(true);
-    }
-
-    /**
-     * @dataProvider invalidSerializableProvider
-     */
-    public function test_that_is_serializable_throws_exception_for_invalid_value($value)
-    {
-        $this->expectException(AssertionException::class);
-        Assert::isSerializable($value);
-    }
-
-    /**
      * @dataProvider validTraversableProvider
      */
     public function test_that_is_traversable_passes_for_valid_value($value)

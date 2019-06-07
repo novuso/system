@@ -7,7 +7,6 @@ use Countable;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Type\Equatable;
 use ReflectionClass;
-use Serializable;
 use Traversable;
 
 /**
@@ -1177,26 +1176,6 @@ final class Validate
         }
 
         return true;
-    }
-
-    /**
-     * Checks if value can be serialized
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
-     */
-    public static function isSerializable($value): bool
-    {
-        if ($value === null || is_scalar($value) || is_array($value)) {
-            return true;
-        }
-
-        if (is_object($value) && ($value instanceof Serializable)) {
-            return true;
-        }
-
-        return false;
     }
 
     /**

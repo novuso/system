@@ -2,6 +2,7 @@
 
 namespace Novuso\System\Collection\Contract;
 
+use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Type\Comparator;
 
 /**
@@ -141,6 +142,8 @@ interface SortedItemCollection extends Collection
      * @param callable|null $callback The callback
      *
      * @return mixed
+     *
+     * @throws UnderflowException When the collection is empty
      */
     public function max(?callable $callback = null);
 
@@ -158,6 +161,8 @@ interface SortedItemCollection extends Collection
      * @param callable|null $callback The callback
      *
      * @return mixed
+     *
+     * @throws UnderflowException When the collection is empty
      */
     public function min(?callable $callback = null);
 

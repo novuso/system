@@ -1216,23 +1216,6 @@ final class Assert
     }
 
     /**
-     * Asserts that a value can be serialized
-     *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
-     * @throws AssertionException
-     */
-    public static function isSerializable($value): void
-    {
-        assert(
-            Validate::isSerializable($value),
-            static::error('isSerializable', ['value' => $value])
-        );
-    }
-
-    /**
      * Asserts that a value is traversable
      *
      * @param mixed $value The value

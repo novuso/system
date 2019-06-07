@@ -2,6 +2,7 @@
 
 namespace Novuso\System\Collection\Contract;
 
+use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Type\Comparator;
 
 /**
@@ -32,7 +33,7 @@ interface SortedKeyCollection extends Collection
      * If types are not provided, the types are dynamic.
      *
      * The key type must be a fully-qualified class name that implements:
-     * `RateGenius\System\Type\Comparable`
+     * `Novuso\System\Type\Comparable`
      *
      * The value type can be any fully-qualified class or interface name,
      * or one of the following type strings:
@@ -182,6 +183,8 @@ interface SortedKeyCollection extends Collection
      * @param callable|null $callback The callback
      *
      * @return mixed
+     *
+     * @throws UnderflowException When the collection is empty
      */
     public function max(?callable $callback = null);
 
@@ -199,6 +202,8 @@ interface SortedKeyCollection extends Collection
      * @param callable|null $callback The callback
      *
      * @return mixed
+     *
+     * @throws UnderflowException When the collection is empty
      */
     public function min(?callable $callback = null);
 

@@ -10,12 +10,11 @@ use Novuso\System\Utility\ClassName;
 use Novuso\System\Utility\Validate;
 use Novuso\System\Utility\VarPrinter;
 use ReflectionClass;
-use Serializable;
 
 /**
  * Class Enum
  */
-abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializable
+abstract class Enum implements Comparable, Equatable, JsonSerializable
 {
     /**
      * Constants cache
@@ -278,32 +277,20 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      * @param array $data the serialized data
      *
      * @return void
+     *
+     * @throws DomainException When the value is invalid
      */
     final public function __unserialize(array $data): void
     {
+        $constants = self::getMembers();
+
+        if (!in_array($data['value'], $constants, true)) {
+            $var = VarPrinter::toString($data['value']);
+            $message = sprintf('%s is not a member value of enum %s', $var, static::class);
+            throw new DomainException($message);
+        }
+
         $this->value = $data['value'];
-    }
-
-    /**
-     * Retrieves a serialized representation
-     *
-     * @return string
-     */
-    final public function serialize(): string
-    {
-        return serialize($this->__serialize());
-    }
-
-    /**
-     * Handles construction from a serialized representation
-     *
-     * @param string $serialized The serialized representation
-     *
-     * @return void
-     */
-    final public function unserialize($serialized)
-    {
-        $this->__unserialize(unserialize($serialized));
     }
 
     /**

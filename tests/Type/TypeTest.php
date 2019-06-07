@@ -4,6 +4,7 @@ namespace Novuso\System\Test\Type;
 
 use Novuso\System\Test\UnitTestCase;
 use Novuso\System\Type\Type;
+use Novuso\System\Utility\ClassName;
 
 /**
  * @covers \Novuso\System\Type\Type
@@ -44,6 +45,22 @@ class TypeTest extends UnitTestCase
         $state = serialize(Type::create($this));
         $type = unserialize($state);
         $this->assertSame(str_replace('\\', '.', get_class($this)), (string) $type);
+    }
+
+    public function test_that_serialize_returns_expected_state()
+    {
+        // TODO: update these tests when php7.4 is released
+        $state = Type::create($this)->__serialize();
+        $this->assertSame(ClassName::canonical($this), $state['name']);
+    }
+
+    public function test_that_unserialize_works_as_expected()
+    {
+        // TODO: update these tests when php7.4 is released
+        $data = ['name' => ClassName::canonical($this)];
+        $type = Type::create($this);
+        $type->__unserialize($data);
+        $this->assertSame(ClassName::canonical($this), $type->toString());
     }
 
     public function test_that_equals_returns_true_for_same_instance()

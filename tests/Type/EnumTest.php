@@ -66,11 +66,29 @@ class EnumTest extends UnitTestCase
         $this->assertSame('{"week_day":5}', json_encode($data));
     }
 
-    public function test_that_it_is_serializable()
+    public function test_that_serialize_returns_expected_state()
     {
-        $state = serialize(TestWeekDay::FRIDAY());
-        $weekDay = unserialize($state);
-        $this->assertSame('TestWeekDay::FRIDAY', (string) $weekDay);
+        // TODO: update these tests when php7.4 is released
+        $state = TestWeekDay::FRIDAY()->__serialize();
+        $this->assertSame(5, $state['value']);
+    }
+
+    public function test_that_unserialize_works_as_expected()
+    {
+        // TODO: update these tests when php7.4 is released
+        $data = ['value' => TestWeekDay::FRIDAY];
+        $weekDay = TestWeekDay::FRIDAY();
+        $weekDay->__unserialize($data);
+        $this->assertSame(5, $weekDay->value());
+    }
+
+    public function test_that_unserialize_throws_exception_from_bad_data()
+    {
+        // TODO: update these tests when php7.4 is released
+        $this->expectException(DomainException::class);
+        $data = ['value' => 'Friday'];
+        $weekDay = TestWeekDay::FRIDAY();
+        $weekDay->__unserialize($data);
     }
 
     public function test_that_equals_returns_true_for_same_instance()
