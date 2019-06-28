@@ -2,34 +2,33 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Api\OrderedSet;
-use Novuso\System\Collection\Compare\ComparableComparator;
-use Novuso\System\Collection\Compare\FloatComparator;
-use Novuso\System\Collection\Compare\IntegerComparator;
-use Novuso\System\Collection\Compare\StringComparator;
-use Novuso\System\Collection\Traits\ItemTypeMethods;
+use Novuso\System\Collection\Comparison\ComparableComparator;
+use Novuso\System\Collection\Comparison\FloatComparator;
+use Novuso\System\Collection\Comparison\FunctionComparator;
+use Novuso\System\Collection\Comparison\IntegerComparator;
+use Novuso\System\Collection\Comparison\StringComparator;
+use Novuso\System\Collection\Iterator\GeneratorIterator;
+use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Tree\BinarySearchTree;
 use Novuso\System\Collection\Tree\RedBlackSearchTree;
-use Novuso\System\Type\Arrayable;
+use Novuso\System\Collection\Type\OrderedSet;
+use Novuso\System\Exception\AssertionException;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Type\Comparator;
+use Novuso\System\Utility\Assert;
 use Novuso\System\Utility\Validate;
-use Traversable;
 
 /**
- * SortedSet is an implementation of the sorted set type
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class SortedSet
  */
-class SortedSet implements Arrayable, OrderedSet
+final class SortedSet implements OrderedSet
 {
     use ItemTypeMethods;
 
     /**
      * Binary search tree
      *
-     * @var RedBlackSearchTree
+     * @var BinarySearchTree
      */
     protected $tree;
 
@@ -54,9 +53,9 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function __construct(Comparator $comparator, ?string $itemType = null)
     {
+        $this->setItemType($itemType);
         $this->comparator = $comparator;
         $this->tree = new RedBlackSearchTree($this->comparator);
-        $this->setItemType($itemType);
     }
 
     /**
@@ -89,15 +88,43 @@ class SortedSet implements Arrayable, OrderedSet
      * @param string|null $itemType The item type
      *
      * @return SortedSet
+     *
+     * @throws AssertionException When the item type is not valid
      */
     public static function comparable(?string $itemType = null): SortedSet
     {
-        assert(
-            Validate::isNull($itemType) || Validate::implementsInterface($itemType, Comparable::class),
-            sprintf('%s expects $itemType to implement %s', __METHOD__, Comparable::class)
-        );
+        Assert::isTrue(Validate::isNull($itemType) || Validate::implementsInterface($itemType, Comparable::class));
 
         return new static(new ComparableComparator(), $itemType);
+    }
+
+    /**
+     * Creates collection of items sorted by callback
+     *
+     * The callback should return 0 for values considered equal, return -1 if
+     * the first value is less than the second value, and return 1 if the
+     * first value is greater than the second value.
+     *
+     * Callback signature:
+     *
+     * <code>
+     * function (<I> $item1, <I> $item2): int {}
+     * </code>
+     *
+     * If a type is not provided, the item type is dynamic.
+     *
+     * The type can be any fully-qualified class or interface name,
+     * or one of the following type strings:
+     * [array, object, bool, int, float, string, callable]
+     *
+     * @param callable    $callback The sorting callback function
+     * @param string|null $itemType The item type
+     *
+     * @return SortedSet
+     */
+    public static function callback(callable $callback, ?string $itemType = null): SortedSet
+    {
+        return new static(new FunctionComparator($callback), $itemType);
     }
 
     /**
@@ -151,11 +178,7 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function add($item): void
     {
-        assert(
-            Validate::isType($item, $this->itemType()),
-            $this->itemTypeError('add', $item)
-        );
-
+        Assert::isType($item, $this->itemType());
         $this->tree->set($item, true);
     }
 
@@ -178,7 +201,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function difference(OrderedSet $other): SortedSet
+    public function difference(OrderedSet $other)
     {
         $difference = static::create($this->comparator, $this->itemType());
 
@@ -195,7 +218,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function intersection(OrderedSet $other): SortedSet
+    public function intersection(OrderedSet $other)
     {
         $intersection = static::create($this->comparator, $this->itemType());
 
@@ -207,7 +230,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function complement(OrderedSet $other): SortedSet
+    public function complement(OrderedSet $other)
     {
         $complement = static::create($this->comparator, $this->itemType());
 
@@ -223,7 +246,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function union(OrderedSet $other): SortedSet
+    public function union(OrderedSet $other)
     {
         $union = static::create($this->comparator, $this->itemType());
 
@@ -236,7 +259,7 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function range($lo, $hi): Traversable
+    public function range($lo, $hi): iterable
     {
         return $this->tree->rangeKeys($lo, $hi);
     }
@@ -247,38 +270,6 @@ class SortedSet implements Arrayable, OrderedSet
     public function rangeCount($lo, $hi): int
     {
         return $this->tree->rangeCount($lo, $hi);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function min()
-    {
-        return $this->tree->min();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function max()
-    {
-        return $this->tree->max();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeMin(): void
-    {
-        $this->tree->removeMin();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeMax(): void
-    {
-        $this->tree->removeMax();
     }
 
     /**
@@ -318,20 +309,20 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function each(callable $callback): void
     {
-        foreach ($this->getIterator() as $item) {
-            call_user_func($callback, $item);
+        foreach ($this->getIterator() as $index => $item) {
+            call_user_func($callback, $item, $index);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, Comparator $comparator, ?string $itemType = null): SortedSet
+    public function map(callable $callback, Comparator $comparator, ?string $itemType = null)
     {
         $set = static::create($comparator, $itemType);
 
-        foreach ($this->getIterator() as $item) {
-            $set->add(call_user_func($callback, $item));
+        foreach ($this->getIterator() as $index => $item) {
+            $set->add(call_user_func($callback, $item, $index));
         }
 
         return $set;
@@ -340,10 +331,132 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
+    public function max(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $maxItem = null;
+            $max = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($max === null || $field > $max) {
+                    $max = $field;
+                    $maxItem = $item;
+                }
+            }
+
+            return $maxItem;
+        }
+
+        return $this->tree->max();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function min(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $minItem = null;
+            $min = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($min === null || $field < $min) {
+                    $min = $field;
+                    $minItem = $item;
+                }
+            }
+
+            return $minItem;
+        }
+
+        return $this->tree->min();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeMin(?callable $callback = null): void
+    {
+        if ($callback === null) {
+            $this->tree->removeMin();
+
+            return;
+        }
+
+        $this->remove($this->min($callback));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeMax(?callable $callback = null): void
+    {
+        if ($callback === null) {
+            $this->tree->removeMax();
+
+            return;
+        }
+
+        $this->remove($this->max($callback));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        $accumulator = $initial;
+
+        foreach ($this->getIterator() as $index => $item) {
+            $accumulator = call_user_func($callback, $accumulator, $item, $index);
+        }
+
+        return $accumulator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sum(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        if ($callback === null) {
+            $callback = function ($item) {
+                return $item;
+            };
+        }
+
+        return $this->reduce(function ($total, $item, $index) use ($callback) {
+            return $total + call_user_func($callback, $item, $index);
+        }, 0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function average(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        $count = $this->count();
+
+        return $this->sum($callback) / $count;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function find(callable $predicate)
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return $item;
             }
         }
@@ -354,12 +467,12 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $predicate): SortedSet
+    public function filter(callable $predicate)
     {
         $set = static::create($this->comparator, $this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $set->add($item);
             }
         }
@@ -370,12 +483,12 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function reject(callable $predicate): SortedSet
+    public function reject(callable $predicate)
     {
         $set = static::create($this->comparator, $this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 $set->add($item);
             }
         }
@@ -388,8 +501,8 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function any(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return true;
             }
         }
@@ -402,8 +515,8 @@ class SortedSet implements Arrayable, OrderedSet
      */
     public function every(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 return false;
             }
         }
@@ -419,8 +532,8 @@ class SortedSet implements Arrayable, OrderedSet
         $set1 = static::create($this->comparator, $this->itemType());
         $set2 = static::create($this->comparator, $this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $set1->add($item);
             } else {
                 $set2->add($item);
@@ -433,9 +546,15 @@ class SortedSet implements Arrayable, OrderedSet
     /**
      * {@inheritdoc}
      */
-    public function getIterator(): Traversable
+    public function getIterator()
     {
-        return $this->tree->keys();
+        return new GeneratorIterator(function (iterable $keys) {
+            $index = 0;
+            foreach ($keys as $key) {
+                yield $index => $key;
+                $index++;
+            }
+        }, [$this->tree->keys()]);
     }
 
     /**
@@ -450,6 +569,38 @@ class SortedSet implements Arrayable, OrderedSet
         }
 
         return $items;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toString(): string
+    {
+        return $this->toJson();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 
     /**

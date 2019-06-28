@@ -8,13 +8,9 @@ use Novuso\System\Utility\Validate;
 use Novuso\System\Utility\VarPrinter;
 
 /**
- * TableBucketChain is a list of key-value buckets supporting table operations
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class TableBucketChain
  */
-class TableBucketChain implements Countable
+final class TableBucketChain implements Countable
 {
     /**
      * Head bucket
@@ -290,7 +286,8 @@ class TableBucketChain implements Countable
         $this->offset = -1;
         $prev = $this->head;
         $next = $this->tail;
-        for ($i = 0; $i < count($keys); $i++) {
+        $count = count($keys);
+        for ($i = 0; $i < $count; $i++) {
             $this->insertBetween($keys[$i], $values[$i], $prev, $next);
             $prev = $this->current;
         }

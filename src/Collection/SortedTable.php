@@ -2,34 +2,33 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Api\OrderedTable;
-use Novuso\System\Collection\Compare\ComparableComparator;
-use Novuso\System\Collection\Compare\FloatComparator;
-use Novuso\System\Collection\Compare\IntegerComparator;
-use Novuso\System\Collection\Compare\StringComparator;
+use Novuso\System\Collection\Comparison\ComparableComparator;
+use Novuso\System\Collection\Comparison\FloatComparator;
+use Novuso\System\Collection\Comparison\FunctionComparator;
+use Novuso\System\Collection\Comparison\IntegerComparator;
+use Novuso\System\Collection\Comparison\StringComparator;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
-use Novuso\System\Collection\Traits\KeyValueTypeMethods;
+use Novuso\System\Collection\Mixin\KeyValueTypeMethods;
+use Novuso\System\Collection\Tree\BinarySearchTree;
 use Novuso\System\Collection\Tree\RedBlackSearchTree;
+use Novuso\System\Collection\Type\OrderedTable;
+use Novuso\System\Exception\AssertionException;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Type\Comparator;
+use Novuso\System\Utility\Assert;
 use Novuso\System\Utility\Validate;
-use Traversable;
 
 /**
- * SortedTable is an implementation of the sorted table type
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class SortedTable
  */
-class SortedTable implements OrderedTable
+final class SortedTable implements OrderedTable
 {
     use KeyValueTypeMethods;
 
     /**
      * Binary search tree
      *
-     * @var RedBlackSearchTree
+     * @var BinarySearchTree
      */
     protected $tree;
 
@@ -49,10 +48,10 @@ class SortedTable implements OrderedTable
      */
     public function __construct(Comparator $comparator, ?string $keyType = null, ?string $valueType = null)
     {
-        $this->comparator = $comparator;
-        $this->tree = new RedBlackSearchTree($this->comparator);
         $this->setKeyType($keyType);
         $this->setValueType($valueType);
+        $this->comparator = $comparator;
+        $this->tree = new RedBlackSearchTree($this->comparator);
     }
 
     /**
@@ -94,15 +93,44 @@ class SortedTable implements OrderedTable
      * @param string|null $valueType The value type
      *
      * @return SortedTable
+     *
+     * @throws AssertionException When the key type is not valid
      */
     public static function comparable(?string $keyType = null, ?string $valueType = null): SortedTable
     {
-        assert(
-            Validate::isNull($keyType) || Validate::implementsInterface($keyType, Comparable::class),
-            sprintf('%s expects $keyType to implement %s', __METHOD__, Comparable::class)
-        );
+        Assert::isTrue(Validate::isNull($keyType) || Validate::implementsInterface($keyType, Comparable::class));
 
         return new static(new ComparableComparator(), $keyType, $valueType);
+    }
+
+    /**
+     * Creates collection sorted by callback
+     *
+     * The callback should return 0 for values considered equal, return -1 if
+     * the first value is less than the second value, and return 1 if the
+     * first value is greater than the second value.
+     *
+     * Callback signature:
+     *
+     * <code>
+     * function (<K> $key1, <K> $key2): int {}
+     * </code>
+     *
+     * If types are not provided, the types are dynamic.
+     *
+     * The type can be any fully-qualified class or interface name,
+     * or one of the following type strings:
+     * [array, object, bool, int, float, string, callable]
+     *
+     * @param callable    $callback  The sorting callback function
+     * @param string|null $keyType   The key type
+     * @param string|null $valueType The value type
+     *
+     * @return SortedTable
+     */
+    public static function callback(callable $callback, ?string $keyType = null, ?string $valueType = null): SortedTable
+    {
+        return new static(new FunctionComparator($callback), $keyType, $valueType);
     }
 
     /**
@@ -180,15 +208,8 @@ class SortedTable implements OrderedTable
      */
     public function set($key, $value): void
     {
-        assert(
-            Validate::isType($key, $this->keyType()),
-            $this->keyTypeError('set', $key)
-        );
-        assert(
-            Validate::isType($value, $this->valueType()),
-            $this->valueTypeError('set', $value)
-        );
-
+        Assert::isType($key, $this->keyType());
+        Assert::isType($value, $this->valueType());
         $this->tree->set($key, $value);
     }
 
@@ -251,7 +272,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function keys(): Traversable
+    public function keys(): iterable
     {
         return $this->tree->keys();
     }
@@ -259,7 +280,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function rangeKeys($lo, $hi): Traversable
+    public function rangeKeys($lo, $hi): iterable
     {
         return $this->tree->rangeKeys($lo, $hi);
     }
@@ -270,38 +291,6 @@ class SortedTable implements OrderedTable
     public function rangeCount($lo, $hi): int
     {
         return $this->tree->rangeCount($lo, $hi);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function min()
-    {
-        return $this->tree->min();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function max()
-    {
-        return $this->tree->max();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeMin(): void
-    {
-        $this->tree->removeMin();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeMax(): void
-    {
-        $this->tree->removeMax();
     }
 
     /**
@@ -349,7 +338,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, ?string $valueType = null): SortedTable
+    public function map(callable $callback, ?string $valueType = null)
     {
         $table = static::create($this->comparator, $this->keyType(), $valueType);
 
@@ -358,6 +347,128 @@ class SortedTable implements OrderedTable
         }
 
         return $table;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function max(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $maxKey = null;
+            $max = null;
+
+            foreach ($this->getIterator() as $key => $value) {
+                $field = call_user_func($callback, $value, $key);
+                if ($max === null || $field > $max) {
+                    $max = $field;
+                    $maxKey = $key;
+                }
+            }
+
+            return $maxKey;
+        }
+
+        return $this->tree->max();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function min(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $minKey = null;
+            $min = null;
+
+            foreach ($this->getIterator() as $key => $value) {
+                $field = call_user_func($callback, $value, $key);
+                if ($min === null || $field < $min) {
+                    $min = $field;
+                    $minKey = $key;
+                }
+            }
+
+            return $minKey;
+        }
+
+        return $this->tree->min();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeMin(?callable $callback = null): void
+    {
+        if ($callback === null) {
+            $this->tree->removeMin();
+
+            return;
+        }
+
+        $this->remove($this->min($callback));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeMax(?callable $callback = null): void
+    {
+        if ($callback === null) {
+            $this->tree->removeMax();
+
+            return;
+        }
+
+        $this->remove($this->max($callback));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        $accumulator = $initial;
+
+        foreach ($this->getIterator() as $key => $value) {
+            $accumulator = call_user_func($callback, $accumulator, $value, $key);
+        }
+
+        return $accumulator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sum(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        if ($callback === null) {
+            $callback = function ($value) {
+                return $value;
+            };
+        }
+
+        return $this->reduce(function ($total, $value, $key) use ($callback) {
+            return $total + call_user_func($callback, $value, $key);
+        }, 0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function average(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        $count = $this->count();
+
+        return $this->sum($callback) / $count;
     }
 
     /**
@@ -377,7 +488,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $predicate): SortedTable
+    public function filter(callable $predicate)
     {
         $table = static::create($this->comparator, $this->keyType(), $this->valueType());
 
@@ -393,7 +504,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function reject(callable $predicate): SortedTable
+    public function reject(callable $predicate)
     {
         $table = static::create($this->comparator, $this->keyType(), $this->valueType());
 
@@ -456,7 +567,7 @@ class SortedTable implements OrderedTable
     /**
      * {@inheritdoc}
      */
-    public function getIterator(): Traversable
+    public function getIterator()
     {
         return new GeneratorIterator(function (OrderedTable $table) {
             foreach ($table->keys() as $key) {

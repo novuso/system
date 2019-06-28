@@ -5,48 +5,44 @@ namespace Novuso\System\Collection\Iterator;
 use Iterator;
 
 /**
- * ArrayQueueIterator is the iterator used by an array queue
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class ArrayQueueIterator
  */
-class ArrayQueueIterator implements Iterator
+final class ArrayQueueIterator implements Iterator
 {
     /**
      * Items
      *
      * @var array
      */
-    private $items;
+    protected $items;
 
     /**
      * Front index
      *
      * @var int
      */
-    private $front;
+    protected $front;
 
     /**
      * Capacity
      *
      * @var int
      */
-    private $cap;
+    protected $cap;
 
     /**
      * Current index
      *
      * @var int
      */
-    private $index;
+    protected $index;
 
     /**
      * Item count
      *
      * @var int
      */
-    private $count;
+    protected $count;
 
     /**
      * Constructor

@@ -3,13 +3,9 @@
 namespace Novuso\System\Collection\Chain;
 
 /**
- * KeyValueBucket is a bucket that contains a key-value pair
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class KeyValueBucket
  */
-class KeyValueBucket implements Bucket
+final class KeyValueBucket implements Bucket
 {
     /**
      * Next bucket

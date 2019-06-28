@@ -3,13 +3,9 @@
 namespace Novuso\System\Collection\Chain;
 
 /**
- * ItemBucket is a bucket that contains an item
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class ItemBucket
  */
-class ItemBucket implements Bucket
+final class ItemBucket implements Bucket
 {
     /**
      * Next bucket

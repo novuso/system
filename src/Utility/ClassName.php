@@ -5,16 +5,9 @@ namespace Novuso\System\Utility;
 use Novuso\System\Exception\TypeException;
 
 /**
- * ClassName is a class name string utility
- *
- * Based on ClassFunctions by Mathias Verraes.
- *
- * @link      https://github.com/mathiasverraes/classfunctions
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class ClassName
  */
-class ClassName
+final class ClassName
 {
     /**
      * Retrieves the fully qualified class name of an object
@@ -46,12 +39,14 @@ class ClassName
     }
 
     /**
-     * Retrieves the canonical class name
+     * Retrieves the canonical class name of an object
      *
      * @param object|string $object An object, fully qualified class name, or
      *                              canonical class name
      *
      * @return string
+     *
+     * @throws TypeException When $object is not a string or object
      */
     public static function canonical($object): string
     {
@@ -59,25 +54,29 @@ class ClassName
     }
 
     /**
-     * Retrieves the lowercase underscored class name
+     * Retrieves the lowercase underscored class name of an object
      *
      * @param object|string $object An object, fully qualified class name, or
      *                              canonical class name
      *
      * @return string
+     *
+     * @throws TypeException When $object is not a string or object
      */
     public static function underscore($object): string
     {
-        return strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', static::canonical($object)));
+        return strtolower(preg_replace('/(?<=\\w)([A-Z])/', '_$1', static::canonical($object)));
     }
 
     /**
-     * Retrieves the short class name
+     * Retrieves the short class name of an object
      *
      * @param object|string $object An object, fully qualified class name, or
      *                              canonical class name
      *
      * @return string
+     *
+     * @throws TypeException When $object is not a string or object
      */
     public static function short($object): string
     {

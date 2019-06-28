@@ -3,13 +3,9 @@
 namespace Novuso\System\Collection\Tree;
 
 /**
- * RedBlackNode is a node in a red-black binary search tree
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class RedBlackNode
  */
-class RedBlackNode
+final class RedBlackNode
 {
     /**
      * Red link

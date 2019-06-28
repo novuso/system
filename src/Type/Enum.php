@@ -2,23 +2,27 @@
 
 namespace Novuso\System\Type;
 
+use Exception;
 use JsonSerializable;
 use Novuso\System\Exception\DomainException;
+use Novuso\System\Utility\Assert;
 use Novuso\System\Utility\ClassName;
 use Novuso\System\Utility\Validate;
 use Novuso\System\Utility\VarPrinter;
 use ReflectionClass;
-use Serializable;
 
 /**
- * Enum is the base class for enum types
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class Enum
  */
-abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializable
+abstract class Enum implements Comparable, Equatable, JsonSerializable
 {
+    /**
+     * Constants cache
+     *
+     * @var array
+     */
+    private static $constants = [];
+
     /**
      * Enum value
      *
@@ -39,13 +43,6 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      * @var int
      */
     private $ordinal;
-
-    /**
-     * Constants cache
-     *
-     * @var array
-     */
-    private static $constants = [];
 
     /**
      * Constructs Enum
@@ -75,14 +72,14 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      * Maps static method `MyClass::CONST_NAME()` given `CONST_NAME` is a class
      * constant of `MyClass`.
      *
-     * @param string $name The name of the method
-     * @param array  $args A list of arguments
+     * @param string $name      The name of the method
+     * @param array  $arguments A list of arguments
      *
-     * @return Enum
+     * @return static
      *
      * @throws DomainException When the constant name is not defined
      */
-    final public static function __callStatic($name, array $args): Enum
+    final public static function __callStatic($name, $arguments)
     {
         return self::fromName($name);
     }
@@ -92,11 +89,11 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      *
      * @param mixed $value The enum constant value
      *
-     * @return Enum
+     * @return static
      *
      * @throws DomainException When the value is invalid
      */
-    final public static function fromValue($value): Enum
+    final public static function fromValue($value)
     {
         return new static($value);
     }
@@ -106,11 +103,11 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      *
      * @param string $string The string representation
      *
-     * @return Enum
+     * @return static
      *
      * @throws DomainException When the string is invalid
      */
-    final public static function fromString(string $string): Enum
+    final public static function fromString(string $string)
     {
         $parts = explode('::', $string);
 
@@ -122,11 +119,11 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      *
      * @param string $name The enum constant name
      *
-     * @return Enum
+     * @return static
      *
      * @throws DomainException When the name is invalid
      */
-    final public static function fromName(string $name): Enum
+    final public static function fromName(string $name)
     {
         $constName = sprintf('%s::%s', static::class, $name);
 
@@ -143,11 +140,11 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      *
      * @param int $ordinal The enum ordinal position
      *
-     * @return Enum
+     * @return static
      *
      * @throws DomainException When the ordinal is invalid
      */
-    final public static function fromOrdinal(int $ordinal): Enum
+    final public static function fromOrdinal(int $ordinal)
     {
         $constants = self::getMembers();
         $item = array_slice($constants, $ordinal, 1, true);
@@ -194,6 +191,8 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      * Retrieves the enum constant name
      *
      * @return string
+     *
+     * @throws DomainException When more than one constant has the same value
      */
     final public function name(): string
     {
@@ -209,13 +208,15 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      * Retrieves the enum ordinal position
      *
      * @return int
+     *
+     * @throws Exception Will not happen
      */
     final public function ordinal(): int
     {
         if ($this->ordinal === null) {
             $ordinal = 0;
-            foreach (self::getMembers() as $constValue) {
-                if ($this->value === $constValue) {
+            foreach (self::getMembers() as $value) {
+                if ($this->value === $value) {
                     break;
                 }
                 $ordinal++;
@@ -230,6 +231,8 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      * Retrieves a string representation
      *
      * @return string
+     *
+     * @throws Exception Will not happen
      */
     final public function toString(): string
     {
@@ -240,6 +243,8 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
      * Handles casting to a string
      *
      * @return string
+     *
+     * @throws Exception Will not happen
      */
     final public function __toString(): string
     {
@@ -257,26 +262,35 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
     }
 
     /**
-     * Retrieves a serialized representation
+     * Retrieves a representation to serialize
      *
-     * @return string
+     * @return array
      */
-    final public function serialize(): string
+    final public function __serialize(): array
     {
-        return serialize(['value' => $this->value]);
+        return ['value' => $this->value];
     }
 
     /**
-     * Handles construction from a serialized representation
+     * Handles construction from serialized data
      *
-     * @param string $serialized The serialized representation
+     * @param array $data the serialized data
      *
      * @return void
+     *
+     * @throws DomainException When the value is invalid
      */
-    final public function unserialize($serialized): void
+    final public function __unserialize(array $data): void
     {
-        $data = unserialize($serialized);
-        $this->__construct($data['value']);
+        $constants = self::getMembers();
+
+        if (!in_array($data['value'], $constants, true)) {
+            $var = VarPrinter::toString($data['value']);
+            $message = sprintf('%s is not a member value of enum %s', $var, static::class);
+            throw new DomainException($message);
+        }
+
+        $this->value = $data['value'];
     }
 
     /**
@@ -288,10 +302,7 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
             return 0;
         }
 
-        assert(
-            Validate::areSameType($this, $object),
-            sprintf('Comparison requires instance of %s', static::class)
-        );
+        Assert::areSameType($this, $object);
 
         return $this->ordinal() <=> $object->ordinal();
     }
@@ -332,12 +343,14 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
     final private static function guardConstants(array $constants): void
     {
         $duplicates = [];
+
         foreach ($constants as $value) {
             $names = array_keys($constants, $value, $strict = true);
             if (count($names) > 1) {
                 $duplicates[VarPrinter::toString($value)] = $names;
             }
         }
+
         if (!empty($duplicates)) {
             $list = array_map(function ($names) use ($constants) {
                 return sprintf('(%s)=%s', implode('|', $names), VarPrinter::toString($constants[$names[0]]));
@@ -357,17 +370,19 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable, Serializ
     final private static function sortConstants(ReflectionClass $reflection): array
     {
         $constants = [];
+
         while ($reflection && __CLASS__ !== $reflection->getName()) {
             $scope = [];
-            foreach ($reflection->getReflectionConstants() as $const) {
-                if ($const->isPublic()) {
-                    $scope[$const->getName()] = $const->getValue();
+
+            foreach ($reflection->getReflectionConstants() as $constant) {
+                if ($constant->isPublic()) {
+                    $scope[$constant->getName()] = $constant->getValue();
                 }
             }
+
             $constants = $scope + $constants;
             $reflection = $reflection->getParentClass();
         }
-
 
         return $constants;
     }

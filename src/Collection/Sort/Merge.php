@@ -3,13 +3,9 @@
 namespace Novuso\System\Collection\Sort;
 
 /**
- * Merge implements the merge sort algorithm
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class Merge
  */
-class Merge
+final class Merge
 {
     /**
      * Insertion sort cutoff
@@ -63,7 +59,7 @@ class Merge
             return;
         }
 
-        static::merge($src, $dst, $lo, $mid, $hi, $comp);
+        static::mergeSort($src, $dst, $lo, $mid, $hi, $comp);
     }
 
     /**
@@ -78,7 +74,7 @@ class Merge
      *
      * @return void
      */
-    protected static function merge(array &$src, array &$dst, int $lo, int $mid, int $hi, callable $comp): void
+    protected static function mergeSort(array &$src, array &$dst, int $lo, int $mid, int $hi, callable $comp): void
     {
         $i = $lo;
         $j = $mid + 1;

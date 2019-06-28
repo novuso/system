@@ -1,5 +1,0 @@
----
-currentMenu: type
----
-
-# Equatable

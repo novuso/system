@@ -4,22 +4,15 @@ namespace Novuso\System\Utility;
 
 use ArrayAccess;
 use Countable;
-use DateTimeZone;
-use JsonSerializable;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Type\Equatable;
 use ReflectionClass;
-use Serializable;
 use Traversable;
 
 /**
- * Validate provides static methods for testing values
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class Validate
  */
-class Validate
+final class Validate
 {
     /**
      * Valid timezones
@@ -543,10 +536,6 @@ class Validate
      */
     public static function isTimezone($value): bool
     {
-        if ($value instanceof DateTimeZone) {
-            return true;
-        }
-
         if (!static::isStringCastable($value)) {
             return false;
         }
@@ -624,8 +613,8 @@ class Validate
             return false;
         }
 
-        $searchlen = (int) mb_strlen($search, $encoding);
-        $start = mb_substr((string) $value, 0, $searchlen, $encoding);
+        $searchLength = (int) mb_strlen($search, $encoding);
+        $start = mb_substr((string) $value, 0, $searchLength, $encoding);
 
         return $search === $start;
     }
@@ -645,9 +634,9 @@ class Validate
             return false;
         }
 
-        $searchlen = (int) mb_strlen($search, $encoding);
+        $searchLength = (int) mb_strlen($search, $encoding);
         $length = (int) mb_strlen((string) $value, $encoding);
-        $end = mb_substr((string) $value, $length - $searchlen, $searchlen, $encoding);
+        $end = mb_substr((string) $value, $length - $searchLength, $searchLength, $encoding);
 
         return $search === $end;
     }
@@ -667,9 +656,9 @@ class Validate
             return false;
         }
 
-        $strlen = (int) mb_strlen((string) $value, $encoding);
+        $strLength = (int) mb_strlen((string) $value, $encoding);
 
-        return $strlen === $length;
+        return $strLength === $length;
     }
 
     /**
@@ -687,9 +676,9 @@ class Validate
             return false;
         }
 
-        $strlen = (int) mb_strlen((string) $value, $encoding);
+        $strLength = (int) mb_strlen((string) $value, $encoding);
 
-        return $strlen >= $minLength;
+        return $strLength >= $minLength;
     }
 
     /**
@@ -707,9 +696,9 @@ class Validate
             return false;
         }
 
-        $strlen = (int) mb_strlen((string) $value, $encoding);
+        $strLength = (int) mb_strlen((string) $value, $encoding);
 
-        return $strlen <= $maxLength;
+        return $strLength <= $maxLength;
     }
 
     /**
@@ -728,12 +717,12 @@ class Validate
             return false;
         }
 
-        $strlen = (int) mb_strlen((string) $value, $encoding);
+        $strLength = (int) mb_strlen((string) $value, $encoding);
 
-        if ($strlen < $minLength) {
+        if ($strLength < $minLength) {
             return false;
         }
-        if ($strlen > $maxLength) {
+        if ($strLength > $maxLength) {
             return false;
         }
 
@@ -1180,35 +1169,13 @@ class Validate
      */
     public static function isJsonEncodable($value): bool
     {
-        if ($value === null || is_scalar($value) || is_array($value)) {
-            return true;
+        $result = @json_encode($value);
+
+        if (!is_string($result)) {
+            return false;
         }
 
-        if (is_object($value) && ($value instanceof JsonSerializable)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Checks if value can be serialized
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
-     */
-    public static function isSerializable($value): bool
-    {
-        if ($value === null || is_scalar($value) || is_array($value)) {
-            return true;
-        }
-
-        if (is_object($value) && ($value instanceof Serializable)) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**

@@ -4,16 +4,11 @@ namespace Novuso\System\Serialization;
 
 use Novuso\System\Exception\DomainException;
 use Novuso\System\Utility\ClassName;
-use Novuso\System\Utility\Validate;
 
 /**
- * JsonSerializer is a JSON encoding serializer
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class JsonSerializer
  */
-class JsonSerializer implements Serializer
+final class JsonSerializer implements Serializer
 {
     /**
      * {@inheritdoc}
@@ -31,11 +26,6 @@ class JsonSerializer implements Serializer
         }
 
         $class = ClassName::full($data['@']);
-
-        assert(
-            Validate::implementsInterface($class, Serializable::class),
-            sprintf('Unable to deserialize: %s; does not implement %s', $class, Serializable::class)
-        );
 
         /** @var Serializable|string $class */
         return $class::arrayDeserialize($data['$']);

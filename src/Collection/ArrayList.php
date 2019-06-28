@@ -3,24 +3,18 @@
 namespace Novuso\System\Collection;
 
 use ArrayIterator;
-use Novuso\System\Collection\Api\IndexedList;
+use Closure;
+use Novuso\System\Collection\Mixin\ItemTypeMethods;
 use Novuso\System\Collection\Sort\Merge;
-use Novuso\System\Collection\Traits\ItemTypeMethods;
+use Novuso\System\Collection\Type\Sequence;
 use Novuso\System\Exception\IndexException;
 use Novuso\System\Exception\UnderflowException;
-use Novuso\System\Type\Arrayable;
-use Novuso\System\Utility\Validate;
-use Novuso\System\Utility\VarPrinter;
-use Traversable;
+use Novuso\System\Utility\Assert;
 
 /**
- * ArrayList is an implementation of the list type
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class ArrayList
  */
-class ArrayList implements Arrayable, IndexedList
+final class ArrayList implements Sequence
 {
     use ItemTypeMethods;
 
@@ -85,13 +79,31 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
+    public function length(): int
+    {
+        return count($this->items);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function replace(iterable $items)
+    {
+        $list = static::of($this->itemType());
+
+        foreach ($items as $item) {
+            $list->add($item);
+        }
+
+        return $list;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function add($item): void
     {
-        assert(
-            Validate::isType($item, $this->itemType()),
-            $this->itemTypeError('add', $item)
-        );
-
+        Assert::isType($item, $this->itemType());
         $this->items[] = $item;
     }
 
@@ -100,10 +112,7 @@ class ArrayList implements Arrayable, IndexedList
      */
     public function set(int $index, $item): void
     {
-        assert(
-            Validate::isType($item, $this->itemType()),
-            $this->itemTypeError('set', $item)
-        );
+        Assert::isType($item, $this->itemType());
 
         $count = count($this->items);
 
@@ -173,6 +182,14 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
+    public function contains($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->items, $strict);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function offsetSet($index, $item): void
     {
         if ($index === null) {
@@ -181,11 +198,7 @@ class ArrayList implements Arrayable, IndexedList
             return;
         }
 
-        assert(
-            Validate::isInt($index),
-            sprintf('Invalid list index: %s', VarPrinter::toString($index))
-        );
-
+        Assert::isInt($index);
         $this->set($index, $item);
     }
 
@@ -194,10 +207,7 @@ class ArrayList implements Arrayable, IndexedList
      */
     public function offsetGet($index)
     {
-        assert(
-            Validate::isInt($index),
-            sprintf('Invalid list index: %s', VarPrinter::toString($index))
-        );
+        Assert::isInt($index);
 
         return $this->get($index);
     }
@@ -207,10 +217,7 @@ class ArrayList implements Arrayable, IndexedList
      */
     public function offsetExists($index): bool
     {
-        assert(
-            Validate::isInt($index),
-            sprintf('Invalid list index: %s', VarPrinter::toString($index))
-        );
+        Assert::isInt($index);
 
         return $this->has($index);
     }
@@ -220,46 +227,160 @@ class ArrayList implements Arrayable, IndexedList
      */
     public function offsetUnset($index): void
     {
-        assert(
-            Validate::isInt($index),
-            sprintf('Invalid list index: %s', VarPrinter::toString($index))
-        );
-
+        Assert::isInt($index);
         $this->remove($index);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function sort(callable $comparator): void
+    public function sort(callable $comparator, bool $stable = false)
     {
-        Merge::sort($this->items, $comparator);
+        $list = static::of($this->itemType());
+        $items = $this->items;
+
+        if ($stable) {
+            Merge::sort($items, $comparator);
+        } else {
+            usort($items, $comparator);
+        }
+
+        foreach ($items as $item) {
+            $list->add($item);
+        }
+
+        return $list;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function first()
+    public function reverse()
     {
-        if (empty($this->items)) {
-            throw new UnderflowException('List underflow');
+        $list = static::of($this->itemType());
+
+        for ($this->end(); $this->valid(); $this->prev()) {
+            $list->add($this->current());
         }
 
-        return $this->items[0];
+        return $list;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function last()
+    public function head()
     {
-        if (empty($this->items)) {
+        if ($this->isEmpty()) {
             throw new UnderflowException('List underflow');
         }
 
-        $index = count($this->items) - 1;
+        return reset($this->items);
+    }
 
-        return $this->items[$index];
+    /**
+     * {@inheritdoc}
+     */
+    public function tail()
+    {
+        if ($this->isEmpty()) {
+            throw new UnderflowException('List underflow');
+        }
+
+        $items = $this->items;
+        array_shift($items);
+
+        $list = static::of($this->itemType());
+
+        foreach ($items as $item) {
+            $list->add($item);
+        }
+
+        return $list;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function first(?callable $predicate = null, $default = null)
+    {
+        if ($predicate === null) {
+            return $this->isEmpty() ? $default : reset($this->items);
+        }
+
+        foreach ($this->items as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
+                return $item;
+            }
+        }
+
+        return $default;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function last(?callable $predicate = null, $default = null)
+    {
+        if ($predicate === null) {
+            return $this->isEmpty() ? $default : end($this->items);
+        }
+
+        foreach (array_reverse($this->items, true) as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
+                return $item;
+            }
+        }
+
+        return $default;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function indexOf($object): ?int
+    {
+        if (!($object instanceof Closure)) {
+            $key = array_search($object, $this->items, true);
+
+            if ($key === false) {
+                return null;
+            }
+
+            return $key;
+        }
+
+        foreach ($this->items as $index => $item) {
+            if (call_user_func($object, $item, $index)) {
+                return $index;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function lastIndexOf($object): ?int
+    {
+        if (!($object instanceof Closure)) {
+            $key = array_search($object, array_reverse($this->items, true), true);
+
+            if ($key === false) {
+                return null;
+            }
+
+            return $key;
+        }
+
+        foreach (array_reverse($this->items, true) as $index => $item) {
+            if (call_user_func($object, $item, $index)) {
+                return $index;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -325,22 +446,46 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function each(callable $callback): void
+    public function unique(?callable $callback = null)
     {
-        foreach ($this->getIterator() as $item) {
-            call_user_func($callback, $item);
+        if ($callback === null) {
+            $list = static::of($this->itemType());
+
+            $items = array_values(array_unique($this->items, SORT_REGULAR));
+
+            foreach ($items as $item) {
+                $list->add($item);
+            }
+
+            return $list;
         }
+
+        $set = [];
+
+        return $this->filter(function ($item, $index) use ($callback, &$set) {
+            $hash = call_user_func($callback, $item, $index);
+
+            if (isset($set[$hash])) {
+                return false;
+            }
+
+            $set[$hash] = true;
+
+            return true;
+        });
     }
 
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, ?string $itemType = null): ArrayList
+    public function slice(int $index, ?int $length = null)
     {
-        $list = static::of($itemType);
+        $list = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            $list->add(call_user_func($callback, $item));
+        $items = array_slice($this->items, $index, $length);
+
+        foreach ($items as $item) {
+            $list->add($item);
         }
 
         return $list;
@@ -349,10 +494,140 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
+    public function page(int $page, int $perPage)
+    {
+        return $this->slice(($page - 1) * $perPage, $perPage);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function each(callable $callback): void
+    {
+        foreach ($this->items as $index => $item) {
+            call_user_func($callback, $item, $index);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function map(callable $callback, ?string $itemType = null)
+    {
+        $list = static::of($itemType);
+
+        foreach ($this->items as $index => $item) {
+            $list->add(call_user_func($callback, $item, $index));
+        }
+
+        return $list;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function max(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $maxItem = null;
+            $max = null;
+
+            foreach ($this->items as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($max === null || $field > $max) {
+                    $max = $field;
+                    $maxItem = $item;
+                }
+            }
+
+            return $maxItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item > $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function min(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $minItem = null;
+            $min = null;
+
+            foreach ($this->items as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($min === null || $field < $min) {
+                    $min = $field;
+                    $minItem = $item;
+                }
+            }
+
+            return $minItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item < $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        $accumulator = $initial;
+
+        foreach ($this->items as $index => $item) {
+            $accumulator = call_user_func($callback, $accumulator, $item, $index);
+        }
+
+        return $accumulator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sum(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        if ($callback === null) {
+            $callback = function ($item) {
+                return $item;
+            };
+        }
+
+        return $this->reduce(function ($total, $item, $index) use ($callback) {
+            return $total + call_user_func($callback, $item, $index);
+        }, 0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function average(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        $count = $this->count();
+
+        return $this->sum($callback) / $count;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function find(callable $predicate)
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->items as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return $item;
             }
         }
@@ -363,12 +638,12 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $predicate): ArrayList
+    public function filter(callable $predicate)
     {
         $list = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->items as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $list->add($item);
             }
         }
@@ -379,12 +654,12 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function reject(callable $predicate): ArrayList
+    public function reject(callable $predicate)
     {
         $list = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->items as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 $list->add($item);
             }
         }
@@ -397,8 +672,8 @@ class ArrayList implements Arrayable, IndexedList
      */
     public function any(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->items as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return true;
             }
         }
@@ -411,8 +686,8 @@ class ArrayList implements Arrayable, IndexedList
      */
     public function every(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->items as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 return false;
             }
         }
@@ -428,8 +703,8 @@ class ArrayList implements Arrayable, IndexedList
         $list1 = static::of($this->itemType());
         $list2 = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->items as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $list1->add($item);
             } else {
                 $list2->add($item);
@@ -442,7 +717,7 @@ class ArrayList implements Arrayable, IndexedList
     /**
      * {@inheritdoc}
      */
-    public function getIterator(): Traversable
+    public function getIterator()
     {
         return new ArrayIterator($this->items);
     }
@@ -455,5 +730,37 @@ class ArrayList implements Arrayable, IndexedList
         $array = $this->items;
 
         return $array;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toString(): string
+    {
+        return $this->toJson();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 }

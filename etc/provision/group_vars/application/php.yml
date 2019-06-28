@@ -1,7 +1,0 @@
----
-php_cli_extra_settings:
-- setting: "xdebug.max_nesting_level=250"
-php_fpm_extra_settings:
-- setting: "xdebug.max_nesting_level=250"
-php_fpm_user: "{{ ansible_user_id }}"
-php_fpm_group: "{{ ansible_user_id }}"

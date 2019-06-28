@@ -6,13 +6,9 @@ use Countable;
 use Novuso\System\Utility\Validate;
 
 /**
- * SetBucketChain is list of item buckets supporting set operations
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class SetBucketChain
  */
-class SetBucketChain implements Countable
+final class SetBucketChain implements Countable
 {
     /**
      * Head bucket

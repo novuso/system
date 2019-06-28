@@ -3,18 +3,14 @@
 namespace Novuso\System\Type;
 
 use JsonSerializable;
+use Novuso\System\Exception\TypeException;
 use Novuso\System\Utility\ClassName;
 use Novuso\System\Utility\Validate;
-use Serializable;
 
 /**
- * Type is an object type description
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class Type
  */
-class Type implements Equatable, JsonSerializable, Serializable
+final class Type implements Equatable, JsonSerializable
 {
     /**
      * Type name
@@ -28,7 +24,7 @@ class Type implements Equatable, JsonSerializable, Serializable
      *
      * @internal
      *
-     * @param string $name The type name
+     * @param string $name
      */
     protected function __construct(string $name)
     {
@@ -42,6 +38,8 @@ class Type implements Equatable, JsonSerializable, Serializable
      *                              canonical class name
      *
      * @return Type
+     *
+     * @throws TypeException When $object is not a string or object
      */
     public static function create($object): Type
     {
@@ -52,6 +50,8 @@ class Type implements Equatable, JsonSerializable, Serializable
      * Retrieves the full class name
      *
      * @return string
+     *
+     * @throws TypeException Will not happen
      */
     public function toClassName(): string
     {
@@ -89,26 +89,25 @@ class Type implements Equatable, JsonSerializable, Serializable
     }
 
     /**
-     * Retrieves a serialized representation
+     * Retrieves a representation to serialize
      *
-     * @return string
+     * @return array
      */
-    public function serialize(): string
+    public function __serialize(): array
     {
-        return serialize(['name' => $this->name]);
+        return ['name' => $this->name];
     }
 
     /**
-     * Handles construction from a serialized representation
+     * Handles construction from serialized data
      *
-     * @param string $serialized The serialized representation
+     * @param array $data the serialized data
      *
      * @return void
      */
-    public function unserialize($serialized): void
+    public function __unserialize(array $data): void
     {
-        $data = unserialize($serialized);
-        $this->__construct($data['name']);
+        $this->name = $data['name'];
     }
 
     /**

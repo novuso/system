@@ -2,23 +2,17 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Api\Set;
 use Novuso\System\Collection\Chain\SetBucketChain;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
-use Novuso\System\Collection\Traits\ItemTypeMethods;
-use Novuso\System\Type\Arrayable;
+use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Type\Set;
+use Novuso\System\Utility\Assert;
 use Novuso\System\Utility\FastHasher;
-use Novuso\System\Utility\Validate;
-use Traversable;
 
 /**
- * HashSet is an implementation of the set type
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class HashSet
  */
-class HashSet implements Arrayable, Set
+final class HashSet implements Set
 {
     use ItemTypeMethods;
 
@@ -93,10 +87,7 @@ class HashSet implements Arrayable, Set
      */
     public function add($item): void
     {
-        assert(
-            Validate::isType($item, $this->itemType()),
-            $this->itemTypeError('add', $item)
-        );
+        Assert::isType($item, $this->itemType());
 
         $hash = FastHasher::hash($item);
 
@@ -143,7 +134,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function difference(Set $other): HashSet
+    public function difference(Set $other)
     {
         $difference = static::of($this->itemType());
 
@@ -160,7 +151,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function intersection(Set $other): HashSet
+    public function intersection(Set $other)
     {
         $intersection = static::of($this->itemType());
 
@@ -172,7 +163,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function complement(Set $other): HashSet
+    public function complement(Set $other)
     {
         $complement = static::of($this->itemType());
 
@@ -188,7 +179,7 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function union(Set $other): HashSet
+    public function union(Set $other)
     {
         $union = static::of($this->itemType());
 
@@ -203,20 +194,20 @@ class HashSet implements Arrayable, Set
      */
     public function each(callable $callback): void
     {
-        foreach ($this->getIterator() as $item) {
-            call_user_func($callback, $item);
+        foreach ($this->getIterator() as $index => $item) {
+            call_user_func($callback, $item, $index);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, ?string $itemType = null): HashSet
+    public function map(callable $callback, ?string $itemType = null)
     {
         $set = static::of($itemType);
 
-        foreach ($this->getIterator() as $item) {
-            $set->add(call_user_func($callback, $item));
+        foreach ($this->getIterator() as $index => $item) {
+            $set->add(call_user_func($callback, $item, $index));
         }
 
         return $set;
@@ -225,10 +216,108 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
+    public function max(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $maxItem = null;
+            $max = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($max === null || $field > $max) {
+                    $max = $field;
+                    $maxItem = $item;
+                }
+            }
+
+            return $maxItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item > $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function min(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $minItem = null;
+            $min = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($min === null || $field < $min) {
+                    $min = $field;
+                    $minItem = $item;
+                }
+            }
+
+            return $minItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item < $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        $accumulator = $initial;
+
+        foreach ($this->getIterator() as $index => $item) {
+            $accumulator = call_user_func($callback, $accumulator, $item, $index);
+        }
+
+        return $accumulator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sum(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        if ($callback === null) {
+            $callback = function ($item) {
+                return $item;
+            };
+        }
+
+        return $this->reduce(function ($total, $item, $index) use ($callback) {
+            return $total + call_user_func($callback, $item, $index);
+        }, 0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function average(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        $count = $this->count();
+
+        return $this->sum($callback) / $count;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function find(callable $predicate)
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return $item;
             }
         }
@@ -239,12 +328,12 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $predicate): HashSet
+    public function filter(callable $predicate)
     {
         $set = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $set->add($item);
             }
         }
@@ -255,12 +344,12 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function reject(callable $predicate): HashSet
+    public function reject(callable $predicate)
     {
         $set = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 $set->add($item);
             }
         }
@@ -273,8 +362,8 @@ class HashSet implements Arrayable, Set
      */
     public function any(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return true;
             }
         }
@@ -287,8 +376,8 @@ class HashSet implements Arrayable, Set
      */
     public function every(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 return false;
             }
         }
@@ -304,8 +393,8 @@ class HashSet implements Arrayable, Set
         $set1 = static::of($this->itemType());
         $set2 = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $set1->add($item);
             } else {
                 $set2->add($item);
@@ -318,12 +407,15 @@ class HashSet implements Arrayable, Set
     /**
      * {@inheritdoc}
      */
-    public function getIterator(): Traversable
+    public function getIterator()
     {
         return new GeneratorIterator(function (array $buckets) {
+            $index = 0;
+            /** @var SetBucketChain $chain */
             foreach ($buckets as $chain) {
                 for ($chain->rewind(); $chain->valid(); $chain->next()) {
-                    yield $chain->current();
+                    yield $index => $chain->current();
+                    $index++;
                 }
             }
         }, [$this->buckets]);
@@ -341,6 +433,38 @@ class HashSet implements Arrayable, Set
         }
 
         return $items;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toString(): string
+    {
+        return $this->toJson();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 
     /**

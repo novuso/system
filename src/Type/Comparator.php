@@ -2,12 +2,10 @@
 
 namespace Novuso\System\Type;
 
+use Novuso\System\Exception\AssertionException;
+
 /**
- * Comparator is the interface for types that compare external values
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Interface Comparator
  */
 interface Comparator
 {
@@ -26,6 +24,8 @@ interface Comparator
      * @param mixed $object2 The second object
      *
      * @return int
+     *
+     * @throws AssertionException When the object types are not compatible
      */
     public function compare($object1, $object2): int;
 }

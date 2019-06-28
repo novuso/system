@@ -5,13 +5,9 @@ namespace Novuso\System\Collection\Iterator;
 use Iterator;
 
 /**
- * ArrayStackIterator is the iterator used by an array stack
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class ArrayStackIterator
  */
-class ArrayStackIterator implements Iterator
+final class ArrayStackIterator implements Iterator
 {
     /**
      * Items

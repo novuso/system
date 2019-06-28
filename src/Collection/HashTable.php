@@ -2,24 +2,19 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Api\Table;
 use Novuso\System\Collection\Chain\TableBucketChain;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
-use Novuso\System\Collection\Traits\KeyValueTypeMethods;
+use Novuso\System\Collection\Mixin\KeyValueTypeMethods;
+use Novuso\System\Collection\Type\Table;
 use Novuso\System\Exception\KeyException;
+use Novuso\System\Utility\Assert;
 use Novuso\System\Utility\FastHasher;
-use Novuso\System\Utility\Validate;
 use Novuso\System\Utility\VarPrinter;
-use Traversable;
 
 /**
- * HashTable is an implementation of the symbol table type
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class HashTable
  */
-class HashTable implements Table
+final class HashTable implements Table
 {
     use KeyValueTypeMethods;
 
@@ -97,14 +92,8 @@ class HashTable implements Table
      */
     public function set($key, $value): void
     {
-        assert(
-            Validate::isType($key, $this->keyType()),
-            $this->keyTypeError('set', $key)
-        );
-        assert(
-            Validate::isType($value, $this->valueType()),
-            $this->valueTypeError('set', $value)
-        );
+        Assert::isType($key, $this->keyType());
+        Assert::isType($value, $this->valueType());
 
         $hash = FastHasher::hash($key);
 
@@ -198,15 +187,16 @@ class HashTable implements Table
     /**
      * {@inheritdoc}
      */
-    public function keys(): Traversable
+    public function keys(): iterable
     {
-        return call_user_func(function (array $buckets) {
+        return new GeneratorIterator(function (array $buckets) {
+            /** @var TableBucketChain $chain */
             foreach ($buckets as $chain) {
                 for ($chain->rewind(); $chain->valid(); $chain->next()) {
                     yield $chain->key();
                 }
             }
-        }, $this->buckets);
+        }, [$this->buckets]);
     }
 
     /**
@@ -222,7 +212,7 @@ class HashTable implements Table
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, ?string $valueType = null): HashTable
+    public function map(callable $callback, ?string $valueType = null)
     {
         $table = static::of($this->keyType(), $valueType);
 
@@ -231,6 +221,120 @@ class HashTable implements Table
         }
 
         return $table;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function max(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $maxKey = null;
+            $max = null;
+
+            foreach ($this->getIterator() as $key => $value) {
+                $field = call_user_func($callback, $value, $key);
+                if ($max === null || $field > $max) {
+                    $max = $field;
+                    $maxKey = $key;
+                }
+            }
+
+            return $maxKey;
+        }
+
+        $maxKey = null;
+        $max = null;
+
+        foreach ($this->getIterator() as $key => $value) {
+            if ($max === null || $value > $max) {
+                $max = $value;
+                $maxKey = $key;
+            }
+        }
+
+        return $maxKey;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function min(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $minKey = null;
+            $min = null;
+
+            foreach ($this->getIterator() as $key => $value) {
+                $field = call_user_func($callback, $value, $key);
+                if ($min === null || $field < $min) {
+                    $min = $field;
+                    $minKey = $key;
+                }
+            }
+
+            return $minKey;
+        }
+
+        $minKey = null;
+        $min = null;
+
+        foreach ($this->getIterator() as $key => $value) {
+            if ($min === null || $value < $min) {
+                $min = $value;
+                $minKey = $key;
+            }
+        }
+
+        return $minKey;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        $accumulator = $initial;
+
+        foreach ($this->getIterator() as $key => $value) {
+            $accumulator = call_user_func($callback, $accumulator, $value, $key);
+        }
+
+        return $accumulator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sum(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        if ($callback === null) {
+            $callback = function ($value) {
+                return $value;
+            };
+        }
+
+        return $this->reduce(function ($total, $value, $key) use ($callback) {
+            return $total + call_user_func($callback, $value, $key);
+        }, 0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function average(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        $count = $this->count();
+
+        return $this->sum($callback) / $count;
     }
 
     /**
@@ -250,7 +354,7 @@ class HashTable implements Table
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $predicate): HashTable
+    public function filter(callable $predicate)
     {
         $table = static::of($this->keyType(), $this->valueType());
 
@@ -266,7 +370,7 @@ class HashTable implements Table
     /**
      * {@inheritdoc}
      */
-    public function reject(callable $predicate): HashTable
+    public function reject(callable $predicate)
     {
         $table = static::of($this->keyType(), $this->valueType());
 
@@ -329,7 +433,7 @@ class HashTable implements Table
     /**
      * {@inheritdoc}
      */
-    public function getIterator(): Traversable
+    public function getIterator()
     {
         return new GeneratorIterator(function (Table $table) {
             foreach ($table->keys() as $key) {

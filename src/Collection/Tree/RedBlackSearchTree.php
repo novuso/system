@@ -2,23 +2,19 @@
 
 namespace Novuso\System\Collection\Tree;
 
-use Novuso\System\Collection\Api\Queue;
-use Novuso\System\Collection\LinkedQueue;
+use Novuso\System\Collection\ArrayList;
+use Novuso\System\Collection\Type\Sequence;
+use Novuso\System\Exception\AssertionException;
 use Novuso\System\Exception\KeyException;
 use Novuso\System\Exception\LookupException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Type\Comparator;
 use Novuso\System\Utility\VarPrinter;
-use Traversable;
 
 /**
- * RedBlackSearchTree is an implementation of a binary search tree
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class RedBlackSearchTree
  */
-class RedBlackSearchTree implements BinarySearchTree
+final class RedBlackSearchTree implements BinarySearchTree
 {
     /**
      * Comparator
@@ -115,10 +111,10 @@ class RedBlackSearchTree implements BinarySearchTree
     /**
      * {@inheritdoc}
      */
-    public function keys(): Traversable
+    public function keys(): iterable
     {
         if ($this->isEmpty()) {
-            return new LinkedQueue();
+            return new ArrayList();
         }
 
         return $this->rangeKeys($this->min(), $this->max());
@@ -127,13 +123,13 @@ class RedBlackSearchTree implements BinarySearchTree
     /**
      * {@inheritdoc}
      */
-    public function rangeKeys($lo, $hi): Traversable
+    public function rangeKeys($lo, $hi): iterable
     {
-        $queue = new LinkedQueue();
+        $list = new ArrayList();
 
-        $this->fillKeys($queue, $lo, $hi, $this->root);
+        $this->fillKeys($list, $lo, $hi, $this->root);
 
-        return $queue;
+        return $list;
     }
 
     /**
@@ -324,6 +320,8 @@ class RedBlackSearchTree implements BinarySearchTree
      * @param RedBlackNode|null $node  The subtree root
      *
      * @return RedBlackNode
+     *
+     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeSet($key, $value, ?RedBlackNode $node): RedBlackNode
     {
@@ -353,6 +351,8 @@ class RedBlackSearchTree implements BinarySearchTree
      * @param RedBlackNode|null $node The subtree root
      *
      * @return RedBlackNode|null
+     *
+     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeGet($key, ?RedBlackNode $node): ?RedBlackNode
     {
@@ -377,6 +377,8 @@ class RedBlackSearchTree implements BinarySearchTree
      * @param RedBlackNode $node The subtree root
      *
      * @return RedBlackNode|null
+     *
+     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeRemove($key, RedBlackNode $node): ?RedBlackNode
     {
@@ -405,6 +407,8 @@ class RedBlackSearchTree implements BinarySearchTree
      * @param RedBlackNode $node The subtree root
      *
      * @return RedBlackNode
+     *
+     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeRemoveLeft($key, RedBlackNode $node): RedBlackNode
     {
@@ -425,6 +429,8 @@ class RedBlackSearchTree implements BinarySearchTree
      * @param RedBlackNode $node The subtree root
      *
      * @return RedBlackNode
+     *
+     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeRemoveRight($key, RedBlackNode $node): RedBlackNode
     {
@@ -446,30 +452,32 @@ class RedBlackSearchTree implements BinarySearchTree
     /**
      * Fills a queue with keys between lo and hi in a subtree
      *
-     * @param Queue             $queue The queue
+     * @param Sequence             $list The queue
      * @param mixed             $lo    The lower bound
      * @param mixed             $hi    The upper bound
      * @param RedBlackNode|null $node  The subtree root
      *
      * @return void
+     *
+     * @throws AssertionException When the keys are not compatible
      */
-    protected function fillKeys(Queue $queue, $lo, $hi, ?RedBlackNode $node): void
+    protected function fillKeys(Sequence $list, $lo, $hi, ?RedBlackNode $node): void
     {
         if ($node === null) {
             return;
         }
 
-        $complo = $this->comparator->compare($lo, $node->key());
-        $comphi = $this->comparator->compare($hi, $node->key());
+        $compLo = $this->comparator->compare($lo, $node->key());
+        $compHi = $this->comparator->compare($hi, $node->key());
 
-        if ($complo < 0) {
-            $this->fillKeys($queue, $lo, $hi, $node->left());
+        if ($compLo < 0) {
+            $this->fillKeys($list, $lo, $hi, $node->left());
         }
-        if ($complo <= 0 && $comphi >= 0) {
-            $queue->enqueue($node->key());
+        if ($compLo <= 0 && $compHi >= 0) {
+            $list->add($node->key());
         }
-        if ($comphi > 0) {
-            $this->fillKeys($queue, $lo, $hi, $node->right());
+        if ($compHi > 0) {
+            $this->fillKeys($list, $lo, $hi, $node->right());
         }
     }
 
@@ -562,6 +570,8 @@ class RedBlackSearchTree implements BinarySearchTree
      * @param RedBlackNode|null $node The subtree root
      *
      * @return RedBlackNode|null
+     *
+     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeFloor($key, ?RedBlackNode $node): ?RedBlackNode
     {
@@ -594,6 +604,8 @@ class RedBlackSearchTree implements BinarySearchTree
      * @param RedBlackNode|null $node The subtree root
      *
      * @return RedBlackNode|null
+     *
+     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeCeiling($key, ?RedBlackNode $node): ?RedBlackNode
     {
@@ -624,6 +636,8 @@ class RedBlackSearchTree implements BinarySearchTree
      * @param RedBlackNode|null $node The subtree root
      *
      * @return int
+     *
+     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeRank($key, ?RedBlackNode $node): int
     {

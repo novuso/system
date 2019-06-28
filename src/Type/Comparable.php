@@ -2,12 +2,10 @@
 
 namespace Novuso\System\Type;
 
+use Novuso\System\Exception\AssertionException;
+
 /**
- * Comparable is the interface for types that provide natural order comparison
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Interface Comparable
  */
 interface Comparable
 {
@@ -23,6 +21,8 @@ interface Comparable
      * @param mixed $object The object
      *
      * @return int
+     *
+     * @throws AssertionException When the object types are not compatible
      */
     public function compareTo($object): int;
 }

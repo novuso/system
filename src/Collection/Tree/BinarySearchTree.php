@@ -6,14 +6,9 @@ use Countable;
 use Novuso\System\Exception\KeyException;
 use Novuso\System\Exception\LookupException;
 use Novuso\System\Exception\UnderflowException;
-use Traversable;
 
 /**
- * BinarySearchTree is the interface for a binary search tree
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Interface BinarySearchTree
  */
 interface BinarySearchTree extends Countable
 {
@@ -73,9 +68,9 @@ interface BinarySearchTree extends Countable
     /**
      * Retrieves an iterator for keys
      *
-     * @return Traversable
+     * @return iterable
      */
-    public function keys(): Traversable;
+    public function keys(): iterable;
 
     /**
      * Retrieves an inclusive list of keys between given keys
@@ -83,9 +78,9 @@ interface BinarySearchTree extends Countable
      * @param mixed $lo The lower bound
      * @param mixed $hi The upper bound
      *
-     * @return Traversable
+     * @return iterable
      */
-    public function rangeKeys($lo, $hi): Traversable;
+    public function rangeKeys($lo, $hi): iterable;
 
     /**
      * Retrieves the inclusive number of keys between given keys
@@ -102,7 +97,7 @@ interface BinarySearchTree extends Countable
      *
      * @return mixed
      *
-     * @throws UnderflowException When the table is empty
+     * @throws UnderflowException When the tree is empty
      */
     public function min();
 
@@ -111,7 +106,7 @@ interface BinarySearchTree extends Countable
      *
      * @return mixed
      *
-     * @throws UnderflowException When the table is empty
+     * @throws UnderflowException When the tree is empty
      */
     public function max();
 
@@ -120,7 +115,7 @@ interface BinarySearchTree extends Countable
      *
      * @return void
      *
-     * @throws UnderflowException When the table is empty
+     * @throws UnderflowException When the tree is empty
      */
     public function removeMin(): void;
 
@@ -129,7 +124,7 @@ interface BinarySearchTree extends Countable
      *
      * @return void
      *
-     * @throws UnderflowException When the table is empty
+     * @throws UnderflowException When the tree is empty
      */
     public function removeMax(): void;
 
@@ -142,7 +137,7 @@ interface BinarySearchTree extends Countable
      *
      * @return mixed|null
      *
-     * @throws UnderflowException When the table is empty
+     * @throws UnderflowException When the tree is empty
      */
     public function floor($key);
 
@@ -155,7 +150,7 @@ interface BinarySearchTree extends Countable
      *
      * @return mixed|null
      *
-     * @throws UnderflowException When the table is empty
+     * @throws UnderflowException When the tree is empty
      */
     public function ceiling($key);
 

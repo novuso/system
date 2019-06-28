@@ -3,11 +3,7 @@
 namespace Novuso\System\Exception;
 
 /**
- * LookupException is thrown when a requested item cannot be found
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class LookupException
  */
 class LookupException extends SystemException
 {

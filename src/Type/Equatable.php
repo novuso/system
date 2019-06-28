@@ -3,11 +3,7 @@
 namespace Novuso\System\Type;
 
 /**
- * Equatable is the interface for types that provide checks for equality
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Interface Equatable
  */
 interface Equatable
 {

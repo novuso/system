@@ -3,22 +3,16 @@
 namespace Novuso\System\Collection;
 
 use IteratorIterator;
-use Novuso\System\Collection\Api\Deque;
-use Novuso\System\Collection\Traits\ItemTypeMethods;
+use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Type\Deque;
 use Novuso\System\Exception\UnderflowException;
-use Novuso\System\Type\Arrayable;
-use Novuso\System\Utility\Validate;
+use Novuso\System\Utility\Assert;
 use SplDoublyLinkedList;
-use Traversable;
 
 /**
- * LinkedDeque is an implementation of the deque type
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class LinkedDeque
  */
-class LinkedDeque implements Arrayable, Deque
+final class LinkedDeque implements Deque
 {
     use ItemTypeMethods;
 
@@ -87,11 +81,7 @@ class LinkedDeque implements Arrayable, Deque
      */
     public function addFirst($item): void
     {
-        assert(
-            Validate::isType($item, $this->itemType()),
-            $this->itemTypeError('addFirst', $item)
-        );
-
+        Assert::isType($item, $this->itemType());
         $this->list->unshift($item);
     }
 
@@ -100,11 +90,7 @@ class LinkedDeque implements Arrayable, Deque
      */
     public function addLast($item): void
     {
-        assert(
-            Validate::isType($item, $this->itemType()),
-            $this->itemTypeError('addLast', $item)
-        );
-
+        Assert::isType($item, $this->itemType());
         $this->list->push($item);
     }
 
@@ -161,20 +147,20 @@ class LinkedDeque implements Arrayable, Deque
      */
     public function each(callable $callback): void
     {
-        foreach ($this->getIterator() as $item) {
-            call_user_func($callback, $item);
+        foreach ($this->getIterator() as $index => $item) {
+            call_user_func($callback, $item, $index);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, ?string $itemType = null): LinkedDeque
+    public function map(callable $callback, ?string $itemType = null)
     {
         $deque = static::of($itemType);
 
-        foreach ($this->getIterator() as $item) {
-            $deque->addLast(call_user_func($callback, $item));
+        foreach ($this->getIterator() as $index => $item) {
+            $deque->addLast(call_user_func($callback, $item, $index));
         }
 
         return $deque;
@@ -183,10 +169,108 @@ class LinkedDeque implements Arrayable, Deque
     /**
      * {@inheritdoc}
      */
+    public function max(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $maxItem = null;
+            $max = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($max === null || $field > $max) {
+                    $max = $field;
+                    $maxItem = $item;
+                }
+            }
+
+            return $maxItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item > $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function min(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $minItem = null;
+            $min = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($min === null || $field < $min) {
+                    $min = $field;
+                    $minItem = $item;
+                }
+            }
+
+            return $minItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item < $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        $accumulator = $initial;
+
+        foreach ($this->getIterator() as $index => $item) {
+            $accumulator = call_user_func($callback, $accumulator, $item, $index);
+        }
+
+        return $accumulator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sum(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        if ($callback === null) {
+            $callback = function ($item) {
+                return $item;
+            };
+        }
+
+        return $this->reduce(function ($total, $item, $index) use ($callback) {
+            return $total + call_user_func($callback, $item, $index);
+        }, 0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function average(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        $count = $this->count();
+
+        return $this->sum($callback) / $count;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function find(callable $predicate)
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return $item;
             }
         }
@@ -197,12 +281,12 @@ class LinkedDeque implements Arrayable, Deque
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $predicate): LinkedDeque
+    public function filter(callable $predicate)
     {
         $deque = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $deque->addLast($item);
             }
         }
@@ -213,12 +297,12 @@ class LinkedDeque implements Arrayable, Deque
     /**
      * {@inheritdoc}
      */
-    public function reject(callable $predicate): LinkedDeque
+    public function reject(callable $predicate)
     {
         $deque = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 $deque->addLast($item);
             }
         }
@@ -231,8 +315,8 @@ class LinkedDeque implements Arrayable, Deque
      */
     public function any(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return true;
             }
         }
@@ -245,8 +329,8 @@ class LinkedDeque implements Arrayable, Deque
      */
     public function every(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 return false;
             }
         }
@@ -262,8 +346,8 @@ class LinkedDeque implements Arrayable, Deque
         $deque1 = static::of($this->itemType());
         $deque2 = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $deque1->addLast($item);
             } else {
                 $deque2->addLast($item);
@@ -276,7 +360,7 @@ class LinkedDeque implements Arrayable, Deque
     /**
      * {@inheritdoc}
      */
-    public function getIterator(): Traversable
+    public function getIterator()
     {
         return new IteratorIterator($this->list);
     }
@@ -293,6 +377,38 @@ class LinkedDeque implements Arrayable, Deque
         }
 
         return $items;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toString(): string
+    {
+        return $this->toJson();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 
     /**

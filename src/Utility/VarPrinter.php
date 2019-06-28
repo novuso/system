@@ -3,16 +3,13 @@
 namespace Novuso\System\Utility;
 
 use Closure;
-use DateTime;
+use DateTimeInterface;
+use Throwable;
 
 /**
- * VarPrinter is a variable printing utility
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class VarPrinter
  */
-class VarPrinter
+final class VarPrinter
 {
     /**
      * Reads a string representation from a value
@@ -63,8 +60,17 @@ class VarPrinter
             return 'Function';
         }
 
-        if ($object instanceof DateTime) {
-            return sprintf('DateTime(%s)', $object->format('Y-m-d\TH:i:sP'));
+        if ($object instanceof DateTimeInterface) {
+            return sprintf('%s(%s)', ClassName::short($object), $object->format('Y-m-d\TH:i:sP'));
+        }
+
+        if ($object instanceof Throwable) {
+            return sprintf('%s(%s)', ClassName::short($object), json_encode([
+                'message' => $object->getMessage(),
+                'code'    => $object->getCode(),
+                'file'    => $object->getFile(),
+                'line'    => $object->getLine()
+            ], JSON_UNESCAPED_SLASHES));
         }
 
         if (method_exists($object, 'toString')) {
@@ -75,7 +81,7 @@ class VarPrinter
             return (string) $object;
         }
 
-        return sprintf('Object(%s)', get_class($object));
+        return sprintf('Object(%s)', ClassName::full($object));
     }
 
     /**

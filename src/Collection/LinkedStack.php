@@ -3,22 +3,16 @@
 namespace Novuso\System\Collection;
 
 use IteratorIterator;
-use Novuso\System\Collection\Api\Stack;
-use Novuso\System\Collection\Traits\ItemTypeMethods;
+use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Type\Stack;
 use Novuso\System\Exception\UnderflowException;
-use Novuso\System\Type\Arrayable;
-use Novuso\System\Utility\Validate;
+use Novuso\System\Utility\Assert;
 use SplDoublyLinkedList;
-use Traversable;
 
 /**
- * LinkedStack is an implementation of the stack type
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class LinkedStack
  */
-class LinkedStack implements Arrayable, Stack
+final class LinkedStack implements Stack
 {
     use ItemTypeMethods;
 
@@ -87,11 +81,7 @@ class LinkedStack implements Arrayable, Stack
      */
     public function push($item): void
     {
-        assert(
-            Validate::isType($item, $this->itemType()),
-            $this->itemTypeError('push', $item)
-        );
-
+        Assert::isType($item, $this->itemType());
         $this->list->push($item);
     }
 
@@ -100,7 +90,7 @@ class LinkedStack implements Arrayable, Stack
      */
     public function pop()
     {
-        if ($this->list->isEmpty()) {
+        if ($this->isEmpty()) {
             throw new UnderflowException('Stack underflow');
         }
 
@@ -112,7 +102,7 @@ class LinkedStack implements Arrayable, Stack
      */
     public function top()
     {
-        if ($this->list->isEmpty()) {
+        if ($this->isEmpty()) {
             throw new UnderflowException('Stack underflow');
         }
 
@@ -124,21 +114,21 @@ class LinkedStack implements Arrayable, Stack
      */
     public function each(callable $callback): void
     {
-        foreach ($this->getIterator() as $item) {
-            call_user_func($callback, $item);
+        foreach ($this->getIterator() as $index => $item) {
+            call_user_func($callback, $item, $index);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, ?string $itemType = null): LinkedStack
+    public function map(callable $callback, ?string $itemType = null)
     {
         $stack = static::of($itemType);
 
         $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
-        foreach ($this->getIterator() as $item) {
-            $stack->push(call_user_func($callback, $item));
+        foreach ($this->getIterator() as $index => $item) {
+            $stack->push(call_user_func($callback, $item, $index));
         }
         $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP);
 
@@ -148,10 +138,108 @@ class LinkedStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
+    public function max(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $maxItem = null;
+            $max = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($max === null || $field > $max) {
+                    $max = $field;
+                    $maxItem = $item;
+                }
+            }
+
+            return $maxItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item > $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function min(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $minItem = null;
+            $min = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($min === null || $field < $min) {
+                    $min = $field;
+                    $minItem = $item;
+                }
+            }
+
+            return $minItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item < $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        $accumulator = $initial;
+
+        foreach ($this->getIterator() as $index => $item) {
+            $accumulator = call_user_func($callback, $accumulator, $item, $index);
+        }
+
+        return $accumulator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sum(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        if ($callback === null) {
+            $callback = function ($item) {
+                return $item;
+            };
+        }
+
+        return $this->reduce(function ($total, $item, $index) use ($callback) {
+            return $total + call_user_func($callback, $item, $index);
+        }, 0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function average(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        $count = $this->count();
+
+        return $this->sum($callback) / $count;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function find(callable $predicate)
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return $item;
             }
         }
@@ -162,13 +250,13 @@ class LinkedStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $predicate): LinkedStack
+    public function filter(callable $predicate)
     {
         $stack = static::of($this->itemType());
 
         $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $stack->push($item);
             }
         }
@@ -180,13 +268,13 @@ class LinkedStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function reject(callable $predicate): LinkedStack
+    public function reject(callable $predicate)
     {
         $stack = static::of($this->itemType());
 
         $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 $stack->push($item);
             }
         }
@@ -200,8 +288,8 @@ class LinkedStack implements Arrayable, Stack
      */
     public function any(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return true;
             }
         }
@@ -214,8 +302,8 @@ class LinkedStack implements Arrayable, Stack
      */
     public function every(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 return false;
             }
         }
@@ -232,8 +320,8 @@ class LinkedStack implements Arrayable, Stack
         $stack2 = static::of($this->itemType());
 
         $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $stack1->push($item);
             } else {
                 $stack2->push($item);
@@ -247,7 +335,7 @@ class LinkedStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function getIterator(): Traversable
+    public function getIterator()
     {
         return new IteratorIterator($this->list);
     }
@@ -259,13 +347,43 @@ class LinkedStack implements Arrayable, Stack
     {
         $items = [];
 
-        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
         foreach ($this->getIterator() as $item) {
             $items[] = $item;
         }
-        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP);
 
         return $items;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toString(): string
+    {
+        return $this->toJson();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 
     /**

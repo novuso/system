@@ -2,19 +2,15 @@
 
 namespace Novuso\System\Collection\Iterator;
 
-use Exception;
 use Generator;
 use Iterator;
 use Novuso\System\Exception\MethodCallException;
+use Throwable;
 
 /**
- * GeneratorIterator is a traversable wrapper for a generator
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class GeneratorIterator
  */
-class GeneratorIterator implements Iterator
+final class GeneratorIterator implements Iterator
 {
     /**
      * Generator function
@@ -150,7 +146,7 @@ class GeneratorIterator implements Iterator
      *
      * @return mixed
      *
-     * @throws Exception When exception is thrown by called method
+     * @throws Throwable When exception is thrown by called method
      * @throws MethodCallException When the method is invalid
      */
     public function __call($method, array $args)

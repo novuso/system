@@ -3,22 +3,16 @@
 namespace Novuso\System\Collection;
 
 use IteratorIterator;
-use Novuso\System\Collection\Api\Queue;
-use Novuso\System\Collection\Traits\ItemTypeMethods;
+use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Type\Queue;
 use Novuso\System\Exception\UnderflowException;
-use Novuso\System\Type\Arrayable;
-use Novuso\System\Utility\Validate;
+use Novuso\System\Utility\Assert;
 use SplDoublyLinkedList;
-use Traversable;
 
 /**
- * LinkedQueue is an implementation of the queue type
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class LinkedQueue
  */
-class LinkedQueue implements Arrayable, Queue
+final class LinkedQueue implements Queue
 {
     use ItemTypeMethods;
 
@@ -87,10 +81,7 @@ class LinkedQueue implements Arrayable, Queue
      */
     public function enqueue($item): void
     {
-        assert(
-            Validate::isType($item, $this->itemType()),
-            $this->itemTypeError('enqueue', $item)
-        );
+        Assert::isType($item, $this->itemType());
 
         $this->list->push($item);
     }
@@ -124,20 +115,20 @@ class LinkedQueue implements Arrayable, Queue
      */
     public function each(callable $callback): void
     {
-        foreach ($this->getIterator() as $item) {
-            call_user_func($callback, $item);
+        foreach ($this->getIterator() as $index => $item) {
+            call_user_func($callback, $item, $index);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, ?string $itemType = null): LinkedQueue
+    public function map(callable $callback, ?string $itemType = null)
     {
         $queue = static::of($itemType);
 
-        foreach ($this->getIterator() as $item) {
-            $queue->enqueue(call_user_func($callback, $item));
+        foreach ($this->getIterator() as $index => $item) {
+            $queue->enqueue(call_user_func($callback, $item, $index));
         }
 
         return $queue;
@@ -146,10 +137,108 @@ class LinkedQueue implements Arrayable, Queue
     /**
      * {@inheritdoc}
      */
+    public function max(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $maxItem = null;
+            $max = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($max === null || $field > $max) {
+                    $max = $field;
+                    $maxItem = $item;
+                }
+            }
+
+            return $maxItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item > $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function min(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $minItem = null;
+            $min = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($min === null || $field < $min) {
+                    $min = $field;
+                    $minItem = $item;
+                }
+            }
+
+            return $minItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item < $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        $accumulator = $initial;
+
+        foreach ($this->getIterator() as $index => $item) {
+            $accumulator = call_user_func($callback, $accumulator, $item, $index);
+        }
+
+        return $accumulator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sum(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        if ($callback === null) {
+            $callback = function ($item) {
+                return $item;
+            };
+        }
+
+        return $this->reduce(function ($total, $item, $index) use ($callback) {
+            return $total + call_user_func($callback, $item, $index);
+        }, 0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function average(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        $count = $this->count();
+
+        return $this->sum($callback) / $count;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function find(callable $predicate)
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return $item;
             }
         }
@@ -160,12 +249,12 @@ class LinkedQueue implements Arrayable, Queue
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $predicate): LinkedQueue
+    public function filter(callable $predicate)
     {
         $queue = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $queue->enqueue($item);
             }
         }
@@ -176,12 +265,12 @@ class LinkedQueue implements Arrayable, Queue
     /**
      * {@inheritdoc}
      */
-    public function reject(callable $predicate): LinkedQueue
+    public function reject(callable $predicate)
     {
         $queue = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 $queue->enqueue($item);
             }
         }
@@ -194,8 +283,8 @@ class LinkedQueue implements Arrayable, Queue
      */
     public function any(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return true;
             }
         }
@@ -208,8 +297,8 @@ class LinkedQueue implements Arrayable, Queue
      */
     public function every(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 return false;
             }
         }
@@ -225,8 +314,8 @@ class LinkedQueue implements Arrayable, Queue
         $queue1 = static::of($this->itemType());
         $queue2 = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 $queue1->enqueue($item);
             } else {
                 $queue2->enqueue($item);
@@ -239,7 +328,7 @@ class LinkedQueue implements Arrayable, Queue
     /**
      * {@inheritdoc}
      */
-    public function getIterator(): Traversable
+    public function getIterator()
     {
         return new IteratorIterator($this->list);
     }
@@ -256,6 +345,38 @@ class LinkedQueue implements Arrayable, Queue
         }
 
         return $items;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toString(): string
+    {
+        return $this->toJson();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 
     /**

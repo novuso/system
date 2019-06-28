@@ -3,13 +3,9 @@
 namespace Novuso\System\Collection\Chain;
 
 /**
- * TerminalBucket is a terminating bucket chain node
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class TerminalBucket
  */
-class TerminalBucket implements Bucket
+final class TerminalBucket implements Bucket
 {
     /**
      * Next bucket

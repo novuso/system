@@ -2,22 +2,16 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Api\Stack;
 use Novuso\System\Collection\Iterator\ArrayStackIterator;
-use Novuso\System\Collection\Traits\ItemTypeMethods;
+use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Type\Stack;
 use Novuso\System\Exception\UnderflowException;
-use Novuso\System\Type\Arrayable;
-use Novuso\System\Utility\Validate;
-use Traversable;
+use Novuso\System\Utility\Assert;
 
 /**
- * ArrayStack is an implementation of the stack type
- *
- * @copyright Copyright (c) 2017, Novuso. <http://novuso.com>
- * @license   http://opensource.org/licenses/MIT The MIT License
- * @author    John Nickell <email@johnnickell.com>
+ * Class ArrayStack
  */
-class ArrayStack implements Arrayable, Stack
+final class ArrayStack implements Stack
 {
     use ItemTypeMethods;
 
@@ -92,11 +86,7 @@ class ArrayStack implements Arrayable, Stack
      */
     public function push($item): void
     {
-        assert(
-            Validate::isType($item, $this->itemType()),
-            $this->itemTypeError('push', $item)
-        );
-
+        Assert::isType($item, $this->itemType());
         $index = $this->count++;
         $this->items[$index] = $item;
     }
@@ -137,20 +127,20 @@ class ArrayStack implements Arrayable, Stack
      */
     public function each(callable $callback): void
     {
-        foreach ($this->getIterator() as $item) {
-            call_user_func($callback, $item);
+        foreach ($this->getIterator() as $index => $item) {
+            call_user_func($callback, $item, $index);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function map(callable $callback, ?string $itemType = null): ArrayStack
+    public function map(callable $callback, ?string $itemType = null)
     {
         $stack = static::of($itemType);
 
         for ($i = 0; $i < $this->count; $i++) {
-            $stack->push(call_user_func($callback, $this->items[$i]));
+            $stack->push(call_user_func($callback, $this->items[$i], $i));
         }
 
         return $stack;
@@ -159,10 +149,108 @@ class ArrayStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
+    public function max(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $maxItem = null;
+            $max = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($max === null || $field > $max) {
+                    $max = $field;
+                    $maxItem = $item;
+                }
+            }
+
+            return $maxItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item > $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function min(?callable $callback = null)
+    {
+        if ($callback !== null) {
+            $minItem = null;
+            $min = null;
+
+            foreach ($this->getIterator() as $index => $item) {
+                $field = call_user_func($callback, $item, $index);
+                if ($min === null || $field < $min) {
+                    $min = $field;
+                    $minItem = $item;
+                }
+            }
+
+            return $minItem;
+        }
+
+        return $this->reduce(function ($accumulator, $item) {
+            return ($accumulator === null) || $item < $accumulator ? $item : $accumulator;
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        $accumulator = $initial;
+
+        foreach ($this->getIterator() as $index => $item) {
+            $accumulator = call_user_func($callback, $accumulator, $item, $index);
+        }
+
+        return $accumulator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sum(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        if ($callback === null) {
+            $callback = function ($item) {
+                return $item;
+            };
+        }
+
+        return $this->reduce(function ($total, $item, $index) use ($callback) {
+            return $total + call_user_func($callback, $item, $index);
+        }, 0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function average(?callable $callback = null)
+    {
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        $count = $this->count();
+
+        return $this->sum($callback) / $count;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function find(callable $predicate)
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return $item;
             }
         }
@@ -173,12 +261,12 @@ class ArrayStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $predicate): ArrayStack
+    public function filter(callable $predicate)
     {
         $stack = static::of($this->itemType());
 
         for ($i = 0; $i < $this->count; $i++) {
-            if (call_user_func($predicate, $this->items[$i])) {
+            if (call_user_func($predicate, $this->items[$i], $i)) {
                 $stack->push($this->items[$i]);
             }
         }
@@ -189,12 +277,12 @@ class ArrayStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function reject(callable $predicate): ArrayStack
+    public function reject(callable $predicate)
     {
         $stack = static::of($this->itemType());
 
         for ($i = 0; $i < $this->count; $i++) {
-            if (!call_user_func($predicate, $this->items[$i])) {
+            if (!call_user_func($predicate, $this->items[$i], $i)) {
                 $stack->push($this->items[$i]);
             }
         }
@@ -207,8 +295,8 @@ class ArrayStack implements Arrayable, Stack
      */
     public function any(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (call_user_func($predicate, $item, $index)) {
                 return true;
             }
         }
@@ -221,8 +309,8 @@ class ArrayStack implements Arrayable, Stack
      */
     public function every(callable $predicate): bool
     {
-        foreach ($this->getIterator() as $item) {
-            if (!call_user_func($predicate, $item)) {
+        foreach ($this->getIterator() as $index => $item) {
+            if (!call_user_func($predicate, $item, $index)) {
                 return false;
             }
         }
@@ -239,7 +327,7 @@ class ArrayStack implements Arrayable, Stack
         $stack2 = static::of($this->itemType());
 
         for ($i = 0; $i < $this->count; $i++) {
-            if (call_user_func($predicate, $this->items[$i])) {
+            if (call_user_func($predicate, $this->items[$i], $i)) {
                 $stack1->push($this->items[$i]);
             } else {
                 $stack2->push($this->items[$i]);
@@ -252,7 +340,7 @@ class ArrayStack implements Arrayable, Stack
     /**
      * {@inheritdoc}
      */
-    public function getIterator(): Traversable
+    public function getIterator()
     {
         return new ArrayStackIterator($this->items);
     }
@@ -264,6 +352,38 @@ class ArrayStack implements Arrayable, Stack
     {
         $array = $this->items;
 
-        return $array;
+        return array_reverse($array);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toString(): string
+    {
+        return $this->toJson();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 }

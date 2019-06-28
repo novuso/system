@@ -1,9 +1,0 @@
----
-- name: "git config"
-  become: yes
-  copy:
-    src: "gitconfig"
-    dest: "/etc/gitconfig"
-    owner: "root"
-    group: "root"
-    mode: "0644"
