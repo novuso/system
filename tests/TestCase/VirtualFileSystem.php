@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Novuso\System\Test;
+namespace Novuso\System\Test\TestCase;
 
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;

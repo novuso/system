@@ -4,7 +4,7 @@ namespace Novuso\System\Test\Collection\Tree;
 
 use Novuso\System\Collection\Tree\RedBlackNode;
 use Novuso\System\Test\Resources\TestWeekDay;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Collection\Tree\RedBlackNode

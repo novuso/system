@@ -8,7 +8,7 @@ use Novuso\System\Exception\IndexException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Test\Collection\Sort\SortDataProvider;
 use Novuso\System\Test\Resources\TestUser;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Collection\ArrayList

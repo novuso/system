@@ -8,7 +8,7 @@ use Novuso\System\Exception\KeyException;
 use Novuso\System\Exception\LookupException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Test\Resources\TestWeekDay;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Collection\Tree\RedBlackSearchTree

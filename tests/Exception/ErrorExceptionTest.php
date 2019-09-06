@@ -3,7 +3,7 @@
 namespace Novuso\System\Test\Exception;
 
 use Novuso\System\Exception\ErrorException;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Exception\ErrorException

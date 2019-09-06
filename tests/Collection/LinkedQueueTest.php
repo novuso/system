@@ -5,7 +5,7 @@ namespace Novuso\System\Test\Collection;
 use Novuso\System\Collection\LinkedQueue;
 use Novuso\System\Exception\AssertionException;
 use Novuso\System\Exception\UnderflowException;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Collection\LinkedQueue

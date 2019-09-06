@@ -3,7 +3,7 @@
 namespace Novuso\System\Test\Utility;
 
 use Novuso\System\Test\Resources\TestStringObject;
-use Novuso\System\Test\VirtualFileSystem;
+use Novuso\System\Test\TestCase\VirtualFileSystem;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 

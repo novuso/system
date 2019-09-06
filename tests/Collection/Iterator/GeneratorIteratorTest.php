@@ -5,7 +5,7 @@ namespace Novuso\System\Test\Collection\Iterator;
 use Exception;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
 use Novuso\System\Exception\MethodCallException;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Collection\Iterator\GeneratorIterator

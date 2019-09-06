@@ -9,7 +9,7 @@ use Novuso\System\Collection\Comparison\IntegerComparator;
 use Novuso\System\Collection\Comparison\StringComparator;
 use Novuso\System\Collection\Sort\Merge;
 use Novuso\System\Test\Resources\TestUser;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Type\Comparable;
 
 /**

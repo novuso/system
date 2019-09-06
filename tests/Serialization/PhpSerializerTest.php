@@ -5,7 +5,7 @@ namespace Novuso\System\Test\Serialization;
 use Novuso\System\Exception\DomainException;
 use Novuso\System\Serialization\PhpSerializer;
 use Novuso\System\Test\Resources\TestUser;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Serialization\PhpSerializer

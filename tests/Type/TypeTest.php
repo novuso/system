@@ -2,7 +2,7 @@
 
 namespace Novuso\System\Test\Type;
 
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Type\Type;
 use Novuso\System\Utility\ClassName;
 
