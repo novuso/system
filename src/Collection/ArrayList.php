@@ -275,7 +275,9 @@ final class ArrayList implements Sequence
             throw new UnderflowException('List underflow');
         }
 
-        return reset($this->items);
+        $key = array_key_first($this->items);
+
+        return $this->items[$key];
     }
 
     /**
@@ -305,7 +307,13 @@ final class ArrayList implements Sequence
     public function first(?callable $predicate = null, $default = null)
     {
         if ($predicate === null) {
-            return $this->isEmpty() ? $default : reset($this->items);
+            if ($this->isEmpty()) {
+                return $default;
+            }
+
+            $key = array_key_first($this->items);
+
+            return $this->items[$key];
         }
 
         foreach ($this->items as $index => $item) {
@@ -323,7 +331,13 @@ final class ArrayList implements Sequence
     public function last(?callable $predicate = null, $default = null)
     {
         if ($predicate === null) {
-            return $this->isEmpty() ? $default : end($this->items);
+            if ($this->isEmpty()) {
+                return $default;
+            }
+
+            $key = array_key_last($this->items);
+
+            return $this->items[$key];
         }
 
         foreach (array_reverse($this->items, true) as $index => $item) {

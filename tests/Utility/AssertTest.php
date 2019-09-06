@@ -3,7 +3,7 @@
 namespace Novuso\System\Test\Utility;
 
 use Novuso\System\Exception\AssertionException;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Utility\Assert;
 
 /**

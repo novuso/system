@@ -3,7 +3,7 @@
 namespace Novuso\System\Test\Collection\Chain;
 
 use Novuso\System\Collection\Chain\SetBucketChain;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Collection\Chain\SetBucketChain

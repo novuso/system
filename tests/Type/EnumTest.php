@@ -7,7 +7,7 @@ use Novuso\System\Exception\DomainException;
 use Novuso\System\Test\Resources\TestInvalidStatus;
 use Novuso\System\Test\Resources\TestStatus;
 use Novuso\System\Test\Resources\TestWeekDay;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Type\Enum

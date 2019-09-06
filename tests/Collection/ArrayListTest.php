@@ -8,7 +8,7 @@ use Novuso\System\Exception\IndexException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Test\Collection\Sort\SortDataProvider;
 use Novuso\System\Test\Resources\TestUser;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Collection\ArrayList
@@ -292,6 +292,11 @@ class ArrayListTest extends UnitTestCase
         $this->assertSame(['bar', 'baz'], $list->tail()->toArray());
     }
 
+    public function test_that_first_returns_default_when_empty_no_predicate()
+    {
+        $this->assertSame('default', ArrayList::of('string')->first(null, 'default'));
+    }
+
     public function test_that_first_returns_default_when_empty()
     {
         $this->assertSame('default', ArrayList::of('string')->first(function (string $item) {
@@ -317,6 +322,11 @@ class ArrayListTest extends UnitTestCase
         $this->assertSame('bar', $list->first(function (string $item) {
             return substr($item, 0, 1) === 'b';
         }));
+    }
+
+    public function test_that_last_returns_default_when_empty_no_predicate()
+    {
+        $this->assertSame('default', ArrayList::of('string')->last(null, 'default'));
     }
 
     public function test_that_last_returns_default_when_empty()

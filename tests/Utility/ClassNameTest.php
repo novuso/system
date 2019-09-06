@@ -3,7 +3,7 @@
 namespace Novuso\System\Test\Utility;
 
 use Novuso\System\Exception\TypeException;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Utility\ClassName;
 
 /**

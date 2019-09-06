@@ -8,7 +8,7 @@ use Novuso\System\Collection\SortedSet;
 use Novuso\System\Exception\AssertionException;
 use Novuso\System\Test\Resources\TestIntegerObject;
 use Novuso\System\Test\Resources\TestWeekDay;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Collection\SortedSet

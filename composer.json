@@ -16,7 +16,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Novuso\\System\\": "src"
+            "Novuso\\System\\": "src",
+            "Novuso\\System\\Test\\TestCase\\": "tests/TestCase"
         }
     },
     "autoload-dev": {

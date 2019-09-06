@@ -5,7 +5,7 @@ namespace Novuso\System\Test\Collection;
 use Novuso\System\Collection\HashTable;
 use Novuso\System\Exception\AssertionException;
 use Novuso\System\Exception\KeyException;
-use Novuso\System\Test\UnitTestCase;
+use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
  * @covers \Novuso\System\Collection\HashTable
