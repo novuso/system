@@ -275,7 +275,9 @@ final class ArrayList implements Sequence
             throw new UnderflowException('List underflow');
         }
 
-        return reset($this->items);
+        $key = array_key_first($this->items);
+
+        return $this->items[$key];
     }
 
     /**
