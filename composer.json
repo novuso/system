@@ -1,0 +1,30 @@
+{
+    "name": "novuso/system",
+    "description": "Novuso System Library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.0"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Novuso\\System\\": "src",
+            "Novuso\\System\\Test\\TestCase\\": "tests/TestCase"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Novuso\\System\\Test\\": "tests"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.0.0"
+        },
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "stable"
+}

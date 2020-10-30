@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# change to the project root
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd $DIR/..
+
+docker build -t novuso-system ./etc/docker/
+
+docker container run \
+    --rm -it \
+    -v $(pwd):/app:delegated \
+    -w /app \
+    novuso-system "$@"
