@@ -92,9 +92,8 @@ class EnumTest extends UnitTestCase
     {
         $this->expectException(DomainException::class);
 
-        $data = ['value' => 'Friday'];
-        $weekDay = TestWeekDay::FRIDAY();
-        $weekDay->__unserialize($data);
+        $state = 'O:40:"Novuso\System\Test\Resources\TestWeekDay":1:{s:5:"value";i:10;}';
+        unserialize($state);
     }
 
     public function test_that_equals_returns_true_for_same_instance()
