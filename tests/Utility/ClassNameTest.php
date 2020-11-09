@@ -34,7 +34,7 @@ class ClassNameTest extends UnitTestCase
 
     public function test_that_underscore_returns_expected_value()
     {
-        $expected = 'no_vo_so.system.utility.class_name';
+        $expected = 'novuso.system.utility.class_name';
         $className = 'Novuso\\System\\Utility\\ClassName';
 
         static::assertSame($expected, ClassName::underscore($className));
