@@ -94,6 +94,6 @@ class TypeTest extends UnitTestCase
 
         $type = Type::create($canonical);
 
-        self::assertSame($canonical, $type->hashValue());
+        static::assertSame($canonical, $type->hashValue());
     }
 }
