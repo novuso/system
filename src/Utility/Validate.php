@@ -15,7 +15,7 @@ use Traversable;
  */
 final class Validate
 {
-    private static array $timezones;
+    private static ?array $timezones = null;
 
     /**
      * Checks if value is scalar
