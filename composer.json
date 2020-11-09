@@ -6,6 +6,8 @@
         "php": ">=8.0"
     },
     "require-dev": {
+        "mikey179/vfsstream": "^1.6",
+        "mockery/mockery": "^1.4",
         "phpunit/phpunit": "^9.4"
     },
     "autoload": {
