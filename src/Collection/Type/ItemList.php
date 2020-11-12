@@ -3,6 +3,7 @@
 namespace Novuso\System\Collection\Type;
 
 use ArrayAccess;
+use Closure;
 use JsonSerializable;
 use Novuso\System\Collection\Contract\ItemCollection;
 use Novuso\System\Exception\IndexException;
@@ -129,7 +130,7 @@ interface ItemList extends Arrayable, ArrayAccess, ItemCollection, JsonSerializa
      * function (<I> $item, int $index): bool {}
      * </code>
      *
-     * @param mixed|callable $object The search item or a predicate function
+     * @param mixed|Closure $object The search item or a predicate function
      */
     public function indexOf(mixed $object): ?int;
 
@@ -144,7 +145,7 @@ interface ItemList extends Arrayable, ArrayAccess, ItemCollection, JsonSerializa
      * function (<I> $item, int $index): bool {}
      * </code>
      *
-     * @param mixed|callable $object The search item or a predicate function
+     * @param mixed|Closure $object The search item or a predicate function
      */
     public function lastIndexOf(mixed $object): ?int;
 
