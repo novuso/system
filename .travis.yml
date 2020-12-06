@@ -15,4 +15,4 @@ before_script:
   - echo 'assert.exception = 1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 script:
-  - php vendor/bin/phpunit build --configuration etc/build --cache-result-file var/cache/.phpunit.result.cache --no-coverage
+  - php vendor/bin/phpunit --configuration etc/build --cache-result-file var/cache/.phpunit.result.cache --no-coverage
