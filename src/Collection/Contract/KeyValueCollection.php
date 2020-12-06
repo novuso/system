@@ -2,8 +2,6 @@
 
 namespace Novuso\System\Collection\Contract;
 
-use phpDocumentor\Reflection\Types\Mixed_;
-
 /**
  * Interface KeyValueCollection
  */
