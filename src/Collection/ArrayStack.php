@@ -2,28 +2,25 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Iterator\ArrayQueueIterator;
+use Novuso\System\Collection\Iterator\ArrayStackIterator;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
-use Novuso\System\Collection\Type\Queue;
+use Novuso\System\Collection\Type\Stack;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Utility\Assert;
 use Traversable;
 
 /**
- * Class ArrayQueue
+ * Class ArrayStack
  */
-final class ArrayQueue implements Queue
+final class ArrayStack implements Stack
 {
     use ItemTypeMethods;
 
     protected array $items = [];
     protected int $count = 0;
-    protected int $front = 0;
-    protected int $end = 0;
-    protected int $cap = 10;
 
     /**
-     * Constructs ArrayQueue
+     * Constructs ArrayStack
      *
      * If a type is not provided, the item type is dynamic.
      *
@@ -63,45 +60,26 @@ final class ArrayQueue implements Queue
     /**
      * @inheritDoc
      */
-    public function enqueue(mixed $item): void
+    public function push(mixed $item): void
     {
         Assert::isType($item, $this->itemType());
-
-        if ($this->count === $this->cap) {
-            $this->reindex($this->cap * 2);
-        }
-
-        $index = $this->end++;
+        $index = $this->count++;
         $this->items[$index] = $item;
-
-        if ($this->end === $this->cap) {
-            $this->end = 0;
-        }
-
-        $this->count++;
     }
 
     /**
      * @inheritDoc
      */
-    public function dequeue(): mixed
+    public function pop(): mixed
     {
         if ($this->isEmpty()) {
-            throw new UnderflowException('Queue underflow');
+            throw new UnderflowException('Stack underflow');
         }
 
-        $item = $this->items[$this->front];
-        unset($this->items[$this->front]);
+        $index = $this->count - 1;
+        $item = $this->items[$index];
+        unset($this->items[$index]);
         $this->count--;
-        $this->front++;
-
-        if ($this->front === $this->cap) {
-            $this->front = 0;
-        }
-
-        if ($this->count > 0 && $this->count === $this->cap / 4) {
-            $this->reindex($this->cap / 2);
-        }
 
         return $item;
     }
@@ -109,13 +87,15 @@ final class ArrayQueue implements Queue
     /**
      * @inheritDoc
      */
-    public function front(): mixed
+    public function top(): mixed
     {
         if ($this->isEmpty()) {
-            throw new UnderflowException('Queue underflow');
+            throw new UnderflowException('Stack underflow');
         }
 
-        return $this->items[$this->front];
+        $index = $this->count - 1;
+
+        return $this->items[$index];
     }
 
     /**
@@ -133,13 +113,13 @@ final class ArrayQueue implements Queue
      */
     public function map(callable $callback, ?string $itemType = null): static
     {
-        $queue = static::of($itemType);
+        $stack = static::of($itemType);
 
-        foreach ($this->getIterator() as $index => $item) {
-            $queue->enqueue(call_user_func($callback, $item, $index));
+        for ($i = 0; $i < $this->count; $i++) {
+            $stack->push(call_user_func($callback, $this->items[$i], $i));
         }
 
-        return $queue;
+        return $stack;
     }
 
     /**
@@ -209,7 +189,7 @@ final class ArrayQueue implements Queue
     /**
      * @inheritDoc
      */
-    public function sum(?callable $callback = null): int|float|null
+    public function sum(?callable $callback = null): float|int|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -229,7 +209,7 @@ final class ArrayQueue implements Queue
     /**
      * @inheritDoc
      */
-    public function average(?callable $callback = null): int|float|null
+    public function average(?callable $callback = null): float|int|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -259,15 +239,15 @@ final class ArrayQueue implements Queue
      */
     public function filter(callable $predicate): static
     {
-        $queue = static::of($this->itemType());
+        $stack = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $index => $item) {
-            if (call_user_func($predicate, $item, $index)) {
-                $queue->enqueue($item);
+        for ($i = 0; $i < $this->count; $i++) {
+            if (call_user_func($predicate, $this->items[$i], $i)) {
+                $stack->push($this->items[$i]);
             }
         }
 
-        return $queue;
+        return $stack;
     }
 
     /**
@@ -275,15 +255,15 @@ final class ArrayQueue implements Queue
      */
     public function reject(callable $predicate): static
     {
-        $queue = static::of($this->itemType());
+        $stack = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $index => $item) {
-            if (!call_user_func($predicate, $item, $index)) {
-                $queue->enqueue($item);
+        for ($i = 0; $i < $this->count; $i++) {
+            if (!call_user_func($predicate, $this->items[$i], $i)) {
+                $stack->push($this->items[$i]);
             }
         }
 
-        return $queue;
+        return $stack;
     }
 
     /**
@@ -319,18 +299,18 @@ final class ArrayQueue implements Queue
      */
     public function partition(callable $predicate): array
     {
-        $queue1 = static::of($this->itemType());
-        $queue2 = static::of($this->itemType());
+        $stack1 = static::of($this->itemType());
+        $stack2 = static::of($this->itemType());
 
-        foreach ($this->getIterator() as $index => $item) {
-            if (call_user_func($predicate, $item, $index)) {
-                $queue1->enqueue($item);
+        for ($i = 0; $i < $this->count; $i++) {
+            if (call_user_func($predicate, $this->items[$i], $i)) {
+                $stack1->push($this->items[$i]);
             } else {
-                $queue2->enqueue($item);
+                $stack2->push($this->items[$i]);
             }
         }
 
-        return [$queue1, $queue2];
+        return [$stack1, $stack2];
     }
 
     /**
@@ -338,7 +318,7 @@ final class ArrayQueue implements Queue
      */
     public function getIterator(): Traversable
     {
-        return new ArrayQueueIterator($this->items, $this->front, $this->cap);
+        return new ArrayStackIterator($this->items);
     }
 
     /**
@@ -346,13 +326,9 @@ final class ArrayQueue implements Queue
      */
     public function toArray(): array
     {
-        $items = [];
+        $array = $this->items;
 
-        foreach ($this->getIterator() as $item) {
-            $items[] = $item;
-        }
-
-        return $items;
+        return array_reverse($array);
     }
 
     /**
@@ -385,26 +361,5 @@ final class ArrayQueue implements Queue
     public function __toString(): string
     {
         return $this->toString();
-    }
-
-    /**
-     * Re-indexes the underlying array
-     *
-     * This is needed to keep wrapping under control. Using direct indices
-     * allows operations in constant amortized time instead of O(n).
-     *
-     * Using array_(un)shift is easier, but requires re-indexing the array
-     * every time during the enqueue or dequeue operation.
-     */
-    private function reindex(int $capacity): void
-    {
-        $temp = [];
-        for ($i = 0; $i < $this->count; $i++) {
-            $temp[$i] = $this->items[($i + $this->front) % $this->cap];
-        }
-        $this->items = $temp;
-        $this->cap = $capacity;
-        $this->front = 0;
-        $this->end = $this->count;
     }
 }
