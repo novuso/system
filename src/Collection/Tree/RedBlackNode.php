@@ -122,7 +122,7 @@ final class RedBlackNode
     /**
      * Handles deep cloning
      */
-    public function __clone()
+    public function __clone(): void
     {
         if ($this->left !== null) {
             $left = clone $this->left;

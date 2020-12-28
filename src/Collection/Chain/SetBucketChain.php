@@ -181,7 +181,7 @@ final class SetBucketChain implements Countable
     /**
      * Handles deep cloning
      */
-    public function __clone()
+    public function __clone(): void
     {
         $items = [];
         for ($this->rewind(); $this->valid(); $this->next()) {

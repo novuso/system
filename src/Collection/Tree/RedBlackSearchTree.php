@@ -253,7 +253,7 @@ final class RedBlackSearchTree implements BinarySearchTree
     /**
      * Handles deep cloning
      */
-    public function __clone()
+    public function __clone(): void
     {
         $root = clone $this->root;
         $this->root = $root;
