@@ -16,7 +16,7 @@ final class ArrayQueueIterator implements Iterator
     protected int $count;
 
     /**
-     * Constructor
+     * Constructs ArrayQueueIterator
      */
     public function __construct(array $items, int $front, int $cap)
     {

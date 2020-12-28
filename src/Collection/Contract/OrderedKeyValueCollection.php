@@ -8,7 +8,7 @@ use Novuso\System\Type\Comparator;
 /**
  * Interface OrderedKeyValueCollection
  */
-interface OrderedKeyValueCollection
+interface OrderedKeyValueCollection extends Collection
 {
     /**
      * Creates collection with a custom comparator

@@ -14,7 +14,7 @@ final class ArrayStackIterator implements Iterator
     protected int $count;
 
     /**
-     * Constructor
+     * Constructs ArrayStackIterator
      */
     public function __construct(array $items)
     {
