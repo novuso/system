@@ -3,9 +3,11 @@
 namespace Novuso\System\Collection\Iterator;
 
 use Closure;
+use Exception;
 use Generator;
 use Iterator;
 use Novuso\System\Exception\DomainException;
+use Novuso\System\Exception\MethodCallException;
 use ReflectionException;
 use ReflectionFunction;
 use Throwable;
@@ -95,11 +97,14 @@ final class GeneratorIterator implements Iterator
 
     /**
      * Retrieves the return value of a generator
+     *
+     * @throws Exception When the generator hasn't returned
      */
     public function getReturn(): mixed
     {
         if (!$this->generator) {
-            $this->rewind();
+            $message = "Cannot get return value of a generator that hasn't returned";
+            throw new MethodCallException($message);
         }
 
         return $this->generator->getReturn();
