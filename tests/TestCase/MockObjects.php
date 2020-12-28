@@ -14,8 +14,6 @@ trait MockObjects
      * Creates a mock object
      *
      * Arguments are passed as-is to Mockery::mock()
-     *
-     * @return MockInterface
      */
     protected function mock(): MockInterface
     {

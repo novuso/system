@@ -3,7 +3,6 @@
 namespace Novuso\System\Type;
 
 use JsonSerializable;
-use Novuso\System\Exception\TypeException;
 use Novuso\System\Utility\ClassName;
 use Novuso\System\Utility\Validate;
 
@@ -13,45 +12,22 @@ use Novuso\System\Utility\Validate;
 final class Type implements Equatable, JsonSerializable
 {
     /**
-     * Type name
-     *
-     * @var string
-     */
-    protected $name;
-
-    /**
      * Constructs Type
      *
      * @internal
-     *
-     * @param string $name
      */
-    protected function __construct(string $name)
-    {
-        $this->name = $name;
-    }
+    protected function __construct(protected string $name) {}
 
     /**
      * Creates instance from an object or class name
-     *
-     * @param object|string $object An object, fully qualified class name, or
-     *                              canonical class name
-     *
-     * @return Type
-     *
-     * @throws TypeException When $object is not a string or object
      */
-    public static function create($object): Type
+    public static function create(object|string $object): Type
     {
         return new static(ClassName::canonical($object));
     }
 
     /**
      * Retrieves the full class name
-     *
-     * @return string
-     *
-     * @throws TypeException Will not happen
      */
     public function toClassName(): string
     {
@@ -60,8 +36,6 @@ final class Type implements Equatable, JsonSerializable
 
     /**
      * Retrieves a string representation
-     *
-     * @return string
      */
     public function toString(): string
     {
@@ -70,8 +44,6 @@ final class Type implements Equatable, JsonSerializable
 
     /**
      * Handles casting to a string
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -80,8 +52,6 @@ final class Type implements Equatable, JsonSerializable
 
     /**
      * Retrieves a value for JSON encoding
-     *
-     * @return string
      */
     public function jsonSerialize(): string
     {
@@ -90,8 +60,6 @@ final class Type implements Equatable, JsonSerializable
 
     /**
      * Retrieves a representation to serialize
-     *
-     * @return array
      */
     public function __serialize(): array
     {
@@ -100,10 +68,6 @@ final class Type implements Equatable, JsonSerializable
 
     /**
      * Handles construction from serialized data
-     *
-     * @param array $data the serialized data
-     *
-     * @return void
      */
     public function __unserialize(array $data): void
     {
@@ -111,9 +75,9 @@ final class Type implements Equatable, JsonSerializable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function equals($object): bool
+    public function equals(mixed $object): bool
     {
         if ($this === $object) {
             return true;
@@ -127,7 +91,7 @@ final class Type implements Equatable, JsonSerializable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function hashValue(): string
     {

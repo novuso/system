@@ -7,39 +7,16 @@ namespace Novuso\System\Collection\Chain;
  */
 final class ItemBucket implements Bucket
 {
-    /**
-     * Next bucket
-     *
-     * @var Bucket|null
-     */
-    protected $next;
-
-    /**
-     * Previous bucket
-     *
-     * @var Bucket|null
-     */
-    protected $prev;
-
-    /**
-     * Bucket item
-     *
-     * @var mixed
-     */
-    protected $item;
+    protected ?Bucket $next = null;
+    protected ?Bucket $prev = null;
 
     /**
      * Constructs ItemBucket
-     *
-     * @param mixed $item The item
      */
-    public function __construct($item)
-    {
-        $this->item = $item;
-    }
+    public function __construct(protected mixed $item) {}
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function setNext(?Bucket $next): void
     {
@@ -47,7 +24,7 @@ final class ItemBucket implements Bucket
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function next(): ?Bucket
     {
@@ -55,7 +32,7 @@ final class ItemBucket implements Bucket
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function setPrev(?Bucket $prev): void
     {
@@ -63,7 +40,7 @@ final class ItemBucket implements Bucket
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function prev(): ?Bucket
     {
@@ -72,10 +49,8 @@ final class ItemBucket implements Bucket
 
     /**
      * Retrieves the item
-     *
-     * @return mixed
      */
-    public function item()
+    public function item(): mixed
     {
         return $this->item;
     }

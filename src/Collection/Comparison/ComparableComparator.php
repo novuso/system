@@ -12,9 +12,9 @@ use Novuso\System\Utility\Assert;
 final class ComparableComparator implements Comparator
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function compare($object1, $object2): int
+    public function compare(mixed $object1, mixed $object2): int
     {
         /** @var Comparable $object1 */
         Assert::isInstanceOf($object1, Comparable::class);

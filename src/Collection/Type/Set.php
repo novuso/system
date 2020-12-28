@@ -13,30 +13,18 @@ interface Set extends Arrayable, ItemCollection, JsonSerializable
 {
     /**
      * Adds an item
-     *
-     * @param mixed $item The item
-     *
-     * @return void
      */
-    public function add($item): void;
+    public function add(mixed $item): void;
 
     /**
      * Checks if an item is in the set
-     *
-     * @param mixed $item The item
-     *
-     * @return bool
      */
-    public function contains($item): bool;
+    public function contains(mixed $item): bool;
 
     /**
      * Removes an item
-     *
-     * @param mixed $item The item
-     *
-     * @return void
      */
-    public function remove($item): void;
+    public function remove(mixed $item): void;
 
     /**
      * Retrieves the symmetric difference
@@ -46,12 +34,8 @@ interface Set extends Arrayable, ItemCollection, JsonSerializable
      * the current set.
      *
      * A ∆ B = {x : (x ∈ A) ⊕ (x ∈ B)}
-     *
-     * @param Set $other The other set
-     *
-     * @return static
      */
-    public function difference(Set $other);
+    public function difference(Set $other): static;
 
     /**
      * Retrieves the intersection
@@ -60,12 +44,8 @@ interface Set extends Arrayable, ItemCollection, JsonSerializable
      * set and the provided set.
      *
      * A ∩ B = {x : x ∈ A ∧ x ∈ B}
-     *
-     * @param Set $other The other set
-     *
-     * @return static
      */
-    public function intersection(Set $other);
+    public function intersection(Set $other): static;
 
     /**
      * Retrieves the relative complement
@@ -74,12 +54,8 @@ interface Set extends Arrayable, ItemCollection, JsonSerializable
      * found in the current set.
      *
      * B \ A = {x : x ∈ B ∧ x ∉ A}
-     *
-     * @param Set $other The other set
-     *
-     * @return static
      */
-    public function complement(Set $other);
+    public function complement(Set $other): static;
 
     /**
      * Retrieves the union
@@ -88,47 +64,31 @@ interface Set extends Arrayable, ItemCollection, JsonSerializable
      * the provided set.
      *
      * A ∪ B = {x : x ∈ A ∨ x ∈ B}
-     *
-     * @param Set $other The other set
-     *
-     * @return static
      */
-    public function union(Set $other);
+    public function union(Set $other): static;
 
     /**
      * Retrieves an array representation
-     *
-     * @return array
      */
     public function toArray(): array;
 
     /**
      * Retrieves a JSON representation
-     *
-     * @param int $options Bitmask options for JSON encode
-     *
-     * @return string
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string;
 
     /**
      * Retrieves a representation for JSON encoding
-     *
-     * @return array
      */
     public function jsonSerialize(): array;
 
     /**
      * Retrieves a string representation
-     *
-     * @return string
      */
     public function toString(): string;
 
     /**
      * Handles casting to a string
-     *
-     * @return string
      */
     public function __toString(): string;
 }

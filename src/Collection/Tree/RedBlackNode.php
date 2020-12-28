@@ -7,84 +7,26 @@ namespace Novuso\System\Collection\Tree;
  */
 final class RedBlackNode
 {
-    /**
-     * Red link
-     *
-     * @var bool
-     */
     public const RED = true;
-
-    /**
-     * Black link
-     *
-     * @var bool
-     */
     public const BLACK = false;
 
-    /**
-     * Left subtree
-     *
-     * @var RedBlackNode|null
-     */
-    protected $left;
-
-    /**
-     * Right subtree
-     *
-     * @var RedBlackNode|null
-     */
-    protected $right;
-
-    /**
-     * Node key
-     *
-     * @var mixed
-     */
-    protected $key;
-
-    /**
-     * Node value
-     *
-     * @var mixed
-     */
-    protected $value;
-
-    /**
-     * Subtree size
-     *
-     * @var int
-     */
-    protected $size;
-
-    /**
-     * Parent link color
-     *
-     * @var bool
-     */
-    protected $color;
+    protected ?RedBlackNode $left = null;
+    protected ?RedBlackNode $right = null;
 
     /**
      * Constructs RedBlackNode
      *
-     * @param mixed $key   The key
-     * @param mixed $value The value
-     * @param int   $size  The size
-     * @param bool  $color The color constant
+     * @codeCoverageIgnore
      */
-    public function __construct($key, $value, int $size, bool $color)
-    {
-        $this->key = $key;
-        $this->value = $value;
-        $this->size = $size;
-        $this->color = $color;
-    }
+    public function __construct(
+        protected mixed $key,
+        protected mixed $value,
+        protected int $size,
+        protected bool $color
+    ) {}
 
     /**
      * Sets the left node
-     *
-     * @param RedBlackNode|null $left A RedBlackNode instance or null to unset
-     *
-     * @return void
      */
     public function setLeft(?RedBlackNode $left): void
     {
@@ -93,8 +35,6 @@ final class RedBlackNode
 
     /**
      * Retrieves the left node
-     *
-     * @return RedBlackNode|null
      */
     public function left(): ?RedBlackNode
     {
@@ -103,10 +43,6 @@ final class RedBlackNode
 
     /**
      * Sets the right node
-     *
-     * @param RedBlackNode|null $right A RedBlackNode instance or null to unset
-     *
-     * @return void
      */
     public function setRight(?RedBlackNode $right): void
     {
@@ -115,8 +51,6 @@ final class RedBlackNode
 
     /**
      * Retrieves the right node
-     *
-     * @return RedBlackNode|null
      */
     public function right(): ?RedBlackNode
     {
@@ -125,54 +59,38 @@ final class RedBlackNode
 
     /**
      * Sets the key
-     *
-     * @param mixed $key The key
-     *
-     * @return void
      */
-    public function setKey($key): void
+    public function setKey(mixed $key): void
     {
         $this->key = $key;
     }
 
     /**
      * Retrieves the key
-     *
-     * @return mixed
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->key;
     }
 
     /**
      * Sets the value
-     *
-     * @param mixed $value The value
-     *
-     * @return void
      */
-    public function setValue($value): void
+    public function setValue(mixed $value): void
     {
         $this->value = $value;
     }
 
     /**
      * Retrieves the value
-     *
-     * @return mixed
      */
-    public function value()
+    public function value(): mixed
     {
         return $this->value;
     }
 
     /**
      * Sets the size
-     *
-     * @param int $size The size
-     *
-     * @return void
      */
     public function setSize(int $size): void
     {
@@ -181,8 +99,6 @@ final class RedBlackNode
 
     /**
      * Retrieves the size
-     *
-     * @return int
      */
     public function size(): int
     {
@@ -191,10 +107,6 @@ final class RedBlackNode
 
     /**
      * Sets the color flag
-     *
-     * @param bool $color Either RedBlackNode::RED or RedBlackNode::BLACK
-     *
-     * @return void
      */
     public function setColor(bool $color): void
     {
@@ -203,8 +115,6 @@ final class RedBlackNode
 
     /**
      * Retrieves the color flag
-     *
-     * @return bool
      */
     public function color(): bool
     {
@@ -213,10 +123,8 @@ final class RedBlackNode
 
     /**
      * Handles deep cloning
-     *
-     * @return void
      */
-    public function __clone()
+    public function __clone(): void
     {
         if ($this->left !== null) {
             $left = clone $this->left;

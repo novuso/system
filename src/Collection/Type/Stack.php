@@ -14,65 +14,45 @@ interface Stack extends Arrayable, ItemCollection, JsonSerializable
 {
     /**
      * Adds an item to the top
-     *
-     * @param mixed $item The item
-     *
-     * @return void
      */
-    public function push($item): void;
+    public function push(mixed $item): void;
 
     /**
      * Removes and returns the top item
      *
-     * @return mixed
-     *
      * @throws UnderflowException When the stack is empty
      */
-    public function pop();
+    public function pop(): mixed;
 
     /**
      * Retrieves the top item without removal
      *
-     * @return mixed
-     *
      * @throws UnderflowException When the stack is empty
      */
-    public function top();
+    public function top(): mixed;
 
     /**
      * Retrieves an array representation
-     *
-     * @return array
      */
     public function toArray(): array;
 
     /**
      * Retrieves a JSON representation
-     *
-     * @param int $options Bitmask options for JSON encode
-     *
-     * @return string
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string;
 
     /**
      * Retrieves a representation for JSON encoding
-     *
-     * @return array
      */
     public function jsonSerialize(): array;
 
     /**
      * Retrieves a string representation
-     *
-     * @return string
      */
     public function toString(): string;
 
     /**
      * Handles casting to a string
-     *
-     * @return string
      */
     public function __toString(): string;
 }

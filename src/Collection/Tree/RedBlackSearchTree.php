@@ -3,12 +3,12 @@
 namespace Novuso\System\Collection\Tree;
 
 use Novuso\System\Collection\ArrayList;
-use Novuso\System\Collection\Type\Sequence;
+use Novuso\System\Collection\Type\ItemList;
 use Novuso\System\Exception\AssertionException;
-use Novuso\System\Exception\KeyException;
 use Novuso\System\Exception\LookupException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Type\Comparator;
+use Novuso\System\Exception\KeyException;
 use Novuso\System\Utility\VarPrinter;
 
 /**
@@ -16,32 +16,15 @@ use Novuso\System\Utility\VarPrinter;
  */
 final class RedBlackSearchTree implements BinarySearchTree
 {
-    /**
-     * Comparator
-     *
-     * @var Comparator
-     */
-    protected $comparator;
-
-    /**
-     * Root node
-     *
-     * @var RedBlackNode|null
-     */
-    protected $root;
+    protected ?RedBlackNode $root = null;
 
     /**
      * Constructs RedBlackSearchTree
-     *
-     * @param Comparator $comparator The comparator
      */
-    public function __construct(Comparator $comparator)
-    {
-        $this->comparator = $comparator;
-    }
+    public function __construct(protected Comparator $comparator) {}
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function isEmpty(): bool
     {
@@ -49,7 +32,7 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count(): int
     {
@@ -57,18 +40,18 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function set($key, $value): void
+    public function set(mixed $key, mixed $value): void
     {
         $this->root = $this->nodeSet($key, $value, $this->root);
         $this->root->setColor(RedBlackNode::BLACK);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function get($key)
+    public function get(mixed $key): mixed
     {
         $node = $this->nodeGet($key, $this->root);
 
@@ -81,17 +64,17 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function has($key): bool
+    public function has(mixed $key): bool
     {
         return $this->nodeGet($key, $this->root) !== null;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function remove($key): void
+    public function remove(mixed $key): void
     {
         if (!$this->has($key)) {
             return;
@@ -109,7 +92,7 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function keys(): iterable
     {
@@ -121,9 +104,9 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function rangeKeys($lo, $hi): iterable
+    public function rangeKeys(mixed $lo, mixed $hi): iterable
     {
         $list = new ArrayList();
 
@@ -133,9 +116,9 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function rangeCount($lo, $hi): int
+    public function rangeCount(mixed $lo, mixed $hi): int
     {
         if ($this->comparator->compare($lo, $hi) > 0) {
             return 0;
@@ -149,9 +132,9 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function min()
+    public function min(): mixed
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('Tree underflow');
@@ -161,9 +144,9 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function max()
+    public function max(): mixed
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('Tree underflow');
@@ -173,7 +156,7 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function removeMin(): void
     {
@@ -193,7 +176,7 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function removeMax(): void
     {
@@ -213,9 +196,9 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function floor($key)
+    public function floor(mixed $key): mixed
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('Tree underflow');
@@ -231,9 +214,9 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function ceiling($key)
+    public function ceiling(mixed $key): mixed
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('Tree underflow');
@@ -249,17 +232,17 @@ final class RedBlackSearchTree implements BinarySearchTree
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function rank($key): int
+    public function rank(mixed $key): int
     {
         return $this->nodeRank($key, $this->root);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function select(int $rank)
+    public function select(int $rank): mixed
     {
         if ($rank < 0 || $rank >= $this->nodeSize($this->root)) {
             $message = sprintf('Invalid rank: %d', $rank);
@@ -271,10 +254,8 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Handles deep cloning
-     *
-     * @return void
      */
-    public function __clone()
+    public function __clone(): void
     {
         $root = clone $this->root;
         $this->root = $root;
@@ -282,10 +263,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Checks if a node is red
-     *
-     * @param RedBlackNode|null $node The node
-     *
-     * @return bool
      */
     protected function isRed(?RedBlackNode $node): bool
     {
@@ -298,10 +275,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Retrieves the size of a subtree
-     *
-     * @param RedBlackNode|null $node The subtree root
-     *
-     * @return int
      */
     protected function nodeSize(?RedBlackNode $node): int
     {
@@ -315,15 +288,9 @@ final class RedBlackSearchTree implements BinarySearchTree
     /**
      * Inserts a key-value pair in a subtree
      *
-     * @param mixed             $key   The key
-     * @param mixed             $value The value
-     * @param RedBlackNode|null $node  The subtree root
-     *
-     * @return RedBlackNode
-     *
      * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeSet($key, $value, ?RedBlackNode $node): RedBlackNode
+    protected function nodeSet(mixed $key, mixed $value, ?RedBlackNode $node): RedBlackNode
     {
         if ($node === null) {
             return new RedBlackNode($key, $value, 1, RedBlackNode::RED);
@@ -347,14 +314,9 @@ final class RedBlackSearchTree implements BinarySearchTree
      *
      * Returns null if the node is not found.
      *
-     * @param mixed             $key  The key
-     * @param RedBlackNode|null $node The subtree root
-     *
-     * @return RedBlackNode|null
-     *
      * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeGet($key, ?RedBlackNode $node): ?RedBlackNode
+    protected function nodeGet(mixed $key, ?RedBlackNode $node): ?RedBlackNode
     {
         while ($node !== null) {
             $comp = $this->comparator->compare($key, $node->key());
@@ -373,14 +335,9 @@ final class RedBlackSearchTree implements BinarySearchTree
     /**
      * Deletes a node by key and subtree
      *
-     * @param mixed        $key  The key
-     * @param RedBlackNode $node The subtree root
-     *
-     * @return RedBlackNode|null
-     *
      * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeRemove($key, RedBlackNode $node): ?RedBlackNode
+    protected function nodeRemove(mixed $key, RedBlackNode $node): ?RedBlackNode
     {
         $comp = $this->comparator->compare($key, $node->key());
         if ($comp < 0) {
@@ -403,14 +360,9 @@ final class RedBlackSearchTree implements BinarySearchTree
      *
      * @internal Helper for nodeRemove()
      *
-     * @param mixed        $key  The key
-     * @param RedBlackNode $node The subtree root
-     *
-     * @return RedBlackNode
-     *
      * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeRemoveLeft($key, RedBlackNode $node): RedBlackNode
+    protected function nodeRemoveLeft(mixed $key, RedBlackNode $node): RedBlackNode
     {
         if (!$this->isRed($node->left()) && !$this->isRed($node->left()->left())) {
             $node = $this->moveRedLeft($node);
@@ -425,14 +377,9 @@ final class RedBlackSearchTree implements BinarySearchTree
      *
      * @internal Helper for nodeRemove()
      *
-     * @param mixed        $key  The key
-     * @param RedBlackNode $node The subtree root
-     *
-     * @return RedBlackNode
-     *
      * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeRemoveRight($key, RedBlackNode $node): RedBlackNode
+    protected function nodeRemoveRight(mixed $key, RedBlackNode $node): RedBlackNode
     {
         if (!$this->isRed($node->right()) && !$this->isRed($node->right()->left())) {
             $node = $this->moveRedRight($node);
@@ -452,16 +399,9 @@ final class RedBlackSearchTree implements BinarySearchTree
     /**
      * Fills a queue with keys between lo and hi in a subtree
      *
-     * @param Sequence             $list The queue
-     * @param mixed             $lo    The lower bound
-     * @param mixed             $hi    The upper bound
-     * @param RedBlackNode|null $node  The subtree root
-     *
-     * @return void
-     *
      * @throws AssertionException When the keys are not compatible
      */
-    protected function fillKeys(Sequence $list, $lo, $hi, ?RedBlackNode $node): void
+    protected function fillKeys(ItemList $list, mixed $lo, mixed $hi, ?RedBlackNode $node): void
     {
         if ($node === null) {
             return;
@@ -483,10 +423,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Retrieves the node with the minimum key in a subtree
-     *
-     * @param RedBlackNode $node The subtree root
-     *
-     * @return RedBlackNode
      */
     protected function nodeMin(RedBlackNode $node): RedBlackNode
     {
@@ -499,10 +435,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Retrieves the node with the maximum key in a subtree
-     *
-     * @param RedBlackNode $node The subtree root
-     *
-     * @return RedBlackNode
      */
     protected function nodeMax(RedBlackNode $node): RedBlackNode
     {
@@ -515,10 +447,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Removes the node with the minimum key in a subtree
-     *
-     * @param RedBlackNode $node The subtree root
-     *
-     * @return RedBlackNode|null
      */
     protected function nodeRemoveMin(RedBlackNode $node): ?RedBlackNode
     {
@@ -537,10 +465,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Removes the node with the maximum key in a subtree
-     *
-     * @param RedBlackNode $node The subtree root
-     *
-     * @return RedBlackNode|null
      */
     protected function nodeRemoveMax(RedBlackNode $node): ?RedBlackNode
     {
@@ -566,14 +490,9 @@ final class RedBlackSearchTree implements BinarySearchTree
      *
      * Returns null if there is not a key less or equal to the given key.
      *
-     * @param mixed             $key  The key
-     * @param RedBlackNode|null $node The subtree root
-     *
-     * @return RedBlackNode|null
-     *
      * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeFloor($key, ?RedBlackNode $node): ?RedBlackNode
+    protected function nodeFloor(mixed $key, ?RedBlackNode $node): ?RedBlackNode
     {
         if ($node === null) {
             return null;
@@ -600,14 +519,9 @@ final class RedBlackSearchTree implements BinarySearchTree
      *
      * Returns null if there is not a key less or equal to the given key.
      *
-     * @param mixed             $key  The key
-     * @param RedBlackNode|null $node The subtree root
-     *
-     * @return RedBlackNode|null
-     *
      * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeCeiling($key, ?RedBlackNode $node): ?RedBlackNode
+    protected function nodeCeiling(mixed $key, ?RedBlackNode $node): ?RedBlackNode
     {
         if ($node === null) {
             return null;
@@ -632,14 +546,9 @@ final class RedBlackSearchTree implements BinarySearchTree
     /**
      * Retrieves the rank for a key in a subtree
      *
-     * @param mixed             $key  The key
-     * @param RedBlackNode|null $node The subtree root
-     *
-     * @return int
-     *
      * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeRank($key, ?RedBlackNode $node): int
+    protected function nodeRank(mixed $key, ?RedBlackNode $node): int
     {
         if ($node === null) {
             return 0;
@@ -659,11 +568,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Retrieves the node with the key of a given rank in a subtree
-     *
-     * @param int          $rank The rank
-     * @param RedBlackNode $node The subtree root
-     *
-     * @return RedBlackNode
      */
     protected function nodeSelect(int $rank, RedBlackNode $node): RedBlackNode
     {
@@ -683,10 +587,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Rotates a right-learning link to the left
      *
      * Assumes $node->right is red.
-     *
-     * @param RedBlackNode $node The node
-     *
-     * @return RedBlackNode
      */
     protected function rotateLeft(RedBlackNode $node): RedBlackNode
     {
@@ -705,10 +605,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Rotates a left-leaning link to the right
      *
      * Assumes $node->left is red.
-     *
-     * @param RedBlackNode $node The node
-     *
-     * @return RedBlackNode
      */
     protected function rotateRight(RedBlackNode $node): RedBlackNode
     {
@@ -728,10 +624,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      *
      * Used to maintain symmetric order and perfect black balance when a black
      * node has two red children.
-     *
-     * @param RedBlackNode $node The node
-     *
-     * @return void
      */
     protected function flipColors(RedBlackNode $node): void
     {
@@ -746,10 +638,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Assumes red $node and $node->left and $node->left->left are black.
      *
      * @codeCoverageIgnore
-     *
-     * @param RedBlackNode $node The node
-     *
-     * @return RedBlackNode
      */
     protected function moveRedLeft(RedBlackNode $node): RedBlackNode
     {
@@ -769,10 +657,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Assumes red $node and $node->right and $node->right->left are black.
      *
      * @codeCoverageIgnore
-     *
-     * @param RedBlackNode $node The node
-     *
-     * @return RedBlackNode
      */
     protected function moveRedRight(RedBlackNode $node): RedBlackNode
     {
@@ -789,10 +673,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Restores red-black tree invariant on remove
      *
      * @codeCoverageIgnore
-     *
-     * @param RedBlackNode $node The subtree root
-     *
-     * @return RedBlackNode
      */
     protected function balanceOnRemove(RedBlackNode $node): RedBlackNode
     {
@@ -814,10 +694,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Restores red-black tree invariant on insert
      *
      * @codeCoverageIgnore
-     *
-     * @param RedBlackNode $node The subtree root
-     *
-     * @return RedBlackNode
      */
     protected function balanceOnInsert(RedBlackNode $node): RedBlackNode
     {

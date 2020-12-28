@@ -17,58 +17,70 @@ class SortedSetTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
     {
-        $this->assertTrue(SortedSet::comparable(TestWeekDay::class)->isEmpty());
+        static::assertTrue(SortedSet::comparable(TestWeekDay::class)->isEmpty());
     }
 
     public function test_that_adding_items_affects_count()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
-        $this->assertCount(7, $set);
+
+        static::assertCount(7, $set);
     }
 
     public function test_that_duplicate_items_are_overridden()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
         $set->add(TestWeekDay::TUESDAY());
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
-        $this->assertCount(7, $set);
+
+        static::assertCount(7, $set);
     }
 
     public function test_that_contains_returns_true_for_valid_item()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
-        $this->assertTrue($set->contains(TestWeekDay::SATURDAY()));
+
+        static::assertTrue($set->contains(TestWeekDay::SATURDAY()));
     }
 
     public function test_that_remove_correctly_finds_and_removes()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->remove($weekDay);
         }
-        $this->assertTrue($set->isEmpty());
+
+        static::assertTrue($set->isEmpty());
     }
 
     public function test_that_difference_returns_empty_set_from_same_instances()
     {
         $twos = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30];
         $set = SortedSet::comparable(TestIntegerObject::class);
+
         foreach ($twos as $val) {
             $set->add(new TestIntegerObject($val));
         }
+
         $difference = $set->difference($set);
-        $this->assertTrue($difference->isEmpty());
+
+        static::assertTrue($difference->isEmpty());
     }
 
     public function test_that_difference_returns_expected_set()
@@ -77,27 +89,33 @@ class SortedSetTest extends UnitTestCase
         $threes = [3, 6, 9, 12, 15, 18, 21, 24, 30];
         $setOfTwos = SortedSet::comparable(TestIntegerObject::class);
         $setOfThrees = SortedSet::comparable(TestIntegerObject::class);
+
         foreach ($twos as $val) {
             $setOfTwos->add(new TestIntegerObject($val));
         }
+
         foreach ($threes as $val) {
             $setOfThrees->add(new TestIntegerObject($val));
         }
+
         $validSet = [2, 3, 4, 8, 9, 10, 14, 15, 16, 20, 21, 22, 26, 28];
         $invalidSet = [6, 12, 18, 24, 30];
         $difference = $setOfTwos->difference($setOfThrees);
         $valid = true;
+
         foreach ($validSet as $val) {
             if (!$difference->contains(new TestIntegerObject($val))) {
                 $valid = false;
             }
         }
+
         foreach ($invalidSet as $val) {
             if ($difference->contains(new TestIntegerObject($val))) {
                 $value = false;
             }
         }
-        $this->assertTrue($valid);
+
+        static::assertTrue($valid);
     }
 
     public function test_that_intersection_returns_expected_set()
@@ -106,38 +124,47 @@ class SortedSetTest extends UnitTestCase
         $threes = [3, 6, 9, 12, 15, 18, 21, 24, 30];
         $setOfTwos = SortedSet::comparable(TestIntegerObject::class);
         $setOfThrees = SortedSet::comparable(TestIntegerObject::class);
+
         foreach ($twos as $val) {
             $setOfTwos->add(new TestIntegerObject($val));
         }
+
         foreach ($threes as $val) {
             $setOfThrees->add(new TestIntegerObject($val));
         }
+
         $validSet = [6, 12, 18, 24, 30];
         $invalidSet = [2, 3, 4, 8, 9, 10, 14, 15, 16, 20, 21, 22, 26, 28];
         $intersection = $setOfTwos->intersection($setOfThrees);
         $valid = true;
+
         foreach ($validSet as $val) {
             if (!$intersection->contains(new TestIntegerObject($val))) {
                 $valid = false;
             }
         }
+
         foreach ($invalidSet as $val) {
             if ($intersection->contains(new TestIntegerObject($val))) {
                 $value = false;
             }
         }
-        $this->assertTrue($valid);
+
+        static::assertTrue($valid);
     }
 
     public function test_that_complement_returns_empty_set_from_same_instances()
     {
         $twos = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30];
         $set = SortedSet::comparable(TestIntegerObject::class);
+
         foreach ($twos as $val) {
             $set->add(new TestIntegerObject($val));
         }
+
         $complement = $set->complement($set);
-        $this->assertTrue($complement->isEmpty());
+
+        static::assertTrue($complement->isEmpty());
     }
 
     public function test_that_complement_returns_expected_set()
@@ -146,27 +173,33 @@ class SortedSetTest extends UnitTestCase
         $threes = [3, 6, 9, 12, 15, 18, 21, 24, 30];
         $setOfTwos = SortedSet::comparable(TestIntegerObject::class);
         $setOfThrees = SortedSet::comparable(TestIntegerObject::class);
+
         foreach ($twos as $val) {
             $setOfTwos->add(new TestIntegerObject($val));
         }
+
         foreach ($threes as $val) {
             $setOfThrees->add(new TestIntegerObject($val));
         }
+
         $validSet = [3, 9, 15, 21];
         $invalidSet = [6, 12, 18, 24, 30];
         $complement = $setOfTwos->complement($setOfThrees);
         $valid = true;
+
         foreach ($validSet as $val) {
             if (!$complement->contains(new TestIntegerObject($val))) {
                 $valid = false;
             }
         }
+
         foreach ($invalidSet as $val) {
             if ($complement->contains(new TestIntegerObject($val))) {
                 $value = false;
             }
         }
-        $this->assertTrue($valid);
+
+        static::assertTrue($valid);
     }
 
     public function test_that_union_returns_expected_set()
@@ -175,72 +208,91 @@ class SortedSetTest extends UnitTestCase
         $threes = [3, 6, 9, 12, 15, 18, 21, 24, 30];
         $setOfTwos = SortedSet::comparable(TestIntegerObject::class);
         $setOfThrees = SortedSet::comparable(TestIntegerObject::class);
+
         foreach ($twos as $val) {
             $setOfTwos->add(new TestIntegerObject($val));
         }
+
         foreach ($threes as $val) {
             $setOfThrees->add(new TestIntegerObject($val));
         }
+
         $validSet = [2, 3, 4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22, 24, 26, 28, 30];
         $invalidSet = [1, 5, 7, 11, 13, 17, 19, 23, 25, 27, 29];
         $union = $setOfTwos->union($setOfThrees);
         $valid = true;
+
         foreach ($validSet as $val) {
             if (!$union->contains(new TestIntegerObject($val))) {
                 $valid = false;
             }
         }
+
         foreach ($invalidSet as $val) {
             if ($union->contains(new TestIntegerObject($val))) {
                 $value = false;
             }
         }
-        $this->assertTrue($valid);
+
+        static::assertTrue($valid);
     }
 
     public function test_that_range_returns_inclusive_set()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         $days = $set->range(TestWeekDay::TUESDAY(), TestWeekDay::THURSDAY());
         $count = 0;
+
         foreach ($days as $day) {
             $count++;
         }
-        $this->assertSame(3, $count);
+
+        static::assertSame(3, $count);
     }
 
     public function test_that_range_count_includes_item_arguments_when_present()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         $count = $set->rangeCount(TestWeekDay::TUESDAY(), TestWeekDay::THURSDAY());
-        $this->assertSame(3, $count);
+
+        static::assertSame(3, $count);
     }
 
     public function test_that_range_count_does_not_include_item_arguments_when_missing()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         $set->remove(TestWeekDay::THURSDAY());
         $count = $set->rangeCount(TestWeekDay::TUESDAY(), TestWeekDay::THURSDAY());
-        $this->assertSame(2, $count);
+
+        static::assertSame(2, $count);
     }
 
     public function test_that_range_count_returns_zero_for_args_out_of_order()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         $count = $set->rangeCount(TestWeekDay::THURSDAY(), TestWeekDay::TUESDAY());
-        $this->assertSame(0, $count);
+
+        static::assertSame(0, $count);
     }
 
     public function test_that_max_returns_expected_value()
@@ -249,7 +301,8 @@ class SortedSetTest extends UnitTestCase
         $set->add(5356);
         $set->add(7489);
         $set->add(8936);
-        $this->assertSame(8936, $set->max());
+
+        static::assertSame(8936, $set->max());
     }
 
     public function test_that_max_returns_expected_value_with_callback()
@@ -260,7 +313,8 @@ class SortedSetTest extends UnitTestCase
         $set->add(['age' => 19]);
         $set->add(['age' => 32]);
         $set->add(['age' => 26]);
-        $this->assertSame(['age' => 32], $set->max(function (array $data) {
+
+        static::assertSame(['age' => 32], $set->max(function (array $data) {
             return $data['age'];
         }));
     }
@@ -271,7 +325,8 @@ class SortedSetTest extends UnitTestCase
         $set->add(5356);
         $set->add(7489);
         $set->add(8936);
-        $this->assertSame(5356, $set->min());
+
+        static::assertSame(5356, $set->min());
     }
 
     public function test_that_min_returns_expected_value_with_callback()
@@ -282,7 +337,8 @@ class SortedSetTest extends UnitTestCase
         $set->add(['age' => 19]);
         $set->add(['age' => 32]);
         $set->add(['age' => 26]);
-        $this->assertSame(['age' => 19], $set->min(function (array $data) {
+
+        static::assertSame(['age' => 19], $set->min(function (array $data) {
             return $data['age'];
         }));
     }
@@ -290,13 +346,16 @@ class SortedSetTest extends UnitTestCase
     public function test_that_remove_min_correctly_finds_and_removes()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         for ($i = 0; $i < 6; $i++) {
             $set->removeMin();
         }
-        $this->assertTrue($set->contains(TestWeekDay::SATURDAY()));
+
+        static::assertTrue($set->contains(TestWeekDay::SATURDAY()));
     }
 
     public function test_that_remove_min_correctly_finds_and_removes_with_callback()
@@ -310,19 +369,23 @@ class SortedSetTest extends UnitTestCase
         $set->removeMin(function (array $data) {
             return $data['age'];
         });
-        $this->assertFalse($set->contains(['age' => 19]));
+
+        static::assertFalse($set->contains(['age' => 19]));
     }
 
     public function test_that_remove_max_correctly_finds_and_removes()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         for ($i = 0; $i < 6; $i++) {
             $set->removeMax();
         }
-        $this->assertTrue($set->contains(TestWeekDay::SUNDAY()));
+
+        static::assertTrue($set->contains(TestWeekDay::SUNDAY()));
     }
 
     public function test_that_remove_max_correctly_finds_and_removes_with_callback()
@@ -336,7 +399,8 @@ class SortedSetTest extends UnitTestCase
         $set->removeMax(function (array $data) {
             return $data['age'];
         });
-        $this->assertFalse($set->contains(['age' => 32]));
+
+        static::assertFalse($set->contains(['age' => 32]));
     }
 
     public function test_that_sum_returns_expected_value()
@@ -345,12 +409,13 @@ class SortedSetTest extends UnitTestCase
         $set->add(1);
         $set->add(2);
         $set->add(3);
-        $this->assertSame(6, $set->sum());
+
+        static::assertSame(6, $set->sum());
     }
 
     public function test_that_sum_returns_null_with_empty_set()
     {
-        $this->assertNull(SortedSet::integer()->sum());
+        static::assertNull(SortedSet::integer()->sum());
     }
 
     public function test_that_sum_returns_expected_value_with_callback()
@@ -361,7 +426,8 @@ class SortedSetTest extends UnitTestCase
         $set->add(['age' => 19]);
         $set->add(['age' => 32]);
         $set->add(['age' => 26]);
-        $this->assertSame(77, $set->sum(function (array $data) {
+
+        static::assertSame(77, $set->sum(function (array $data) {
             return $data['age'];
         }));
     }
@@ -372,12 +438,13 @@ class SortedSetTest extends UnitTestCase
         $set->add(1.0);
         $set->add(2.0);
         $set->add(3.0);
-        $this->assertEquals(2.0, $set->average());
+
+        static::assertEquals(2.0, $set->average());
     }
 
     public function test_that_average_returns_null_with_empty_set()
     {
-        $this->assertNull(SortedSet::integer()->average());
+        static::assertNull(SortedSet::integer()->average());
     }
 
     public function test_that_average_returns_expected_value_with_callback()
@@ -388,7 +455,8 @@ class SortedSetTest extends UnitTestCase
         $set->add(['age' => 18]);
         $set->add(['age' => 31]);
         $set->add(['age' => 26]);
-        $this->assertEquals(25.0, $set->average(function (array $data) {
+
+        static::assertEquals(25.0, $set->average(function (array $data) {
             return $data['age'];
         }));
     }
@@ -396,115 +464,145 @@ class SortedSetTest extends UnitTestCase
     public function test_that_floor_returns_equal_item_when_present()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
-        $this->assertTrue(TestWeekDay::FRIDAY()->equals($set->floor(TestWeekDay::FRIDAY())));
+
+        static::assertTrue(TestWeekDay::FRIDAY()->equals($set->floor(TestWeekDay::FRIDAY())));
     }
 
     public function test_that_floor_returns_largest_item_equal_or_less_than_arg()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         $set->remove(TestWeekDay::THURSDAY());
-        $this->assertTrue(TestWeekDay::WEDNESDAY()->equals($set->floor(TestWeekDay::THURSDAY())));
+
+        static::assertTrue(TestWeekDay::WEDNESDAY()->equals($set->floor(TestWeekDay::THURSDAY())));
     }
 
     public function test_that_floor_returns_null_when_equal_or_less_item_not_found()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         $set->remove(TestWeekDay::SUNDAY());
-        $this->assertNull($set->floor(TestWeekDay::SUNDAY()));
+
+        static::assertNull($set->floor(TestWeekDay::SUNDAY()));
     }
 
     public function test_that_ceiling_returns_equal_item_when_present()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
-        $this->assertTrue(TestWeekDay::MONDAY()->equals($set->ceiling(TestWeekDay::MONDAY())));
+
+        static::assertTrue(TestWeekDay::MONDAY()->equals($set->ceiling(TestWeekDay::MONDAY())));
     }
 
     public function test_that_ceiling_returns_smallest_item_equal_or_greater_than_arg()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         $set->remove(TestWeekDay::TUESDAY());
-        $this->assertTrue(TestWeekDay::WEDNESDAY()->equals($set->ceiling(TestWeekDay::TUESDAY())));
+
+        static::assertTrue(TestWeekDay::WEDNESDAY()->equals($set->ceiling(TestWeekDay::TUESDAY())));
     }
 
     public function test_that_ceiling_returns_null_when_equal_or_greater_item_not_found()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         $set->remove(TestWeekDay::SATURDAY());
-        $this->assertNull($set->ceiling(TestWeekDay::SATURDAY()));
+
+        static::assertNull($set->ceiling(TestWeekDay::SATURDAY()));
     }
 
     public function test_that_rank_returns_expected_value_for_item()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
-        $this->assertSame(4, $set->rank(TestWeekDay::THURSDAY()));
+
+        static::assertSame(4, $set->rank(TestWeekDay::THURSDAY()));
     }
 
     public function test_that_select_returns_item_assoc_with_rank()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
-        $this->assertTrue(TestWeekDay::THURSDAY()->equals($set->select(4)));
+
+        static::assertTrue(TestWeekDay::THURSDAY()->equals($set->select(4)));
     }
 
     public function test_that_it_is_traversable()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         $count = 0;
+
         foreach ($set as $item) {
             if ($item->value() !== $count) {
                 throw new \Exception('Items out of order');
             }
             $count++;
         }
-        $this->assertSame(7, $count);
+
+        static::assertSame(7, $count);
     }
 
     public function test_that_to_array_returns_expected_value()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
-        $this->assertCount(7, $set->toArray());
+
+        static::assertCount(7, $set->toArray());
     }
 
     public function test_that_clone_include_nested_collection()
     {
         $set = SortedSet::comparable(TestWeekDay::class);
+
         foreach ($this->getWeekDays() as $weekDay) {
             $set->add($weekDay);
         }
+
         $copy = clone $set;
+
         while (!$set->isEmpty()) {
             $set->removeMin();
         }
-        $this->assertCount(7, $copy->toArray());
+
+        static::assertCount(7, $copy->toArray());
     }
 
     public function test_that_each_calls_callback_with_each_item()
@@ -513,11 +611,14 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
+
         $output = ArrayList::of('string');
+
         $set->each(function ($item) use ($output) {
             $output->add($item);
         });
-        $this->assertCount(3, $output->toArray());
+
+        static::assertCount(3, $output->toArray());
     }
 
     public function test_that_map_returns_expected_set()
@@ -526,14 +627,18 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
+
         $output = $set->map(function ($item) {
             return strlen($item);
         }, new IntegerComparator(), 'int');
+
         $data = [];
+
         foreach ($output as $item) {
             $data[] = $item;
         }
-        $this->assertSame([3], $data);
+
+        static::assertSame([3], $data);
     }
 
     public function test_that_find_returns_expected_item()
@@ -542,10 +647,12 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
+
         $item = $set->find(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
-        $this->assertSame('bar', $item);
+
+        static::assertSame('bar', $item);
     }
 
     public function test_that_find_returns_null_when_item_not_found()
@@ -554,10 +661,12 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
+
         $item = $set->find(function ($item) {
             return substr($item, 0, 1) === 'c';
         });
-        $this->assertNull($item);
+
+        static::assertNull($item);
     }
 
     public function test_that_filter_returns_expected_set()
@@ -566,14 +675,18 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
+
         $output = $set->filter(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
+
         $data = [];
+
         foreach ($output as $item) {
             $data[] = $item;
         }
-        $this->assertCount(2, $data);
+
+        static::assertCount(2, $data);
     }
 
     public function test_that_reject_returns_expected_set()
@@ -582,14 +695,18 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
+
         $output = $set->reject(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
+
         $data = [];
+
         foreach ($output as $item) {
             $data[] = $item;
         }
-        $this->assertSame(['foo'], $data);
+
+        static::assertSame(['foo'], $data);
     }
 
     public function test_that_any_returns_true_when_an_item_passes_test()
@@ -598,7 +715,8 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
-        $this->assertTrue($set->any(function ($item) {
+
+        static::assertTrue($set->any(function ($item) {
             return $item === 'foo';
         }));
     }
@@ -609,7 +727,8 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
-        $this->assertFalse($set->any(function ($item) {
+
+        static::assertFalse($set->any(function ($item) {
             return $item === 'buz';
         }));
     }
@@ -620,7 +739,8 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
-        $this->assertTrue($set->every(function ($item) {
+
+        static::assertTrue($set->every(function ($item) {
             return strlen($item) === 3;
         }));
     }
@@ -631,7 +751,8 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
-        $this->assertFalse($set->every(function ($item) {
+
+        static::assertFalse($set->every(function ($item) {
             return substr($item, 0, 1) === 'b';
         }));
     }
@@ -642,18 +763,24 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
+
         $parts = $set->partition(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
+
         $data1 = [];
+
         foreach ($parts[0] as $item) {
             $data1[] = $item;
         }
+
         $data2 = [];
+
         foreach ($parts[1] as $item) {
             $data2[] = $item;
         }
-        $this->assertTrue(count($data1) === 2 && count($data2) === 1);
+
+        static::assertTrue(count($data1) === 2 && count($data2) === 1);
     }
 
     public function test_that_to_json_returns_expected_value()
@@ -662,7 +789,8 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
-        $this->assertSame('["bar","baz","foo"]', $set->toJson());
+
+        static::assertSame('["bar","baz","foo"]', $set->toJson());
     }
 
     public function test_that_it_is_json_encodable()
@@ -671,7 +799,8 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
-        $this->assertSame('["bar","baz","foo"]', json_encode($set));
+
+        static::assertSame('["bar","baz","foo"]', json_encode($set));
     }
 
     public function test_that_to_string_returns_expected_value()
@@ -680,7 +809,8 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
-        $this->assertSame('["bar","baz","foo"]', $set->toString());
+
+        static::assertSame('["bar","baz","foo"]', $set->toString());
     }
 
     public function test_that_string_cast_returns_expected_value()
@@ -689,12 +819,14 @@ class SortedSetTest extends UnitTestCase
         $set->add('foo');
         $set->add('bar');
         $set->add('baz');
-        $this->assertSame('["bar","baz","foo"]', (string) $set);
+
+        static::assertSame('["bar","baz","foo"]', (string) $set);
     }
 
     public function test_that_comparable_triggers_assert_error_for_non_comparable_type()
     {
         $this->expectException(AssertionException::class);
+
         SortedSet::comparable('string');
     }
 

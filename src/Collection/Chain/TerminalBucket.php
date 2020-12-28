@@ -7,22 +7,11 @@ namespace Novuso\System\Collection\Chain;
  */
 final class TerminalBucket implements Bucket
 {
-    /**
-     * Next bucket
-     *
-     * @var Bucket|null
-     */
-    protected $next;
+    protected ?Bucket $next = null;
+    protected ?Bucket $prev = null;
 
     /**
-     * Previous bucket
-     *
-     * @var Bucket|null
-     */
-    protected $prev;
-
-    /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function setNext(?Bucket $next): void
     {
@@ -30,7 +19,7 @@ final class TerminalBucket implements Bucket
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function next(): ?Bucket
     {
@@ -38,7 +27,7 @@ final class TerminalBucket implements Bucket
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function setPrev(?Bucket $prev): void
     {
@@ -46,7 +35,7 @@ final class TerminalBucket implements Bucket
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function prev(): ?Bucket
     {

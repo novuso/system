@@ -17,7 +17,6 @@ class JsonSerializerTest extends UnitTestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
         $this->user = new TestUser([
             'firstName' => 'James',
             'lastName'  => 'Wood',
@@ -30,16 +29,20 @@ class JsonSerializerTest extends UnitTestCase
     public function test_that_serialize_returns_expected_state()
     {
         $serializer = new JsonSerializer();
+
         $state = $serializer->serialize($this->user);
-        $this->assertSame($this->getUserState(), $state);
+
+        static::assertSame($this->getUserState(), $state);
     }
 
     public function test_that_deserialize_returns_expected_instance()
     {
         $serializer = new JsonSerializer();
+
         /** @var TestUser $user */
         $user = $serializer->deserialize($this->getUserState());
-        $this->assertTrue(
+
+        static::assertTrue(
             'James' === $user->firstName()
             && 'Wood' === $user->lastName()
             && 'jwood' === $user->username()
@@ -51,7 +54,9 @@ class JsonSerializerTest extends UnitTestCase
     public function test_that_deserialize_throws_exception_for_invalid_state()
     {
         $this->expectException(DomainException::class);
+
         $serializer = new JsonSerializer();
+
         $serializer->deserialize(json_encode([
             'firstName' => 'James',
             'lastName'  => 'Wood',

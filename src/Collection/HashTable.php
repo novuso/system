@@ -4,12 +4,13 @@ namespace Novuso\System\Collection;
 
 use Novuso\System\Collection\Chain\TableBucketChain;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
-use Novuso\System\Collection\Mixin\KeyValueTypeMethods;
+use Novuso\System\Collection\Traits\KeyValueTypeMethods;
 use Novuso\System\Collection\Type\Table;
 use Novuso\System\Exception\KeyException;
 use Novuso\System\Utility\Assert;
 use Novuso\System\Utility\FastHasher;
 use Novuso\System\Utility\VarPrinter;
+use Traversable;
 
 /**
  * Class HashTable
@@ -18,19 +19,8 @@ final class HashTable implements Table
 {
     use KeyValueTypeMethods;
 
-    /**
-     * Bucket chains
-     *
-     * @var array
-     */
-    protected $buckets;
-
-    /**
-     * Bucket count
-     *
-     * @var int
-     */
-    protected $count;
+    protected array $buckets = [];
+    protected int $count = 0;
 
     /**
      * Constructs HashTable
@@ -40,39 +30,23 @@ final class HashTable implements Table
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $keyType   The key type
-     * @param string|null $valueType The value type
      */
     public function __construct(?string $keyType = null, ?string $valueType = null)
     {
         $this->setKeyType($keyType);
         $this->setValueType($valueType);
-        $this->buckets = [];
-        $this->count = 0;
     }
 
     /**
-     * Creates collection with specific key and value types
-     *
-     * If types are not provided, the types are dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $keyType   The key type
-     * @param string|null $valueType The value type
-     *
-     * @return HashTable
+     * @inheritDoc
      */
-    public static function of(?string $keyType = null, ?string $valueType = null): HashTable
+    public static function of(?string $keyType = null, ?string $valueType = null): static
     {
         return new static($keyType, $valueType);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function isEmpty(): bool
     {
@@ -80,7 +54,7 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count(): int
     {
@@ -88,9 +62,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function set($key, $value): void
+    public function set(mixed $key, mixed $value): void
     {
         Assert::isType($key, $this->keyType());
         Assert::isType($value, $this->valueType());
@@ -107,9 +81,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function get($key)
+    public function get(mixed $key): mixed
     {
         $hash = FastHasher::hash($key);
 
@@ -122,9 +96,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function has($key): bool
+    public function has(mixed $key): bool
     {
         $hash = FastHasher::hash($key);
 
@@ -136,9 +110,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function remove($key): void
+    public function remove(mixed $key): void
     {
         $hash = FastHasher::hash($key);
 
@@ -153,39 +127,39 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetSet($key, $value): void
+    public function offsetSet(mixed $key, mixed $value): void
     {
         $this->set($key, $value);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetGet($key)
+    public function offsetGet(mixed $key): mixed
     {
         return $this->get($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetExists($key): bool
+    public function offsetExists(mixed $key): bool
     {
         return $this->has($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetUnset($key): void
+    public function offsetUnset(mixed $key): void
     {
         $this->remove($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function keys(): iterable
     {
@@ -200,7 +174,7 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function each(callable $callback): void
     {
@@ -210,9 +184,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function map(callable $callback, ?string $valueType = null)
+    public function map(callable $callback, ?string $valueType = null): static
     {
         $table = static::of($this->keyType(), $valueType);
 
@@ -224,9 +198,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function max(?callable $callback = null)
+    public function max(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $maxKey = null;
@@ -257,9 +231,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function min(?callable $callback = null)
+    public function min(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $minKey = null;
@@ -290,9 +264,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, mixed $initial = null): mixed
     {
         $accumulator = $initial;
 
@@ -304,9 +278,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function sum(?callable $callback = null)
+    public function sum(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -324,9 +298,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function average(?callable $callback = null)
+    public function average(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -338,9 +312,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function find(callable $predicate)
+    public function find(callable $predicate): mixed
     {
         foreach ($this->getIterator() as $key => $value) {
             if (call_user_func($predicate, $value, $key)) {
@@ -352,9 +326,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function filter(callable $predicate)
+    public function filter(callable $predicate): static
     {
         $table = static::of($this->keyType(), $this->valueType());
 
@@ -368,9 +342,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reject(callable $predicate)
+    public function reject(callable $predicate): static
     {
         $table = static::of($this->keyType(), $this->valueType());
 
@@ -384,7 +358,7 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function any(callable $predicate): bool
     {
@@ -398,7 +372,7 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function every(callable $predicate): bool
     {
@@ -412,7 +386,7 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function partition(callable $predicate): array
     {
@@ -431,9 +405,9 @@ final class HashTable implements Table
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new GeneratorIterator(function (Table $table) {
             foreach ($table->keys() as $key) {
@@ -444,10 +418,8 @@ final class HashTable implements Table
 
     /**
      * Handles deep cloning
-     *
-     * @return void
      */
-    public function __clone()
+    public function __clone(): void
     {
         $buckets = [];
 

@@ -15,122 +15,153 @@ class ArrayStackTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
     {
-        $this->assertTrue(ArrayStack::of('int')->isEmpty());
+        static::assertTrue(ArrayStack::of('int')->isEmpty());
     }
 
     public function test_that_adding_items_affects_count()
     {
         $stack = ArrayStack::of('int');
+
         foreach (range(0, 9) as $i) {
             $stack->push($i);
         }
-        $this->assertCount(10, $stack);
+
+        static::assertCount(10, $stack);
     }
 
     public function test_that_pop_returns_expected_item()
     {
         $stack = ArrayStack::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $stack->push($i);
         }
+
         $output = [];
+
         foreach ($items as $i) {
             $output[] = $stack->pop();
         }
-        $this->assertSame($items, array_reverse($output));
+
+        static::assertSame($items, array_reverse($output));
     }
 
     public function test_that_pop_returns_item_with_removal()
     {
         $stack = ArrayStack::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $stack->push($i);
         }
+
         $stack->pop();
-        $this->assertCount(9, $stack);
+
+        static::assertCount(9, $stack);
     }
 
     public function test_that_top_returns_item_without_removal()
     {
         $stack = ArrayStack::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $stack->push($i);
         }
+
         $stack->top();
-        $this->assertCount(10, $stack);
+
+        static::assertCount(10, $stack);
     }
 
     public function test_that_mixing_add_remove_operations_affects_order()
     {
         $stack = ArrayStack::of('int');
         $items = range(0, 99);
+
         foreach ($items as $i) {
             $stack->push($i);
             if ($i % 2 === 0) {
                 $stack->pop();
             }
         }
+
         $remaining = [];
+
         for ($i = 0; $i < 50; $i++) {
             $remaining[] = $stack->pop();
         }
-        $this->assertSame(range(1, 99, 2), array_reverse($remaining));
+
+        static::assertSame(range(1, 99, 2), array_reverse($remaining));
     }
 
     public function test_that_it_is_traversable()
     {
         $stack = ArrayStack::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $stack->push($i);
         }
+
         $output = [];
+
         foreach ($stack as $item) {
             $output[] = $item;
         }
-        $this->assertSame(array_reverse($items), $output);
+
+        static::assertSame(array_reverse($items), $output);
     }
 
     public function test_that_clone_include_nested_collection()
     {
         $stack = ArrayStack::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $stack->push($i);
         }
+
         $copy = clone $stack;
+
         while (!$stack->isEmpty()) {
             $stack->pop();
         }
-        $this->assertSame(array_reverse($items), $copy->toArray());
+
+        static::assertSame(array_reverse($items), $copy->toArray());
     }
 
     public function test_that_to_array_returns_expected_output()
     {
         $stack = ArrayStack::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $stack->push($i);
         }
-        $this->assertSame(array_reverse($items), $stack->toArray());
+
+        static::assertSame(array_reverse($items), $stack->toArray());
     }
 
     public function test_iteration_beyond_items_returns_null()
     {
         $stack = ArrayStack::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $stack->push($i);
         }
+
         $output = [];
+
         $iterator = $stack->getIterator();
+
         foreach ($iterator as $index => $item) {
             $output[] = $item;
         }
-        $this->assertTrue(
+
+        static::assertTrue(
             $iterator->current() === null
             && $iterator->key() === null
         );
@@ -142,15 +173,20 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
+
         $output = ArrayStack::of('string');
+
         $stack->each(function ($item) use ($output) {
             $output->push($item);
         });
+
         $data = [];
+
         foreach ($output as $item) {
             $data[] = $item;
         }
-        $this->assertSame(['foo', 'bar', 'baz'], $data);
+
+        static::assertSame(['foo', 'bar', 'baz'], $data);
     }
 
     public function test_that_map_returns_expected_stack()
@@ -159,14 +195,18 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
+
         $output = $stack->map(function ($item) {
             return strlen($item);
         }, 'int');
+
         $data = [];
+
         foreach ($output as $item) {
             $data[] = $item;
         }
-        $this->assertSame([3, 3, 3], $data);
+
+        static::assertSame([3, 3, 3], $data);
     }
 
     public function test_that_max_returns_expected_value()
@@ -175,7 +215,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push(5356);
         $stack->push(7489);
         $stack->push(8936);
-        $this->assertSame(8936, $stack->max());
+
+        static::assertSame(8936, $stack->max());
     }
 
     public function test_that_max_returns_expected_value_with_callback()
@@ -184,7 +225,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push(['age' => 19]);
         $stack->push(['age' => 32]);
         $stack->push(['age' => 26]);
-        $this->assertSame(['age' => 32], $stack->max(function (array $data) {
+
+        static::assertSame(['age' => 32], $stack->max(function (array $data) {
             return $data['age'];
         }));
     }
@@ -195,7 +237,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push(5356);
         $stack->push(7489);
         $stack->push(8936);
-        $this->assertSame(5356, $stack->min());
+
+        static::assertSame(5356, $stack->min());
     }
 
     public function test_that_min_returns_expected_value_with_callback()
@@ -204,7 +247,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push(['age' => 19]);
         $stack->push(['age' => 32]);
         $stack->push(['age' => 26]);
-        $this->assertSame(['age' => 19], $stack->min(function (array $data) {
+
+        static::assertSame(['age' => 19], $stack->min(function (array $data) {
             return $data['age'];
         }));
     }
@@ -215,12 +259,13 @@ class ArrayStackTest extends UnitTestCase
         $stack->push(1);
         $stack->push(2);
         $stack->push(3);
-        $this->assertSame(6, $stack->sum());
+
+        static::assertSame(6, $stack->sum());
     }
 
     public function test_that_sum_returns_null_with_empty_stack()
     {
-        $this->assertNull(ArrayStack::of('int')->sum());
+        static::assertNull(ArrayStack::of('int')->sum());
     }
 
     public function test_that_sum_returns_expected_value_with_callback()
@@ -229,7 +274,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push(['age' => 19]);
         $stack->push(['age' => 32]);
         $stack->push(['age' => 26]);
-        $this->assertSame(77, $stack->sum(function (array $data) {
+
+        static::assertSame(77, $stack->sum(function (array $data) {
             return $data['age'];
         }));
     }
@@ -240,12 +286,13 @@ class ArrayStackTest extends UnitTestCase
         $stack->push(1);
         $stack->push(2);
         $stack->push(3);
-        $this->assertEquals(2.0, $stack->average());
+
+        static::assertEquals(2.0, $stack->average());
     }
 
     public function test_that_average_returns_null_with_empty_stack()
     {
-        $this->assertNull(ArrayStack::of('int')->average());
+        static::assertNull(ArrayStack::of('int')->average());
     }
 
     public function test_that_average_returns_expected_value_with_callback()
@@ -254,7 +301,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push(['age' => 18]);
         $stack->push(['age' => 31]);
         $stack->push(['age' => 26]);
-        $this->assertEquals(25.0, $stack->average(function (array $data) {
+
+        static::assertEquals(25.0, $stack->average(function (array $data) {
             return $data['age'];
         }));
     }
@@ -265,10 +313,12 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
+
         $item = $stack->find(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
-        $this->assertSame('baz', $item);
+
+        static::assertSame('baz', $item);
     }
 
     public function test_that_find_returns_null_when_item_not_found()
@@ -277,10 +327,12 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
+
         $item = $stack->find(function ($item) {
             return substr($item, 0, 1) === 'c';
         });
-        $this->assertNull($item);
+
+        static::assertNull($item);
     }
 
     public function test_that_filter_returns_expected_stack()
@@ -289,14 +341,18 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
+
         $output = $stack->filter(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
+
         $data = [];
+
         foreach ($output as $item) {
             $data[] = $item;
         }
-        $this->assertSame(['baz', 'bar'], $data);
+
+        static::assertSame(['baz', 'bar'], $data);
     }
 
     public function test_that_reject_returns_expected_stack()
@@ -305,14 +361,18 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
+
         $output = $stack->reject(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
+
         $data = [];
+
         foreach ($output as $item) {
             $data[] = $item;
         }
-        $this->assertSame(['foo'], $data);
+
+        static::assertSame(['foo'], $data);
     }
 
     public function test_that_any_returns_true_when_an_item_passes_test()
@@ -321,7 +381,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
-        $this->assertTrue($stack->any(function ($item) {
+
+        static::assertTrue($stack->any(function ($item) {
             return $item === 'foo';
         }));
     }
@@ -332,7 +393,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
-        $this->assertFalse($stack->any(function ($item) {
+
+        static::assertFalse($stack->any(function ($item) {
             return $item === 'buz';
         }));
     }
@@ -343,7 +405,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
-        $this->assertTrue($stack->every(function ($item) {
+
+        static::assertTrue($stack->every(function ($item) {
             return strlen($item) === 3;
         }));
     }
@@ -354,7 +417,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
-        $this->assertFalse($stack->every(function ($item) {
+
+        static::assertFalse($stack->every(function ($item) {
             return substr($item, 0, 1) === 'b';
         }));
     }
@@ -365,18 +429,24 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
+
         $parts = $stack->partition(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
+
         $data1 = [];
+
         foreach ($parts[0] as $item) {
             $data1[] = $item;
         }
+
         $data2 = [];
+
         foreach ($parts[1] as $item) {
             $data2[] = $item;
         }
-        $this->assertTrue($data1 === ['baz', 'bar'] && $data2 === ['foo']);
+
+        static::assertTrue($data1 === ['baz', 'bar'] && $data2 === ['foo']);
     }
 
     public function test_that_to_json_returns_expected_value()
@@ -385,7 +455,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
-        $this->assertSame('["baz","bar","foo"]', $stack->toJson());
+
+        static::assertSame('["baz","bar","foo"]', $stack->toJson());
     }
 
     public function test_that_it_is_json_encodable()
@@ -394,7 +465,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
-        $this->assertSame('["baz","bar","foo"]', json_encode($stack));
+
+        static::assertSame('["baz","bar","foo"]', json_encode($stack));
     }
 
     public function test_that_to_string_returns_expected_value()
@@ -403,7 +475,8 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
-        $this->assertSame('["baz","bar","foo"]', $stack->toString());
+
+        static::assertSame('["baz","bar","foo"]', $stack->toString());
     }
 
     public function test_that_string_cast_returns_expected_value()
@@ -412,24 +485,28 @@ class ArrayStackTest extends UnitTestCase
         $stack->push('foo');
         $stack->push('bar');
         $stack->push('baz');
-        $this->assertSame('["baz","bar","foo"]', (string) $stack);
+
+        static::assertSame('["baz","bar","foo"]', (string) $stack);
     }
 
     public function test_that_push_triggers_assert_error_for_invalid_item_type()
     {
         $this->expectException(AssertionException::class);
+
         ArrayStack::of('int')->push('string');
     }
 
     public function test_that_pop_throws_exception_when_empty()
     {
         $this->expectException(UnderflowException::class);
+
         ArrayStack::of('int')->pop();
     }
 
     public function test_that_top_throws_exception_when_empty()
     {
         $this->expectException(UnderflowException::class);
+
         ArrayStack::of('int')->top();
     }
 }

@@ -4,21 +4,9 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd $DIR/..
 
-case "$1" in
-    install|update|require)
-    docker container run \
-        --rm -it \
-        -v $(pwd):/app:delegated \
-        -v ~/.composer:/tmp \
-        --user $(id -u):$(id -g) \
-        composer "$@" --ignore-platform-reqs --no-scripts
-    ;;
-    *)
-    docker container run \
-        --rm -it \
-        -v $(pwd):/app:delegated \
-        -v ~/.composer:/tmp \
-        --user $(id -u):$(id -g) \
-        composer "$@"
-    ;;
-esac
+docker container run \
+    --rm -it \
+    -v $(pwd):/app:delegated \
+    -v ~/.composer:/tmp \
+    --user $(id -u):$(id -g) \
+    composer "$@"

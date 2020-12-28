@@ -3,10 +3,11 @@
 namespace Novuso\System\Collection;
 
 use Novuso\System\Collection\Iterator\ArrayStackIterator;
-use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Collection\Type\Stack;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Utility\Assert;
+use Traversable;
 
 /**
  * Class ArrayStack
@@ -15,19 +16,8 @@ final class ArrayStack implements Stack
 {
     use ItemTypeMethods;
 
-    /**
-     * Stack items
-     *
-     * @var array
-     */
-    protected $items;
-
-    /**
-     * Item count
-     *
-     * @var int
-     */
-    protected $count;
+    protected array $items = [];
+    protected int $count = 0;
 
     /**
      * Constructs ArrayStack
@@ -37,36 +27,22 @@ final class ArrayStack implements Stack
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
      */
     public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
-        $this->items = [];
-        $this->count = 0;
     }
 
     /**
-     * Creates collection of a specific item type
-     *
-     * If a type is not provided, the item type is dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
-     *
-     * @return ArrayStack
+     * @inheritDoc
      */
-    public static function of(?string $itemType = null): ArrayStack
+    public static function of(?string $itemType = null): static
     {
         return new static($itemType);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function isEmpty(): bool
     {
@@ -74,7 +50,7 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count(): int
     {
@@ -82,9 +58,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function push($item): void
+    public function push(mixed $item): void
     {
         Assert::isType($item, $this->itemType());
         $index = $this->count++;
@@ -92,9 +68,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function pop()
+    public function pop(): mixed
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('Stack underflow');
@@ -109,9 +85,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function top()
+    public function top(): mixed
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('Stack underflow');
@@ -123,7 +99,7 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function each(callable $callback): void
     {
@@ -133,9 +109,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function map(callable $callback, ?string $itemType = null)
+    public function map(callable $callback, ?string $itemType = null): static
     {
         $stack = static::of($itemType);
 
@@ -147,9 +123,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function max(?callable $callback = null)
+    public function max(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $maxItem = null;
@@ -172,9 +148,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function min(?callable $callback = null)
+    public function min(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $minItem = null;
@@ -197,9 +173,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, mixed $initial = null): mixed
     {
         $accumulator = $initial;
 
@@ -211,9 +187,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function sum(?callable $callback = null)
+    public function sum(?callable $callback = null): float|int|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -231,9 +207,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function average(?callable $callback = null)
+    public function average(?callable $callback = null): float|int|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -245,9 +221,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function find(callable $predicate)
+    public function find(callable $predicate): mixed
     {
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
@@ -259,9 +235,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function filter(callable $predicate)
+    public function filter(callable $predicate): static
     {
         $stack = static::of($this->itemType());
 
@@ -275,9 +251,9 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reject(callable $predicate)
+    public function reject(callable $predicate): static
     {
         $stack = static::of($this->itemType());
 
@@ -291,7 +267,7 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function any(callable $predicate): bool
     {
@@ -305,7 +281,7 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function every(callable $predicate): bool
     {
@@ -319,7 +295,7 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function partition(callable $predicate): array
     {
@@ -338,15 +314,15 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayStackIterator($this->items);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toArray(): array
     {
@@ -356,7 +332,7 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
     {
@@ -364,7 +340,7 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
@@ -372,7 +348,7 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toString(): string
     {
@@ -380,7 +356,7 @@ final class ArrayStack implements Stack
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function __toString(): string
     {

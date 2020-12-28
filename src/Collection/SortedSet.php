@@ -8,15 +8,15 @@ use Novuso\System\Collection\Comparison\FunctionComparator;
 use Novuso\System\Collection\Comparison\IntegerComparator;
 use Novuso\System\Collection\Comparison\StringComparator;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
-use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Collection\Tree\BinarySearchTree;
 use Novuso\System\Collection\Tree\RedBlackSearchTree;
 use Novuso\System\Collection\Type\OrderedSet;
-use Novuso\System\Exception\AssertionException;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Type\Comparator;
 use Novuso\System\Utility\Assert;
 use Novuso\System\Utility\Validate;
+use Traversable;
 
 /**
  * Class SortedSet
@@ -25,19 +25,8 @@ final class SortedSet implements OrderedSet
 {
     use ItemTypeMethods;
 
-    /**
-     * Binary search tree
-     *
-     * @var BinarySearchTree
-     */
-    protected $tree;
-
-    /**
-     * Comparator
-     *
-     * @var Comparator
-     */
-    protected $comparator;
+    protected BinarySearchTree $tree;
+    protected Comparator $comparator;
 
     /**
      * Constructs SortedSet
@@ -47,9 +36,6 @@ final class SortedSet implements OrderedSet
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
-     *
-     * @param Comparator  $comparator The comparator
-     * @param string|null $itemType   The item type
      */
     public function __construct(Comparator $comparator, ?string $itemType = null)
     {
@@ -59,39 +45,17 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * Creates collection with a custom comparator
-     *
-     * If a type is not provided, the item type is dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param Comparator  $comparator The comparator
-     * @param string|null $itemType   The item type
-     *
-     * @return SortedSet
+     * @inheritDoc
      */
-    public static function create(Comparator $comparator, ?string $itemType = null): SortedSet
+    public static function create(Comparator $comparator, ?string $itemType = null): static
     {
         return new static($comparator, $itemType);
     }
 
     /**
-     * Creates collection of comparable items
-     *
-     * If a type is not provided, the item type is dynamic.
-     *
-     * The item type must be a fully-qualified class name that implements:
-     * `Novuso\System\Type\Comparable`
-     *
-     * @param string|null $itemType The item type
-     *
-     * @return SortedSet
-     *
-     * @throws AssertionException When the item type is not valid
+     * @inheritDoc
      */
-    public static function comparable(?string $itemType = null): SortedSet
+    public static function comparable(?string $itemType = null): static
     {
         Assert::isTrue(Validate::isNull($itemType) || Validate::implementsInterface($itemType, Comparable::class));
 
@@ -99,66 +63,39 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * Creates collection of items sorted by callback
-     *
-     * The callback should return 0 for values considered equal, return -1 if
-     * the first value is less than the second value, and return 1 if the
-     * first value is greater than the second value.
-     *
-     * Callback signature:
-     *
-     * <code>
-     * function (<I> $item1, <I> $item2): int {}
-     * </code>
-     *
-     * If a type is not provided, the item type is dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param callable    $callback The sorting callback function
-     * @param string|null $itemType The item type
-     *
-     * @return SortedSet
+     * @inheritDoc
      */
-    public static function callback(callable $callback, ?string $itemType = null): SortedSet
+    public static function callback(callable $callback, ?string $itemType = null): static
     {
         return new static(new FunctionComparator($callback), $itemType);
     }
 
     /**
-     * Creates collection of floats
-     *
-     * @return SortedSet
+     * @inheritDoc
      */
-    public static function float(): SortedSet
+    public static function float(): static
     {
         return new static(new FloatComparator(), 'float');
     }
 
     /**
-     * Creates collection of integers
-     *
-     * @return SortedSet
+     * @inheritDoc
      */
-    public static function integer(): SortedSet
+    public static function integer(): static
     {
         return new static(new IntegerComparator(), 'int');
     }
 
     /**
-     * Creates collection of strings
-     *
-     * @return SortedSet
+     * @inheritDoc
      */
-    public static function string(): SortedSet
+    public static function string(): static
     {
         return new static(new StringComparator(), 'string');
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function isEmpty(): bool
     {
@@ -166,7 +103,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count(): int
     {
@@ -174,7 +111,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function add($item): void
     {
@@ -183,7 +120,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function contains($item): bool
     {
@@ -191,7 +128,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function remove($item): void
     {
@@ -199,9 +136,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function difference(OrderedSet $other)
+    public function difference(OrderedSet $other): static
     {
         $difference = static::create($this->comparator, $this->itemType());
 
@@ -216,9 +153,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function intersection(OrderedSet $other)
+    public function intersection(OrderedSet $other): static
     {
         $intersection = static::create($this->comparator, $this->itemType());
 
@@ -228,9 +165,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function complement(OrderedSet $other)
+    public function complement(OrderedSet $other): static
     {
         $complement = static::create($this->comparator, $this->itemType());
 
@@ -244,9 +181,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function union(OrderedSet $other)
+    public function union(OrderedSet $other): static
     {
         $union = static::create($this->comparator, $this->itemType());
 
@@ -257,55 +194,55 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function range($lo, $hi): iterable
+    public function range(mixed $lo, mixed $hi): iterable
     {
         return $this->tree->rangeKeys($lo, $hi);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function rangeCount($lo, $hi): int
+    public function rangeCount(mixed $lo, mixed $hi): int
     {
         return $this->tree->rangeCount($lo, $hi);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function floor($item)
+    public function floor(mixed $item): mixed
     {
         return $this->tree->floor($item);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function ceiling($item)
+    public function ceiling(mixed $item): mixed
     {
         return $this->tree->ceiling($item);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function rank($item): int
+    public function rank(mixed $item): int
     {
         return $this->tree->rank($item);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function select(int $rank)
+    public function select(int $rank): mixed
     {
         return $this->tree->select($rank);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function each(callable $callback): void
     {
@@ -315,9 +252,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function map(callable $callback, Comparator $comparator, ?string $itemType = null)
+    public function map(callable $callback, Comparator $comparator, ?string $itemType = null): static
     {
         $set = static::create($comparator, $itemType);
 
@@ -329,9 +266,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function max(?callable $callback = null)
+    public function max(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $maxItem = null;
@@ -352,9 +289,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function min(?callable $callback = null)
+    public function min(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $minItem = null;
@@ -375,7 +312,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function removeMin(?callable $callback = null): void
     {
@@ -389,7 +326,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function removeMax(?callable $callback = null): void
     {
@@ -403,9 +340,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, mixed $initial = null): mixed
     {
         $accumulator = $initial;
 
@@ -417,9 +354,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function sum(?callable $callback = null)
+    public function sum(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -437,9 +374,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function average(?callable $callback = null)
+    public function average(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -451,9 +388,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function find(callable $predicate)
+    public function find(callable $predicate): mixed
     {
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
@@ -465,9 +402,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function filter(callable $predicate)
+    public function filter(callable $predicate): static
     {
         $set = static::create($this->comparator, $this->itemType());
 
@@ -481,9 +418,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reject(callable $predicate)
+    public function reject(callable $predicate): static
     {
         $set = static::create($this->comparator, $this->itemType());
 
@@ -497,7 +434,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function any(callable $predicate): bool
     {
@@ -511,7 +448,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function every(callable $predicate): bool
     {
@@ -525,7 +462,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function partition(callable $predicate): array
     {
@@ -544,9 +481,9 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new GeneratorIterator(function (iterable $keys) {
             $index = 0;
@@ -558,7 +495,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toArray(): array
     {
@@ -572,7 +509,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
     {
@@ -580,7 +517,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
@@ -588,7 +525,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toString(): string
     {
@@ -596,7 +533,7 @@ final class SortedSet implements OrderedSet
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function __toString(): string
     {
@@ -605,10 +542,8 @@ final class SortedSet implements OrderedSet
 
     /**
      * Handles deep cloning
-     *
-     * @return void
      */
-    public function __clone()
+    public function __clone(): void
     {
         $tree = clone $this->tree;
         $this->tree = $tree;

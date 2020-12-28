@@ -14,12 +14,8 @@ interface Equatable
      *
      * The method should return false for invalid object types, rather than
      * throw an exception.
-     *
-     * @param mixed $object The object
-     *
-     * @return bool
      */
-    public function equals($object): bool;
+    public function equals(mixed $object): bool;
 
     /**
      * Retrieves a string representation for hashing
@@ -31,8 +27,6 @@ interface Equatable
      * is changed so that the new version is no longer considered "equal" to
      * the old), and two objects which equals() says are equal must report the
      * same hash value.
-     *
-     * @return string
      */
     public function hashValue(): string;
 }

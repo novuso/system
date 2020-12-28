@@ -14,92 +14,64 @@ interface Deque extends Arrayable, ItemCollection, JsonSerializable
 {
     /**
      * Adds an item to the front
-     *
-     * @param mixed $item The item
-     *
-     * @return void
      */
-    public function addFirst($item): void;
+    public function addFirst(mixed $item): void;
 
     /**
      * Adds an item to the end
-     *
-     * @param mixed $item The item
-     *
-     * @return void
      */
-    public function addLast($item): void;
+    public function addLast(mixed $item): void;
 
     /**
      * Removes and returns the first item
      *
-     * @return mixed
-     *
      * @throws UnderflowException When the deque is empty
      */
-    public function removeFirst();
+    public function removeFirst(): mixed;
 
     /**
      * Removes and returns the last item
      *
-     * @return mixed
-     *
      * @throws UnderflowException When the deque is empty
      */
-    public function removeLast();
+    public function removeLast(): mixed;
 
     /**
      * Retrieves the first item without removal
      *
-     * @return mixed
-     *
      * @throws UnderflowException When the deque is empty
      */
-    public function first();
+    public function first(): mixed;
 
     /**
      * Retrieves the last item without removal
      *
-     * @return mixed
-     *
      * @throws UnderflowException When the deque is empty
      */
-    public function last();
+    public function last(): mixed;
 
     /**
-     * Retrieves an array representation
-     *
-     * @return array
+     * Retrieves array representation
      */
     public function toArray(): array;
 
     /**
      * Retrieves a JSON representation
-     *
-     * @param int $options Bitmask options for JSON encode
-     *
-     * @return string
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string;
 
     /**
      * Retrieves a representation for JSON encoding
-     *
-     * @return array
      */
     public function jsonSerialize(): array;
 
     /**
      * Retrieves a string representation
-     *
-     * @return string
      */
     public function toString(): string;
 
     /**
      * Handles casting to a string
-     *
-     * @return string
      */
     public function __toString(): string;
 }

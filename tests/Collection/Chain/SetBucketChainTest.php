@@ -13,7 +13,8 @@ class SetBucketChainTest extends UnitTestCase
     public function test_that_it_is_empty_by_default()
     {
         $chain = new SetBucketChain();
-        $this->assertTrue($chain->isEmpty());
+
+        static::assertTrue($chain->isEmpty());
     }
 
     public function test_that_duplicate_items_do_not_affect_count()
@@ -22,7 +23,8 @@ class SetBucketChainTest extends UnitTestCase
         $chain->add('foo');
         $chain->add('bar');
         $chain->add('foo');
-        $this->assertSame(2, count($chain));
+
+        static::assertSame(2, count($chain));
     }
 
     public function test_that_contains_returns_true_when_item_is_in_the_chain()
@@ -30,7 +32,8 @@ class SetBucketChainTest extends UnitTestCase
         $chain = new SetBucketChain();
         $chain->add('foo');
         $chain->add('bar');
-        $this->assertTrue($chain->contains('bar'));
+
+        static::assertTrue($chain->contains('bar'));
     }
 
     public function test_that_contains_returns_false_when_item_is_not_in_the_chain()
@@ -38,7 +41,8 @@ class SetBucketChainTest extends UnitTestCase
         $chain = new SetBucketChain();
         $chain->add('foo');
         $chain->add('bar');
-        $this->assertFalse($chain->contains('baz'));
+
+        static::assertFalse($chain->contains('baz'));
     }
 
     public function test_that_contains_returns_false_after_item_is_removed()
@@ -47,21 +51,24 @@ class SetBucketChainTest extends UnitTestCase
         $chain->add('foo');
         $chain->add('bar');
         $chain->remove('foo');
-        $this->assertFalse($chain->contains('foo'));
+
+        static::assertFalse($chain->contains('foo'));
     }
 
     public function test_that_remove_returns_true_when_item_removed()
     {
         $chain = new SetBucketChain();
         $chain->add('foo');
-        $this->assertTrue($chain->remove('foo'));
+
+        static::assertTrue($chain->remove('foo'));
     }
 
     public function test_that_remove_returns_false_when_item_not_removed()
     {
         $chain = new SetBucketChain();
         $chain->add('foo');
-        $this->assertFalse($chain->remove('bar'));
+
+        static::assertFalse($chain->remove('bar'));
     }
 
     public function test_that_it_is_iterable_forward()
@@ -70,9 +77,10 @@ class SetBucketChainTest extends UnitTestCase
         $chain->add('foo');
         $chain->add('bar');
         $chain->add('baz');
+
         for ($chain->rewind(); $chain->valid(); $chain->next()) {
             if ($chain->key() === 1) {
-                $this->assertSame('bar', $chain->current());
+                static::assertSame('bar', $chain->current());
             }
         }
     }
@@ -83,9 +91,10 @@ class SetBucketChainTest extends UnitTestCase
         $chain->add('foo');
         $chain->add('bar');
         $chain->add('baz');
+
         for ($chain->end(); $chain->valid(); $chain->prev()) {
             if ($chain->key() === 1) {
-                $this->assertSame('bar', $chain->current());
+                static::assertSame('bar', $chain->current());
             }
         }
     }
@@ -96,11 +105,14 @@ class SetBucketChainTest extends UnitTestCase
         $chain->add('foo');
         $chain->add('bar');
         $chain->add('baz');
+
         for ($chain->end(); $chain->valid(); $chain->prev()) {
             $chain->current();
         }
+
         $chain->prev();
-        $this->assertNull($chain->current());
+
+        static::assertNull($chain->current());
     }
 
     public function test_that_it_does_not_iterate_beyond_end()
@@ -109,23 +121,28 @@ class SetBucketChainTest extends UnitTestCase
         $chain->add('foo');
         $chain->add('bar');
         $chain->add('baz');
+
         for ($chain->rewind(); $chain->valid(); $chain->next()) {
             $chain->current();
         }
+
         $chain->next();
-        $this->assertNull($chain->current());
+
+        static::assertNull($chain->current());
     }
 
     public function test_that_calling_key_without_valid_item_returns_null()
     {
         $chain = new SetBucketChain();
-        $this->assertNull($chain->key());
+
+        static::assertNull($chain->key());
     }
 
     public function test_that_calling_current_without_valid_item_returns_null()
     {
         $chain = new SetBucketChain();
-        $this->assertNull($chain->current());
+
+        static::assertNull($chain->current());
     }
 
     public function test_that_clone_include_nested_collection()
@@ -134,11 +151,13 @@ class SetBucketChainTest extends UnitTestCase
         $chain->add('foo');
         $chain->add('bar');
         $chain->add('baz');
+
         $copy = clone $chain;
         $chain->remove('foo');
         $chain->remove('bar');
         $chain->remove('baz');
-        $this->assertTrue(
+
+        static::assertTrue(
             $copy->contains('foo')
             && $copy->contains('bar')
             && $copy->contains('baz')

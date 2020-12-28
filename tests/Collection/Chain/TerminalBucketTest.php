@@ -15,7 +15,8 @@ class TerminalBucketTest extends UnitTestCase
         $bucket = new TerminalBucket();
         $next = new TerminalBucket();
         $bucket->setNext($next);
-        $this->assertSame($next, $bucket->next());
+
+        static::assertSame($next, $bucket->next());
     }
 
     public function test_that_prev_stores_bucket_instance()
@@ -23,6 +24,7 @@ class TerminalBucketTest extends UnitTestCase
         $bucket = new TerminalBucket();
         $prev = new TerminalBucket();
         $bucket->setPrev($prev);
-        $this->assertSame($prev, $bucket->prev());
+
+        static::assertSame($prev, $bucket->prev());
     }
 }

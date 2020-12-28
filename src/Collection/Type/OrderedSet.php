@@ -3,7 +3,7 @@
 namespace Novuso\System\Collection\Type;
 
 use JsonSerializable;
-use Novuso\System\Collection\Contract\SortedItemCollection;
+use Novuso\System\Collection\Contract\OrderedItemCollection;
 use Novuso\System\Exception\LookupException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Type\Arrayable;
@@ -11,34 +11,22 @@ use Novuso\System\Type\Arrayable;
 /**
  * Interface OrderedSet
  */
-interface OrderedSet extends Arrayable, SortedItemCollection, JsonSerializable
+interface OrderedSet extends Arrayable, OrderedItemCollection, JsonSerializable
 {
     /**
      * Adds an item
-     *
-     * @param mixed $item The item
-     *
-     * @return void
      */
-    public function add($item): void;
+    public function add(mixed $item): void;
 
     /**
      * Checks if an item is in the set
-     *
-     * @param mixed $item The item
-     *
-     * @return bool
      */
-    public function contains($item): bool;
+    public function contains(mixed $item): bool;
 
     /**
      * Removes an item
-     *
-     * @param mixed $item The item
-     *
-     * @return void
      */
-    public function remove($item): void;
+    public function remove(mixed $item): void;
 
     /**
      * Retrieves the symmetric difference
@@ -48,12 +36,8 @@ interface OrderedSet extends Arrayable, SortedItemCollection, JsonSerializable
      * the current set.
      *
      * A ∆ B = {x : (x ∈ A) ⊕ (x ∈ B)}
-     *
-     * @param OrderedSet $other The other set
-     *
-     * @return static
      */
-    public function difference(OrderedSet $other);
+    public function difference(OrderedSet $other): static;
 
     /**
      * Retrieves the intersection
@@ -62,12 +46,8 @@ interface OrderedSet extends Arrayable, SortedItemCollection, JsonSerializable
      * set and the provided set.
      *
      * A ∩ B = {x : x ∈ A ∧ x ∈ B}
-     *
-     * @param OrderedSet $other The other set
-     *
-     * @return static
      */
-    public function intersection(OrderedSet $other);
+    public function intersection(OrderedSet $other): static;
 
     /**
      * Retrieves the relative complement
@@ -76,12 +56,8 @@ interface OrderedSet extends Arrayable, SortedItemCollection, JsonSerializable
      * found in the current set.
      *
      * B \ A = {x : x ∈ B ∧ x ∉ A}
-     *
-     * @param OrderedSet $other The other set
-     *
-     * @return static
      */
-    public function complement(OrderedSet $other);
+    public function complement(OrderedSet $other): static;
 
     /**
      * Retrieves the union
@@ -90,32 +66,18 @@ interface OrderedSet extends Arrayable, SortedItemCollection, JsonSerializable
      * the provided set.
      *
      * A ∪ B = {x : x ∈ A ∨ x ∈ B}
-     *
-     * @param OrderedSet $other The other set
-     *
-     * @return static
      */
-    public function union(OrderedSet $other);
+    public function union(OrderedSet $other): static;
 
     /**
      * Retrieves an inclusive list of items between given items
-     *
-     * @param mixed $lo The lower bound
-     * @param mixed $hi The upper bound
-     *
-     * @return iterable
      */
-    public function range($lo, $hi): iterable;
+    public function range(mixed $lo, mixed $hi): iterable;
 
     /**
      * Retrieves the inclusive number of items between given items
-     *
-     * @param mixed $lo The lower bound
-     * @param mixed $hi The upper bound
-     *
-     * @return int
      */
-    public function rangeCount($lo, $hi): int;
+    public function rangeCount(mixed $lo, mixed $hi): int;
 
     /**
      * Removes the minimum item
@@ -127,10 +89,6 @@ interface OrderedSet extends Arrayable, SortedItemCollection, JsonSerializable
      * <code>
      * function (<I> $item, int $index): mixed {}
      * </code>
-     *
-     * @param callable|null $callback The callback
-     *
-     * @return void
      *
      * @throws UnderflowException When the set is empty
      */
@@ -147,10 +105,6 @@ interface OrderedSet extends Arrayable, SortedItemCollection, JsonSerializable
      * function (<I> $item, int $index): mixed {}
      * </code>
      *
-     * @param callable|null $callback The callback
-     *
-     * @return void
-     *
      * @throws UnderflowException When the set is empty
      */
     public function removeMax(?callable $callback = null): void;
@@ -160,81 +114,53 @@ interface OrderedSet extends Arrayable, SortedItemCollection, JsonSerializable
      *
      * Returns null if there is not an item less or equal to the given item.
      *
-     * @param mixed $item The item
-     *
-     * @return mixed|null
-     *
      * @throws UnderflowException When the set is empty
      */
-    public function floor($item);
+    public function floor(mixed $item): mixed;
 
     /**
      * Retrieves the smallest item greater or equal to the given item
      *
      * Returns null if there is not a item greater or equal to the given item.
      *
-     * @param mixed $item The item
-     *
-     * @return mixed|null
-     *
      * @throws UnderflowException When the set is empty
      */
-    public function ceiling($item);
+    public function ceiling(mixed $item): mixed;
 
     /**
      * Retrieves the rank of the given item
-     *
-     * @param mixed $item The item
-     *
-     * @return int
      */
-    public function rank($item): int;
+    public function rank(mixed $item): int;
 
     /**
      * Retrieves the item with the given rank
      *
-     * @param int $rank The rank
-     *
-     * @return mixed
-     *
      * @throws LookupException When the rank is not valid
      */
-    public function select(int $rank);
+    public function select(int $rank): mixed;
 
     /**
      * Retrieves an array representation
-     *
-     * @return array
      */
     public function toArray(): array;
 
     /**
      * Retrieves a JSON representation
-     *
-     * @param int $options Bitmask options for JSON encode
-     *
-     * @return string
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string;
 
     /**
      * Retrieves a representation for JSON encoding
-     *
-     * @return array
      */
     public function jsonSerialize(): array;
 
     /**
      * Retrieves a string representation
-     *
-     * @return string
      */
     public function toString(): string;
 
     /**
      * Handles casting to a string
-     *
-     * @return string
      */
     public function __toString(): string;
 }

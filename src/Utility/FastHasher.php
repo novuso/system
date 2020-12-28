@@ -9,13 +9,8 @@ final class FastHasher
 {
     /**
      * Creates a string hash for a value
-     *
-     * @param mixed  $value     The value
-     * @param string $algorithm The hash algorithm
-     *
-     * @return string
      */
-    public static function hash($value, string $algorithm = 'fnv1a32'): string
+    public static function hash(mixed $value, string $algorithm = 'fnv1a32'): string
     {
         $type = gettype($value);
 
@@ -40,7 +35,7 @@ final class FastHasher
                 $string = sprintf('b_%d', (int) $value);
                 break;
             case 'resource':
-                $string = sprintf('r_%d', (int) $value);
+                $string = sprintf('r_%d', get_resource_id($value));
                 break;
             case 'array':
                 $string = sprintf('a_%s', serialize($value));

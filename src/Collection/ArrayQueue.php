@@ -3,10 +3,11 @@
 namespace Novuso\System\Collection;
 
 use Novuso\System\Collection\Iterator\ArrayQueueIterator;
-use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Collection\Type\Queue;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Utility\Assert;
+use Traversable;
 
 /**
  * Class ArrayQueue
@@ -15,40 +16,11 @@ final class ArrayQueue implements Queue
 {
     use ItemTypeMethods;
 
-    /**
-     * Queue items
-     *
-     * @var array
-     */
-    protected $items;
-
-    /**
-     * Item count
-     *
-     * @var int
-     */
-    protected $count;
-
-    /**
-     * Front item index
-     *
-     * @var int
-     */
-    protected $front;
-
-    /**
-     * Next available index
-     *
-     * @var int
-     */
-    protected $end;
-
-    /**
-     * Capacity
-     *
-     * @var int
-     */
-    protected $cap;
+    protected array $items = [];
+    protected int $count = 0;
+    protected int $front = 0;
+    protected int $end = 0;
+    protected int $cap = 10;
 
     /**
      * Constructs ArrayQueue
@@ -58,39 +30,22 @@ final class ArrayQueue implements Queue
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
      */
     public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
-        $this->items = [];
-        $this->count = 0;
-        $this->front = 0;
-        $this->end = 0;
-        $this->cap = 10;
     }
 
     /**
-     * Creates collection of a specific item type
-     *
-     * If a type is not provided, the item type is dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
-     *
-     * @return ArrayQueue
+     * @inheritDoc
      */
-    public static function of(?string $itemType = null): ArrayQueue
+    public static function of(?string $itemType = null): static
     {
         return new static($itemType);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function isEmpty(): bool
     {
@@ -98,7 +53,7 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count(): int
     {
@@ -106,9 +61,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function enqueue($item): void
+    public function enqueue(mixed $item): void
     {
         Assert::isType($item, $this->itemType());
 
@@ -127,9 +82,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function dequeue()
+    public function dequeue(): mixed
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('Queue underflow');
@@ -152,9 +107,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function front()
+    public function front(): mixed
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('Queue underflow');
@@ -164,7 +119,7 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function each(callable $callback): void
     {
@@ -174,9 +129,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function map(callable $callback, ?string $itemType = null)
+    public function map(callable $callback, ?string $itemType = null): static
     {
         $queue = static::of($itemType);
 
@@ -188,9 +143,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function max(?callable $callback = null)
+    public function max(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $maxItem = null;
@@ -213,9 +168,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function min(?callable $callback = null)
+    public function min(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $minItem = null;
@@ -238,9 +193,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, mixed $initial = null): mixed
     {
         $accumulator = $initial;
 
@@ -252,9 +207,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function sum(?callable $callback = null)
+    public function sum(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -272,9 +227,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function average(?callable $callback = null)
+    public function average(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -286,9 +241,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function find(callable $predicate)
+    public function find(callable $predicate): mixed
     {
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
@@ -300,9 +255,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function filter(callable $predicate)
+    public function filter(callable $predicate): static
     {
         $queue = static::of($this->itemType());
 
@@ -316,9 +271,9 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reject(callable $predicate)
+    public function reject(callable $predicate): static
     {
         $queue = static::of($this->itemType());
 
@@ -332,7 +287,7 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function any(callable $predicate): bool
     {
@@ -346,7 +301,7 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function every(callable $predicate): bool
     {
@@ -360,7 +315,7 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function partition(callable $predicate): array
     {
@@ -379,15 +334,15 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayQueueIterator($this->items, $this->front, $this->cap);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toArray(): array
     {
@@ -401,7 +356,7 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
     {
@@ -409,7 +364,7 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
@@ -417,7 +372,7 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toString(): string
     {
@@ -425,7 +380,7 @@ final class ArrayQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function __toString(): string
     {
@@ -440,10 +395,6 @@ final class ArrayQueue implements Queue
      *
      * Using array_(un)shift is easier, but requires re-indexing the array
      * every time during the enqueue or dequeue operation.
-     *
-     * @param int $capacity The new capacity
-     *
-     * @return void
      */
     private function reindex(int $capacity): void
     {

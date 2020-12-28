@@ -9,47 +9,14 @@ use Iterator;
  */
 final class ArrayQueueIterator implements Iterator
 {
-    /**
-     * Items
-     *
-     * @var array
-     */
-    protected $items;
+    protected array $items;
+    protected int $front;
+    protected int $cap;
+    protected int $index;
+    protected int $count;
 
     /**
-     * Front index
-     *
-     * @var int
-     */
-    protected $front;
-
-    /**
-     * Capacity
-     *
-     * @var int
-     */
-    protected $cap;
-
-    /**
-     * Current index
-     *
-     * @var int
-     */
-    protected $index;
-
-    /**
-     * Item count
-     *
-     * @var int
-     */
-    protected $count;
-
-    /**
-     * Constructor
-     *
-     * @param array $items The items
-     * @param int   $front The front index
-     * @param int   $cap   The capacity
+     * Constructs ArrayQueueIterator
      */
     public function __construct(array $items, int $front, int $cap)
     {
@@ -62,8 +29,6 @@ final class ArrayQueueIterator implements Iterator
 
     /**
      * Rewinds the iterator
-     *
-     * @return void
      */
     public function rewind(): void
     {
@@ -72,8 +37,6 @@ final class ArrayQueueIterator implements Iterator
 
     /**
      * Checks if the current index is valid
-     *
-     * @return bool
      */
     public function valid(): bool
     {
@@ -82,8 +45,6 @@ final class ArrayQueueIterator implements Iterator
 
     /**
      * Retrieves the current key
-     *
-     * @return int|null
      */
     public function key(): ?int
     {
@@ -96,10 +57,8 @@ final class ArrayQueueIterator implements Iterator
 
     /**
      * Retrieves the current item
-     *
-     * @return mixed
      */
-    public function current()
+    public function current(): mixed
     {
         if (!$this->valid()) {
             return null;
@@ -115,8 +74,6 @@ final class ArrayQueueIterator implements Iterator
 
     /**
      * Moves the iterator to the next item
-     *
-     * @return void
      */
     public function next(): void
     {

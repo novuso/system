@@ -19,7 +19,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_scalar_passes_for_valid_value($value)
     {
         Assert::isScalar($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -28,6 +29,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_scalar_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isScalar($value);
     }
 
@@ -37,7 +39,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_bool_passes_for_valid_value($value)
     {
         Assert::isBool($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -46,6 +49,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_bool_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isBool($value);
     }
 
@@ -55,7 +59,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_float_passes_for_valid_value($value)
     {
         Assert::isFloat($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -64,6 +69,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_float_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isFloat($value);
     }
 
@@ -73,7 +79,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_int_passes_for_valid_value($value)
     {
         Assert::isInt($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -82,6 +89,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_int_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isInt($value);
     }
 
@@ -91,7 +99,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_string_passes_for_valid_value($value)
     {
         Assert::isString($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -100,6 +109,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_string_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isString($value);
     }
 
@@ -109,7 +119,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_array_passes_for_valid_value($value)
     {
         Assert::isArray($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -118,6 +129,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_array_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isArray($value);
     }
 
@@ -127,7 +139,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_object_passes_for_valid_value($value)
     {
         Assert::isObject($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -136,6 +149,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_object_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isObject($value);
     }
 
@@ -145,7 +159,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_callable_passes_for_valid_value($value)
     {
         Assert::isCallable($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -154,6 +169,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_callable_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isCallable($value);
     }
 
@@ -163,7 +179,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_null_passes_for_valid_value($value)
     {
         Assert::isNull($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -172,6 +189,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_null_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isNull($value);
     }
 
@@ -181,7 +199,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_not_null_passes_for_valid_value($value)
     {
         Assert::isNotNull($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -190,6 +209,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_not_null_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isNotNull($value);
     }
 
@@ -199,7 +219,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_true_passes_for_valid_value($value)
     {
         Assert::isTrue($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -208,6 +229,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_true_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isTrue($value);
     }
 
@@ -217,7 +239,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_false_passes_for_valid_value($value)
     {
         Assert::isFalse($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -226,6 +249,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_false_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isFalse($value);
     }
 
@@ -235,7 +259,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_empty_passes_for_valid_value($value)
     {
         Assert::isEmpty($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -244,6 +269,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_empty_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isEmpty($value);
     }
 
@@ -253,7 +279,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_not_empty_passes_for_valid_value($value)
     {
         Assert::isNotEmpty($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -262,6 +289,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_not_empty_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isNotEmpty($value);
     }
 
@@ -271,7 +299,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_blank_passes_for_valid_value($value)
     {
         Assert::isBlank($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -280,6 +309,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_blank_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isBlank($value);
     }
 
@@ -289,7 +319,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_not_blank_passes_for_valid_value($value)
     {
         Assert::isNotBlank($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -298,6 +329,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_not_blank_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isNotBlank($value);
     }
 
@@ -307,7 +339,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_alpha_passes_for_valid_value($value)
     {
         Assert::isAlpha($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -316,6 +349,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_alpha_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isAlpha($value);
     }
 
@@ -325,7 +359,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_alnum_passes_for_valid_value($value)
     {
         Assert::isAlnum($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -334,6 +369,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_alnum_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isAlnum($value);
     }
 
@@ -343,7 +379,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_alpha_dash_passes_for_valid_value($value)
     {
         Assert::isAlphaDash($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -352,6 +389,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_alpha_dash_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isAlphaDash($value);
     }
 
@@ -361,7 +399,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_alnum_dash_passes_for_valid_value($value)
     {
         Assert::isAlnumDash($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -370,6 +409,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_alnum_dash_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isAlnumDash($value);
     }
 
@@ -379,7 +419,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_digits_passes_for_valid_value($value)
     {
         Assert::isDigits($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -388,6 +429,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_digits_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isDigits($value);
     }
 
@@ -397,7 +439,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_numeric_passes_for_valid_value($value)
     {
         Assert::isNumeric($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -406,6 +449,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_numeric_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isNumeric($value);
     }
 
@@ -415,7 +459,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_email_passes_for_valid_value($value)
     {
         Assert::isEmail($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -424,6 +469,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_email_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isEmail($value);
     }
 
@@ -433,7 +479,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_ip_address_passes_for_valid_value($value)
     {
         Assert::isIpAddress($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -442,6 +489,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_ip_address_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isIpAddress($value);
     }
 
@@ -451,7 +499,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_ip_v4_address_passes_for_valid_value($value)
     {
         Assert::isIpV4Address($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -460,6 +509,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_ip_v4_address_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isIpV4Address($value);
     }
 
@@ -469,7 +519,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_ip_v6_address_passes_for_valid_value($value)
     {
         Assert::isIpV6Address($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -478,6 +529,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_ip_v6_address_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isIpV6Address($value);
     }
 
@@ -487,7 +539,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_uri_passes_for_valid_value($value)
     {
         Assert::isUri($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -496,6 +549,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_uri_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isUri($value);
     }
 
@@ -505,7 +559,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_urn_passes_for_valid_value($value)
     {
         Assert::isUrn($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -514,6 +569,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_urn_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isUrn($value);
     }
 
@@ -523,7 +579,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_uuid_passes_for_valid_value($value)
     {
         Assert::isUuid($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -532,6 +589,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_uuid_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isUuid($value);
     }
 
@@ -541,7 +599,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_timezone_passes_for_valid_value($value)
     {
         Assert::isTimezone($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -550,6 +609,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_timezone_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isTimezone($value);
     }
 
@@ -559,7 +619,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_json_passes_for_valid_value($value)
     {
         Assert::isJson($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -568,6 +629,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_json_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isJson($value);
     }
 
@@ -577,7 +639,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_match_passes_for_valid_value($value, $pattern)
     {
         Assert::isMatch($value, $pattern);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -586,6 +649,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_match_throws_exception_for_invalid_value($value, $pattern)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isMatch($value, $pattern);
     }
 
@@ -595,7 +659,8 @@ class AssertTest extends UnitTestCase
     public function test_that_contains_passes_for_valid_value($value, $search)
     {
         Assert::contains($value, $search);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -604,6 +669,7 @@ class AssertTest extends UnitTestCase
     public function test_that_contains_throws_exception_for_invalid_value($value, $search)
     {
         $this->expectException(AssertionException::class);
+
         Assert::contains($value, $search);
     }
 
@@ -613,7 +679,8 @@ class AssertTest extends UnitTestCase
     public function test_that_starts_with_passes_for_valid_value($value, $search)
     {
         Assert::startsWith($value, $search);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -622,6 +689,7 @@ class AssertTest extends UnitTestCase
     public function test_that_starts_with_throws_exception_for_invalid_value($value, $search)
     {
         $this->expectException(AssertionException::class);
+
         Assert::startsWith($value, $search);
     }
 
@@ -631,7 +699,8 @@ class AssertTest extends UnitTestCase
     public function test_that_ends_with_passes_for_valid_value($value, $search)
     {
         Assert::endsWith($value, $search);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -640,6 +709,7 @@ class AssertTest extends UnitTestCase
     public function test_that_ends_with_throws_exception_for_invalid_value($value, $search)
     {
         $this->expectException(AssertionException::class);
+
         Assert::endsWith($value, $search);
     }
 
@@ -649,7 +719,8 @@ class AssertTest extends UnitTestCase
     public function test_that_exact_length_passes_for_valid_value($value, $length)
     {
         Assert::exactLength($value, $length);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -658,6 +729,7 @@ class AssertTest extends UnitTestCase
     public function test_that_exact_length_throws_exception_for_invalid_value($value, $length)
     {
         $this->expectException(AssertionException::class);
+
         Assert::exactLength($value, $length);
     }
 
@@ -667,7 +739,8 @@ class AssertTest extends UnitTestCase
     public function test_that_min_length_passes_for_valid_value($value, $minLength)
     {
         Assert::minLength($value, $minLength);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -676,6 +749,7 @@ class AssertTest extends UnitTestCase
     public function test_that_min_length_throws_exception_for_invalid_value($value, $minLength)
     {
         $this->expectException(AssertionException::class);
+
         Assert::minLength($value, $minLength);
     }
 
@@ -685,7 +759,8 @@ class AssertTest extends UnitTestCase
     public function test_that_max_length_passes_for_valid_value($value, $maxLength)
     {
         Assert::maxLength($value, $maxLength);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -694,6 +769,7 @@ class AssertTest extends UnitTestCase
     public function test_that_max_length_throws_exception_for_invalid_value($value, $maxLength)
     {
         $this->expectException(AssertionException::class);
+
         Assert::maxLength($value, $maxLength);
     }
 
@@ -703,7 +779,8 @@ class AssertTest extends UnitTestCase
     public function test_that_range_length_passes_for_valid_value($value, $minLength, $maxLength)
     {
         Assert::rangeLength($value, $minLength, $maxLength);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -712,6 +789,7 @@ class AssertTest extends UnitTestCase
     public function test_that_range_length_throws_exception_for_invalid_value($value, $minLength, $maxLength)
     {
         $this->expectException(AssertionException::class);
+
         Assert::rangeLength($value, $minLength, $maxLength);
     }
 
@@ -721,7 +799,8 @@ class AssertTest extends UnitTestCase
     public function test_that_exact_number_passes_for_valid_value($value, $number)
     {
         Assert::exactNumber($value, $number);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -730,6 +809,7 @@ class AssertTest extends UnitTestCase
     public function test_that_exact_number_throws_exception_for_invalid_value($value, $number)
     {
         $this->expectException(AssertionException::class);
+
         Assert::exactNumber($value, $number);
     }
 
@@ -739,7 +819,8 @@ class AssertTest extends UnitTestCase
     public function test_that_min_number_passes_for_valid_value($value, $minNumber)
     {
         Assert::minNumber($value, $minNumber);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -748,6 +829,7 @@ class AssertTest extends UnitTestCase
     public function test_that_min_number_throws_exception_for_invalid_value($value, $minNumber)
     {
         $this->expectException(AssertionException::class);
+
         Assert::minNumber($value, $minNumber);
     }
 
@@ -757,7 +839,8 @@ class AssertTest extends UnitTestCase
     public function test_that_max_number_passes_for_valid_value($value, $maxNumber)
     {
         Assert::maxNumber($value, $maxNumber);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -766,6 +849,7 @@ class AssertTest extends UnitTestCase
     public function test_that_max_number_throws_exception_for_invalid_value($value, $maxNumber)
     {
         $this->expectException(AssertionException::class);
+
         Assert::maxNumber($value, $maxNumber);
     }
 
@@ -775,7 +859,8 @@ class AssertTest extends UnitTestCase
     public function test_that_range_number_passes_for_valid_value($value, $minNumber, $maxNumber)
     {
         Assert::rangeNumber($value, $minNumber, $maxNumber);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -784,6 +869,7 @@ class AssertTest extends UnitTestCase
     public function test_that_range_number_throws_exception_for_invalid_value($value, $minNumber, $maxNumber)
     {
         $this->expectException(AssertionException::class);
+
         Assert::rangeNumber($value, $minNumber, $maxNumber);
     }
 
@@ -793,7 +879,8 @@ class AssertTest extends UnitTestCase
     public function test_that_whole_number_passes_for_valid_value($value)
     {
         Assert::wholeNumber($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -802,6 +889,7 @@ class AssertTest extends UnitTestCase
     public function test_that_whole_number_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::wholeNumber($value);
     }
 
@@ -811,7 +899,8 @@ class AssertTest extends UnitTestCase
     public function test_that_natural_number_passes_for_valid_value($value)
     {
         Assert::naturalNumber($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -820,6 +909,7 @@ class AssertTest extends UnitTestCase
     public function test_that_natural_number_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::naturalNumber($value);
     }
 
@@ -829,7 +919,8 @@ class AssertTest extends UnitTestCase
     public function test_that_int_value_passes_for_valid_value($value)
     {
         Assert::intValue($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -838,6 +929,7 @@ class AssertTest extends UnitTestCase
     public function test_that_int_value_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::intValue($value);
     }
 
@@ -847,7 +939,8 @@ class AssertTest extends UnitTestCase
     public function test_that_exact_count_passes_for_valid_value($value, $count)
     {
         Assert::exactCount($value, $count);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -856,6 +949,7 @@ class AssertTest extends UnitTestCase
     public function test_that_exact_count_throws_exception_for_invalid_value($value, $count)
     {
         $this->expectException(AssertionException::class);
+
         Assert::exactCount($value, $count);
     }
 
@@ -865,7 +959,8 @@ class AssertTest extends UnitTestCase
     public function test_that_min_count_passes_for_valid_value($value, $minCount)
     {
         Assert::minCount($value, $minCount);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -874,6 +969,7 @@ class AssertTest extends UnitTestCase
     public function test_that_min_count_throws_exception_for_invalid_value($value, $minCount)
     {
         $this->expectException(AssertionException::class);
+
         Assert::minCount($value, $minCount);
     }
 
@@ -883,7 +979,8 @@ class AssertTest extends UnitTestCase
     public function test_that_max_count_passes_for_valid_value($value, $maxCount)
     {
         Assert::maxCount($value, $maxCount);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -892,6 +989,7 @@ class AssertTest extends UnitTestCase
     public function test_that_max_count_throws_exception_for_invalid_value($value, $maxCount)
     {
         $this->expectException(AssertionException::class);
+
         Assert::maxCount($value, $maxCount);
     }
 
@@ -901,7 +999,8 @@ class AssertTest extends UnitTestCase
     public function test_that_range_count_passes_for_valid_value($value, $minCount, $maxCount)
     {
         Assert::rangeCount($value, $minCount, $maxCount);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -910,6 +1009,7 @@ class AssertTest extends UnitTestCase
     public function test_that_range_count_throws_exception_for_invalid_value($value, $minCount, $maxCount)
     {
         $this->expectException(AssertionException::class);
+
         Assert::rangeCount($value, $minCount, $maxCount);
     }
 
@@ -919,7 +1019,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_one_of_passes_for_valid_value($value, $choices)
     {
         Assert::isOneOf($value, $choices);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -928,6 +1029,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_one_of_throws_exception_for_invalid_value($value, $choices)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isOneOf($value, $choices);
     }
 
@@ -937,7 +1039,8 @@ class AssertTest extends UnitTestCase
     public function test_that_key_isset_passes_for_valid_value($value, $key)
     {
         Assert::keyIsset($value, $key);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -946,6 +1049,7 @@ class AssertTest extends UnitTestCase
     public function test_that_key_isset_throws_exception_for_invalid_value($value, $key)
     {
         $this->expectException(AssertionException::class);
+
         Assert::keyIsset($value, $key);
     }
 
@@ -955,7 +1059,8 @@ class AssertTest extends UnitTestCase
     public function test_that_key_not_empty_passes_for_valid_value($value, $key)
     {
         Assert::keyNotEmpty($value, $key);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -964,6 +1069,7 @@ class AssertTest extends UnitTestCase
     public function test_that_key_not_empty_throws_exception_for_invalid_value($value, $key)
     {
         $this->expectException(AssertionException::class);
+
         Assert::keyNotEmpty($value, $key);
     }
 
@@ -973,7 +1079,8 @@ class AssertTest extends UnitTestCase
     public function test_that_are_equal_passes_for_valid_value($value1, $value2)
     {
         Assert::areEqual($value1, $value2);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -982,6 +1089,7 @@ class AssertTest extends UnitTestCase
     public function test_that_are_equal_throws_exception_for_invalid_value($value1, $value2)
     {
         $this->expectException(AssertionException::class);
+
         Assert::areEqual($value1, $value2);
     }
 
@@ -991,7 +1099,8 @@ class AssertTest extends UnitTestCase
     public function test_that_are_not_equal_passes_for_valid_value($value1, $value2)
     {
         Assert::areNotEqual($value1, $value2);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1000,6 +1109,7 @@ class AssertTest extends UnitTestCase
     public function test_that_are_not_equal_throws_exception_for_invalid_value($value1, $value2)
     {
         $this->expectException(AssertionException::class);
+
         Assert::areNotEqual($value1, $value2);
     }
 
@@ -1009,7 +1119,8 @@ class AssertTest extends UnitTestCase
     public function test_that_are_same_passes_for_valid_value($value1, $value2)
     {
         Assert::areSame($value1, $value2);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1018,6 +1129,7 @@ class AssertTest extends UnitTestCase
     public function test_that_are_same_throws_exception_for_invalid_value($value1, $value2)
     {
         $this->expectException(AssertionException::class);
+
         Assert::areSame($value1, $value2);
     }
 
@@ -1027,7 +1139,8 @@ class AssertTest extends UnitTestCase
     public function test_that_are_not_same_passes_for_valid_value($value1, $value2)
     {
         Assert::areNotSame($value1, $value2);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1036,6 +1149,7 @@ class AssertTest extends UnitTestCase
     public function test_that_are_not_same_throws_exception_for_invalid_value($value1, $value2)
     {
         $this->expectException(AssertionException::class);
+
         Assert::areNotSame($value1, $value2);
     }
 
@@ -1045,7 +1159,8 @@ class AssertTest extends UnitTestCase
     public function test_that_are_same_type_passes_for_valid_value($value1, $value2)
     {
         Assert::areSameType($value1, $value2);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1054,6 +1169,7 @@ class AssertTest extends UnitTestCase
     public function test_that_are_same_type_throws_exception_for_invalid_value($value1, $value2)
     {
         $this->expectException(AssertionException::class);
+
         Assert::areSameType($value1, $value2);
     }
 
@@ -1063,7 +1179,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_type_passes_for_valid_value($value, $type)
     {
         Assert::isType($value, $type);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1072,6 +1189,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_type_throws_exception_for_invalid_value($value, $type)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isType($value, $type);
     }
 
@@ -1081,7 +1199,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_list_of_passes_for_valid_value($value, $type)
     {
         Assert::isListOf($value, $type);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1090,6 +1209,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_list_of_throws_exception_for_invalid_value($value, $type)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isListOf($value, $type);
     }
 
@@ -1099,7 +1219,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_string_castable_passes_for_valid_value($value)
     {
         Assert::isStringCastable($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1108,6 +1229,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_string_castable_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isStringCastable($value);
     }
 
@@ -1117,7 +1239,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_json_encodable_passes_for_valid_value($value)
     {
         Assert::isJsonEncodable($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1126,6 +1249,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_json_encodable_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isJsonEncodable($value);
     }
 
@@ -1135,7 +1259,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_traversable_passes_for_valid_value($value)
     {
         Assert::isTraversable($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1144,6 +1269,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_traversable_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isTraversable($value);
     }
 
@@ -1153,7 +1279,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_countable_passes_for_valid_value($value)
     {
         Assert::isCountable($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1162,6 +1289,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_countable_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isCountable($value);
     }
 
@@ -1171,7 +1299,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_array_accessible_passes_for_valid_value($value)
     {
         Assert::isArrayAccessible($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1180,6 +1309,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_array_accessible_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isArrayAccessible($value);
     }
 
@@ -1189,7 +1319,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_comparable_passes_for_valid_value($value)
     {
         Assert::isComparable($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1198,6 +1329,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_comparable_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isComparable($value);
     }
 
@@ -1207,7 +1339,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_equatable_passes_for_valid_value($value)
     {
         Assert::isEquatable($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1216,6 +1349,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_equatable_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isEquatable($value);
     }
 
@@ -1225,7 +1359,8 @@ class AssertTest extends UnitTestCase
     public function test_that_implements_interface_passes_for_valid_value($value, $interface)
     {
         Assert::implementsInterface($value, $interface);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1234,6 +1369,7 @@ class AssertTest extends UnitTestCase
     public function test_that_implements_interface_throws_exception_for_invalid_value($value, $interface)
     {
         $this->expectException(AssertionException::class);
+
         Assert::implementsInterface($value, $interface);
     }
 
@@ -1243,7 +1379,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_instance_of_passes_for_valid_value($value, $className)
     {
         Assert::isInstanceOf($value, $className);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1252,6 +1389,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_instance_of_throws_exception_for_invalid_value($value, $className)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isInstanceOf($value, $className);
     }
 
@@ -1261,7 +1399,8 @@ class AssertTest extends UnitTestCase
     public function test_that_is_subclass_of_passes_for_valid_value($value, $className)
     {
         Assert::isSubclassOf($value, $className);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1270,6 +1409,7 @@ class AssertTest extends UnitTestCase
     public function test_that_is_subclass_of_throws_exception_for_invalid_value($value, $className)
     {
         $this->expectException(AssertionException::class);
+
         Assert::isSubclassOf($value, $className);
     }
 
@@ -1279,7 +1419,8 @@ class AssertTest extends UnitTestCase
     public function test_that_class_exists_passes_for_valid_value($value)
     {
         Assert::classExists($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1288,6 +1429,7 @@ class AssertTest extends UnitTestCase
     public function test_that_class_exists_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::classExists($value);
     }
 
@@ -1297,7 +1439,8 @@ class AssertTest extends UnitTestCase
     public function test_that_interface_exists_passes_for_valid_value($value)
     {
         Assert::interfaceExists($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1306,6 +1449,7 @@ class AssertTest extends UnitTestCase
     public function test_that_interface_exists_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         Assert::interfaceExists($value);
     }
 
@@ -1315,7 +1459,8 @@ class AssertTest extends UnitTestCase
     public function test_that_method_exists_passes_for_valid_value($value, $object)
     {
         Assert::methodExists($value, $object);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1324,6 +1469,7 @@ class AssertTest extends UnitTestCase
     public function test_that_method_exists_throws_exception_for_invalid_value($value, $object)
     {
         $this->expectException(AssertionException::class);
+
         Assert::methodExists($value, $object);
     }
 
@@ -1333,8 +1479,10 @@ class AssertTest extends UnitTestCase
     public function test_that_is_path_passes_for_valid_value($value)
     {
         $this->createFilesystem();
+
         Assert::isPath($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1343,7 +1491,9 @@ class AssertTest extends UnitTestCase
     public function test_that_is_path_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         $this->createFilesystem();
+
         Assert::isPath($value);
     }
 
@@ -1353,8 +1503,10 @@ class AssertTest extends UnitTestCase
     public function test_that_is_file_passes_for_valid_value($value)
     {
         $this->createFilesystem();
+
         Assert::isFile($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1363,7 +1515,9 @@ class AssertTest extends UnitTestCase
     public function test_that_is_file_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         $this->createFilesystem();
+
         Assert::isFile($value);
     }
 
@@ -1373,8 +1527,10 @@ class AssertTest extends UnitTestCase
     public function test_that_is_dir_passes_for_valid_value($value)
     {
         $this->createFilesystem();
+
         Assert::isDir($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1383,7 +1539,9 @@ class AssertTest extends UnitTestCase
     public function test_that_is_dir_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         $this->createFilesystem();
+
         Assert::isDir($value);
     }
 
@@ -1393,8 +1551,10 @@ class AssertTest extends UnitTestCase
     public function test_that_is_readable_passes_for_valid_value($value)
     {
         $this->createFilesystem();
+
         Assert::isReadable($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1403,7 +1563,9 @@ class AssertTest extends UnitTestCase
     public function test_that_is_readable_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         $this->createFilesystem();
+
         Assert::isReadable($value);
     }
 
@@ -1413,8 +1575,10 @@ class AssertTest extends UnitTestCase
     public function test_that_is_writable_passes_for_valid_value($value)
     {
         $this->createFilesystem();
+
         Assert::isWritable($value);
-        $this->assertTrue(true);
+
+        static::assertTrue(true);
     }
 
     /**
@@ -1423,7 +1587,9 @@ class AssertTest extends UnitTestCase
     public function test_that_is_writable_throws_exception_for_invalid_value($value)
     {
         $this->expectException(AssertionException::class);
+
         $this->createFilesystem();
+
         Assert::isWritable($value);
     }
 }

@@ -3,11 +3,12 @@
 namespace Novuso\System\Collection;
 
 use IteratorIterator;
-use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Collection\Type\Deque;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Utility\Assert;
 use SplDoublyLinkedList;
+use Traversable;
 
 /**
  * Class LinkedDeque
@@ -16,12 +17,7 @@ final class LinkedDeque implements Deque
 {
     use ItemTypeMethods;
 
-    /**
-     * Linked list
-     *
-     * @var SplDoublyLinkedList
-     */
-    protected $list;
+    protected SplDoublyLinkedList $list;
 
     /**
      * Constructs LinkedDeque
@@ -31,8 +27,6 @@ final class LinkedDeque implements Deque
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
      */
     public function __construct(?string $itemType = null)
     {
@@ -43,25 +37,15 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * Creates collection of a specific item type
-     *
-     * If a type is not provided, the item type is dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
-     *
-     * @return LinkedDeque
+     * @inheritDoc
      */
-    public static function of(?string $itemType = null): LinkedDeque
+    public static function of(?string $itemType = null): static
     {
         return new static($itemType);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function isEmpty(): bool
     {
@@ -69,7 +53,7 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count(): int
     {
@@ -77,7 +61,7 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function addFirst($item): void
     {
@@ -86,7 +70,7 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function addLast($item): void
     {
@@ -95,9 +79,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function removeFirst()
+    public function removeFirst(): mixed
     {
         if ($this->list->isEmpty()) {
             throw new UnderflowException('Deque underflow');
@@ -107,9 +91,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function removeLast()
+    public function removeLast(): mixed
     {
         if ($this->list->isEmpty()) {
             throw new UnderflowException('Deque underflow');
@@ -119,9 +103,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function first()
+    public function first(): mixed
     {
         if ($this->list->isEmpty()) {
             throw new UnderflowException('Deque underflow');
@@ -131,9 +115,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function last()
+    public function last(): mixed
     {
         if ($this->list->isEmpty()) {
             throw new UnderflowException('Deque underflow');
@@ -143,7 +127,7 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function each(callable $callback): void
     {
@@ -153,9 +137,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function map(callable $callback, ?string $itemType = null)
+    public function map(callable $callback, ?string $itemType = null): static
     {
         $deque = static::of($itemType);
 
@@ -167,9 +151,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function max(?callable $callback = null)
+    public function max(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $maxItem = null;
@@ -192,9 +176,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function min(?callable $callback = null)
+    public function min(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $minItem = null;
@@ -217,9 +201,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, mixed $initial = null): mixed
     {
         $accumulator = $initial;
 
@@ -231,9 +215,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function sum(?callable $callback = null)
+    public function sum(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -251,9 +235,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function average(?callable $callback = null)
+    public function average(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -265,9 +249,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function find(callable $predicate)
+    public function find(callable $predicate): mixed
     {
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
@@ -279,9 +263,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function filter(callable $predicate)
+    public function filter(callable $predicate): static
     {
         $deque = static::of($this->itemType());
 
@@ -295,9 +279,9 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reject(callable $predicate)
+    public function reject(callable $predicate): static
     {
         $deque = static::of($this->itemType());
 
@@ -311,7 +295,7 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function any(callable $predicate): bool
     {
@@ -325,7 +309,7 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function every(callable $predicate): bool
     {
@@ -339,7 +323,7 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function partition(callable $predicate): array
     {
@@ -358,15 +342,15 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new IteratorIterator($this->list);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toArray(): array
     {
@@ -380,7 +364,7 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
     {
@@ -388,7 +372,7 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
@@ -396,7 +380,7 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toString(): string
     {
@@ -404,7 +388,7 @@ final class LinkedDeque implements Deque
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function __toString(): string
     {
@@ -413,10 +397,8 @@ final class LinkedDeque implements Deque
 
     /**
      * Handles deep cloning
-     *
-     * @return void
      */
-    public function __clone()
+    public function __clone(): void
     {
         $list = clone $this->list;
         $this->list = $list;

@@ -18,11 +18,7 @@ interface Comparable
      * this instance is less than the passed value, and return 1 if this
      * instance is greater than the passed value.
      *
-     * @param mixed $object The object
-     *
-     * @return int
-     *
-     * @throws AssertionException When the object types are not compatible
+     * @throws AssertionException When the object type is not compatible
      */
-    public function compareTo($object): int;
+    public function compareTo(mixed $object): int;
 }

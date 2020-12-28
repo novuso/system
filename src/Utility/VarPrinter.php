@@ -4,6 +4,7 @@ namespace Novuso\System\Utility;
 
 use Closure;
 use DateTimeInterface;
+use Stringable;
 use Throwable;
 
 /**
@@ -13,12 +14,8 @@ final class VarPrinter
 {
     /**
      * Reads a string representation from a value
-     *
-     * @param mixed $value The value
-     *
-     * @return string
      */
-    public static function toString($value): string
+    public static function toString(mixed $value): string
     {
         if ($value === null) {
             return 'NULL';
@@ -32,6 +29,14 @@ final class VarPrinter
             return 'FALSE';
         }
 
+        if (is_resource($value)) {
+            return sprintf(
+                'Resource(%d:%s)',
+                get_resource_id($value),
+                get_resource_type($value)
+            );
+        }
+
         if (is_object($value)) {
             return static::readObject($value);
         }
@@ -40,21 +45,13 @@ final class VarPrinter
             return static::readArray($value);
         }
 
-        if (is_resource($value)) {
-            return static::readResource($value);
-        }
-
         return (string) $value;
     }
 
     /**
      * Reads a string representation from an object
-     *
-     * @param object $object The object
-     *
-     * @return string
      */
-    protected static function readObject($object): string
+    protected static function readObject(object $object): string
     {
         if ($object instanceof Closure) {
             return 'Function';
@@ -77,7 +74,7 @@ final class VarPrinter
             return (string) $object->toString();
         }
 
-        if (method_exists($object, '__toString')) {
+        if ($object instanceof Stringable) {
             return (string) $object;
         }
 
@@ -86,10 +83,6 @@ final class VarPrinter
 
     /**
      * Reads a string representation from an array
-     *
-     * @param array $array The array
-     *
-     * @return string
      */
     protected static function readArray(array $array): string
     {
@@ -100,17 +93,5 @@ final class VarPrinter
         }
 
         return sprintf('Array(%s)', implode(', ', $data));
-    }
-
-    /**
-     * Reads a string representation from a resource
-     *
-     * @param resource $resource The resource
-     *
-     * @return string
-     */
-    protected static function readResource($resource): string
-    {
-        return sprintf('Resource(%s)', get_resource_type($resource));
     }
 }

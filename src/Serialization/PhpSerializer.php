@@ -11,7 +11,7 @@ use Novuso\System\Utility\ClassName;
 final class PhpSerializer implements Serializer
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function deserialize(string $state): Serializable
     {
@@ -32,7 +32,7 @@ final class PhpSerializer implements Serializer
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function serialize(Serializable $object): string
     {

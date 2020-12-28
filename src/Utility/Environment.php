@@ -9,13 +9,8 @@ final class Environment
 {
     /**
      * Retrieves the value of an environment variable
-     *
-     * @param string $key     The environment key
-     * @param mixed  $default The default value
-     *
-     * @return mixed
      */
-    public static function get(string $key, $default = null)
+    public static function get(string $key, string|bool|null $default = null): string|bool|null
     {
         $value = getenv($key);
 

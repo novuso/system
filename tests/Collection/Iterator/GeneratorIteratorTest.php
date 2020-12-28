@@ -4,7 +4,7 @@ namespace Novuso\System\Test\Collection\Iterator;
 
 use Exception;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
-use Novuso\System\Exception\MethodCallException;
+use Novuso\System\Exception\DomainException;
 use Novuso\System\Test\TestCase\UnitTestCase;
 
 /**
@@ -25,7 +25,7 @@ class GeneratorIteratorTest extends UnitTestCase
             $count++;
         }
 
-        $this->assertFalse($iterator->valid());
+        static::assertFalse($iterator->valid());
 
         foreach ($iterator as $key => $value) {
             $count++;
@@ -40,7 +40,7 @@ class GeneratorIteratorTest extends UnitTestCase
             }
         });
 
-        $this->assertTrue($iterator->valid());
+        static::assertTrue($iterator->valid());
     }
 
     public function test_that_current_returns_first_yielded_value()
@@ -51,7 +51,7 @@ class GeneratorIteratorTest extends UnitTestCase
             }
         });
 
-        $this->assertSame(0, $iterator->current());
+        static::assertSame(0, $iterator->current());
     }
 
     public function test_that_key_returns_first_yielded_key()
@@ -62,7 +62,7 @@ class GeneratorIteratorTest extends UnitTestCase
             }
         });
 
-        $this->assertSame(0, $iterator->key());
+        static::assertSame(0, $iterator->key());
     }
 
     public function test_that_next_advances_to_next_position()
@@ -75,7 +75,7 @@ class GeneratorIteratorTest extends UnitTestCase
 
         $iterator->next();
 
-        $this->assertSame(1, $iterator->key());
+        static::assertSame(1, $iterator->key());
     }
 
     public function test_that_send_injects_value_to_generator()
@@ -91,7 +91,7 @@ class GeneratorIteratorTest extends UnitTestCase
         $iterator->send(' ');
         $iterator->send('World');
 
-        $this->assertSame('Hello World', $iterator->current());
+        static::assertSame('Hello World', $iterator->current());
     }
 
     public function test_that_throw_sends_an_exception_into_generator()
@@ -113,17 +113,47 @@ class GeneratorIteratorTest extends UnitTestCase
         $iterator->send(' ');
         $iterator->send('World');
 
-        $this->assertSame('Oops! Hello World', $iterator->current());
+        static::assertSame('Oops! Hello World', $iterator->current());
     }
 
-    public function test_that_it_throws_exception_for_bad_method_call()
+    public function test_that_get_return_returns_expected_value()
     {
-        $this->expectException(MethodCallException::class);
-        $iterator = new GeneratorIterator(function () {
+        $return = 'foo';
+        $iterator = new GeneratorIterator(function () use ($return) {
             for ($i = 0; $i < 10; $i++) {
                 yield $i => $i;
             }
+
+            return $return;
         });
-        $iterator->foo();
+
+        foreach ($iterator as $index => $value) {
+            //
+        }
+
+        $this->assertSame($return, $iterator->getReturn());
+    }
+
+    public function test_that_get_return_throws_exception_when_has_not_returned()
+    {
+        $this->expectException(Exception::class);
+
+        $return = 'foo';
+        $iterator = new GeneratorIterator(function () use ($return) {
+            for ($i = 0; $i < 10; $i++) {
+                yield $i => $i;
+            }
+
+            return $return;
+        });
+
+        $this->assertSame($return, $iterator->getReturn());
+    }
+
+    public function test_that_constructor_throws_exception_when_function_is_not_generator()
+    {
+        $this->expectException(DomainException::class);
+
+        new GeneratorIterator(function () { });
     }
 }
