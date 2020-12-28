@@ -15,28 +15,32 @@ class RedBlackNodeTest extends UnitTestCase
     {
         $monday = TestWeekDay::MONDAY();
         $node = new RedBlackNode($monday, 'Monday', 1, RedBlackNode::RED);
-        $this->assertSame($monday, $node->key());
+
+        static::assertSame($monday, $node->key());
     }
 
     public function test_that_constructor_takes_value_arg()
     {
         $monday = TestWeekDay::MONDAY();
         $node = new RedBlackNode($monday, 'Monday', 1, RedBlackNode::RED);
-        $this->assertSame('Monday', $node->value());
+
+        static::assertSame('Monday', $node->value());
     }
 
     public function test_that_constructor_takes_size_arg()
     {
         $monday = TestWeekDay::MONDAY();
         $node = new RedBlackNode($monday, 'Monday', 1, RedBlackNode::RED);
-        $this->assertSame(1, $node->size());
+
+        static::assertSame(1, $node->size());
     }
 
     public function test_that_constructor_takes_color_arg()
     {
         $monday = TestWeekDay::MONDAY();
         $node = new RedBlackNode($monday, 'Monday', 1, RedBlackNode::RED);
-        $this->assertSame(RedBlackNode::RED, $node->color());
+
+        static::assertSame(RedBlackNode::RED, $node->color());
     }
 
     public function test_that_left_holds_reference_to_left_node()
@@ -46,7 +50,8 @@ class RedBlackNodeTest extends UnitTestCase
         $sunday = TestWeekDay::SUNDAY();
         $left = new RedBlackNode($sunday, 'Sunday', 1, RedBlackNode::RED);
         $node->setLeft($left);
-        $this->assertSame($left, $node->left());
+
+        static::assertSame($left, $node->left());
     }
 
     public function test_that_right_holds_reference_to_right_node()
@@ -56,7 +61,8 @@ class RedBlackNodeTest extends UnitTestCase
         $tuesday = TestWeekDay::TUESDAY();
         $right = new RedBlackNode($tuesday, 'Tuesday', 1, RedBlackNode::RED);
         $node->setRight($right);
-        $this->assertSame($right, $node->right());
+
+        static::assertSame($right, $node->right());
     }
 
     public function test_that_it_allows_key_replacement()
@@ -65,7 +71,8 @@ class RedBlackNodeTest extends UnitTestCase
         $node = new RedBlackNode($monday, 'Monday', 1, RedBlackNode::RED);
         $sunday = TestWeekDay::SUNDAY();
         $node->setKey($sunday);
-        $this->assertSame($sunday, $node->key());
+
+        static::assertSame($sunday, $node->key());
     }
 
     public function test_that_it_allows_value_replacement()
@@ -73,7 +80,8 @@ class RedBlackNodeTest extends UnitTestCase
         $monday = TestWeekDay::MONDAY();
         $node = new RedBlackNode($monday, 'Monday', 1, RedBlackNode::RED);
         $node->setValue('Sunday');
-        $this->assertSame('Sunday', $node->value());
+
+        static::assertSame('Sunday', $node->value());
     }
 
     public function test_that_it_allows_size_replacement()
@@ -81,7 +89,8 @@ class RedBlackNodeTest extends UnitTestCase
         $monday = TestWeekDay::MONDAY();
         $node = new RedBlackNode($monday, 'Monday', 1, RedBlackNode::RED);
         $node->setSize(2);
-        $this->assertSame(2, $node->size());
+
+        static::assertSame(2, $node->size());
     }
 
     public function test_that_it_allows_color_replacement()
@@ -89,7 +98,8 @@ class RedBlackNodeTest extends UnitTestCase
         $monday = TestWeekDay::MONDAY();
         $node = new RedBlackNode($monday, 'Monday', 1, RedBlackNode::RED);
         $node->setColor(RedBlackNode::BLACK);
-        $this->assertSame(RedBlackNode::BLACK, $node->color());
+
+        static::assertSame(RedBlackNode::BLACK, $node->color());
     }
 
     public function test_that_clone_includes_linked_nodes()
@@ -105,6 +115,7 @@ class RedBlackNodeTest extends UnitTestCase
         $copy = clone $node;
         $node->setLeft(null);
         $node->setRight(null);
-        $this->assertTrue($copy->left()->key()->equals($sunday));
+
+        static::assertTrue($copy->left()->key()->equals($sunday));
     }
 }

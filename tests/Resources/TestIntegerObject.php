@@ -3,33 +3,17 @@
 namespace Novuso\System\Test\Resources;
 
 use JsonSerializable;
-use Novuso\System\Exception\TypeException;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Type\Equatable;
 use Novuso\System\Utility\Assert;
 use Novuso\System\Utility\Validate;
-use Serializable;
 
 /**
  * Class TestIntegerObject
  */
-class TestIntegerObject implements Comparable, Equatable, JsonSerializable, Serializable
+class TestIntegerObject implements Comparable, Equatable, JsonSerializable
 {
-    protected $value;
-
-    public function __construct($value)
-    {
-        if (!is_int($value)) {
-            $message = sprintf(
-                '%s expects value to be an integer; received %s',
-                __METHOD__,
-                gettype($value)
-            );
-            throw new TypeException($message);
-        }
-
-        $this->value = $value;
-    }
+    public function __construct(protected int $value) {}
 
     public function value(): int
     {
@@ -46,7 +30,23 @@ class TestIntegerObject implements Comparable, Equatable, JsonSerializable, Seri
         return (string) $this->value;
     }
 
-    public function equals($object): bool
+    public function jsonSerialize(): int
+    {
+        return $this->value;
+    }
+
+    public function compareTo(mixed $object): int
+    {
+        if ($this === $object) {
+            return 0;
+        }
+
+        Assert::areSameType($this, $object);
+
+        return $this->value <=> $object->value;
+    }
+
+    public function equals(mixed $object): bool
     {
         if ($this === $object) {
             return true;
@@ -56,48 +56,11 @@ class TestIntegerObject implements Comparable, Equatable, JsonSerializable, Seri
             return false;
         }
 
-        return $this->value() === $object->value();
-    }
-
-    public function compareTo($object): int
-    {
-        if ($this === $object) {
-            return 0;
-        }
-
-        Assert::areSameType($this, $object);
-
-        $thisVal = $this->value();
-        $thatVal = $object->value();
-
-        if ($thisVal > $thatVal) {
-            return 1;
-        }
-        if ($thisVal < $thatVal) {
-            return -1;
-        }
-
-        return 0;
+        return $this->value === $object->value;
     }
 
     public function hashValue(): string
     {
         return (string) $this->value;
-    }
-
-    public function jsonSerialize(): int
-    {
-        return $this->value;
-    }
-
-    public function serialize(): string
-    {
-        return serialize(['value' => $this->value]);
-    }
-
-    public function unserialize($str)
-    {
-        $data = unserialize($str);
-        $this->__construct($data['value']);
     }
 }

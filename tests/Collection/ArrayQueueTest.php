@@ -15,123 +15,153 @@ class ArrayQueueTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
     {
-        $this->assertTrue(ArrayQueue::of('int')->isEmpty());
+        static::assertTrue(ArrayQueue::of('int')->isEmpty());
     }
 
     public function test_that_adding_items_affects_count()
     {
         $queue = ArrayQueue::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $queue->enqueue($i);
         }
-        $this->assertCount(10, $queue);
+
+        static::assertCount(10, $queue);
     }
 
     public function test_that_dequeue_returns_expected_item()
     {
         $queue = ArrayQueue::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $queue->enqueue($i);
         }
+
         $output = [];
+
         foreach ($items as $i) {
             $output[] = $queue->dequeue();
         }
-        $this->assertSame($items, $output);
+
+        static::assertSame($items, $output);
     }
 
     public function test_that_dequeue_returns_item_with_removal()
     {
         $queue = ArrayQueue::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $queue->enqueue($i);
         }
+
         $queue->dequeue();
-        $this->assertCount(9, $queue);
+
+        static::assertCount(9, $queue);
     }
 
     public function test_that_front_returns_item_without_removal()
     {
         $queue = ArrayQueue::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $queue->enqueue($i);
         }
+
         $queue->front();
-        $this->assertCount(10, $queue);
+
+        static::assertCount(10, $queue);
     }
 
     public function test_that_mixing_add_remove_operations_keeps_order()
     {
         $queue = ArrayQueue::of('int');
         $items = range(0, 99);
+
         foreach ($items as $i) {
             $queue->enqueue($i);
             if ($i % 2 === 0) {
                 $queue->dequeue();
             }
         }
+
         $remaining = [];
+
         for ($i = 0; $i < 50; $i++) {
             $remaining[] = $queue->dequeue();
         }
-        $this->assertSame(range(50, 99), $remaining);
+
+        static::assertSame(range(50, 99), $remaining);
     }
 
     public function test_that_it_is_traversable()
     {
         $queue = ArrayQueue::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $queue->enqueue($i);
         }
+
         $output = [];
+
         foreach ($queue as $item) {
             $output[] = $item;
         }
-        $this->assertSame($items, $output);
+
+        static::assertSame($items, $output);
     }
 
     public function test_that_clone_include_nested_collection()
     {
         $queue = ArrayQueue::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $queue->enqueue($i);
         }
+
         $copy = clone $queue;
+
         while (!$queue->isEmpty()) {
             $queue->dequeue();
         }
-        $this->assertSame($items, $copy->toArray());
+
+        static::assertSame($items, $copy->toArray());
     }
 
     public function test_that_to_array_returns_expected_output()
     {
         $queue = ArrayQueue::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $queue->enqueue($i);
         }
-        $this->assertSame($items, $queue->toArray());
+
+        static::assertSame($items, $queue->toArray());
     }
 
     public function test_iteration_beyond_items_returns_null()
     {
         $queue = ArrayQueue::of('int');
         $items = range(0, 9);
+
         foreach ($items as $i) {
             $queue->enqueue($i);
         }
+
         $output = [];
         $iterator = $queue->getIterator();
+
         foreach ($iterator as $index => $item) {
             $output[] = $item;
         }
-        $this->assertTrue(
+
+        static::assertTrue(
             $iterator->current() === null
             && $iterator->key() === null
         );
@@ -143,15 +173,19 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
+
         $output = ArrayQueue::of('string');
         $queue->each(function ($item) use ($output) {
             $output->enqueue($item);
         });
+
         $data = [];
+
         foreach ($output as $item) {
             $data[] = $item;
         }
-        $this->assertSame(['foo', 'bar', 'baz'], $data);
+
+        static::assertSame(['foo', 'bar', 'baz'], $data);
     }
 
     public function test_that_map_returns_expected_queue()
@@ -160,14 +194,18 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
+
         $output = $queue->map(function ($item) {
             return strlen($item);
         }, 'int');
+
         $data = [];
+
         foreach ($output as $item) {
             $data[] = $item;
         }
-        $this->assertSame([3, 3, 3], $data);
+
+        static::assertSame([3, 3, 3], $data);
     }
 
     public function test_that_max_returns_expected_value()
@@ -176,7 +214,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue(5356);
         $queue->enqueue(7489);
         $queue->enqueue(8936);
-        $this->assertSame(8936, $queue->max());
+
+        static::assertSame(8936, $queue->max());
     }
 
     public function test_that_max_returns_expected_value_with_callback()
@@ -185,7 +224,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue(['age' => 19]);
         $queue->enqueue(['age' => 32]);
         $queue->enqueue(['age' => 26]);
-        $this->assertSame(['age' => 32], $queue->max(function (array $data) {
+
+        static::assertSame(['age' => 32], $queue->max(function (array $data) {
             return $data['age'];
         }));
     }
@@ -196,7 +236,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue(5356);
         $queue->enqueue(7489);
         $queue->enqueue(8936);
-        $this->assertSame(5356, $queue->min());
+
+        static::assertSame(5356, $queue->min());
     }
 
     public function test_that_min_returns_expected_value_with_callback()
@@ -205,7 +246,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue(['age' => 19]);
         $queue->enqueue(['age' => 32]);
         $queue->enqueue(['age' => 26]);
-        $this->assertSame(['age' => 19], $queue->min(function (array $data) {
+
+        static::assertSame(['age' => 19], $queue->min(function (array $data) {
             return $data['age'];
         }));
     }
@@ -216,12 +258,13 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue(1);
         $queue->enqueue(2);
         $queue->enqueue(3);
-        $this->assertSame(6, $queue->sum());
+
+        static::assertSame(6, $queue->sum());
     }
 
     public function test_that_sum_returns_null_with_empty_queue()
     {
-        $this->assertNull(ArrayQueue::of('int')->sum());
+        static::assertNull(ArrayQueue::of('int')->sum());
     }
 
     public function test_that_sum_returns_expected_value_with_callback()
@@ -230,7 +273,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue(['age' => 19]);
         $queue->enqueue(['age' => 32]);
         $queue->enqueue(['age' => 26]);
-        $this->assertSame(77, $queue->sum(function (array $data) {
+
+        static::assertSame(77, $queue->sum(function (array $data) {
             return $data['age'];
         }));
     }
@@ -241,12 +285,13 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue(1);
         $queue->enqueue(2);
         $queue->enqueue(3);
-        $this->assertEquals(2.0, $queue->average());
+
+        static::assertEquals(2.0, $queue->average());
     }
 
     public function test_that_average_returns_null_with_empty_queue()
     {
-        $this->assertNull(ArrayQueue::of('int')->average());
+        static::assertNull(ArrayQueue::of('int')->average());
     }
 
     public function test_that_average_returns_expected_value_with_callback()
@@ -255,7 +300,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue(['age' => 18]);
         $queue->enqueue(['age' => 31]);
         $queue->enqueue(['age' => 26]);
-        $this->assertEquals(25.0, $queue->average(function (array $data) {
+
+        static::assertEquals(25.0, $queue->average(function (array $data) {
             return $data['age'];
         }));
     }
@@ -266,10 +312,12 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
+
         $item = $queue->find(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
-        $this->assertSame('bar', $item);
+
+        static::assertSame('bar', $item);
     }
 
     public function test_that_find_returns_null_when_item_not_found()
@@ -278,10 +326,12 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
+
         $item = $queue->find(function ($item) {
             return substr($item, 0, 1) === 'c';
         });
-        $this->assertNull($item);
+
+        static::assertNull($item);
     }
 
     public function test_that_filter_returns_expected_queue()
@@ -290,14 +340,18 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
+
         $output = $queue->filter(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
+
         $data = [];
+
         foreach ($output as $item) {
             $data[] = $item;
         }
-        $this->assertSame(['bar', 'baz'], $data);
+
+        static::assertSame(['bar', 'baz'], $data);
     }
 
     public function test_that_reject_returns_expected_queue()
@@ -306,14 +360,18 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
+
         $output = $queue->reject(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
+
         $data = [];
+
         foreach ($output as $item) {
             $data[] = $item;
         }
-        $this->assertSame(['foo'], $data);
+
+        static::assertSame(['foo'], $data);
     }
 
     public function test_that_any_returns_true_when_an_item_passes_test()
@@ -322,7 +380,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
-        $this->assertTrue($queue->any(function ($item) {
+
+        static::assertTrue($queue->any(function ($item) {
             return $item === 'foo';
         }));
     }
@@ -333,7 +392,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
-        $this->assertFalse($queue->any(function ($item) {
+
+        static::assertFalse($queue->any(function ($item) {
             return $item === 'buz';
         }));
     }
@@ -344,7 +404,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
-        $this->assertTrue($queue->every(function ($item) {
+
+        static::assertTrue($queue->every(function ($item) {
             return strlen($item) === 3;
         }));
     }
@@ -355,7 +416,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
-        $this->assertFalse($queue->every(function ($item) {
+
+        static::assertFalse($queue->every(function ($item) {
             return substr($item, 0, 1) === 'b';
         }));
     }
@@ -366,18 +428,24 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
+
         $parts = $queue->partition(function ($item) {
             return substr($item, 0, 1) === 'b';
         });
+
         $data1 = [];
+
         foreach ($parts[0] as $item) {
             $data1[] = $item;
         }
+
         $data2 = [];
+
         foreach ($parts[1] as $item) {
             $data2[] = $item;
         }
-        $this->assertTrue($data1 === ['bar', 'baz'] && $data2 === ['foo']);
+
+        static::assertTrue($data1 === ['bar', 'baz'] && $data2 === ['foo']);
     }
 
     public function test_that_to_json_returns_expected_value()
@@ -386,7 +454,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
-        $this->assertSame('["foo","bar","baz"]', $queue->toJson());
+
+        static::assertSame('["foo","bar","baz"]', $queue->toJson());
     }
 
     public function test_that_it_is_json_encodable()
@@ -395,7 +464,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
-        $this->assertSame('["foo","bar","baz"]', json_encode($queue));
+
+        static::assertSame('["foo","bar","baz"]', json_encode($queue));
     }
 
     public function test_that_to_string_returns_expected_value()
@@ -404,7 +474,8 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
-        $this->assertSame('["foo","bar","baz"]', $queue->toString());
+
+        static::assertSame('["foo","bar","baz"]', $queue->toString());
     }
 
     public function test_that_string_cast_returns_expected_value()
@@ -413,24 +484,28 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue('foo');
         $queue->enqueue('bar');
         $queue->enqueue('baz');
-        $this->assertSame('["foo","bar","baz"]', (string) $queue);
+
+        static::assertSame('["foo","bar","baz"]', (string) $queue);
     }
 
     public function test_that_enqueue_triggers_assert_error_for_invalid_item_type()
     {
         $this->expectException(AssertionException::class);
+
         ArrayQueue::of('int')->enqueue('string');
     }
 
     public function test_that_dequeue_throws_exception_when_empty()
     {
         $this->expectException(UnderflowException::class);
+
         ArrayQueue::of('int')->dequeue();
     }
 
     public function test_that_front_throws_exception_when_empty()
     {
         $this->expectException(UnderflowException::class);
+
         ArrayQueue::of('int')->front();
     }
 }

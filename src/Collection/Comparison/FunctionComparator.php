@@ -2,6 +2,7 @@
 
 namespace Novuso\System\Collection\Comparison;
 
+use Closure;
 use Novuso\System\Type\Comparator;
 
 /**
@@ -9,27 +10,20 @@ use Novuso\System\Type\Comparator;
  */
 final class FunctionComparator implements Comparator
 {
-    /**
-     * Callback function
-     *
-     * @var callable
-     */
-    protected $function;
+    protected Closure $function;
 
     /**
      * Constructs FunctionComparator
-     *
-     * @param callable $function The callback function
      */
     public function __construct(callable $function)
     {
-        $this->function = $function;
+        $this->function = Closure::fromCallable($function);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function compare($object1, $object2): int
+    public function compare(mixed $object1, mixed $object2): int
     {
         return (int) call_user_func($this->function, $object1, $object2);
     }

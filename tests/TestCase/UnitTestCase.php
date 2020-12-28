@@ -16,8 +16,6 @@ abstract class UnitTestCase extends TestCase
 
     /**
      * Handles clean-up after tests
-     *
-     * @return void
      */
     protected function tearDown(): void
     {

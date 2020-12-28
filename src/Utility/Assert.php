@@ -12,13 +12,9 @@ final class Assert
     /**
      * Asserts that a value is scalar
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isScalar($value): void
+    public static function isScalar(mixed $value): void
     {
         assert(
             Validate::isScalar($value),
@@ -29,13 +25,9 @@ final class Assert
     /**
      * Asserts that a value is a boolean
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isBool($value): void
+    public static function isBool(mixed $value): void
     {
         assert(
             Validate::isBool($value),
@@ -46,13 +38,9 @@ final class Assert
     /**
      * Asserts that a value is a float
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isFloat($value): void
+    public static function isFloat(mixed $value): void
     {
         assert(
             Validate::isFloat($value),
@@ -63,13 +51,9 @@ final class Assert
     /**
      * Asserts that a value is an integer
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isInt($value): void
+    public static function isInt(mixed $value): void
     {
         assert(
             Validate::isInt($value),
@@ -80,13 +64,9 @@ final class Assert
     /**
      * Asserts that a value is a string
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isString($value): void
+    public static function isString(mixed $value): void
     {
         assert(
             Validate::isString($value),
@@ -97,13 +77,9 @@ final class Assert
     /**
      * Asserts that a value is an array
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isArray($value): void
+    public static function isArray(mixed $value): void
     {
         assert(
             Validate::isArray($value),
@@ -114,13 +90,9 @@ final class Assert
     /**
      * Asserts that a value is an object
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isObject($value): void
+    public static function isObject(mixed $value): void
     {
         assert(
             Validate::isObject($value),
@@ -131,13 +103,9 @@ final class Assert
     /**
      * Asserts that a value is callable
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isCallable($value): void
+    public static function isCallable(mixed $value): void
     {
         assert(
             Validate::isCallable($value),
@@ -148,13 +116,9 @@ final class Assert
     /**
      * Asserts that a value is null
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isNull($value): void
+    public static function isNull(mixed $value): void
     {
         assert(
             Validate::isNull($value),
@@ -165,13 +129,9 @@ final class Assert
     /**
      * Asserts that a value is not null
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isNotNull($value): void
+    public static function isNotNull(mixed $value): void
     {
         assert(
             Validate::isNotNull($value),
@@ -182,13 +142,9 @@ final class Assert
     /**
      * Asserts that a value is true
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isTrue($value): void
+    public static function isTrue(mixed $value): void
     {
         assert(
             Validate::isTrue($value),
@@ -199,13 +155,9 @@ final class Assert
     /**
      * Asserts that a value is false
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isFalse($value): void
+    public static function isFalse(mixed $value): void
     {
         assert(
             Validate::isFalse($value),
@@ -216,13 +168,9 @@ final class Assert
     /**
      * Asserts that a value is empty
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isEmpty($value): void
+    public static function isEmpty(mixed $value): void
     {
         assert(
             Validate::isEmpty($value),
@@ -233,13 +181,9 @@ final class Assert
     /**
      * Asserts that a value is not empty
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isNotEmpty($value): void
+    public static function isNotEmpty(mixed $value): void
     {
         assert(
             Validate::isNotEmpty($value),
@@ -250,13 +194,9 @@ final class Assert
     /**
      * Asserts that a value is blank
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isBlank($value): void
+    public static function isBlank(mixed $value): void
     {
         assert(
             Validate::isBlank($value),
@@ -267,13 +207,9 @@ final class Assert
     /**
      * Asserts that a value is not blank
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isNotBlank($value): void
+    public static function isNotBlank(mixed $value): void
     {
         assert(
             Validate::isNotBlank($value),
@@ -284,13 +220,9 @@ final class Assert
     /**
      * Asserts that a value is alphabetic
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isAlpha($value): void
+    public static function isAlpha(mixed $value): void
     {
         assert(
             Validate::isAlpha($value),
@@ -301,13 +233,9 @@ final class Assert
     /**
      * Asserts that a value is alphanumeric
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isAlnum($value): void
+    public static function isAlnum(mixed $value): void
     {
         assert(
             Validate::isAlnum($value),
@@ -320,13 +248,9 @@ final class Assert
      *
      * NOTE: dashes may include hyphens and underscores.
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isAlphaDash($value): void
+    public static function isAlphaDash(mixed $value): void
     {
         assert(
             Validate::isAlphaDash($value),
@@ -339,13 +263,9 @@ final class Assert
      *
      * NOTE: dashes may include hyphens and underscores.
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isAlnumDash($value): void
+    public static function isAlnumDash(mixed $value): void
     {
         assert(
             Validate::isAlnumDash($value),
@@ -356,13 +276,9 @@ final class Assert
     /**
      * Asserts that a value contains only digits
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isDigits($value): void
+    public static function isDigits(mixed $value): void
     {
         assert(
             Validate::isDigits($value),
@@ -373,13 +289,9 @@ final class Assert
     /**
      * Asserts that a value is numeric
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isNumeric($value): void
+    public static function isNumeric(mixed $value): void
     {
         assert(
             Validate::isNumeric($value),
@@ -390,13 +302,9 @@ final class Assert
     /**
      * Asserts that a value is an email address
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isEmail($value): void
+    public static function isEmail(mixed $value): void
     {
         assert(
             Validate::isEmail($value),
@@ -407,13 +315,9 @@ final class Assert
     /**
      * Asserts that a value is an IP address
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isIpAddress($value): void
+    public static function isIpAddress(mixed $value): void
     {
         assert(
             Validate::isIpAddress($value),
@@ -424,13 +328,9 @@ final class Assert
     /**
      * Asserts that a value is an IPv4 address
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isIpV4Address($value): void
+    public static function isIpV4Address(mixed $value): void
     {
         assert(
             Validate::isIpV4Address($value),
@@ -441,13 +341,9 @@ final class Assert
     /**
      * Asserts that a value is an IPv6 address
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isIpV6Address($value): void
+    public static function isIpV6Address(mixed $value): void
     {
         assert(
             Validate::isIpV6Address($value),
@@ -458,13 +354,9 @@ final class Assert
     /**
      * Asserts that a value is a URI
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isUri($value): void
+    public static function isUri(mixed $value): void
     {
         assert(
             Validate::isUri($value),
@@ -475,13 +367,9 @@ final class Assert
     /**
      * Asserts that a value is a URN
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isUrn($value): void
+    public static function isUrn(mixed $value): void
     {
         assert(
             Validate::isUrn($value),
@@ -492,13 +380,9 @@ final class Assert
     /**
      * Asserts that a value is a UUID
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isUuid($value): void
+    public static function isUuid(mixed $value): void
     {
         assert(
             Validate::isUuid($value),
@@ -509,13 +393,9 @@ final class Assert
     /**
      * Asserts that a value is a timezone
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isTimezone($value): void
+    public static function isTimezone(mixed $value): void
     {
         assert(
             Validate::isTimezone($value),
@@ -526,13 +406,9 @@ final class Assert
     /**
      * Asserts that a value is a JSON string
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isJson($value): void
+    public static function isJson(mixed $value): void
     {
         assert(
             Validate::isJson($value),
@@ -543,14 +419,9 @@ final class Assert
     /**
      * Asserts that a value matches a regular expression
      *
-     * @param mixed  $value   The value
-     * @param string $pattern The regex pattern
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isMatch($value, string $pattern): void
+    public static function isMatch(mixed $value, string $pattern): void
     {
         assert(
             Validate::isMatch($value, $pattern),
@@ -564,22 +435,15 @@ final class Assert
     /**
      * Asserts that a value contains a search string
      *
-     * @param mixed  $value    The value
-     * @param string $search   The search string
-     * @param string $encoding The string encoding
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function contains($value, string $search, string $encoding = 'UTF-8'): void
+    public static function contains(mixed $value, string $search): void
     {
         assert(
-            Validate::contains($value, $search, $encoding),
+            Validate::contains($value, $search),
             static::error('contains', [
-                'value'    => $value,
-                'search'   => $search,
-                'encoding' => $encoding
+                'value'  => $value,
+                'search' => $search
             ])
         );
     }
@@ -587,22 +451,15 @@ final class Assert
     /**
      * Asserts that a value starts with a search string
      *
-     * @param mixed  $value    The value
-     * @param string $search   The search string
-     * @param string $encoding The string encoding
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function startsWith($value, string $search, string $encoding = 'UTF-8'): void
+    public static function startsWith(mixed $value, string $search): void
     {
         assert(
-            Validate::startsWith($value, $search, $encoding),
+            Validate::startsWith($value, $search),
             static::error('startsWith', [
-                'value'    => $value,
-                'search'   => $search,
-                'encoding' => $encoding
+                'value'  => $value,
+                'search' => $search
             ])
         );
     }
@@ -610,22 +467,15 @@ final class Assert
     /**
      * Asserts that a value ends with a search string
      *
-     * @param mixed  $value    The value
-     * @param string $search   The search string
-     * @param string $encoding The string encoding
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function endsWith($value, string $search, string $encoding = 'UTF-8'): void
+    public static function endsWith(mixed $value, string $search): void
     {
         assert(
-            Validate::endsWith($value, $search, $encoding),
+            Validate::endsWith($value, $search),
             static::error('endsWith', [
-                'value'    => $value,
-                'search'   => $search,
-                'encoding' => $encoding
+                'value'  => $value,
+                'search' => $search
             ])
         );
     }
@@ -633,15 +483,9 @@ final class Assert
     /**
      * Asserts that a value has an exact string length
      *
-     * @param mixed  $value    The value
-     * @param int    $length   The string length
-     * @param string $encoding The string encoding
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function exactLength($value, int $length, string $encoding = 'UTF-8'): void
+    public static function exactLength(mixed $value, int $length, string $encoding = 'UTF-8'): void
     {
         assert(
             Validate::exactLength($value, $length, $encoding),
@@ -656,15 +500,9 @@ final class Assert
     /**
      * Asserts that a value has a string length greater or equal to a minimum
      *
-     * @param mixed  $value     The value
-     * @param int    $minLength The minimum length
-     * @param string $encoding  The string encoding
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function minLength($value, int $minLength, string $encoding = 'UTF-8'): void
+    public static function minLength(mixed $value, int $minLength, string $encoding = 'UTF-8'): void
     {
         assert(
             Validate::minLength($value, $minLength, $encoding),
@@ -679,15 +517,9 @@ final class Assert
     /**
      * Asserts that a value has a string length less or equal to a maximum
      *
-     * @param mixed  $value     The value
-     * @param int    $maxLength The maximum length
-     * @param string $encoding  The string encoding
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function maxLength($value, int $maxLength, string $encoding = 'UTF-8'): void
+    public static function maxLength(mixed $value, int $maxLength, string $encoding = 'UTF-8'): void
     {
         assert(
             Validate::maxLength($value, $maxLength, $encoding),
@@ -702,16 +534,9 @@ final class Assert
     /**
      * Asserts that a value has a string length within a range
      *
-     * @param mixed  $value     The value
-     * @param int    $minLength The minimum length
-     * @param int    $maxLength The maximum length
-     * @param string $encoding  The string encoding
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function rangeLength($value, int $minLength, int $maxLength, string $encoding = 'UTF-8'): void
+    public static function rangeLength(mixed $value, int $minLength, int $maxLength, string $encoding = 'UTF-8'): void
     {
         assert(
             Validate::rangeLength($value, $minLength, $maxLength, $encoding),
@@ -727,14 +552,9 @@ final class Assert
     /**
      * Asserts that a value matches an exact numeric value
      *
-     * @param mixed     $value  The value
-     * @param int|float $number The numeric value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function exactNumber($value, $number): void
+    public static function exactNumber(mixed $value, int|float $number): void
     {
         assert(
             Validate::exactNumber($value, $number),
@@ -748,14 +568,9 @@ final class Assert
     /**
      * Asserts that a value is greater or equal to a minimum number
      *
-     * @param mixed     $value     The value
-     * @param int|float $minNumber The minimum number
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function minNumber($value, $minNumber): void
+    public static function minNumber(mixed $value, int|float $minNumber): void
     {
         assert(
             Validate::minNumber($value, $minNumber),
@@ -769,14 +584,9 @@ final class Assert
     /**
      * Asserts that a value is less or equal to a maximum number
      *
-     * @param mixed     $value     The value
-     * @param int|float $maxNumber The maximum number
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function maxNumber($value, $maxNumber): void
+    public static function maxNumber(mixed $value, int|float $maxNumber): void
     {
         assert(
             Validate::maxNumber($value, $maxNumber),
@@ -790,15 +600,9 @@ final class Assert
     /**
      * Asserts that a value is within a numeric range
      *
-     * @param mixed     $value     The value
-     * @param int|float $minNumber The minimum number
-     * @param int|float $maxNumber The maximum number
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function rangeNumber($value, $minNumber, $maxNumber): void
+    public static function rangeNumber(mixed $value, int|float $minNumber, int|float $maxNumber): void
     {
         assert(
             Validate::rangeNumber($value, $minNumber, $maxNumber),
@@ -815,13 +619,9 @@ final class Assert
      *
      * A whole number is any integer value greater or equal to zero.
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function wholeNumber($value): void
+    public static function wholeNumber(mixed $value): void
     {
         assert(
             Validate::wholeNumber($value),
@@ -834,13 +634,9 @@ final class Assert
      *
      * A natural number is any integer value greater than zero.
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function naturalNumber($value): void
+    public static function naturalNumber(mixed $value): void
     {
         assert(
             Validate::naturalNumber($value),
@@ -854,13 +650,9 @@ final class Assert
      * Passing values include integers, integer strings, and floating-point
      * numbers with integer values.
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function intValue($value): void
+    public static function intValue(mixed $value): void
     {
         assert(
             Validate::intValue($value),
@@ -871,14 +663,9 @@ final class Assert
     /**
      * Asserts that a value has an exact count
      *
-     * @param mixed $value The value
-     * @param int   $count The count
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function exactCount($value, int $count): void
+    public static function exactCount(mixed $value, int $count): void
     {
         assert(
             Validate::exactCount($value, $count),
@@ -892,14 +679,9 @@ final class Assert
     /**
      * Asserts that a value has a count greater or equal to a minimum
      *
-     * @param mixed $value    The value
-     * @param int   $minCount The minimum count
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function minCount($value, int $minCount): void
+    public static function minCount(mixed $value, int $minCount): void
     {
         assert(
             Validate::minCount($value, $minCount),
@@ -913,14 +695,9 @@ final class Assert
     /**
      * Asserts that a value has a count less or equal to a maximum
      *
-     * @param mixed $value    The value
-     * @param int   $maxCount The maximum count
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function maxCount($value, int $maxCount): void
+    public static function maxCount(mixed $value, int $maxCount): void
     {
         assert(
             Validate::maxCount($value, $maxCount),
@@ -934,15 +711,9 @@ final class Assert
     /**
      * Asserts that a value has a count within a range
      *
-     * @param mixed $value    The value
-     * @param int   $minCount The minimum count
-     * @param int   $maxCount The maximum count
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function rangeCount($value, int $minCount, int $maxCount): void
+    public static function rangeCount(mixed $value, int $minCount, int $maxCount): void
     {
         assert(
             Validate::rangeCount($value, $minCount, $maxCount),
@@ -957,14 +728,9 @@ final class Assert
     /**
      * Asserts that a value is one of a set of choices
      *
-     * @param mixed    $value   The value
-     * @param iterable $choices The choices
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isOneOf($value, iterable $choices): void
+    public static function isOneOf(mixed $value, iterable $choices): void
     {
         assert(
             Validate::isOneOf($value, $choices),
@@ -978,14 +744,9 @@ final class Assert
     /**
      * Asserts that a value is array accessible with a non-null key
      *
-     * @param mixed $value The value
-     * @param mixed $key   The key
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function keyIsset($value, $key): void
+    public static function keyIsset(mixed $value, mixed $key): void
     {
         assert(
             Validate::keyIsset($value, $key),
@@ -999,14 +760,9 @@ final class Assert
     /**
      * Asserts that a value is array accessible with a non-empty key
      *
-     * @param mixed $value The value
-     * @param mixed $key   The key
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function keyNotEmpty($value, $key): void
+    public static function keyNotEmpty(mixed $value, mixed $key): void
     {
         assert(
             Validate::keyNotEmpty($value, $key),
@@ -1020,14 +776,9 @@ final class Assert
     /**
      * Asserts that two values are equal
      *
-     * @param mixed $value1 The first value
-     * @param mixed $value2 The second value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function areEqual($value1, $value2): void
+    public static function areEqual(mixed $value1, mixed $value2): void
     {
         assert(
             Validate::areEqual($value1, $value2),
@@ -1041,14 +792,9 @@ final class Assert
     /**
      * Asserts that two values are not equal
      *
-     * @param mixed $value1 The first value
-     * @param mixed $value2 The second value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function areNotEqual($value1, $value2): void
+    public static function areNotEqual(mixed $value1, mixed $value2): void
     {
         assert(
             Validate::areNotEqual($value1, $value2),
@@ -1062,14 +808,9 @@ final class Assert
     /**
      * Asserts that two values are the same
      *
-     * @param mixed $value1 The first value
-     * @param mixed $value2 The second value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function areSame($value1, $value2): void
+    public static function areSame(mixed $value1, mixed $value2): void
     {
         assert(
             Validate::areSame($value1, $value2),
@@ -1083,14 +824,9 @@ final class Assert
     /**
      * Asserts that two values are not the same
      *
-     * @param mixed $value1 The first value
-     * @param mixed $value2 The second value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function areNotSame($value1, $value2): void
+    public static function areNotSame(mixed $value1, mixed $value2): void
     {
         assert(
             Validate::areNotSame($value1, $value2),
@@ -1104,14 +840,9 @@ final class Assert
     /**
      * Asserts that two values are the same type
      *
-     * @param mixed $value1 The first value
-     * @param mixed $value2 The second value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function areSameType($value1, $value2): void
+    public static function areSameType(mixed $value1, mixed $value2): void
     {
         if (!is_object($value1) || !is_object($value2)) {
             $context = [
@@ -1138,14 +869,9 @@ final class Assert
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      *
-     * @param mixed       $value The value
-     * @param string|null $type  The type or null to accept all types
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isType($value, ?string $type): void
+    public static function isType(mixed $value, ?string $type): void
     {
         assert(
             Validate::isType($value, $type),
@@ -1163,14 +889,9 @@ final class Assert
      * or one of the following type strings:
      * [array, object, bool, int, float, string]
      *
-     * @param mixed       $value The value
-     * @param string|null $type  The type or null to accept all types
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isListOf($value, ?string $type): void
+    public static function isListOf(mixed $value, ?string $type): void
     {
         assert(
             Validate::isListOf($value, $type),
@@ -1184,13 +905,9 @@ final class Assert
     /**
      * Asserts that a value can be cast to a string
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isStringCastable($value): void
+    public static function isStringCastable(mixed $value): void
     {
         assert(
             Validate::isStringCastable($value),
@@ -1201,13 +918,9 @@ final class Assert
     /**
      * Asserts that a value can be JSON encoded
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isJsonEncodable($value): void
+    public static function isJsonEncodable(mixed $value): void
     {
         assert(
             Validate::isJsonEncodable($value),
@@ -1218,13 +931,9 @@ final class Assert
     /**
      * Asserts that a value is traversable
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isTraversable($value): void
+    public static function isTraversable(mixed $value): void
     {
         assert(
             Validate::isTraversable($value),
@@ -1235,13 +944,9 @@ final class Assert
     /**
      * Asserts that a value is countable
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isCountable($value): void
+    public static function isCountable(mixed $value): void
     {
         assert(
             Validate::isCountable($value),
@@ -1252,13 +957,9 @@ final class Assert
     /**
      * Asserts that a value is array accessible
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isArrayAccessible($value): void
+    public static function isArrayAccessible(mixed $value): void
     {
         assert(
             Validate::isArrayAccessible($value),
@@ -1269,13 +970,9 @@ final class Assert
     /**
      * Asserts that a value is a comparable object
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isComparable($value): void
+    public static function isComparable(mixed $value): void
     {
         assert(
             Validate::isComparable($value),
@@ -1286,13 +983,9 @@ final class Assert
     /**
      * Asserts that a value is an equatable object
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isEquatable($value): void
+    public static function isEquatable(mixed $value): void
     {
         assert(
             Validate::isEquatable($value),
@@ -1303,14 +996,9 @@ final class Assert
     /**
      * Asserts that a value implements a given interface
      *
-     * @param mixed  $value     The value
-     * @param string $interface The fully qualified interface name
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function implementsInterface($value, string $interface): void
+    public static function implementsInterface(mixed $value, string $interface): void
     {
         assert(
             Validate::implementsInterface($value, $interface),
@@ -1324,14 +1012,9 @@ final class Assert
     /**
      * Asserts that a value is an instance of a type
      *
-     * @param mixed  $value     The value
-     * @param string $className The fully qualified class or interface name
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isInstanceOf($value, string $className): void
+    public static function isInstanceOf(mixed $value, string $className): void
     {
         assert(
             Validate::isInstanceOf($value, $className),
@@ -1345,14 +1028,9 @@ final class Assert
     /**
      * Asserts that a value is an object or class with a given parent class
      *
-     * @param mixed  $value     The value
-     * @param string $className The fully qualified class name
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isSubclassOf($value, string $className): void
+    public static function isSubclassOf(mixed $value, string $className): void
     {
         assert(
             Validate::isSubclassOf($value, $className),
@@ -1366,13 +1044,9 @@ final class Assert
     /**
      * Asserts that a value is an existing fully qualified class name
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function classExists($value): void
+    public static function classExists(mixed $value): void
     {
         assert(
             Validate::classExists($value),
@@ -1383,13 +1057,9 @@ final class Assert
     /**
      * Asserts that a value is an existing fully qualified interface name
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function interfaceExists($value): void
+    public static function interfaceExists(mixed $value): void
     {
         assert(
             Validate::interfaceExists($value),
@@ -1400,14 +1070,9 @@ final class Assert
     /**
      * Asserts that a value is a method name for an object or class
      *
-     * @param mixed         $value  The value
-     * @param object|string $object The object or fully qualified class name
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function methodExists($value, $object): void
+    public static function methodExists(mixed $value, object|string $object): void
     {
         assert(
             Validate::methodExists($value, $object),
@@ -1421,13 +1086,9 @@ final class Assert
     /**
      * Asserts that a value is an existing file or directory path
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isPath($value): void
+    public static function isPath(mixed $value): void
     {
         assert(
             Validate::isPath($value),
@@ -1438,13 +1099,9 @@ final class Assert
     /**
      * Asserts that a value is an existing file
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isFile($value): void
+    public static function isFile(mixed $value): void
     {
         assert(
             Validate::isFile($value),
@@ -1455,13 +1112,9 @@ final class Assert
     /**
      * Asserts that a value is an existing directory
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isDir($value): void
+    public static function isDir(mixed $value): void
     {
         assert(
             Validate::isDir($value),
@@ -1472,13 +1125,9 @@ final class Assert
     /**
      * Asserts that a value is a readable file or directory
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isReadable($value): void
+    public static function isReadable(mixed $value): void
     {
         assert(
             Validate::isReadable($value),
@@ -1489,13 +1138,9 @@ final class Assert
     /**
      * Asserts that a value is a writable file or directory
      *
-     * @param mixed $value The value
-     *
-     * @return void
-     *
      * @throws AssertionException
      */
-    public static function isWritable($value): void
+    public static function isWritable(mixed $value): void
     {
         assert(
             Validate::isWritable($value),
@@ -1505,9 +1150,6 @@ final class Assert
 
     /**
      * Creates an assertion exception
-     *
-     * @param string $method  The method name
-     * @param array  $context The assertion context
      *
      * @return AssertionException
      */

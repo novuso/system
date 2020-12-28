@@ -8,15 +8,15 @@ use Novuso\System\Collection\Comparison\FunctionComparator;
 use Novuso\System\Collection\Comparison\IntegerComparator;
 use Novuso\System\Collection\Comparison\StringComparator;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
-use Novuso\System\Collection\Mixin\KeyValueTypeMethods;
+use Novuso\System\Collection\Traits\KeyValueTypeMethods;
 use Novuso\System\Collection\Tree\BinarySearchTree;
 use Novuso\System\Collection\Tree\RedBlackSearchTree;
 use Novuso\System\Collection\Type\OrderedTable;
-use Novuso\System\Exception\AssertionException;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Type\Comparator;
 use Novuso\System\Utility\Assert;
 use Novuso\System\Utility\Validate;
+use Traversable;
 
 /**
  * Class SortedTable
@@ -25,26 +25,17 @@ final class SortedTable implements OrderedTable
 {
     use KeyValueTypeMethods;
 
-    /**
-     * Binary search tree
-     *
-     * @var BinarySearchTree
-     */
-    protected $tree;
-
-    /**
-     * Comparator
-     *
-     * @var Comparator
-     */
-    protected $comparator;
+    protected BinarySearchTree $tree;
+    protected Comparator $comparator;
 
     /**
      * Constructs SortedTable
      *
-     * @param Comparator  $comparator The comparator
-     * @param string|null $keyType    The key type
-     * @param string|null $valueType  The value type
+     * If types are not provided, the types are dynamic.
+     *
+     * The type can be any fully-qualified class or interface name,
+     * or one of the following type strings:
+     * [array, object, bool, int, float, string, callable]
      */
     public function __construct(Comparator $comparator, ?string $keyType = null, ?string $valueType = null)
     {
@@ -55,48 +46,20 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * Creates collection with a custom comparator
-     *
-     * If types are not provided, the types are dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param Comparator  $comparator The comparator
-     * @param string|null $keyType    The key type
-     * @param string|null $valueType  The value type
-     *
-     * @return SortedTable
+     * @inheritDoc
      */
     public static function create(
         Comparator $comparator,
         ?string $keyType = null,
         ?string $valueType = null
-    ): SortedTable {
+    ): static {
         return new static($comparator, $keyType, $valueType);
     }
 
     /**
-     * Creates collection with comparable keys
-     *
-     * If types are not provided, the types are dynamic.
-     *
-     * The key type must be a fully-qualified class name that implements:
-     * `Novuso\System\Type\Comparable`
-     *
-     * The value type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $keyType   The key type
-     * @param string|null $valueType The value type
-     *
-     * @return SortedTable
-     *
-     * @throws AssertionException When the key type is not valid
+     * @inheritDoc
      */
-    public static function comparable(?string $keyType = null, ?string $valueType = null): SortedTable
+    public static function comparable(?string $keyType = null, ?string $valueType = null): static
     {
         Assert::isTrue(Validate::isNull($keyType) || Validate::implementsInterface($keyType, Comparable::class));
 
@@ -104,91 +67,39 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * Creates collection sorted by callback
-     *
-     * The callback should return 0 for values considered equal, return -1 if
-     * the first value is less than the second value, and return 1 if the
-     * first value is greater than the second value.
-     *
-     * Callback signature:
-     *
-     * <code>
-     * function (<K> $key1, <K> $key2): int {}
-     * </code>
-     *
-     * If types are not provided, the types are dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param callable    $callback  The sorting callback function
-     * @param string|null $keyType   The key type
-     * @param string|null $valueType The value type
-     *
-     * @return SortedTable
+     * @inheritDoc
      */
-    public static function callback(callable $callback, ?string $keyType = null, ?string $valueType = null): SortedTable
+    public static function callback(callable $callback, ?string $keyType = null, ?string $valueType = null): static
     {
         return new static(new FunctionComparator($callback), $keyType, $valueType);
     }
 
     /**
-     * Creates collection with float keys
-     *
-     * If a type is not provided, the value type is dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $valueType The value type
-     *
-     * @return SortedTable
+     * @inheritDoc
      */
-    public static function float(?string $valueType = null): SortedTable
+    public static function float(?string $valueType = null): static
     {
         return new static(new FloatComparator(), 'float', $valueType);
     }
 
     /**
-     * Creates collection with integer keys
-     *
-     * If a type is not provided, the value type is dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $valueType The value type
-     *
-     * @return SortedTable
+     * @inheritDoc
      */
-    public static function integer(?string $valueType = null): SortedTable
+    public static function integer(?string $valueType = null): static
     {
         return new static(new IntegerComparator(), 'int', $valueType);
     }
 
     /**
-     * Creates collection with string keys
-     *
-     * If a type is not provided, the value type is dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $valueType The value type
-     *
-     * @return SortedTable
+     * @inheritDoc
      */
-    public static function string(?string $valueType = null): SortedTable
+    public static function string(?string $valueType = null): static
     {
         return new static(new StringComparator(), 'string', $valueType);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function isEmpty(): bool
     {
@@ -196,7 +107,7 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count(): int
     {
@@ -204,9 +115,9 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function set($key, $value): void
+    public function set(mixed $key, mixed $value): void
     {
         Assert::isType($key, $this->keyType());
         Assert::isType($value, $this->valueType());
@@ -214,63 +125,63 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function get($key)
+    public function get(mixed $key): mixed
     {
         return $this->tree->get($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function has($key): bool
+    public function has(mixed $key): bool
     {
         return $this->tree->has($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function remove($key): void
+    public function remove(mixed $key): void
     {
         $this->tree->remove($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetSet($key, $value): void
+    public function offsetSet(mixed $key, mixed $value): void
     {
         $this->set($key, $value);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetGet($key)
+    public function offsetGet(mixed $key): mixed
     {
         return $this->get($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetExists($key): bool
+    public function offsetExists(mixed $key): bool
     {
         return $this->has($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetUnset($key): void
+    public function offsetUnset(mixed $key): void
     {
         $this->remove($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function keys(): iterable
     {
@@ -278,55 +189,55 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function rangeKeys($lo, $hi): iterable
+    public function rangeKeys(mixed $lo, mixed $hi): iterable
     {
         return $this->tree->rangeKeys($lo, $hi);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function rangeCount($lo, $hi): int
+    public function rangeCount(mixed $lo, mixed $hi): int
     {
         return $this->tree->rangeCount($lo, $hi);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function floor($key)
+    public function floor(mixed $key): mixed
     {
         return $this->tree->floor($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function ceiling($key)
+    public function ceiling(mixed $key): mixed
     {
         return $this->tree->ceiling($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function rank($key): int
+    public function rank(mixed $key): int
     {
         return $this->tree->rank($key);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function select(int $rank)
+    public function select(int $rank): mixed
     {
         return $this->tree->select($rank);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function each(callable $callback): void
     {
@@ -336,9 +247,9 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function map(callable $callback, ?string $valueType = null)
+    public function map(callable $callback, ?string $valueType = null): static
     {
         $table = static::create($this->comparator, $this->keyType(), $valueType);
 
@@ -350,9 +261,9 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function max(?callable $callback = null)
+    public function max(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $maxKey = null;
@@ -373,9 +284,9 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function min(?callable $callback = null)
+    public function min(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $minKey = null;
@@ -396,7 +307,7 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function removeMin(?callable $callback = null): void
     {
@@ -410,7 +321,7 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function removeMax(?callable $callback = null): void
     {
@@ -424,9 +335,9 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, mixed $initial = null): mixed
     {
         $accumulator = $initial;
 
@@ -438,9 +349,9 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function sum(?callable $callback = null)
+    public function sum(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -458,9 +369,9 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function average(?callable $callback = null)
+    public function average(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -472,9 +383,9 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function find(callable $predicate)
+    public function find(callable $predicate): mixed
     {
         foreach ($this->getIterator() as $key => $value) {
             if (call_user_func($predicate, $value, $key)) {
@@ -486,9 +397,9 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function filter(callable $predicate)
+    public function filter(callable $predicate): static
     {
         $table = static::create($this->comparator, $this->keyType(), $this->valueType());
 
@@ -502,9 +413,9 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reject(callable $predicate)
+    public function reject(callable $predicate): static
     {
         $table = static::create($this->comparator, $this->keyType(), $this->valueType());
 
@@ -518,7 +429,7 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function any(callable $predicate): bool
     {
@@ -532,7 +443,7 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function every(callable $predicate): bool
     {
@@ -546,7 +457,7 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function partition(callable $predicate): array
     {
@@ -565,9 +476,9 @@ final class SortedTable implements OrderedTable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new GeneratorIterator(function (OrderedTable $table) {
             foreach ($table->keys() as $key) {
@@ -578,10 +489,8 @@ final class SortedTable implements OrderedTable
 
     /**
      * Handles deep cloning
-     *
-     * @return void
      */
-    public function __clone()
+    public function __clone(): void
     {
         $tree = clone $this->tree;
         $this->tree = $tree;

@@ -3,11 +3,12 @@
 namespace Novuso\System\Collection;
 
 use IteratorIterator;
-use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Collection\Type\Queue;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Utility\Assert;
 use SplDoublyLinkedList;
+use Traversable;
 
 /**
  * Class LinkedQueue
@@ -16,12 +17,7 @@ final class LinkedQueue implements Queue
 {
     use ItemTypeMethods;
 
-    /**
-     * Linked list
-     *
-     * @var SplDoublyLinkedList
-     */
-    protected $list;
+    protected SplDoublyLinkedList $list;
 
     /**
      * Constructs LinkedQueue
@@ -31,8 +27,6 @@ final class LinkedQueue implements Queue
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
      */
     public function __construct(?string $itemType = null)
     {
@@ -43,25 +37,15 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * Creates collection of a specific item type
-     *
-     * If a type is not provided, the item type is dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
-     *
-     * @return LinkedQueue
+     * @inheritDoc
      */
-    public static function of(?string $itemType = null): LinkedQueue
+    public static function of(?string $itemType = null): static
     {
         return new static($itemType);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function isEmpty(): bool
     {
@@ -69,7 +53,7 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count(): int
     {
@@ -77,9 +61,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function enqueue($item): void
+    public function enqueue(mixed $item): void
     {
         Assert::isType($item, $this->itemType());
 
@@ -87,9 +71,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function dequeue()
+    public function dequeue(): mixed
     {
         if ($this->list->isEmpty()) {
             throw new UnderflowException('Queue underflow');
@@ -99,9 +83,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function front()
+    public function front(): mixed
     {
         if ($this->list->isEmpty()) {
             throw new UnderflowException('Queue underflow');
@@ -111,7 +95,7 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function each(callable $callback): void
     {
@@ -121,9 +105,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function map(callable $callback, ?string $itemType = null)
+    public function map(callable $callback, ?string $itemType = null): static
     {
         $queue = static::of($itemType);
 
@@ -135,9 +119,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function max(?callable $callback = null)
+    public function max(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $maxItem = null;
@@ -160,9 +144,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function min(?callable $callback = null)
+    public function min(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $minItem = null;
@@ -185,9 +169,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, mixed $initial = null): mixed
     {
         $accumulator = $initial;
 
@@ -199,9 +183,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function sum(?callable $callback = null)
+    public function sum(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -219,9 +203,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function average(?callable $callback = null)
+    public function average(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -233,9 +217,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function find(callable $predicate)
+    public function find(callable $predicate): mixed
     {
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
@@ -247,9 +231,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function filter(callable $predicate)
+    public function filter(callable $predicate): static
     {
         $queue = static::of($this->itemType());
 
@@ -263,9 +247,9 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reject(callable $predicate)
+    public function reject(callable $predicate): static
     {
         $queue = static::of($this->itemType());
 
@@ -279,7 +263,7 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function any(callable $predicate): bool
     {
@@ -293,7 +277,7 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function every(callable $predicate): bool
     {
@@ -307,7 +291,7 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function partition(callable $predicate): array
     {
@@ -326,15 +310,15 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new IteratorIterator($this->list);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toArray(): array
     {
@@ -348,7 +332,7 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
     {
@@ -356,7 +340,7 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
@@ -364,7 +348,7 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toString(): string
     {
@@ -372,7 +356,7 @@ final class LinkedQueue implements Queue
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function __toString(): string
     {
@@ -381,10 +365,8 @@ final class LinkedQueue implements Queue
 
     /**
      * Handles deep cloning
-     *
-     * @return void
      */
-    public function __clone()
+    public function __clone(): void
     {
         $list = clone $this->list;
         $this->list = $list;

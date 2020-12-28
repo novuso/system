@@ -11,9 +11,9 @@ use Novuso\System\Utility\Assert;
 final class IntegerComparator implements Comparator
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function compare($object1, $object2): int
+    public function compare(mixed $object1, mixed $object2): int
     {
         Assert::isInt($object1);
         Assert::isInt($object2);

@@ -14,65 +14,45 @@ interface Queue extends Arrayable, ItemCollection, JsonSerializable
 {
     /**
      * Adds an item to the end
-     *
-     * @param mixed $item The item
-     *
-     * @return void
      */
-    public function enqueue($item): void;
+    public function enqueue(mixed $item): void;
 
     /**
      * Removes and returns the front item
      *
-     * @return mixed
-     *
      * @throws UnderflowException When the queue is empty
      */
-    public function dequeue();
+    public function dequeue(): mixed;
 
     /**
      * Retrieves the front item without removal
      *
-     * @return mixed
-     *
      * @throws UnderflowException When the queue is empty
      */
-    public function front();
+    public function front(): mixed;
 
     /**
      * Retrieves an array representation
-     *
-     * @return array
      */
     public function toArray(): array;
 
     /**
      * Retrieves a JSON representation
-     *
-     * @param int $options Bitmask options for JSON encode
-     *
-     * @return string
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string;
 
     /**
      * Retrieves a representation for JSON encoding
-     *
-     * @return array
      */
     public function jsonSerialize(): array;
 
     /**
      * Retrieves a string representation
-     *
-     * @return string
      */
     public function toString(): string;
 
     /**
      * Handles casting to a string
-     *
-     * @return string
      */
     public function __toString(): string;
 }

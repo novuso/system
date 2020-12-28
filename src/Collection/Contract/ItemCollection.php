@@ -15,19 +15,13 @@ interface ItemCollection extends Collection
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
-     *
-     * @return static
      */
-    public static function of(?string $itemType = null);
+    public static function of(?string $itemType = null): static;
 
     /**
      * Retrieves the item type
      *
      * Returns null if the collection type is dynamic.
-     *
-     * @return string|null
      */
     public function itemType(): ?string;
 
@@ -39,10 +33,6 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): void {}
      * </code>
-     *
-     * @param callable $callback The callback
-     *
-     * @return void
      */
     public function each(callable $callback): void;
 
@@ -54,13 +44,8 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): mixed {}
      * </code>
-     *
-     * @param callable    $callback The callback
-     * @param string|null $itemType The item type for the new collection
-     *
-     * @return static
      */
-    public function map(callable $callback, ?string $itemType = null);
+    public function map(callable $callback, ?string $itemType = null): static;
 
     /**
      * Retrieves the maximum value in the list
@@ -72,12 +57,8 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): mixed {}
      * </code>
-     *
-     * @param callable|null $callback The callback
-     *
-     * @return mixed
      */
-    public function max(?callable $callback = null);
+    public function max(?callable $callback = null): mixed;
 
     /**
      * Retrieves the minimum value in the list
@@ -89,12 +70,8 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): mixed {}
      * </code>
-     *
-     * @param callable|null $callback The callback
-     *
-     * @return mixed
      */
-    public function min(?callable $callback = null);
+    public function min(?callable $callback = null): mixed;
 
     /**
      * Reduces the collection to a single value
@@ -104,13 +81,8 @@ interface ItemCollection extends Collection
      * <code>
      * function ($accumulator, <I> $item, int $index): mixed {}
      * </code>
-     *
-     * @param callable $callback
-     * @param mixed    $initial
-     *
-     * @return mixed
      */
-    public function reduce(callable $callback, $initial = null);
+    public function reduce(callable $callback, mixed $initial = null): mixed;
 
     /**
      * Retrieves the sum of the collection
@@ -122,12 +94,8 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): int|float {}
      * </code>
-     *
-     * @param callable|null $callback The callback function
-     *
-     * @return int|float|null
      */
-    public function sum(?callable $callback = null);
+    public function sum(?callable $callback = null): int|float|null;
 
     /**
      * Retrieves the average of the collection
@@ -139,12 +107,8 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): int|float {}
      * </code>
-     *
-     * @param callable|null $callback The callback function
-     *
-     * @return int|float|null
      */
-    public function average(?callable $callback = null);
+    public function average(?callable $callback = null): int|float|null;
 
     /**
      * Retrieves the first item that passes a truth test
@@ -156,12 +120,8 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): bool {}
      * </code>
-     *
-     * @param callable $predicate The predicate function
-     *
-     * @return mixed|null
      */
-    public function find(callable $predicate);
+    public function find(callable $predicate): mixed;
 
     /**
      * Creates a collection from items that pass a truth test
@@ -171,12 +131,8 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): bool {}
      * </code>
-     *
-     * @param callable $predicate The predicate function
-     *
-     * @return static
      */
-    public function filter(callable $predicate);
+    public function filter(callable $predicate): static;
 
     /**
      * Creates a collection from items that fail a truth test
@@ -186,12 +142,8 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): bool {}
      * </code>
-     *
-     * @param callable $predicate The predicate function
-     *
-     * @return static
      */
-    public function reject(callable $predicate);
+    public function reject(callable $predicate): static;
 
     /**
      * Checks if any items pass a truth test
@@ -201,10 +153,6 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): bool {}
      * </code>
-     *
-     * @param callable $predicate The predicate function
-     *
-     * @return bool
      */
     public function any(callable $predicate): bool;
 
@@ -216,10 +164,6 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): bool {}
      * </code>
-     *
-     * @param callable $predicate The predicate function
-     *
-     * @return bool
      */
     public function every(callable $predicate): bool;
 
@@ -235,10 +179,6 @@ interface ItemCollection extends Collection
      * <code>
      * function (<I> $item, int $index): bool {}
      * </code>
-     *
-     * @param callable $predicate The predicate function
-     *
-     * @return static[]
      */
     public function partition(callable $predicate): array;
 }

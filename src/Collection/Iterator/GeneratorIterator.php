@@ -2,9 +2,14 @@
 
 namespace Novuso\System\Collection\Iterator;
 
+use Closure;
+use Exception;
 use Generator;
 use Iterator;
+use Novuso\System\Exception\DomainException;
 use Novuso\System\Exception\MethodCallException;
+use ReflectionException;
+use ReflectionFunction;
 use Throwable;
 
 /**
@@ -12,54 +17,38 @@ use Throwable;
  */
 final class GeneratorIterator implements Iterator
 {
-    /**
-     * Generator function
-     *
-     * @var callable
-     */
-    protected $function;
-
-    /**
-     * Function arguments
-     *
-     * @var array
-     */
-    protected $args;
-
-    /**
-     * Generator instance
-     *
-     * @var Generator|null
-     */
-    protected $generator;
+    protected Closure $function;
+    protected array $args;
+    protected ?Generator $generator;
 
     /**
      * Constructs GeneratorIterator
      *
-     * @param callable $function The generator function
-     * @param array    $args     The function arguments
+     * @throws DomainException When function is not a generator
+     * @throws ReflectionException
      */
     public function __construct(callable $function, array $args = [])
     {
-        $this->function = $function;
+        $reflection = new ReflectionFunction($function);
+        if (!$reflection->isGenerator()) {
+            throw new DomainException('Invalid generator function');
+        }
+        $this->function = Closure::fromCallable($function);
         $this->args = $args;
         $this->generator = null;
     }
 
     /**
      * Rewinds the iterator
-     *
-     * @return void
      */
     public function rewind(): void
     {
         $this->generator = call_user_func_array($this->function, $this->args);
+        $this->generator->rewind();
     }
 
     /**
      * Checks if position is valid
-     *
-     * @return bool
      */
     public function valid(): bool
     {
@@ -71,25 +60,9 @@ final class GeneratorIterator implements Iterator
     }
 
     /**
-     * Retrieves the yielded value
-     *
-     * @return mixed
-     */
-    public function current()
-    {
-        if (!$this->generator) {
-            $this->rewind();
-        }
-
-        return $this->generator->current();
-    }
-
-    /**
      * Retrieves the yielded key
-     *
-     * @return mixed
      */
-    public function key()
+    public function key(): mixed
     {
         if (!$this->generator) {
             $this->rewind();
@@ -99,9 +72,19 @@ final class GeneratorIterator implements Iterator
     }
 
     /**
+     * Retrieves the yielded value
+     */
+    public function current(): mixed
+    {
+        if (!$this->generator) {
+            $this->rewind();
+        }
+
+        return $this->generator->current();
+    }
+
+    /**
      * Moves to the next position
-     *
-     * @return void
      */
     public function next(): void
     {
@@ -110,6 +93,21 @@ final class GeneratorIterator implements Iterator
         }
 
         $this->generator->next();
+    }
+
+    /**
+     * Retrieves the return value of a generator
+     *
+     * @throws Exception When the generator hasn't returned
+     */
+    public function getReturn(): mixed
+    {
+        if (!$this->generator) {
+            $message = "Cannot get return value of a generator that hasn't returned";
+            throw new MethodCallException($message);
+        }
+
+        return $this->generator->getReturn();
     }
 
     /**
@@ -122,12 +120,8 @@ final class GeneratorIterator implements Iterator
      * called, it will first be let to advance to the first yield expression
      * before sending the value. As such it is not necessary to "prime" PHP
      * generators with a Generator::next() call (like it is done in Python).
-     *
-     * @param mixed $value The value
-     *
-     * @return mixed
      */
-    public function send($value = null)
+    public function send(mixed $value = null): mixed
     {
         if (!$this->generator) {
             $this->rewind();
@@ -137,29 +131,23 @@ final class GeneratorIterator implements Iterator
     }
 
     /**
-     * Handles undefined method calls
+     * Throws an exception into the generator
      *
-     * Needed to support throw method, which is a reserved word.
+     * Throws an exception into the generator and resumes execution of the
+     * generator.
      *
-     * @param string $method The method name
-     * @param array  $args   The method arguments
+     * The behavior will be the same as if the current yield expression was
+     * replaced with a throw $exception statement.
      *
-     * @return mixed
-     *
-     * @throws Throwable When exception is thrown by called method
-     * @throws MethodCallException When the method is invalid
+     * If the generator is already closed when this method is invoked, the
+     * exception will be thrown in the caller's context instead.
      */
-    public function __call($method, array $args)
+    public function throw(Throwable $exception): mixed
     {
-        if ($method === 'throw') {
-            if (!$this->generator) {
-                $this->rewind();
-            }
-
-            return call_user_func_array([$this->generator, 'throw'], $args);
-        } else {
-            $message = sprintf('Call to undefined method GeneratorIterator::%s()', $method);
-            throw new MethodCallException($message);
+        if (!$this->generator) {
+            $this->rewind();
         }
+
+        return $this->generator->throw($exception);
     }
 }

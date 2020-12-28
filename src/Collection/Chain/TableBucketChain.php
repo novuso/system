@@ -12,40 +12,11 @@ use Novuso\System\Utility\VarPrinter;
  */
 final class TableBucketChain implements Countable
 {
-    /**
-     * Head bucket
-     *
-     * @var TerminalBucket
-     */
-    protected $head;
-
-    /**
-     * Tail bucket
-     *
-     * @var TerminalBucket
-     */
-    protected $tail;
-
-    /**
-     * Current bucket
-     *
-     * @var Bucket
-     */
-    protected $current;
-
-    /**
-     * Bucket count
-     *
-     * @var int
-     */
-    protected $count;
-
-    /**
-     * Current offset
-     *
-     * @var int
-     */
-    protected $offset;
+    protected TerminalBucket $head;
+    protected TerminalBucket $tail;
+    protected Bucket $current;
+    protected int $count;
+    protected int $offset;
 
     /**
      * Constructs TableBucketChain
@@ -63,8 +34,6 @@ final class TableBucketChain implements Countable
 
     /**
      * Checks if empty
-     *
-     * @return bool
      */
     public function isEmpty(): bool
     {
@@ -73,8 +42,6 @@ final class TableBucketChain implements Countable
 
     /**
      * Retrieves the count
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -85,13 +52,8 @@ final class TableBucketChain implements Countable
      * Sets a key-value pair
      *
      * Returns true if pair added; false if replaced.
-     *
-     * @param mixed $key   The key
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public function set($key, $value): bool
+    public function set(mixed $key, mixed $value): bool
     {
         $added = true;
         $bucket = $this->locate($key);
@@ -111,13 +73,9 @@ final class TableBucketChain implements Countable
     /**
      * Retrieves a value by key
      *
-     * @param mixed $key The key
-     *
-     * @return mixed
-     *
      * @throws KeyException When the key is not found
      */
-    public function get($key)
+    public function get(mixed $key): mixed
     {
         $bucket = $this->locate($key);
 
@@ -131,12 +89,8 @@ final class TableBucketChain implements Countable
 
     /**
      * Checks if a key is defined
-     *
-     * @param mixed $key The key
-     *
-     * @return bool
      */
-    public function has($key): bool
+    public function has(mixed $key): bool
     {
         return $this->locate($key) !== null;
     }
@@ -145,12 +99,8 @@ final class TableBucketChain implements Countable
      * Removes a key-value pair by key
      *
      * Returns true if pair removed; false otherwise.
-     *
-     * @param mixed $key The key
-     *
-     * @return bool
      */
-    public function remove($key): bool
+    public function remove(mixed $key): bool
     {
         $removed = false;
         $bucket = $this->locate($key);
@@ -166,8 +116,6 @@ final class TableBucketChain implements Countable
 
     /**
      * Sets the pointer to the first bucket
-     *
-     * @return void
      */
     public function rewind(): void
     {
@@ -177,8 +125,6 @@ final class TableBucketChain implements Countable
 
     /**
      * Sets the pointer to the last bucket
-     *
-     * @return void
      */
     public function end(): void
     {
@@ -188,8 +134,6 @@ final class TableBucketChain implements Countable
 
     /**
      * Checks if the pointer is at a valid offset
-     *
-     * @return bool
      */
     public function valid(): bool
     {
@@ -198,8 +142,6 @@ final class TableBucketChain implements Countable
 
     /**
      * Moves the pointer to the next bucket
-     *
-     * @return void
      */
     public function next(): void
     {
@@ -213,8 +155,6 @@ final class TableBucketChain implements Countable
 
     /**
      * Moves the pointer to the previous bucket
-     *
-     * @return void
      */
     public function prev(): void
     {
@@ -230,10 +170,8 @@ final class TableBucketChain implements Countable
      * Retrieves the key from the current bucket
      *
      * Returns null if the pointer is not at a valid offset.
-     *
-     * @return mixed
      */
-    public function key()
+    public function key(): mixed
     {
         if ($this->current instanceof TerminalBucket) {
             return null;
@@ -249,10 +187,8 @@ final class TableBucketChain implements Countable
      * Retrieves the value from the current bucket
      *
      * Returns null if the pointer is not at a valid offset.
-     *
-     * @return mixed
      */
-    public function current()
+    public function current(): mixed
     {
         if ($this->current instanceof TerminalBucket) {
             return null;
@@ -266,10 +202,8 @@ final class TableBucketChain implements Countable
 
     /**
      * Handles deep cloning
-     *
-     * @return void
      */
-    public function __clone()
+    public function __clone(): void
     {
         $keys = [];
         $values = [];
@@ -297,12 +231,8 @@ final class TableBucketChain implements Countable
      * Locates a bucket by key
      *
      * Returns null if the key is not found.
-     *
-     * @param mixed $key The key
-     *
-     * @return KeyValueBucket|null
      */
-    protected function locate($key): ?KeyValueBucket
+    protected function locate(mixed $key): ?KeyValueBucket
     {
         for ($this->rewind(); $this->valid(); $this->next()) {
             /** @var KeyValueBucket $current */
@@ -317,10 +247,6 @@ final class TableBucketChain implements Countable
 
     /**
      * Removes a bucket
-     *
-     * @param Bucket $bucket A Bucket instance
-     *
-     * @return void
      */
     protected function removeBucket(Bucket $bucket): void
     {
@@ -335,15 +261,8 @@ final class TableBucketChain implements Countable
 
     /**
      * Inserts a key-value pair between two nodes
-     *
-     * @param mixed  $key   The key
-     * @param mixed  $value The value
-     * @param Bucket $prev  The previous bucket
-     * @param Bucket $next  The next bucket
-     *
-     * @return void
      */
-    protected function insertBetween($key, $value, Bucket $prev, Bucket $next): void
+    protected function insertBetween(mixed $key, mixed $value, Bucket $prev, Bucket $next): void
     {
         $bucket = new KeyValueBucket($key, $value);
 

@@ -9,31 +9,12 @@ use Iterator;
  */
 final class ArrayStackIterator implements Iterator
 {
-    /**
-     * Items
-     *
-     * @var array
-     */
-    private $items;
+    protected array $items;
+    protected int $index;
+    protected int $count;
 
     /**
-     * Current index
-     *
-     * @var int
-     */
-    private $index;
-
-    /**
-     * Item count
-     *
-     * @var int
-     */
-    private $count;
-
-    /**
-     * Constructor
-     *
-     * @param array $items The items
+     * Constructs ArrayStackIterator
      */
     public function __construct(array $items)
     {
@@ -44,8 +25,6 @@ final class ArrayStackIterator implements Iterator
 
     /**
      * Rewinds the iterator
-     *
-     * @return void
      */
     public function rewind(): void
     {
@@ -54,8 +33,6 @@ final class ArrayStackIterator implements Iterator
 
     /**
      * Checks if the current index is valid
-     *
-     * @return bool
      */
     public function valid(): bool
     {
@@ -64,8 +41,6 @@ final class ArrayStackIterator implements Iterator
 
     /**
      * Retrieves the current key
-     *
-     * @return int|null
      */
     public function key(): ?int
     {
@@ -78,10 +53,8 @@ final class ArrayStackIterator implements Iterator
 
     /**
      * Retrieves the current item
-     *
-     * @return mixed
      */
-    public function current()
+    public function current(): mixed
     {
         if (!$this->valid()) {
             return null;
@@ -92,8 +65,6 @@ final class ArrayStackIterator implements Iterator
 
     /**
      * Moves the iterator to the next item
-     *
-     * @return void
      */
     public function next(): void
     {

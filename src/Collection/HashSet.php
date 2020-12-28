@@ -4,10 +4,11 @@ namespace Novuso\System\Collection;
 
 use Novuso\System\Collection\Chain\SetBucketChain;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
-use Novuso\System\Collection\Mixin\ItemTypeMethods;
+use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Collection\Type\Set;
 use Novuso\System\Utility\Assert;
 use Novuso\System\Utility\FastHasher;
+use Traversable;
 
 /**
  * Class HashSet
@@ -16,19 +17,8 @@ final class HashSet implements Set
 {
     use ItemTypeMethods;
 
-    /**
-     * Bucket chains
-     *
-     * @var array
-     */
-    protected $buckets;
-
-    /**
-     * Bucket count
-     *
-     * @var int
-     */
-    protected $count;
+    protected array $buckets = [];
+    protected int $count = 0;
 
     /**
      * Constructs HashSet
@@ -38,36 +28,22 @@ final class HashSet implements Set
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
      */
     public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
-        $this->buckets = [];
-        $this->count = 0;
     }
 
     /**
-     * Creates collection of a specific item type
-     *
-     * If a type is not provided, the item type is dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
-     *
-     * @return HashSet
+     * @inheritDoc
      */
-    public static function of(?string $itemType = null): HashSet
+    public static function of(?string $itemType = null): static
     {
         return new static($itemType);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function isEmpty(): bool
     {
@@ -75,7 +51,7 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count(): int
     {
@@ -83,9 +59,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function add($item): void
+    public function add(mixed $item): void
     {
         Assert::isType($item, $this->itemType());
 
@@ -101,9 +77,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function contains($item): bool
+    public function contains(mixed $item): bool
     {
         $hash = FastHasher::hash($item);
 
@@ -115,9 +91,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function remove($item): void
+    public function remove(mixed $item): void
     {
         $hash = FastHasher::hash($item);
 
@@ -132,9 +108,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function difference(Set $other)
+    public function difference(Set $other): static
     {
         $difference = static::of($this->itemType());
 
@@ -149,9 +125,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function intersection(Set $other)
+    public function intersection(Set $other): static
     {
         $intersection = static::of($this->itemType());
 
@@ -161,9 +137,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function complement(Set $other)
+    public function complement(Set $other): static
     {
         $complement = static::of($this->itemType());
 
@@ -177,9 +153,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function union(Set $other)
+    public function union(Set $other): static
     {
         $union = static::of($this->itemType());
 
@@ -190,7 +166,7 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function each(callable $callback): void
     {
@@ -200,9 +176,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function map(callable $callback, ?string $itemType = null)
+    public function map(callable $callback, ?string $itemType = null): static
     {
         $set = static::of($itemType);
 
@@ -214,9 +190,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function max(?callable $callback = null)
+    public function max(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $maxItem = null;
@@ -239,9 +215,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function min(?callable $callback = null)
+    public function min(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $minItem = null;
@@ -264,9 +240,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, mixed $initial = null): mixed
     {
         $accumulator = $initial;
 
@@ -278,9 +254,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function sum(?callable $callback = null)
+    public function sum(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -298,9 +274,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function average(?callable $callback = null)
+    public function average(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -312,9 +288,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function find(callable $predicate)
+    public function find(callable $predicate): mixed
     {
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
@@ -326,9 +302,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function filter(callable $predicate)
+    public function filter(callable $predicate): static
     {
         $set = static::of($this->itemType());
 
@@ -342,9 +318,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reject(callable $predicate)
+    public function reject(callable $predicate): static
     {
         $set = static::of($this->itemType());
 
@@ -358,7 +334,7 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function any(callable $predicate): bool
     {
@@ -372,7 +348,7 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function every(callable $predicate): bool
     {
@@ -386,7 +362,7 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function partition(callable $predicate): array
     {
@@ -405,9 +381,9 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new GeneratorIterator(function (array $buckets) {
             $index = 0;
@@ -422,7 +398,7 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toArray(): array
     {
@@ -436,7 +412,7 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
     {
@@ -444,7 +420,7 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
@@ -452,7 +428,7 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toString(): string
     {
@@ -460,7 +436,7 @@ final class HashSet implements Set
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function __toString(): string
     {
@@ -469,10 +445,8 @@ final class HashSet implements Set
 
     /**
      * Handles deep cloning
-     *
-     * @return void
      */
-    public function __clone()
+    public function __clone(): void
     {
         $buckets = [];
 

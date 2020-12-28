@@ -10,4 +10,4 @@ docker container run \
     --rm -it \
     -v $(pwd):/app:delegated \
     -w /app \
-    novuso-system php vendor/bin/robo "$@"
+    novuso-system php scripts/build.php

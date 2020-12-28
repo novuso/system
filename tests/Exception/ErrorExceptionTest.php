@@ -10,21 +10,12 @@ use Novuso\System\Test\TestCase\UnitTestCase;
  */
 class ErrorExceptionTest extends UnitTestCase
 {
-    public function test_that_it_contains_expected_errors()
+    public function test_that_get_errors_returns_expected_value()
     {
-        $message = 'Validation Failed';
-        $errors = [
-            'username' => [
-                'Username is required'
-            ],
-            'password' => [
-                'Password must contain at least 1 special character',
-                'Password must match confirm password field'
-            ]
-        ];
-
+        $message = 'Something went wrong';
+        $errors = ['foo' => 'bar'];
         $exception = new ErrorException($message, $errors);
 
-        $this->assertSame($errors, $exception->getErrors());
+        static::assertSame($errors, $exception->getErrors());
     }
 }

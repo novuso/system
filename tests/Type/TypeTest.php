@@ -4,95 +4,96 @@ namespace Novuso\System\Test\Type;
 
 use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Type\Type;
-use Novuso\System\Utility\ClassName;
 
 /**
  * @covers \Novuso\System\Type\Type
  */
 class TypeTest extends UnitTestCase
 {
-    public function test_that_create_returns_expected_instance()
+    public function test_that_to_class_name_returns_expected_value()
     {
-        $type = Type::create($this);
-        $expected = str_replace('\\', '.', get_class($this));
-        $this->assertSame($expected, $type->toString());
+        $className = 'Novuso\\System\\Type\\Type';
+        $canonical = 'Novuso.System.Type.Type';
+
+        $type = Type::create($canonical);
+
+        static::assertSame($className, $type->toClassName());
     }
 
-    public function test_that_to_class_name_returns_full_class_name()
+    public function test_that_to_string_returns_expected_value()
     {
-        $type = Type::create($this);
-        $expected = get_class($this);
-        $this->assertSame($expected, $type->toClassName());
+        $canonical = 'Novuso.System.Type.Type';
+
+        $type = Type::create($canonical);
+
+        static::assertSame($canonical, $type->toString());
     }
 
-    public function test_that_it_is_string_castable()
+    public function test_that_string_cast_returns_expected_value()
     {
-        $type = Type::create($this);
-        $expected = str_replace('\\', '.', get_class($this));
-        $this->assertSame($expected, (string) $type);
+        $canonical = 'Novuso.System.Type.Type';
+
+        $type = Type::create($canonical);
+
+        static::assertSame($canonical, (string) $type);
     }
 
     public function test_that_it_is_json_encodable()
     {
-        $type = Type::create($this);
-        $data = ['type' => $type];
-        $expected = sprintf('{"type":"%s"}', str_replace('\\', '.', get_class($this)));
-        $this->assertSame($expected, json_encode($data));
+        $canonical = 'Novuso.System.Type.Type';
+
+        $type = Type::create($canonical);
+
+        $data = [
+            'type' => $type
+        ];
+
+        static::assertSame('{"type":"Novuso.System.Type.Type"}', json_encode($data));
     }
 
     public function test_that_it_is_serializable()
     {
-        $state = serialize(Type::create($this));
-        $type = unserialize($state);
-        $this->assertSame(str_replace('\\', '.', get_class($this)), (string) $type);
+        $canonical = 'Novuso.System.Type.Type';
+
+        $type = Type::create($canonical);
+
+        static::assertTrue(unserialize(serialize($type))->equals($type));
     }
 
-    public function test_that_serialize_returns_expected_state()
+    public function test_that_equals_returns_true_when_same_instance()
     {
-        // TODO: update these tests when php7.4 is released
-        $state = Type::create($this)->__serialize();
-        $this->assertSame(ClassName::canonical($this), $state['name']);
+        $canonical = 'Novuso.System.Type.Type';
+
+        $type = Type::create($canonical);
+
+        static::assertTrue($type->equals($type));
     }
 
-    public function test_that_unserialize_works_as_expected()
+    public function test_that_equals_returns_false_when_different_types()
     {
-        // TODO: update these tests when php7.4 is released
-        $data = ['name' => ClassName::canonical($this)];
-        $type = Type::create($this);
-        $type->__unserialize($data);
-        $this->assertSame(ClassName::canonical($this), $type->toString());
+        $canonical = 'Novuso.System.Type.Type';
+
+        $type = Type::create($canonical);
+
+        static::assertFalse($type->equals($canonical));
     }
 
-    public function test_that_equals_returns_true_for_same_instance()
+    public function test_that_equals_returns_true_when_equal()
     {
-        $type = Type::create($this);
-        $this->assertTrue($type->equals($type));
+        $canonical = 'Novuso.System.Type.Type';
+
+        $type1 = Type::create($canonical);
+        $type2 = Type::create($canonical);
+
+        static::assertTrue($type1->equals($type2));
     }
 
-    public function test_that_equals_returns_true_for_same_value()
+    public function test_that_hash_value_returns_expected_value()
     {
-        $type1 = Type::create($this);
-        $type2 = Type::create($this);
-        $this->assertTrue($type1->equals($type2));
-    }
+        $canonical = 'Novuso.System.Type.Type';
 
-    public function test_that_equals_returns_false_for_invalid_value()
-    {
-        $type = Type::create($this);
-        $this->assertFalse($type->equals(get_class($this)));
-    }
+        $type = Type::create($canonical);
 
-    public function test_that_equals_returns_false_for_unequal_value()
-    {
-        $type1 = Type::create($this);
-        $type2 = Type::create(new \ArrayObject());
-        $this->assertFalse($type1->equals($type2));
-    }
-
-    public function test_that_hash_value_returns_expected_string()
-    {
-        $type = Type::create($this);
-        $expected = str_replace('\\', '.', get_class($this));
-        $this->assertSame($expected, $type->hashValue());
+        static::assertSame($canonical, $type->hashValue());
     }
 }

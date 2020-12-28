@@ -7,6 +7,7 @@ use Countable;
 use Novuso\System\Type\Comparable;
 use Novuso\System\Type\Equatable;
 use ReflectionClass;
+use Stringable;
 use Traversable;
 
 /**
@@ -14,189 +15,124 @@ use Traversable;
  */
 final class Validate
 {
-    /**
-     * Valid timezones
-     *
-     * @var array
-     */
-    private static $timezones;
+    private static ?array $timezones = null;
 
     /**
      * Checks if value is scalar
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isScalar($value): bool
+    public static function isScalar(mixed $value): bool
     {
         return is_scalar($value);
     }
 
     /**
      * Checks if value is a boolean
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isBool($value): bool
+    public static function isBool(mixed $value): bool
     {
         return is_bool($value);
     }
 
     /**
      * Checks if value is a float
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isFloat($value): bool
+    public static function isFloat(mixed $value): bool
     {
         return is_float($value);
     }
 
     /**
      * Checks if value is an integer
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isInt($value): bool
+    public static function isInt(mixed $value): bool
     {
         return is_int($value);
     }
 
     /**
      * Checks if value is a string
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isString($value): bool
+    public static function isString(mixed $value): bool
     {
         return is_string($value);
     }
 
     /**
      * Checks if value is an array
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isArray($value): bool
+    public static function isArray(mixed $value): bool
     {
         return is_array($value);
     }
 
     /**
      * Checks if value is an object
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isObject($value): bool
+    public static function isObject(mixed $value): bool
     {
         return is_object($value);
     }
 
     /**
      * Checks if value is callable
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isCallable($value): bool
+    public static function isCallable(mixed $value): bool
     {
         return is_callable($value);
     }
 
     /**
      * Checks if value is null
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isNull($value): bool
+    public static function isNull(mixed $value): bool
     {
         return $value === null;
     }
 
     /**
      * Checks if value is not null
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isNotNull($value): bool
+    public static function isNotNull(mixed $value): bool
     {
         return $value !== null;
     }
 
     /**
      * Checks if value is true
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isTrue($value): bool
+    public static function isTrue(mixed $value): bool
     {
         return $value === true;
     }
 
     /**
      * Checks if value is false
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isFalse($value): bool
+    public static function isFalse(mixed $value): bool
     {
         return $value === false;
     }
 
     /**
      * Checks if value is empty
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isEmpty($value): bool
+    public static function isEmpty(mixed $value): bool
     {
         return empty($value);
     }
 
     /**
      * Checks if value is not empty
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isNotEmpty($value): bool
+    public static function isNotEmpty(mixed $value): bool
     {
         return !empty($value);
     }
 
     /**
      * Checks if value is blank
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isBlank($value): bool
+    public static function isBlank(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -207,12 +143,8 @@ final class Validate
 
     /**
      * Checks if value is not blank
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isNotBlank($value): bool
+    public static function isNotBlank(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -223,12 +155,8 @@ final class Validate
 
     /**
      * Checks if value is alphabetic
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isAlpha($value): bool
+    public static function isAlpha(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -239,12 +167,8 @@ final class Validate
 
     /**
      * Checks if value is alphanumeric
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isAlnum($value): bool
+    public static function isAlnum(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -257,12 +181,8 @@ final class Validate
      * Checks if value is alphabetic-dashed
      *
      * NOTE: dashes may include hyphens and underscores.
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isAlphaDash($value): bool
+    public static function isAlphaDash(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -275,12 +195,8 @@ final class Validate
      * Checks if value is alphanumeric-dashed
      *
      * NOTE: dashes may include hyphens and underscores.
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isAlnumDash($value): bool
+    public static function isAlnumDash(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -291,12 +207,8 @@ final class Validate
 
     /**
      * Checks if value contains only digits
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isDigits($value): bool
+    public static function isDigits(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -307,12 +219,8 @@ final class Validate
 
     /**
      * Checks if value is numeric
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isNumeric($value): bool
+    public static function isNumeric(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -323,12 +231,8 @@ final class Validate
 
     /**
      * Checks if value is an email address
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isEmail($value): bool
+    public static function isEmail(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -339,12 +243,8 @@ final class Validate
 
     /**
      * Checks if value is an IP address
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isIpAddress($value): bool
+    public static function isIpAddress(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -355,12 +255,8 @@ final class Validate
 
     /**
      * Checks if value is an IPv4 address
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isIpV4Address($value): bool
+    public static function isIpV4Address(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -371,12 +267,8 @@ final class Validate
 
     /**
      * Checks if value is an IPv6 address
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isIpV6Address($value): bool
+    public static function isIpV6Address(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -387,12 +279,8 @@ final class Validate
 
     /**
      * Checks if value is a URI
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isUri($value): bool
+    public static function isUri(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -422,12 +310,8 @@ final class Validate
 
     /**
      * Checks if value is a URN
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isUrn($value): bool
+    public static function isUrn(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -484,12 +368,8 @@ final class Validate
 
     /**
      * Checks if value is a UUID
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isUuid($value): bool
+    public static function isUuid(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -529,12 +409,8 @@ final class Validate
 
     /**
      * Checks if value is a timezone
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isTimezone($value): bool
+    public static function isTimezone(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -545,12 +421,8 @@ final class Validate
 
     /**
      * Checks if value is a JSON string
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isJson($value): bool
+    public static function isJson(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -565,13 +437,8 @@ final class Validate
 
     /**
      * Checks if value matches a regular expression
-     *
-     * @param mixed  $value   The value
-     * @param string $pattern The regex pattern
-     *
-     * @return bool
      */
-    public static function isMatch($value, string $pattern): bool
+    public static function isMatch(mixed $value, string $pattern): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -582,75 +449,44 @@ final class Validate
 
     /**
      * Checks if value contains a search string
-     *
-     * @param mixed  $value    The value
-     * @param string $search   The search string
-     * @param string $encoding The string encoding
-     *
-     * @return bool
      */
-    public static function contains($value, string $search, string $encoding = 'UTF-8'): bool
+    public static function contains(mixed $value, string $search): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
         }
 
-        return mb_strpos((string) $value, $search, 0, $encoding) !== false;
+        return str_contains((string) $value, $search);
     }
 
     /**
      * Checks if value starts with a search string
-     *
-     * @param mixed  $value    The value
-     * @param string $search   The search string
-     * @param string $encoding The string encoding
-     *
-     * @return bool
      */
-    public static function startsWith($value, string $search, string $encoding = 'UTF-8'): bool
+    public static function startsWith(mixed $value, string $search): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
         }
 
-        $searchLength = (int) mb_strlen($search, $encoding);
-        $start = mb_substr((string) $value, 0, $searchLength, $encoding);
-
-        return $search === $start;
+        return str_starts_with((string) $value, $search);
     }
 
     /**
      * Checks if value ends with a search string
-     *
-     * @param mixed  $value    The value
-     * @param string $search   The search string
-     * @param string $encoding The string encoding
-     *
-     * @return bool
      */
-    public static function endsWith($value, string $search, string $encoding = 'UTF-8'): bool
+    public static function endsWith(mixed $value, string $search): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
         }
 
-        $searchLength = (int) mb_strlen($search, $encoding);
-        $length = (int) mb_strlen((string) $value, $encoding);
-        $end = mb_substr((string) $value, $length - $searchLength, $searchLength, $encoding);
-
-        return $search === $end;
+        return str_ends_with((string) $value, $search);
     }
 
     /**
      * Checks if value has an exact string length
-     *
-     * @param mixed  $value    The value
-     * @param int    $length   The string length
-     * @param string $encoding The string encoding
-     *
-     * @return bool
      */
-    public static function exactLength($value, int $length, string $encoding = 'UTF-8'): bool
+    public static function exactLength(mixed $value, int $length, string $encoding = 'UTF-8'): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -663,14 +499,8 @@ final class Validate
 
     /**
      * Checks if value has a string length greater or equal to a minimum
-     *
-     * @param mixed  $value     The value
-     * @param int    $minLength The minimum length
-     * @param string $encoding  The string encoding
-     *
-     * @return bool
      */
-    public static function minLength($value, int $minLength, string $encoding = 'UTF-8'): bool
+    public static function minLength(mixed $value, int $minLength, string $encoding = 'UTF-8'): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -683,14 +513,8 @@ final class Validate
 
     /**
      * Checks if value has a string length less or equal to a maximum
-     *
-     * @param mixed  $value     The value
-     * @param int    $maxLength The maximum length
-     * @param string $encoding  The string encoding
-     *
-     * @return bool
      */
-    public static function maxLength($value, int $maxLength, string $encoding = 'UTF-8'): bool
+    public static function maxLength(mixed $value, int $maxLength, string $encoding = 'UTF-8'): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -703,15 +527,8 @@ final class Validate
 
     /**
      * Checks if value has a string length within a range
-     *
-     * @param mixed  $value     The value
-     * @param int    $minLength The minimum length
-     * @param int    $maxLength The maximum length
-     * @param string $encoding  The string encoding
-     *
-     * @return bool
      */
-    public static function rangeLength($value, int $minLength, int $maxLength, string $encoding = 'UTF-8'): bool
+    public static function rangeLength(mixed $value, int $minLength, int $maxLength, string $encoding = 'UTF-8'): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -731,13 +548,8 @@ final class Validate
 
     /**
      * Checks if value matches an exact numeric value
-     *
-     * @param mixed     $value  The value
-     * @param int|float $number The numeric value
-     *
-     * @return bool
      */
-    public static function exactNumber($value, $number): bool
+    public static function exactNumber(mixed $value, int|float $number): bool
     {
         if (!is_numeric($value)) {
             return false;
@@ -748,13 +560,8 @@ final class Validate
 
     /**
      * Checks if value is greater or equal to a minimum number
-     *
-     * @param mixed     $value     The value
-     * @param int|float $minNumber The minimum number
-     *
-     * @return bool
      */
-    public static function minNumber($value, $minNumber): bool
+    public static function minNumber(mixed $value, int|float $minNumber): bool
     {
         if (!is_numeric($value)) {
             return false;
@@ -765,13 +572,8 @@ final class Validate
 
     /**
      * Checks if value is less or equal to a maximum number
-     *
-     * @param mixed     $value     The value
-     * @param int|float $maxNumber The maximum number
-     *
-     * @return bool
      */
-    public static function maxNumber($value, $maxNumber): bool
+    public static function maxNumber(mixed $value, int|float $maxNumber): bool
     {
         if (!is_numeric($value)) {
             return false;
@@ -782,14 +584,8 @@ final class Validate
 
     /**
      * Checks if value is within a numeric range
-     *
-     * @param mixed     $value     The value
-     * @param int|float $minNumber The minimum number
-     * @param int|float $maxNumber The maximum number
-     *
-     * @return bool
      */
-    public static function rangeNumber($value, $minNumber, $maxNumber): bool
+    public static function rangeNumber(mixed $value, int|float $minNumber, int|float $maxNumber): bool
     {
         if (!is_numeric($value)) {
             return false;
@@ -809,12 +605,8 @@ final class Validate
      * Checks if value is a whole number
      *
      * A whole number is any integer value greater or equal to zero.
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function wholeNumber($value): bool
+    public static function wholeNumber(mixed $value): bool
     {
         if (!static::intValue($value)) {
             return false;
@@ -827,12 +619,8 @@ final class Validate
      * Checks if value is a natural number
      *
      * A natural number is any integer value greater than zero.
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function naturalNumber($value): bool
+    public static function naturalNumber(mixed $value): bool
     {
         if (!static::intValue($value)) {
             return false;
@@ -846,12 +634,8 @@ final class Validate
      *
      * Passing values include integers, integer strings, and floating-point
      * numbers with integer values.
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function intValue($value): bool
+    public static function intValue(mixed $value): bool
     {
         if (!is_numeric($value)) {
             return false;
@@ -862,13 +646,8 @@ final class Validate
 
     /**
      * Checks if value has an exact count
-     *
-     * @param mixed $value The value
-     * @param int   $count The count
-     *
-     * @return bool
      */
-    public static function exactCount($value, int $count): bool
+    public static function exactCount(mixed $value, int $count): bool
     {
         if (!static::isCountable($value)) {
             return false;
@@ -879,13 +658,8 @@ final class Validate
 
     /**
      * Checks if value has a count greater or equal to a minimum
-     *
-     * @param mixed $value    The value
-     * @param int   $minCount The minimum count
-     *
-     * @return bool
      */
-    public static function minCount($value, int $minCount): bool
+    public static function minCount(mixed $value, int $minCount): bool
     {
         if (!static::isCountable($value)) {
             return false;
@@ -896,13 +670,8 @@ final class Validate
 
     /**
      * Checks if value has a count less or equal to a maximum
-     *
-     * @param mixed $value    The value
-     * @param int   $maxCount The maximum count
-     *
-     * @return bool
      */
-    public static function maxCount($value, int $maxCount): bool
+    public static function maxCount(mixed $value, int $maxCount): bool
     {
         if (!static::isCountable($value)) {
             return false;
@@ -913,14 +682,8 @@ final class Validate
 
     /**
      * Checks if value has a count within a range
-     *
-     * @param mixed $value    The value
-     * @param int   $minCount The minimum count
-     * @param int   $maxCount The maximum count
-     *
-     * @return bool
      */
-    public static function rangeCount($value, int $minCount, int $maxCount): bool
+    public static function rangeCount(mixed $value, int $minCount, int $maxCount): bool
     {
         if (!static::isCountable($value)) {
             return false;
@@ -940,13 +703,8 @@ final class Validate
 
     /**
      * Checks if value is one of a set of choices
-     *
-     * @param mixed    $value   The value
-     * @param iterable $choices The choices
-     *
-     * @return bool
      */
-    public static function isOneOf($value, iterable $choices): bool
+    public static function isOneOf(mixed $value, iterable $choices): bool
     {
         foreach ($choices as $choice) {
             if ($value === $choice) {
@@ -959,13 +717,8 @@ final class Validate
 
     /**
      * Checks if value is array accessible with a non-null key
-     *
-     * @param mixed $value The value
-     * @param mixed $key   The key
-     *
-     * @return bool
      */
-    public static function keyIsset($value, $key): bool
+    public static function keyIsset(mixed $value, mixed $key): bool
     {
         if (!static::isArrayAccessible($value)) {
             return false;
@@ -976,13 +729,8 @@ final class Validate
 
     /**
      * Checks if value is array accessible with a non-empty key
-     *
-     * @param mixed $value The value
-     * @param mixed $key   The key
-     *
-     * @return bool
      */
-    public static function keyNotEmpty($value, $key): bool
+    public static function keyNotEmpty(mixed $value, mixed $key): bool
     {
         if (!static::isArrayAccessible($value)) {
             return false;
@@ -993,13 +741,8 @@ final class Validate
 
     /**
      * Checks if two values are equal
-     *
-     * @param mixed $value1 The first value
-     * @param mixed $value2 The second value
-     *
-     * @return bool
      */
-    public static function areEqual($value1, $value2): bool
+    public static function areEqual(mixed $value1, mixed $value2): bool
     {
         if (static::isEquatable($value1) && static::areSameType($value1, $value2)) {
             return $value1->equals($value2);
@@ -1010,13 +753,8 @@ final class Validate
 
     /**
      * Checks if two values are not equal
-     *
-     * @param mixed $value1 The first value
-     * @param mixed $value2 The second value
-     *
-     * @return bool
      */
-    public static function areNotEqual($value1, $value2): bool
+    public static function areNotEqual(mixed $value1, mixed $value2): bool
     {
         if (static::isEquatable($value1) && static::areSameType($value1, $value2)) {
             return !$value1->equals($value2);
@@ -1027,39 +765,24 @@ final class Validate
 
     /**
      * Checks if two values are the same
-     *
-     * @param mixed $value1 The first value
-     * @param mixed $value2 The second value
-     *
-     * @return bool
      */
-    public static function areSame($value1, $value2): bool
+    public static function areSame(mixed $value1, mixed $value2): bool
     {
         return $value1 === $value2;
     }
 
     /**
      * Checks if two values are not the same
-     *
-     * @param mixed $value1 The first value
-     * @param mixed $value2 The second value
-     *
-     * @return bool
      */
-    public static function areNotSame($value1, $value2): bool
+    public static function areNotSame(mixed $value1, mixed $value2): bool
     {
         return $value1 !== $value2;
     }
 
     /**
      * Checks if two values are the same type
-     *
-     * @param mixed $value1 The first value
-     * @param mixed $value2 The second value
-     *
-     * @return bool
      */
-    public static function areSameType($value1, $value2): bool
+    public static function areSameType(mixed $value1, mixed $value2): bool
     {
         if (!is_object($value1) || !is_object($value2)) {
             return gettype($value1) === gettype($value2);
@@ -1074,13 +797,8 @@ final class Validate
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
-     *
-     * @param mixed       $value The value
-     * @param string|null $type  The type or null to accept all types
-     *
-     * @return bool
      */
-    public static function isType($value, ?string $type): bool
+    public static function isType(mixed $value, ?string $type): bool
     {
         if ($type === null) {
             return true;
@@ -1101,13 +819,8 @@ final class Validate
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string]
-     *
-     * @param mixed       $value The value
-     * @param string|null $type  The type or null to accept all types
-     *
-     * @return bool
      */
-    public static function isListOf($value, ?string $type): bool
+    public static function isListOf(mixed $value, ?string $type): bool
     {
         if (!static::isTraversable($value)) {
             return false;
@@ -1131,12 +844,8 @@ final class Validate
 
     /**
      * Checks if value can be cast to a string
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isStringCastable($value): bool
+    public static function isStringCastable(mixed $value): bool
     {
         $result = false;
         $type = strtolower(gettype($value));
@@ -1149,7 +858,7 @@ final class Validate
                 $result = true;
                 break;
             case 'object':
-                if (method_exists($value, '__toString')) {
+                if ($value instanceof Stringable) {
                     $result = true;
                 }
                 break;
@@ -1162,12 +871,8 @@ final class Validate
 
     /**
      * Checks if value can be JSON encoded
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isJsonEncodable($value): bool
+    public static function isJsonEncodable(mixed $value): bool
     {
         $result = @json_encode($value);
 
@@ -1180,12 +885,8 @@ final class Validate
 
     /**
      * Checks if value is traversable
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isTraversable($value): bool
+    public static function isTraversable(mixed $value): bool
     {
         if (is_array($value)) {
             return true;
@@ -1200,12 +901,8 @@ final class Validate
 
     /**
      * Checks if value is countable
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isCountable($value): bool
+    public static function isCountable(mixed $value): bool
     {
         if (is_array($value)) {
             return true;
@@ -1220,12 +917,8 @@ final class Validate
 
     /**
      * Checks if value is array accessible
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isArrayAccessible($value): bool
+    public static function isArrayAccessible(mixed $value): bool
     {
         if (is_array($value)) {
             return true;
@@ -1240,12 +933,8 @@ final class Validate
 
     /**
      * Checks if value is a comparable object
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isComparable($value): bool
+    public static function isComparable(mixed $value): bool
     {
         if (is_object($value) && ($value instanceof Comparable)) {
             return true;
@@ -1256,12 +945,8 @@ final class Validate
 
     /**
      * Checks if value is an equatable object
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isEquatable($value): bool
+    public static function isEquatable(mixed $value): bool
     {
         if (is_object($value) && ($value instanceof Equatable)) {
             return true;
@@ -1272,13 +957,8 @@ final class Validate
 
     /**
      * Checks if value implements a given interface
-     *
-     * @param mixed  $value     The value
-     * @param string $interface The fully qualified interface name
-     *
-     * @return bool
      */
-    public static function implementsInterface($value, string $interface): bool
+    public static function implementsInterface(mixed $value, string $interface): bool
     {
         if (!is_object($value)) {
             if (!(static::classExists($value) || static::interfaceExists($value))) {
@@ -1294,38 +974,24 @@ final class Validate
 
     /**
      * Checks if value is an instance of a type
-     *
-     * @param mixed  $value     The value
-     * @param string $className The fully qualified class or interface name
-     *
-     * @return bool
      */
-    public static function isInstanceOf($value, string $className): bool
+    public static function isInstanceOf(mixed $value, string $className): bool
     {
         return ($value instanceof $className);
     }
 
     /**
      * Checks if value is an object or class with a given parent class
-     *
-     * @param mixed  $value     The value
-     * @param string $className The fully qualified class name
-     *
-     * @return bool
      */
-    public static function isSubclassOf($value, string $className): bool
+    public static function isSubclassOf(mixed $value, string $className): bool
     {
         return is_subclass_of($value, $className);
     }
 
     /**
      * Checks if value is an existing fully qualified class name
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function classExists($value): bool
+    public static function classExists(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -1336,12 +1002,8 @@ final class Validate
 
     /**
      * Checks if value is an existing fully qualified interface name
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function interfaceExists($value): bool
+    public static function interfaceExists(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -1352,13 +1014,8 @@ final class Validate
 
     /**
      * Checks if value is a method name for an object or class
-     *
-     * @param mixed         $value  The value
-     * @param object|string $object The object or fully qualified class name
-     *
-     * @return bool
      */
-    public static function methodExists($value, $object): bool
+    public static function methodExists(mixed $value, object|string $object): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -1369,12 +1026,8 @@ final class Validate
 
     /**
      * Checks if value is an existing file or directory path
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isPath($value): bool
+    public static function isPath(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -1385,12 +1038,8 @@ final class Validate
 
     /**
      * Checks if value is an existing file
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isFile($value): bool
+    public static function isFile(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -1401,12 +1050,8 @@ final class Validate
 
     /**
      * Checks if value is an existing directory
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isDir($value): bool
+    public static function isDir(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -1417,12 +1062,8 @@ final class Validate
 
     /**
      * Checks if value is a readable file or directory
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isReadable($value): bool
+    public static function isReadable(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -1433,12 +1074,8 @@ final class Validate
 
     /**
      * Checks if value is a writable file or directory
-     *
-     * @param mixed $value The value
-     *
-     * @return bool
      */
-    public static function isWritable($value): bool
+    public static function isWritable(mixed $value): bool
     {
         if (!static::isStringCastable($value)) {
             return false;
@@ -1449,10 +1086,6 @@ final class Validate
 
     /**
      * Checks if a timezone string is valid
-     *
-     * @param string $timezone The timezone string
-     *
-     * @return bool
      */
     private static function isValidTimezone(string $timezone): bool
     {
@@ -1470,10 +1103,6 @@ final class Validate
 
     /**
      * Retrieves URI components from regex matches
-     *
-     * @param array $matches The regex matches
-     *
-     * @return array
      */
     private static function uriComponentsFromMatches(array $matches): array
     {
@@ -1510,10 +1139,6 @@ final class Validate
 
     /**
      * Checks if URI components are valid
-     *
-     * @param array $uri an associated array of URI components
-     *
-     * @return bool
      */
     private static function isValidUri(array $uri): bool
     {
@@ -1538,10 +1163,6 @@ final class Validate
 
     /**
      * Checks if a URI scheme is valid
-     *
-     * @param string|null $scheme The URI scheme
-     *
-     * @return bool
      */
     private static function isValidUriScheme(?string $scheme): bool
     {
@@ -1561,10 +1182,6 @@ final class Validate
 
     /**
      * Checks if a URI authority is valid
-     *
-     * @param string|null $authority The URI authority
-     *
-     * @return bool
      */
     private static function isValidUriAuthority(?string $authority): bool
     {
@@ -1589,10 +1206,6 @@ final class Validate
 
     /**
      * Checks if a URI path is valid
-     *
-     * @param string $path The URI path
-     *
-     * @return bool
      */
     private static function isValidUriPath(string $path): bool
     {
@@ -1631,10 +1244,6 @@ final class Validate
 
     /**
      * Checks if a URI query is valid
-     *
-     * @param string|null $query The URI query
-     *
-     * @return bool
      */
     private static function isValidUriQuery(?string $query): bool
     {
@@ -1657,10 +1266,6 @@ final class Validate
 
     /**
      * Checks if a URI fragment is valid
-     *
-     * @param string|null $fragment The URI fragment
-     *
-     * @return bool
      */
     private static function isValidUriFragment(?string $fragment): bool
     {
@@ -1683,10 +1288,6 @@ final class Validate
 
     /**
      * Checks if authority userinfo is valid
-     *
-     * @param string|null $userinfo The userinfo
-     *
-     * @return bool
      */
     private static function isValidAuthUser(?string $userinfo): bool
     {
@@ -1708,10 +1309,6 @@ final class Validate
 
     /**
      * Checks if authority host is valid
-     *
-     * @param string $host The host
-     *
-     * @return bool
      */
     private static function isValidAuthHost(string $host): bool
     {
@@ -1748,10 +1345,6 @@ final class Validate
 
     /**
      * Checks if host is a valid IP literal
-     *
-     * @param string $ip The IP address
-     *
-     * @return bool
      */
     private static function isValidIpLiteral(string $ip): bool
     {
@@ -1781,14 +1374,9 @@ final class Validate
     /**
      * Checks if a value matches a simple type
      *
-     * Returns null if the type is not supported
-     *
-     * @param mixed  $value The value
-     * @param string $type  The type
-     *
-     * @return bool|null
+     * Returns null if the type is not supported.
      */
-    private static function isSimpleType($value, string $type): ?bool
+    private static function isSimpleType(mixed $value, string $type): ?bool
     {
         switch ($type) {
             case 'array':

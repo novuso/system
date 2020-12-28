@@ -10,40 +10,11 @@ use Novuso\System\Utility\Validate;
  */
 final class SetBucketChain implements Countable
 {
-    /**
-     * Head bucket
-     *
-     * @var TerminalBucket
-     */
-    protected $head;
-
-    /**
-     * Tail bucket
-     *
-     * @var TerminalBucket
-     */
-    protected $tail;
-
-    /**
-     * Current bucket
-     *
-     * @var Bucket
-     */
-    protected $current;
-
-    /**
-     * Bucket count
-     *
-     * @var int
-     */
-    protected $count;
-
-    /**
-     * Current offset
-     *
-     * @var int
-     */
-    protected $offset;
+    protected TerminalBucket $head;
+    protected TerminalBucket $tail;
+    protected Bucket $current;
+    protected int $count;
+    protected int $offset;
 
     /**
      * Constructs SetBucketChain
@@ -61,8 +32,6 @@ final class SetBucketChain implements Countable
 
     /**
      * Checks if empty
-     *
-     * @return bool
      */
     public function isEmpty(): bool
     {
@@ -71,8 +40,6 @@ final class SetBucketChain implements Countable
 
     /**
      * Retrieves the count
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -83,12 +50,8 @@ final class SetBucketChain implements Countable
      * Adds an item
      *
      * Returns true if item added; false if replaced.
-     *
-     * @param mixed $item The item
-     *
-     * @return bool
      */
-    public function add($item): bool
+    public function add(mixed $item): bool
     {
         $added = true;
         $bucket = $this->locate($item);
@@ -107,12 +70,8 @@ final class SetBucketChain implements Countable
 
     /**
      * Checks if an item is contained
-     *
-     * @param mixed $item The item
-     *
-     * @return bool
      */
-    public function contains($item): bool
+    public function contains(mixed $item): bool
     {
         return $this->locate($item) !== null;
     }
@@ -121,12 +80,8 @@ final class SetBucketChain implements Countable
      * Removes an item
      *
      * Returns true if item removed; false otherwise.
-     *
-     * @param mixed $item The item
-     *
-     * @return bool
      */
-    public function remove($item): bool
+    public function remove(mixed $item): bool
     {
         $removed = false;
         $bucket = $this->locate($item);
@@ -142,8 +97,6 @@ final class SetBucketChain implements Countable
 
     /**
      * Sets the pointer to the first bucket
-     *
-     * @return void
      */
     public function rewind(): void
     {
@@ -153,8 +106,6 @@ final class SetBucketChain implements Countable
 
     /**
      * Sets the pointer to the last bucket
-     *
-     * @return void
      */
     public function end(): void
     {
@@ -164,8 +115,6 @@ final class SetBucketChain implements Countable
 
     /**
      * Checks if the pointer is at a valid offset
-     *
-     * @return bool
      */
     public function valid(): bool
     {
@@ -174,8 +123,6 @@ final class SetBucketChain implements Countable
 
     /**
      * Moves the pointer to the next bucket
-     *
-     * @return void
      */
     public function next(): void
     {
@@ -189,8 +136,6 @@ final class SetBucketChain implements Countable
 
     /**
      * Moves the pointer to the previous bucket
-     *
-     * @return void
      */
     public function prev(): void
     {
@@ -206,8 +151,6 @@ final class SetBucketChain implements Countable
      * Retrieves the offset of the current bucket
      *
      * Returns null if the pointer is not at a valid offset.
-     *
-     * @return int|null
      */
     public function key(): ?int
     {
@@ -222,10 +165,8 @@ final class SetBucketChain implements Countable
      * Retrieves the item from the current bucket
      *
      * Returns null if the pointer is not at a valid offset.
-     *
-     * @return mixed
      */
-    public function current()
+    public function current(): mixed
     {
         if ($this->current instanceof TerminalBucket) {
             return null;
@@ -239,10 +180,8 @@ final class SetBucketChain implements Countable
 
     /**
      * Handles deep cloning
-     *
-     * @return void
      */
-    public function __clone()
+    public function __clone(): void
     {
         $items = [];
         for ($this->rewind(); $this->valid(); $this->next()) {
@@ -267,12 +206,8 @@ final class SetBucketChain implements Countable
      * Locates a bucket by item
      *
      * Returns null if the item is not found.
-     *
-     * @param mixed $item The item
-     *
-     * @return ItemBucket|null
      */
-    protected function locate($item): ?ItemBucket
+    protected function locate(mixed $item): ?ItemBucket
     {
         for ($this->rewind(); $this->valid(); $this->next()) {
             /** @var ItemBucket $current */
@@ -287,10 +222,6 @@ final class SetBucketChain implements Countable
 
     /**
      * Removes a bucket
-     *
-     * @param Bucket $bucket A Bucket instance
-     *
-     * @return void
      */
     protected function removeBucket(Bucket $bucket): void
     {
@@ -305,14 +236,8 @@ final class SetBucketChain implements Countable
 
     /**
      * Inserts an item between two nodes
-     *
-     * @param mixed  $item The item
-     * @param Bucket $prev The previous bucket
-     * @param Bucket $next The next bucket
-     *
-     * @return void
      */
-    protected function insertBetween($item, Bucket $prev, Bucket $next): void
+    protected function insertBetween(mixed $item, Bucket $prev, Bucket $next): void
     {
         $bucket = new ItemBucket($item);
 

@@ -7,48 +7,16 @@ namespace Novuso\System\Collection\Chain;
  */
 final class KeyValueBucket implements Bucket
 {
-    /**
-     * Next bucket
-     *
-     * @var Bucket|null
-     */
-    protected $next;
-
-    /**
-     * Previous bucket
-     *
-     * @var Bucket|null
-     */
-    protected $prev;
-
-    /**
-     * Bucket key
-     *
-     * @var mixed
-     */
-    protected $key;
-
-    /**
-     * Bucket value
-     *
-     * @var mixed
-     */
-    protected $value;
+    protected ?Bucket $next = null;
+    protected ?Bucket $prev = null;
 
     /**
      * Constructs KeyValueBucket
-     *
-     * @param mixed $key   The key
-     * @param mixed $value The value
      */
-    public function __construct($key, $value)
-    {
-        $this->key = $key;
-        $this->value = $value;
-    }
+    public function __construct(protected mixed $key, protected mixed $value) {}
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function setNext(?Bucket $next): void
     {
@@ -56,7 +24,7 @@ final class KeyValueBucket implements Bucket
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function next(): ?Bucket
     {
@@ -64,7 +32,7 @@ final class KeyValueBucket implements Bucket
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function setPrev(?Bucket $prev): void
     {
@@ -72,7 +40,7 @@ final class KeyValueBucket implements Bucket
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function prev(): ?Bucket
     {
@@ -81,20 +49,16 @@ final class KeyValueBucket implements Bucket
 
     /**
      * Retrieves the key
-     *
-     * @return mixed
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->key;
     }
 
     /**
      * Retrieves the value
-     *
-     * @return mixed
      */
-    public function value()
+    public function value(): mixed
     {
         return $this->value;
     }

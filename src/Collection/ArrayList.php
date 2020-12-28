@@ -4,26 +4,21 @@ namespace Novuso\System\Collection;
 
 use ArrayIterator;
 use Closure;
-use Novuso\System\Collection\Mixin\ItemTypeMethods;
-use Novuso\System\Collection\Sort\Merge;
-use Novuso\System\Collection\Type\Sequence;
+use Novuso\System\Collection\Traits\ItemTypeMethods;
+use Novuso\System\Collection\Type\ItemList;
 use Novuso\System\Exception\IndexException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Utility\Assert;
+use Traversable;
 
 /**
  * Class ArrayList
  */
-final class ArrayList implements Sequence
+final class ArrayList implements ItemList
 {
     use ItemTypeMethods;
 
-    /**
-     * List items
-     *
-     * @var array
-     */
-    protected $items;
+    protected array $items = [];
 
     /**
      * Constructs ArrayList
@@ -33,35 +28,22 @@ final class ArrayList implements Sequence
      * The type can be any fully-qualified class or interface name,
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
      */
     public function __construct(?string $itemType = null)
     {
         $this->setItemType($itemType);
-        $this->items = [];
     }
 
     /**
-     * Creates collection of a specific item type
-     *
-     * If a type is not provided, the item type is dynamic.
-     *
-     * The type can be any fully-qualified class or interface name,
-     * or one of the following type strings:
-     * [array, object, bool, int, float, string, callable]
-     *
-     * @param string|null $itemType The item type
-     *
-     * @return ArrayList
+     * @inheritDoc
      */
-    public static function of(?string $itemType = null): ArrayList
+    public static function of(?string $itemType = null): static
     {
         return new static($itemType);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function isEmpty(): bool
     {
@@ -69,7 +51,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count(): int
     {
@@ -77,7 +59,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function length(): int
     {
@@ -85,9 +67,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function replace(iterable $items)
+    public function replace(iterable $items): static
     {
         $list = static::of($this->itemType());
 
@@ -99,18 +81,18 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function add($item): void
+    public function add(mixed $item): void
     {
         Assert::isType($item, $this->itemType());
         $this->items[] = $item;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function set(int $index, $item): void
+    public function set(int $index, mixed $item): void
     {
         Assert::isType($item, $this->itemType());
 
@@ -129,9 +111,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function get(int $index)
+    public function get(int $index): mixed
     {
         $count = count($this->items);
 
@@ -148,7 +130,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function has(int $index): bool
     {
@@ -162,7 +144,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function remove(int $index): void
     {
@@ -180,17 +162,17 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function contains($item, bool $strict = true): bool
+    public function contains(mixed $item, bool $strict = true): bool
     {
         return in_array($item, $this->items, $strict);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetSet($index, $item): void
+    public function offsetSet(mixed $index, mixed $item): void
     {
         if ($index === null) {
             $this->add($item);
@@ -203,9 +185,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetGet($index)
+    public function offsetGet(mixed $index): mixed
     {
         Assert::isInt($index);
 
@@ -213,9 +195,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetExists($index): bool
+    public function offsetExists(mixed $index): bool
     {
         Assert::isInt($index);
 
@@ -223,27 +205,23 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function offsetUnset($index): void
+    public function offsetUnset(mixed $index): void
     {
         Assert::isInt($index);
         $this->remove($index);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function sort(callable $comparator, bool $stable = false)
+    public function sort(callable $comparator): static
     {
         $list = static::of($this->itemType());
         $items = $this->items;
 
-        if ($stable) {
-            Merge::sort($items, $comparator);
-        } else {
-            usort($items, $comparator);
-        }
+        usort($items, $comparator);
 
         foreach ($items as $item) {
             $list->add($item);
@@ -253,9 +231,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reverse()
+    public function reverse(): static
     {
         $list = static::of($this->itemType());
 
@@ -267,9 +245,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function head()
+    public function head(): mixed
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('List underflow');
@@ -281,9 +259,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function tail()
+    public function tail(): static
     {
         if ($this->isEmpty()) {
             throw new UnderflowException('List underflow');
@@ -302,9 +280,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function first(?callable $predicate = null, $default = null)
+    public function first(?callable $predicate = null, mixed $default = null): mixed
     {
         if ($predicate === null) {
             if ($this->isEmpty()) {
@@ -326,9 +304,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function last(?callable $predicate = null, $default = null)
+    public function last(?callable $predicate = null, mixed $default = null): mixed
     {
         if ($predicate === null) {
             if ($this->isEmpty()) {
@@ -350,9 +328,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function indexOf($object): ?int
+    public function indexOf(mixed $object): ?int
     {
         if (!($object instanceof Closure)) {
             $key = array_search($object, $this->items, true);
@@ -374,9 +352,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function lastIndexOf($object): ?int
+    public function lastIndexOf(mixed $object): ?int
     {
         if (!($object instanceof Closure)) {
             $key = array_search($object, array_reverse($this->items, true), true);
@@ -398,7 +376,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function rewind(): void
     {
@@ -406,7 +384,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function end(): void
     {
@@ -414,7 +392,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function valid(): bool
     {
@@ -422,7 +400,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function next(): void
     {
@@ -430,7 +408,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function prev(): void
     {
@@ -438,7 +416,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function key(): ?int
     {
@@ -446,9 +424,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function current()
+    public function current(): mixed
     {
         if (key($this->items) === null) {
             return null;
@@ -458,9 +436,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function unique(?callable $callback = null)
+    public function unique(?callable $callback = null): static
     {
         if ($callback === null) {
             $list = static::of($this->itemType());
@@ -490,9 +468,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function slice(int $index, ?int $length = null)
+    public function slice(int $index, ?int $length = null): static
     {
         $list = static::of($this->itemType());
 
@@ -506,15 +484,15 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function page(int $page, int $perPage)
+    public function page(int $page, int $perPage): static
     {
         return $this->slice(($page - 1) * $perPage, $perPage);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function each(callable $callback): void
     {
@@ -524,9 +502,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function map(callable $callback, ?string $itemType = null)
+    public function map(callable $callback, ?string $itemType = null): static
     {
         $list = static::of($itemType);
 
@@ -538,9 +516,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function max(?callable $callback = null)
+    public function max(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $maxItem = null;
@@ -563,9 +541,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function min(?callable $callback = null)
+    public function min(?callable $callback = null): mixed
     {
         if ($callback !== null) {
             $minItem = null;
@@ -588,9 +566,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reduce(callable $callback, $initial = null)
+    public function reduce(callable $callback, mixed $initial = null): mixed
     {
         $accumulator = $initial;
 
@@ -602,9 +580,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function sum(?callable $callback = null)
+    public function sum(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -622,9 +600,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function average(?callable $callback = null)
+    public function average(?callable $callback = null): int|float|null
     {
         if ($this->isEmpty()) {
             return null;
@@ -636,9 +614,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function find(callable $predicate)
+    public function find(callable $predicate): mixed
     {
         foreach ($this->items as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
@@ -650,9 +628,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function filter(callable $predicate)
+    public function filter(callable $predicate): static
     {
         $list = static::of($this->itemType());
 
@@ -666,9 +644,9 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function reject(callable $predicate)
+    public function reject(callable $predicate): static
     {
         $list = static::of($this->itemType());
 
@@ -682,7 +660,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function any(callable $predicate): bool
     {
@@ -696,7 +674,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function every(callable $predicate): bool
     {
@@ -710,7 +688,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function partition(callable $predicate): array
     {
@@ -729,15 +707,15 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toArray(): array
     {
@@ -747,7 +725,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toJson(int $options = JSON_UNESCAPED_SLASHES): string
     {
@@ -755,7 +733,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
@@ -763,7 +741,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function toString(): string
     {
@@ -771,7 +749,7 @@ final class ArrayList implements Sequence
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function __toString(): string
     {

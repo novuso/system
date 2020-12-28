@@ -8,9 +8,7 @@ namespace Novuso\System\Type;
 interface Arrayable
 {
     /**
-     * Retrieves an array representation
-     *
-     * @return array
+     * Retrieves array representation
      */
     public function toArray(): array;
 }

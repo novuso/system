@@ -12,11 +12,11 @@ use Novuso\System\Utility\Assert;
  */
 class TestUser implements Comparable, Serializable
 {
-    protected $lastName;
-    protected $firstName;
-    protected $username;
-    protected $email;
-    protected $birthDate;
+    protected string $lastName;
+    protected string $firstName;
+    protected string $username;
+    protected string $email;
+    protected string $birthDate;
 
     public function __construct(array $data)
     {
@@ -27,9 +27,10 @@ class TestUser implements Comparable, Serializable
         $this->birthDate = $data['birthDate'];
     }
 
-    public static function arrayDeserialize(array $data)
+    public static function arrayDeserialize(array $data): static
     {
         $keys = ['lastName', 'firstName', 'username', 'email', 'birthDate'];
+
         foreach ($keys as $key) {
             if (!array_key_exists($key, $data)) {
                 $message = sprintf('Serialization key missing: %s', $key);
@@ -45,27 +46,27 @@ class TestUser implements Comparable, Serializable
         return $this->toArray();
     }
 
-    public function lastName()
+    public function lastName(): string
     {
         return $this->lastName;
     }
 
-    public function firstName()
+    public function firstName(): string
     {
         return $this->firstName;
     }
 
-    public function username()
+    public function username(): string
     {
         return $this->username;
     }
 
-    public function email()
+    public function email(): string
     {
         return $this->email;
     }
 
-    public function birthDate()
+    public function birthDate(): string
     {
         return $this->birthDate;
     }
@@ -91,13 +92,6 @@ class TestUser implements Comparable, Serializable
 
         $comp = strnatcmp($this->username(), $object->username());
 
-        if ($comp > 0) {
-            return 1;
-        }
-        if ($comp < 0) {
-            return -1;
-        }
-
-        return 0;
+        return $comp <=> 0;
     }
 }
