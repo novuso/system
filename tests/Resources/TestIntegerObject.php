@@ -9,28 +9,28 @@ use Novuso\System\Utility\Assert;
 use Novuso\System\Utility\Validate;
 
 /**
- * Class TestStringObject
+ * Class TestIntegerObject
  */
-class TestStringObject implements Comparable, Equatable, JsonSerializable
+class TestIntegerObject implements Comparable, Equatable, JsonSerializable
 {
-    public function __construct(protected string $value) {}
+    public function __construct(protected int $value) {}
 
-    public function value(): string
+    public function value(): int
     {
         return $this->value;
     }
 
     public function toString(): string
     {
-        return $this->value;
+        return (string) $this->value;
     }
 
     public function __toString(): string
     {
-        return $this->value;
+        return (string) $this->value;
     }
 
-    public function jsonSerialize(): string
+    public function jsonSerialize(): int
     {
         return $this->value;
     }
@@ -43,9 +43,7 @@ class TestStringObject implements Comparable, Equatable, JsonSerializable
 
         Assert::areSameType($this, $object);
 
-        $comp = strnatcmp($this->value, $object->value);
-
-        return $comp <=> 0;
+        return $this->value <=> $object->value;
     }
 
     public function equals(mixed $object): bool
@@ -63,6 +61,6 @@ class TestStringObject implements Comparable, Equatable, JsonSerializable
 
     public function hashValue(): string
     {
-        return $this->value;
+        return (string) $this->value;
     }
 }
