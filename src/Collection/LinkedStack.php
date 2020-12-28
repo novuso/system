@@ -4,23 +4,23 @@ namespace Novuso\System\Collection;
 
 use IteratorIterator;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
-use Novuso\System\Collection\Type\Queue;
+use Novuso\System\Collection\Type\Stack;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Utility\Assert;
 use SplDoublyLinkedList;
 use Traversable;
 
 /**
- * Class LinkedQueue
+ * Class LinkedStack
  */
-final class LinkedQueue implements Queue
+final class LinkedStack implements Stack
 {
     use ItemTypeMethods;
 
     protected SplDoublyLinkedList $list;
 
     /**
-     * Constructs LinkedQueue
+     * Constructs LinkedStack
      *
      * If a type is not provided, the item type is dynamic.
      *
@@ -32,7 +32,7 @@ final class LinkedQueue implements Queue
     {
         $this->setItemType($itemType);
         $this->list = new SplDoublyLinkedList();
-        $mode = SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP;
+        $mode = SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP;
         $this->list->setIteratorMode($mode);
     }
 
@@ -63,35 +63,34 @@ final class LinkedQueue implements Queue
     /**
      * @inheritDoc
      */
-    public function enqueue(mixed $item): void
+    public function push($item): void
     {
         Assert::isType($item, $this->itemType());
-
         $this->list->push($item);
     }
 
     /**
      * @inheritDoc
      */
-    public function dequeue(): mixed
+    public function pop(): mixed
     {
-        if ($this->list->isEmpty()) {
-            throw new UnderflowException('Queue underflow');
+        if ($this->isEmpty()) {
+            throw new UnderflowException('Stack underflow');
         }
 
-        return $this->list->shift();
+        return $this->list->pop();
     }
 
     /**
      * @inheritDoc
      */
-    public function front(): mixed
+    public function top(): mixed
     {
-        if ($this->list->isEmpty()) {
-            throw new UnderflowException('Queue underflow');
+        if ($this->isEmpty()) {
+            throw new UnderflowException('Stack underflow');
         }
 
-        return $this->list->bottom();
+        return $this->list->top();
     }
 
     /**
@@ -109,13 +108,15 @@ final class LinkedQueue implements Queue
      */
     public function map(callable $callback, ?string $itemType = null): static
     {
-        $queue = static::of($itemType);
+        $stack = static::of($itemType);
 
+        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
         foreach ($this->getIterator() as $index => $item) {
-            $queue->enqueue(call_user_func($callback, $item, $index));
+            $stack->push(call_user_func($callback, $item, $index));
         }
+        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP);
 
-        return $queue;
+        return $stack;
     }
 
     /**
@@ -235,15 +236,17 @@ final class LinkedQueue implements Queue
      */
     public function filter(callable $predicate): static
     {
-        $queue = static::of($this->itemType());
+        $stack = static::of($this->itemType());
 
+        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
-                $queue->enqueue($item);
+                $stack->push($item);
             }
         }
+        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP);
 
-        return $queue;
+        return $stack;
     }
 
     /**
@@ -251,15 +254,17 @@ final class LinkedQueue implements Queue
      */
     public function reject(callable $predicate): static
     {
-        $queue = static::of($this->itemType());
+        $stack = static::of($this->itemType());
 
+        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
         foreach ($this->getIterator() as $index => $item) {
             if (!call_user_func($predicate, $item, $index)) {
-                $queue->enqueue($item);
+                $stack->push($item);
             }
         }
+        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP);
 
-        return $queue;
+        return $stack;
     }
 
     /**
@@ -295,18 +300,20 @@ final class LinkedQueue implements Queue
      */
     public function partition(callable $predicate): array
     {
-        $queue1 = static::of($this->itemType());
-        $queue2 = static::of($this->itemType());
+        $stack1 = static::of($this->itemType());
+        $stack2 = static::of($this->itemType());
 
+        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
-                $queue1->enqueue($item);
+                $stack1->push($item);
             } else {
-                $queue2->enqueue($item);
+                $stack2->push($item);
             }
         }
+        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP);
 
-        return [$queue1, $queue2];
+        return [$stack1, $stack2];
     }
 
     /**

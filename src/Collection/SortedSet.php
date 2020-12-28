@@ -2,26 +2,34 @@
 
 namespace Novuso\System\Collection;
 
-use Novuso\System\Collection\Chain\SetBucketChain;
+use Novuso\System\Collection\Comparison\ComparableComparator;
+use Novuso\System\Collection\Comparison\FloatComparator;
+use Novuso\System\Collection\Comparison\FunctionComparator;
+use Novuso\System\Collection\Comparison\IntegerComparator;
+use Novuso\System\Collection\Comparison\StringComparator;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
 use Novuso\System\Collection\Traits\ItemTypeMethods;
-use Novuso\System\Collection\Type\Set;
+use Novuso\System\Collection\Tree\BinarySearchTree;
+use Novuso\System\Collection\Tree\RedBlackSearchTree;
+use Novuso\System\Collection\Type\OrderedSet;
+use Novuso\System\Type\Comparable;
+use Novuso\System\Type\Comparator;
 use Novuso\System\Utility\Assert;
-use Novuso\System\Utility\FastHasher;
+use Novuso\System\Utility\Validate;
 use Traversable;
 
 /**
- * Class HashSet
+ * Class SortedSet
  */
-final class HashSet implements Set
+final class SortedSet implements OrderedSet
 {
     use ItemTypeMethods;
 
-    protected array $buckets = [];
-    protected int $count = 0;
+    protected BinarySearchTree $tree;
+    protected Comparator $comparator;
 
     /**
-     * Constructs HashSet
+     * Constructs SortedSet
      *
      * If a type is not provided, the item type is dynamic.
      *
@@ -29,17 +37,61 @@ final class HashSet implements Set
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public function __construct(?string $itemType = null)
+    public function __construct(Comparator $comparator, ?string $itemType = null)
     {
         $this->setItemType($itemType);
+        $this->comparator = $comparator;
+        $this->tree = new RedBlackSearchTree($this->comparator);
     }
 
     /**
      * @inheritDoc
      */
-    public static function of(?string $itemType = null): static
+    public static function create(Comparator $comparator, ?string $itemType = null): static
     {
-        return new static($itemType);
+        return new static($comparator, $itemType);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function comparable(?string $itemType = null): static
+    {
+        Assert::isTrue(Validate::isNull($itemType) || Validate::implementsInterface($itemType, Comparable::class));
+
+        return new static(new ComparableComparator(), $itemType);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function callback(callable $callback, ?string $itemType = null): static
+    {
+        return new static(new FunctionComparator($callback), $itemType);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function float(): static
+    {
+        return new static(new FloatComparator(), 'float');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function integer(): static
+    {
+        return new static(new IntegerComparator(), 'int');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function string(): static
+    {
+        return new static(new StringComparator(), 'string');
     }
 
     /**
@@ -47,7 +99,7 @@ final class HashSet implements Set
      */
     public function isEmpty(): bool
     {
-        return $this->count === 0;
+        return $this->tree->isEmpty();
     }
 
     /**
@@ -55,64 +107,40 @@ final class HashSet implements Set
      */
     public function count(): int
     {
-        return $this->count;
+        return $this->tree->count();
     }
 
     /**
      * @inheritDoc
      */
-    public function add(mixed $item): void
+    public function add($item): void
     {
         Assert::isType($item, $this->itemType());
-
-        $hash = FastHasher::hash($item);
-
-        if (!isset($this->buckets[$hash])) {
-            $this->buckets[$hash] = new SetBucketChain();
-        }
-
-        if ($this->buckets[$hash]->add($item)) {
-            $this->count++;
-        }
+        $this->tree->set($item, true);
     }
 
     /**
      * @inheritDoc
      */
-    public function contains(mixed $item): bool
+    public function contains($item): bool
     {
-        $hash = FastHasher::hash($item);
-
-        if (!isset($this->buckets[$hash])) {
-            return false;
-        }
-
-        return $this->buckets[$hash]->contains($item);
+        return $this->tree->has($item);
     }
 
     /**
      * @inheritDoc
      */
-    public function remove(mixed $item): void
+    public function remove($item): void
     {
-        $hash = FastHasher::hash($item);
-
-        if (isset($this->buckets[$hash])) {
-            if ($this->buckets[$hash]->remove($item)) {
-                $this->count--;
-                if ($this->buckets[$hash]->isEmpty()) {
-                    unset($this->buckets[$hash]);
-                }
-            }
-        }
+        $this->tree->remove($item);
     }
 
     /**
      * @inheritDoc
      */
-    public function difference(Set $other): static
+    public function difference(OrderedSet $other): static
     {
-        $difference = static::of($this->itemType());
+        $difference = static::create($this->comparator, $this->itemType());
 
         if ($this === $other) {
             return $difference;
@@ -127,9 +155,9 @@ final class HashSet implements Set
     /**
      * @inheritDoc
      */
-    public function intersection(Set $other): static
+    public function intersection(OrderedSet $other): static
     {
-        $intersection = static::of($this->itemType());
+        $intersection = static::create($this->comparator, $this->itemType());
 
         $this->filter([$other, 'contains'])->each([$intersection, 'add']);
 
@@ -139,9 +167,9 @@ final class HashSet implements Set
     /**
      * @inheritDoc
      */
-    public function complement(Set $other): static
+    public function complement(OrderedSet $other): static
     {
-        $complement = static::of($this->itemType());
+        $complement = static::create($this->comparator, $this->itemType());
 
         if ($this === $other) {
             return $complement;
@@ -155,14 +183,62 @@ final class HashSet implements Set
     /**
      * @inheritDoc
      */
-    public function union(Set $other): static
+    public function union(OrderedSet $other): static
     {
-        $union = static::of($this->itemType());
+        $union = static::create($this->comparator, $this->itemType());
 
         $this->each([$union, 'add']);
         $other->each([$union, 'add']);
 
         return $union;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function range(mixed $lo, mixed $hi): iterable
+    {
+        return $this->tree->rangeKeys($lo, $hi);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function rangeCount(mixed $lo, mixed $hi): int
+    {
+        return $this->tree->rangeCount($lo, $hi);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function floor(mixed $item): mixed
+    {
+        return $this->tree->floor($item);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function ceiling(mixed $item): mixed
+    {
+        return $this->tree->ceiling($item);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function rank(mixed $item): int
+    {
+        return $this->tree->rank($item);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function select(int $rank): mixed
+    {
+        return $this->tree->select($rank);
     }
 
     /**
@@ -178,9 +254,9 @@ final class HashSet implements Set
     /**
      * @inheritDoc
      */
-    public function map(callable $callback, ?string $itemType = null): static
+    public function map(callable $callback, Comparator $comparator, ?string $itemType = null): static
     {
-        $set = static::of($itemType);
+        $set = static::create($comparator, $itemType);
 
         foreach ($this->getIterator() as $index => $item) {
             $set->add(call_user_func($callback, $item, $index));
@@ -209,9 +285,7 @@ final class HashSet implements Set
             return $maxItem;
         }
 
-        return $this->reduce(function ($accumulator, $item) {
-            return ($accumulator === null) || $item > $accumulator ? $item : $accumulator;
-        });
+        return $this->tree->max();
     }
 
     /**
@@ -234,9 +308,35 @@ final class HashSet implements Set
             return $minItem;
         }
 
-        return $this->reduce(function ($accumulator, $item) {
-            return ($accumulator === null) || $item < $accumulator ? $item : $accumulator;
-        });
+        return $this->tree->min();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeMin(?callable $callback = null): void
+    {
+        if ($callback === null) {
+            $this->tree->removeMin();
+
+            return;
+        }
+
+        $this->remove($this->min($callback));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeMax(?callable $callback = null): void
+    {
+        if ($callback === null) {
+            $this->tree->removeMax();
+
+            return;
+        }
+
+        $this->remove($this->max($callback));
     }
 
     /**
@@ -306,7 +406,7 @@ final class HashSet implements Set
      */
     public function filter(callable $predicate): static
     {
-        $set = static::of($this->itemType());
+        $set = static::create($this->comparator, $this->itemType());
 
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
@@ -322,7 +422,7 @@ final class HashSet implements Set
      */
     public function reject(callable $predicate): static
     {
-        $set = static::of($this->itemType());
+        $set = static::create($this->comparator, $this->itemType());
 
         foreach ($this->getIterator() as $index => $item) {
             if (!call_user_func($predicate, $item, $index)) {
@@ -366,8 +466,8 @@ final class HashSet implements Set
      */
     public function partition(callable $predicate): array
     {
-        $set1 = static::of($this->itemType());
-        $set2 = static::of($this->itemType());
+        $set1 = static::create($this->comparator, $this->itemType());
+        $set2 = static::create($this->comparator, $this->itemType());
 
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
@@ -385,16 +485,13 @@ final class HashSet implements Set
      */
     public function getIterator(): Traversable
     {
-        return new GeneratorIterator(function (array $buckets) {
+        return new GeneratorIterator(function (iterable $keys) {
             $index = 0;
-            /** @var SetBucketChain $chain */
-            foreach ($buckets as $chain) {
-                for ($chain->rewind(); $chain->valid(); $chain->next()) {
-                    yield $index => $chain->current();
-                    $index++;
-                }
+            foreach ($keys as $key) {
+                yield $index => $key;
+                $index++;
             }
-        }, [$this->buckets]);
+        }, [$this->tree->keys()]);
     }
 
     /**
@@ -448,12 +545,7 @@ final class HashSet implements Set
      */
     public function __clone(): void
     {
-        $buckets = [];
-
-        foreach ($this->buckets as $hash => $chain) {
-            $buckets[$hash] = clone $chain;
-        }
-
-        $this->buckets = $buckets;
+        $tree = clone $this->tree;
+        $this->tree = $tree;
     }
 }

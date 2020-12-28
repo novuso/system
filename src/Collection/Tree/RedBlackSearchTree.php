@@ -2,10 +2,12 @@
 
 namespace Novuso\System\Collection\Tree;
 
+use Novuso\System\Collection\ArrayList;
 use Novuso\System\Collection\Type\ItemList;
 use Novuso\System\Exception\AssertionException;
+use Novuso\System\Exception\LookupException;
 use Novuso\System\Exception\UnderflowException;
-use Novusp\System\Collection\ArrayList;
+use Novuso\System\Type\Comparator;
 use Novuso\System\Exception\KeyException;
 use Novuso\System\Utility\VarPrinter;
 

@@ -397,8 +397,6 @@ final class LinkedDeque implements Deque
 
     /**
      * Handles deep cloning
-     *
-     * @return void
      */
     public function __clone(): void
     {
