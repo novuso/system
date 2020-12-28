@@ -82,8 +82,7 @@ if ($percentage < $minPercentage) {
         $minPercentage
     ));
 
-    //TODO: turn on coverage build fail when unit tests completed
-    //return 1;
+    return 1;
 } else {
     print_line('green', 'Code coverage check passed');
 }
@@ -97,8 +96,7 @@ passthru(sprintf(
 ), $result);
 
 if ($result !== 0) {
-    //TODO: turn on code styles build fail when style fixed
-    //return $result;
+    return $result;
 } else {
     print_line('green', 'Code style check passed');
 }
