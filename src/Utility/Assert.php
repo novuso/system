@@ -1158,7 +1158,11 @@ final class Assert
         $variables = [];
 
         foreach ($context as $name => $value) {
-            $variables[] = sprintf('%s:%s', $name, VarPrinter::toString($value));
+            $variables[] = sprintf(
+                '%s:%s',
+                $name,
+                VarPrinter::toString($value)
+            );
         }
 
         $message = sprintf(

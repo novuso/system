@@ -99,7 +99,12 @@ final class ArrayList implements ItemList
         $count = count($this->items);
 
         if ($index < -$count || $index > $count - 1) {
-            $message = sprintf('Index (%d) out of range[%d, %d]', $index, -$count, $count - 1);
+            $message = sprintf(
+                'Index (%d) out of range[%d, %d]',
+                $index,
+                -$count,
+                $count - 1
+            );
             throw new IndexException($message);
         }
 
@@ -118,7 +123,12 @@ final class ArrayList implements ItemList
         $count = count($this->items);
 
         if ($index < -$count || $index > $count - 1) {
-            $message = sprintf('Index (%d) out of range[%d, %d]', $index, -$count, $count - 1);
+            $message = sprintf(
+                'Index (%d) out of range[%d, %d]',
+                $index,
+                -$count,
+                $count - 1
+            );
             throw new IndexException($message);
         }
 
@@ -333,7 +343,11 @@ final class ArrayList implements ItemList
     public function indexOf(mixed $object): ?int
     {
         if (!($object instanceof Closure)) {
-            $key = array_search($object, $this->items, true);
+            $key = array_search(
+                $object,
+                $this->items,
+                $strict = true
+            );
 
             if ($key === false) {
                 return null;
@@ -357,7 +371,11 @@ final class ArrayList implements ItemList
     public function lastIndexOf(mixed $object): ?int
     {
         if (!($object instanceof Closure)) {
-            $key = array_search($object, array_reverse($this->items, true), true);
+            $key = array_search(
+                $object,
+                array_reverse($this->items, true),
+                $strict = true
+            );
 
             if ($key === false) {
                 return null;
@@ -536,7 +554,11 @@ final class ArrayList implements ItemList
         }
 
         return $this->reduce(function ($accumulator, $item) {
-            return ($accumulator === null) || $item > $accumulator ? $item : $accumulator;
+            if ($accumulator === null || $item > $accumulator) {
+                return $item;
+            }
+
+            return $accumulator;
         });
     }
 
@@ -561,7 +583,11 @@ final class ArrayList implements ItemList
         }
 
         return $this->reduce(function ($accumulator, $item) {
-            return ($accumulator === null) || $item < $accumulator ? $item : $accumulator;
+            if ($accumulator === null || $item < $accumulator) {
+                return $item;
+            }
+
+            return $accumulator;
         });
     }
 
@@ -573,7 +599,12 @@ final class ArrayList implements ItemList
         $accumulator = $initial;
 
         foreach ($this->items as $index => $item) {
-            $accumulator = call_user_func($callback, $accumulator, $item, $index);
+            $accumulator = call_user_func(
+                $callback,
+                $accumulator,
+                $item,
+                $index
+            );
         }
 
         return $accumulator;

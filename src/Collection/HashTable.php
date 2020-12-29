@@ -88,7 +88,10 @@ final class HashTable implements Table
         $hash = FastHasher::hash($key);
 
         if (!isset($this->buckets[$hash])) {
-            $message = sprintf('Key not found: %s', VarPrinter::toString($key));
+            $message = sprintf(
+                'Key not found: %s',
+                VarPrinter::toString($key)
+            );
             throw new KeyException($message);
         }
 
@@ -271,7 +274,12 @@ final class HashTable implements Table
         $accumulator = $initial;
 
         foreach ($this->getIterator() as $key => $value) {
-            $accumulator = call_user_func($callback, $accumulator, $value, $key);
+            $accumulator = call_user_func(
+                $callback,
+                $accumulator,
+                $value,
+                $key
+            );
         }
 
         return $accumulator;

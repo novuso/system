@@ -214,6 +214,7 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue(5356);
         $queue->enqueue(7489);
         $queue->enqueue(8936);
+        $queue->enqueue(2345);
 
         static::assertSame(8936, $queue->max());
     }
@@ -236,8 +237,9 @@ class ArrayQueueTest extends UnitTestCase
         $queue->enqueue(5356);
         $queue->enqueue(7489);
         $queue->enqueue(8936);
+        $queue->enqueue(2345);
 
-        static::assertSame(5356, $queue->min());
+        static::assertSame(2345, $queue->min());
     }
 
     public function test_that_min_returns_expected_value_with_callback()

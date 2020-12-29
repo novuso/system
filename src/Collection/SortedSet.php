@@ -57,7 +57,8 @@ final class SortedSet implements OrderedSet
      */
     public static function comparable(?string $itemType = null): static
     {
-        Assert::isTrue(Validate::isNull($itemType) || Validate::implementsInterface($itemType, Comparable::class));
+        Assert::isTrue(Validate::isNull($itemType)
+            || Validate::implementsInterface($itemType, Comparable::class));
 
         return new static(new ComparableComparator(), $itemType);
     }
@@ -347,7 +348,12 @@ final class SortedSet implements OrderedSet
         $accumulator = $initial;
 
         foreach ($this->getIterator() as $index => $item) {
-            $accumulator = call_user_func($callback, $accumulator, $item, $index);
+            $accumulator = call_user_func(
+                $callback,
+                $accumulator,
+                $item,
+                $index
+            );
         }
 
         return $accumulator;

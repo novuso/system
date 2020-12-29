@@ -588,6 +588,7 @@ class ArrayListTest extends UnitTestCase
         $list[] = 5356;
         $list[] = 7489;
         $list[] = 8936;
+        $list[] = 2345;
 
         static::assertSame(8936, $list->max());
     }
@@ -610,8 +611,9 @@ class ArrayListTest extends UnitTestCase
         $list[] = 5356;
         $list[] = 7489;
         $list[] = 8936;
+        $list[] = 2345;
 
-        static::assertSame(5356, $list->min());
+        static::assertSame(2345, $list->min());
     }
 
     public function test_that_min_returns_expected_value_with_callback()

@@ -103,7 +103,7 @@ final class GeneratorIterator implements Iterator
     public function getReturn(): mixed
     {
         if (!$this->generator) {
-            $message = "Cannot get return value of a generator that hasn't returned";
+            $message = 'Cannot get return value; generator has not returned';
             throw new MethodCallException($message);
         }
 

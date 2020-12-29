@@ -140,7 +140,11 @@ final class LinkedStack implements Stack
         }
 
         return $this->reduce(function ($accumulator, $item) {
-            return ($accumulator === null) || $item > $accumulator ? $item : $accumulator;
+            if ($accumulator === null || $item > $accumulator) {
+                return $item;
+            }
+
+            return $accumulator;
         });
     }
 
@@ -165,7 +169,11 @@ final class LinkedStack implements Stack
         }
 
         return $this->reduce(function ($accumulator, $item) {
-            return ($accumulator === null) || $item < $accumulator ? $item : $accumulator;
+            if ($accumulator === null || $item < $accumulator) {
+                return $item;
+            }
+
+            return $accumulator;
         });
     }
 
@@ -177,7 +185,12 @@ final class LinkedStack implements Stack
         $accumulator = $initial;
 
         foreach ($this->getIterator() as $index => $item) {
-            $accumulator = call_user_func($callback, $accumulator, $item, $index);
+            $accumulator = call_user_func(
+                $callback,
+                $accumulator,
+                $item,
+                $index
+            );
         }
 
         return $accumulator;

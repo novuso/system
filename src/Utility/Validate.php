@@ -432,7 +432,8 @@ final class Validate
             return true;
         }
 
-        return (json_decode((string) $value) !== null && json_last_error() === JSON_ERROR_NONE);
+        return json_decode((string) $value) !== null
+            && json_last_error() === JSON_ERROR_NONE;
     }
 
     /**

@@ -265,6 +265,7 @@ class HashSetTest extends UnitTestCase
         $set->add(5356);
         $set->add(7489);
         $set->add(8936);
+        $set->add(2345);
 
         static::assertSame(8936, $set->max());
     }
@@ -287,8 +288,9 @@ class HashSetTest extends UnitTestCase
         $set->add(5356);
         $set->add(7489);
         $set->add(8936);
+        $set->add(2345);
 
-        static::assertSame(5356, $set->min());
+        static::assertSame(2345, $set->min());
     }
 
     public function test_that_min_returns_expected_value_with_callback()

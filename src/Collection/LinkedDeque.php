@@ -171,7 +171,11 @@ final class LinkedDeque implements Deque
         }
 
         return $this->reduce(function ($accumulator, $item) {
-            return ($accumulator === null) || $item > $accumulator ? $item : $accumulator;
+            if ($accumulator === null || $item > $accumulator) {
+                return $item;
+            }
+
+            return $accumulator;
         });
     }
 
@@ -196,7 +200,11 @@ final class LinkedDeque implements Deque
         }
 
         return $this->reduce(function ($accumulator, $item) {
-            return ($accumulator === null) || $item < $accumulator ? $item : $accumulator;
+            if ($accumulator === null || $item < $accumulator) {
+                return $item;
+            }
+
+            return $accumulator;
         });
     }
 
@@ -208,7 +216,12 @@ final class LinkedDeque implements Deque
         $accumulator = $initial;
 
         foreach ($this->getIterator() as $index => $item) {
-            $accumulator = call_user_func($callback, $accumulator, $item, $index);
+            $accumulator = call_user_func(
+                $callback,
+                $accumulator,
+                $item,
+                $index
+            );
         }
 
         return $accumulator;
