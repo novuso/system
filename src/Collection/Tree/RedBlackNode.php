@@ -16,7 +16,7 @@ final class RedBlackNode
     /**
      * Constructs RedBlackNode
      *
-     * @codeCoverageIgnore
+     * @codeCoverageIgnore coverage bug
      */
     public function __construct(
         protected mixed $key,

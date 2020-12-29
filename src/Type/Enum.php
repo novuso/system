@@ -18,29 +18,27 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable
     private static array $constants = [];
     private ?string $name = null;
     private ?int $ordinal = null;
-    private mixed $value;
 
     /**
      * Constructs Enum
      *
      * @internal
      *
+     * @codeCoverageIgnore coverage bug
+     *
      * @throws DomainException When the value is invalid
      */
-    final private function __construct(mixed $value)
+    final private function __construct(protected mixed $value)
     {
         $constants = self::getMembers();
-
-        if (!in_array($value, $constants, true)) {
+        if (!in_array($this->value, $constants, true)) {
             $message = sprintf(
                 '%s is not a member value of enum %s',
-                VarPrinter::toString($value),
+                VarPrinter::toString($this->value),
                 static::class
             );
             throw new DomainException($message);
         }
-
-        $this->value = $value;
     }
 
     /**

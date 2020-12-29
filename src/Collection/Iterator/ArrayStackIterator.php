@@ -9,16 +9,16 @@ use Iterator;
  */
 final class ArrayStackIterator implements Iterator
 {
-    protected array $items;
     protected int $index;
     protected int $count;
 
     /**
      * Constructs ArrayStackIterator
+     *
+     * @codeCoverageIgnore coverage bug
      */
-    public function __construct(array $items)
+    public function __construct(protected array $items)
     {
-        $this->items = $items;
         $this->count = count($this->items);
         $this->index = $this->count - 1;
     }

@@ -18,24 +18,23 @@ use Throwable;
 final class GeneratorIterator implements Iterator
 {
     protected Closure $function;
-    protected array $args;
-    protected ?Generator $generator;
+    protected ?Generator $generator = null;
 
     /**
      * Constructs GeneratorIterator
      *
+     * @codeCoverageIgnore coverage bug
+     *
      * @throws DomainException When function is not a generator
      * @throws ReflectionException
      */
-    public function __construct(callable $function, array $args = [])
+    public function __construct(callable $function, protected array $args = [])
     {
         $reflection = new ReflectionFunction($function);
         if (!$reflection->isGenerator()) {
             throw new DomainException('Invalid generator function');
         }
         $this->function = Closure::fromCallable($function);
-        $this->args = $args;
-        $this->generator = null;
     }
 
     /**

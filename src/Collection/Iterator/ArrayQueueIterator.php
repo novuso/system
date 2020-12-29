@@ -9,21 +9,16 @@ use Iterator;
  */
 final class ArrayQueueIterator implements Iterator
 {
-    protected array $items;
-    protected int $front;
-    protected int $cap;
-    protected int $index;
+    protected int $index = 0;
     protected int $count;
 
     /**
      * Constructs ArrayQueueIterator
+     *
+     * @codeCoverageIgnore coverage bug
      */
-    public function __construct(array $items, int $front, int $cap)
+    public function __construct(protected array $items, protected int $front, protected int $cap)
     {
-        $this->items = $items;
-        $this->front = $front;
-        $this->cap = $cap;
-        $this->index = 0;
         $this->count = count($this->items);
     }
 

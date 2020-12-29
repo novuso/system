@@ -13,8 +13,8 @@ final class SetBucketChain implements Countable
     protected TerminalBucket $head;
     protected TerminalBucket $tail;
     protected Bucket $current;
-    protected int $count;
-    protected int $offset;
+    protected int $count = 0;
+    protected int $offset = -1;
 
     /**
      * Constructs SetBucketChain
@@ -26,8 +26,6 @@ final class SetBucketChain implements Countable
         $this->head->setNext($this->tail);
         $this->tail->setPrev($this->head);
         $this->current = $this->head;
-        $this->count = 0;
-        $this->offset = -1;
     }
 
     /**

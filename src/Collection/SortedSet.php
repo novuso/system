@@ -26,10 +26,11 @@ final class SortedSet implements OrderedSet
     use ItemTypeMethods;
 
     protected BinarySearchTree $tree;
-    protected Comparator $comparator;
 
     /**
      * Constructs SortedSet
+     *
+     * @codeCoverageIgnore coverage bug
      *
      * If a type is not provided, the item type is dynamic.
      *
@@ -37,10 +38,9 @@ final class SortedSet implements OrderedSet
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public function __construct(Comparator $comparator, ?string $itemType = null)
+    public function __construct(protected Comparator $comparator, ?string $itemType = null)
     {
         $this->setItemType($itemType);
-        $this->comparator = $comparator;
         $this->tree = new RedBlackSearchTree($this->comparator);
     }
 

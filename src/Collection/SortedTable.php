@@ -26,10 +26,11 @@ final class SortedTable implements OrderedTable
     use KeyValueTypeMethods;
 
     protected BinarySearchTree $tree;
-    protected Comparator $comparator;
 
     /**
      * Constructs SortedTable
+     *
+     * @codeCoverageIgnore coverage bug
      *
      * If types are not provided, the types are dynamic.
      *
@@ -37,11 +38,10 @@ final class SortedTable implements OrderedTable
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public function __construct(Comparator $comparator, ?string $keyType = null, ?string $valueType = null)
+    public function __construct(protected Comparator $comparator, ?string $keyType = null, ?string $valueType = null)
     {
         $this->setKeyType($keyType);
         $this->setValueType($valueType);
-        $this->comparator = $comparator;
         $this->tree = new RedBlackSearchTree($this->comparator);
     }
 
