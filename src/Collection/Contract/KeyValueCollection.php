@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection\Contract;
 
@@ -16,7 +18,10 @@ interface KeyValueCollection extends Collection
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public static function of(?string $keyType = null, ?string $valueType = null): static;
+    public static function of(
+        ?string $keyType = null,
+        ?string $valueType = null
+    ): static;
 
     /**
      * Retrieves the key type

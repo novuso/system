@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection;
 
@@ -32,7 +34,8 @@ final class LinkedQueue implements Queue
     {
         $this->setItemType($itemType);
         $this->list = new SplDoublyLinkedList();
-        $mode = SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP;
+        $mode = SplDoublyLinkedList::IT_MODE_FIFO
+            | SplDoublyLinkedList::IT_MODE_KEEP;
         $this->list->setIteratorMode($mode);
     }
 

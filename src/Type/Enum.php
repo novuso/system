@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Type;
 
@@ -49,8 +51,10 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable
      *
      * @throws DomainException When the constant name is not defined
      */
-    final public static function __callStatic(string $name, array $arguments): static
-    {
+    final public static function __callStatic(
+        string $name,
+        array $arguments
+    ): static {
         return self::fromName($name);
     }
 

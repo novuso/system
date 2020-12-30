@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection;
 
@@ -38,8 +40,10 @@ final class SortedSet implements OrderedSet
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public function __construct(protected Comparator $comparator, ?string $itemType = null)
-    {
+    public function __construct(
+        protected Comparator $comparator,
+        ?string $itemType = null
+    ) {
         $this->setItemType($itemType);
         $this->tree = new RedBlackSearchTree($this->comparator);
     }
@@ -47,8 +51,10 @@ final class SortedSet implements OrderedSet
     /**
      * @inheritDoc
      */
-    public static function create(Comparator $comparator, ?string $itemType = null): static
-    {
+    public static function create(
+        Comparator $comparator,
+        ?string $itemType = null
+    ): static {
         return new static($comparator, $itemType);
     }
 
@@ -66,8 +72,10 @@ final class SortedSet implements OrderedSet
     /**
      * @inheritDoc
      */
-    public static function callback(callable $callback, ?string $itemType = null): static
-    {
+    public static function callback(
+        callable $callback,
+        ?string $itemType = null
+    ): static {
         return new static(new FunctionComparator($callback), $itemType);
     }
 
@@ -255,8 +263,11 @@ final class SortedSet implements OrderedSet
     /**
      * @inheritDoc
      */
-    public function map(callable $callback, Comparator $comparator, ?string $itemType = null): static
-    {
+    public function map(
+        callable $callback,
+        Comparator $comparator,
+        ?string $itemType = null
+    ): static {
         $set = static::create($comparator, $itemType);
 
         foreach ($this->getIterator() as $index => $item) {

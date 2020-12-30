@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection\Chain;
 
@@ -12,8 +14,12 @@ final class ItemBucket implements Bucket
 
     /**
      * Constructs ItemBucket
+     *
+     * @codeCoverageIgnore coverage bug
      */
-    public function __construct(protected mixed $item) {}
+    public function __construct(protected mixed $item)
+    {
+    }
 
     /**
      * @inheritDoc

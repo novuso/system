@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection;
 
@@ -31,8 +33,10 @@ final class HashTable implements Table
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public function __construct(?string $keyType = null, ?string $valueType = null)
-    {
+    public function __construct(
+        ?string $keyType = null,
+        ?string $valueType = null
+    ) {
         $this->setKeyType($keyType);
         $this->setValueType($valueType);
     }
@@ -40,8 +44,10 @@ final class HashTable implements Table
     /**
      * @inheritDoc
      */
-    public static function of(?string $keyType = null, ?string $valueType = null): static
-    {
+    public static function of(
+        ?string $keyType = null,
+        ?string $valueType = null
+    ): static {
         return new static($keyType, $valueType);
     }
 
@@ -132,33 +138,33 @@ final class HashTable implements Table
     /**
      * @inheritDoc
      */
-    public function offsetSet(mixed $key, mixed $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->set($key, $value);
+        $this->set($offset, $value);
     }
 
     /**
      * @inheritDoc
      */
-    public function offsetGet(mixed $key): mixed
+    public function offsetGet(mixed $offset): mixed
     {
-        return $this->get($key);
+        return $this->get($offset);
     }
 
     /**
      * @inheritDoc
      */
-    public function offsetExists(mixed $key): bool
+    public function offsetExists(mixed $offset): bool
     {
-        return $this->has($key);
+        return $this->has($offset);
     }
 
     /**
      * @inheritDoc
      */
-    public function offsetUnset(mixed $key): void
+    public function offsetUnset(mixed $offset): void
     {
-        $this->remove($key);
+        $this->remove($offset);
     }
 
     /**

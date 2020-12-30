@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Type;
 
@@ -14,9 +16,13 @@ final class Type implements Equatable, JsonSerializable
     /**
      * Constructs Type
      *
+     * @codeCoverageIgnore coverage bug
+     *
      * @internal
      */
-    protected function __construct(protected string $name) {}
+    protected function __construct(protected string $name)
+    {
+    }
 
     /**
      * Creates instance from an object or class name

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection;
 
@@ -17,6 +19,11 @@ final class LinkedStack implements Stack
 {
     use ItemTypeMethods;
 
+    protected const FORWARD = SplDoublyLinkedList::IT_MODE_LIFO
+        | SplDoublyLinkedList::IT_MODE_KEEP;
+    protected const REVERSE = SplDoublyLinkedList::IT_MODE_FIFO
+        | SplDoublyLinkedList::IT_MODE_KEEP;
+
     protected SplDoublyLinkedList $list;
 
     /**
@@ -32,8 +39,7 @@ final class LinkedStack implements Stack
     {
         $this->setItemType($itemType);
         $this->list = new SplDoublyLinkedList();
-        $mode = SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP;
-        $this->list->setIteratorMode($mode);
+        $this->list->setIteratorMode(static::FORWARD);
     }
 
     /**
@@ -110,11 +116,11 @@ final class LinkedStack implements Stack
     {
         $stack = static::of($itemType);
 
-        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
+        $this->list->setIteratorMode(static::REVERSE);
         foreach ($this->getIterator() as $index => $item) {
             $stack->push(call_user_func($callback, $item, $index));
         }
-        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP);
+        $this->list->setIteratorMode(static::FORWARD);
 
         return $stack;
     }
@@ -139,13 +145,15 @@ final class LinkedStack implements Stack
             return $maxItem;
         }
 
-        return $this->reduce(function ($accumulator, $item) {
-            if ($accumulator === null || $item > $accumulator) {
-                return $item;
-            }
+        return $this->reduce(
+            function ($accumulator, $item) {
+                if ($accumulator === null || $item > $accumulator) {
+                    return $item;
+                }
 
-            return $accumulator;
-        });
+                return $accumulator;
+            }
+        );
     }
 
     /**
@@ -168,13 +176,15 @@ final class LinkedStack implements Stack
             return $minItem;
         }
 
-        return $this->reduce(function ($accumulator, $item) {
-            if ($accumulator === null || $item < $accumulator) {
-                return $item;
-            }
+        return $this->reduce(
+            function ($accumulator, $item) {
+                if ($accumulator === null || $item < $accumulator) {
+                    return $item;
+                }
 
-            return $accumulator;
-        });
+                return $accumulator;
+            }
+        );
     }
 
     /**
@@ -211,9 +221,12 @@ final class LinkedStack implements Stack
             };
         }
 
-        return $this->reduce(function ($total, $item, $index) use ($callback) {
-            return $total + call_user_func($callback, $item, $index);
-        }, 0);
+        return $this->reduce(
+            function ($total, $item, $index) use ($callback) {
+                return $total + call_user_func($callback, $item, $index);
+            },
+            0
+        );
     }
 
     /**
@@ -251,13 +264,13 @@ final class LinkedStack implements Stack
     {
         $stack = static::of($this->itemType());
 
-        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
+        $this->list->setIteratorMode(static::REVERSE);
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
                 $stack->push($item);
             }
         }
-        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP);
+        $this->list->setIteratorMode(static::FORWARD);
 
         return $stack;
     }
@@ -269,13 +282,13 @@ final class LinkedStack implements Stack
     {
         $stack = static::of($this->itemType());
 
-        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
+        $this->list->setIteratorMode(static::REVERSE);
         foreach ($this->getIterator() as $index => $item) {
             if (!call_user_func($predicate, $item, $index)) {
                 $stack->push($item);
             }
         }
-        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP);
+        $this->list->setIteratorMode(static::FORWARD);
 
         return $stack;
     }
@@ -316,7 +329,7 @@ final class LinkedStack implements Stack
         $stack1 = static::of($this->itemType());
         $stack2 = static::of($this->itemType());
 
-        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO | SplDoublyLinkedList::IT_MODE_KEEP);
+        $this->list->setIteratorMode(static::REVERSE);
         foreach ($this->getIterator() as $index => $item) {
             if (call_user_func($predicate, $item, $index)) {
                 $stack1->push($item);
@@ -324,7 +337,7 @@ final class LinkedStack implements Stack
                 $stack2->push($item);
             }
         }
-        $this->list->setIteratorMode(SplDoublyLinkedList::IT_MODE_LIFO | SplDoublyLinkedList::IT_MODE_KEEP);
+        $this->list->setIteratorMode(static::FORWARD);
 
         return [$stack1, $stack2];
     }

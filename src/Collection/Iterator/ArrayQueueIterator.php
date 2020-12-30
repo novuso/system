@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection\Iterator;
 
@@ -17,8 +19,11 @@ final class ArrayQueueIterator implements Iterator
      *
      * @codeCoverageIgnore coverage bug
      */
-    public function __construct(protected array $items, protected int $front, protected int $cap)
-    {
+    public function __construct(
+        protected array $items,
+        protected int $front,
+        protected int $cap
+    ) {
         $this->count = count($this->items);
     }
 

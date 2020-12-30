@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Utility;
 
@@ -10,8 +12,10 @@ final class FastHasher
     /**
      * Creates a string hash for a value
      */
-    public static function hash(mixed $value, string $algorithm = 'fnv1a32'): string
-    {
+    public static function hash(
+        mixed $value,
+        string $algorithm = 'fnv1a32'
+    ): string {
         $type = gettype($value);
 
         switch ($type) {

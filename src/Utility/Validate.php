@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Utility;
 
@@ -262,7 +264,13 @@ final class Validate
             return false;
         }
 
-        return filter_var((string) $value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false;
+        $filtered = filter_var(
+            (string) $value,
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_IPV4
+        );
+
+        return $filtered !== false;
     }
 
     /**
@@ -274,7 +282,13 @@ final class Validate
             return false;
         }
 
-        return filter_var((string) $value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false;
+        $filtered = filter_var(
+            (string) $value,
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_IPV6
+        );
+
+        return $filtered !== false;
     }
 
     /**
@@ -487,8 +501,11 @@ final class Validate
     /**
      * Checks if value has an exact string length
      */
-    public static function exactLength(mixed $value, int $length, string $encoding = 'UTF-8'): bool
-    {
+    public static function exactLength(
+        mixed $value,
+        int $length,
+        string $encoding = 'UTF-8'
+    ): bool {
         if (!static::isStringCastable($value)) {
             return false;
         }
@@ -501,8 +518,11 @@ final class Validate
     /**
      * Checks if value has a string length greater or equal to a minimum
      */
-    public static function minLength(mixed $value, int $minLength, string $encoding = 'UTF-8'): bool
-    {
+    public static function minLength(
+        mixed $value,
+        int $minLength,
+        string $encoding = 'UTF-8'
+    ): bool {
         if (!static::isStringCastable($value)) {
             return false;
         }
@@ -515,8 +535,11 @@ final class Validate
     /**
      * Checks if value has a string length less or equal to a maximum
      */
-    public static function maxLength(mixed $value, int $maxLength, string $encoding = 'UTF-8'): bool
-    {
+    public static function maxLength(
+        mixed $value,
+        int $maxLength,
+        string $encoding = 'UTF-8'
+    ): bool {
         if (!static::isStringCastable($value)) {
             return false;
         }
@@ -529,8 +552,12 @@ final class Validate
     /**
      * Checks if value has a string length within a range
      */
-    public static function rangeLength(mixed $value, int $minLength, int $maxLength, string $encoding = 'UTF-8'): bool
-    {
+    public static function rangeLength(
+        mixed $value,
+        int $minLength,
+        int $maxLength,
+        string $encoding = 'UTF-8'
+    ): bool {
         if (!static::isStringCastable($value)) {
             return false;
         }
@@ -586,8 +613,11 @@ final class Validate
     /**
      * Checks if value is within a numeric range
      */
-    public static function rangeNumber(mixed $value, int|float $minNumber, int|float $maxNumber): bool
-    {
+    public static function rangeNumber(
+        mixed $value,
+        int|float $minNumber,
+        int|float $maxNumber
+    ): bool {
         if (!is_numeric($value)) {
             return false;
         }
@@ -684,8 +714,11 @@ final class Validate
     /**
      * Checks if value has a count within a range
      */
-    public static function rangeCount(mixed $value, int $minCount, int $maxCount): bool
-    {
+    public static function rangeCount(
+        mixed $value,
+        int $minCount,
+        int $maxCount
+    ): bool {
         if (!static::isCountable($value)) {
             return false;
         }
@@ -745,7 +778,10 @@ final class Validate
      */
     public static function areEqual(mixed $value1, mixed $value2): bool
     {
-        if (static::isEquatable($value1) && static::areSameType($value1, $value2)) {
+        if (
+            static::isEquatable($value1)
+            && static::areSameType($value1, $value2)
+        ) {
             return $value1->equals($value2);
         }
 
@@ -757,7 +793,10 @@ final class Validate
      */
     public static function areNotEqual(mixed $value1, mixed $value2): bool
     {
-        if (static::isEquatable($value1) && static::areSameType($value1, $value2)) {
+        if (
+            static::isEquatable($value1)
+            && static::areSameType($value1, $value2)
+        ) {
             return !$value1->equals($value2);
         }
 
@@ -959,10 +998,14 @@ final class Validate
     /**
      * Checks if value implements a given interface
      */
-    public static function implementsInterface(mixed $value, string $interface): bool
-    {
+    public static function implementsInterface(
+        mixed $value,
+        string $interface
+    ): bool {
         if (!is_object($value)) {
-            if (!(static::classExists($value) || static::interfaceExists($value))) {
+            $exists = static::classExists($value)
+                || static::interfaceExists($value);
+            if (!$exists) {
                 return false;
             }
             $value = (string) $value;
@@ -1016,8 +1059,10 @@ final class Validate
     /**
      * Checks if value is a method name for an object or class
      */
-    public static function methodExists(mixed $value, object|string $object): bool
-    {
+    public static function methodExists(
+        mixed $value,
+        object|string $object
+    ): bool {
         if (!static::isStringCastable($value)) {
             return false;
         }
@@ -1195,10 +1240,17 @@ final class Validate
         $pattern = '/\A(?:([^@]*)@)?(\[[^\]]*\]|[^:]*)(?::(?:\d*))?\z/';
         preg_match($pattern, $authority, $matches);
 
-        if (!self::isValidAuthUser((isset($matches[1]) && $matches[1]) ? $matches[1] : null)) {
+        $isValidAuthUser = self::isValidAuthUser(
+            (isset($matches[1]) && $matches[1]) ? $matches[1] : null
+        );
+        $isValidAuthHost = self::isValidAuthHost(
+            (isset($matches[2]) && $matches[2]) ? $matches[2] : ''
+        );
+
+        if (!$isValidAuthUser) {
             return false;
         }
-        if (!self::isValidAuthHost((isset($matches[2]) && $matches[2]) ? $matches[2] : '')) {
+        if (!$isValidAuthHost) {
             return false;
         }
 
@@ -1322,7 +1374,7 @@ final class Validate
         // [RFC3513] or later, is distinguished by enclosing the IP literal
         // within square brackets ("[" and "]").  This is the only place where
         // square bracket characters are allowed in the URI syntax.
-        if (strpos($host, '[') !== false) {
+        if (str_contains($host, '[')) {
             return self::isValidIpLiteral($host);
         }
 
@@ -1382,25 +1434,18 @@ final class Validate
         switch ($type) {
             case 'array':
                 return static::isArray($value);
-                break;
             case 'object':
                 return static::isObject($value);
-                break;
             case 'bool':
                 return static::isBool($value);
-                break;
             case 'int':
                 return static::isInt($value);
-                break;
             case 'float':
                 return static::isFloat($value);
-                break;
             case 'string':
                 return static::isString($value);
-                break;
             case 'callable':
                 return static::isCallable($value);
-                break;
             default:
                 break;
         }

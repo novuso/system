@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection\Type;
 
@@ -104,7 +106,10 @@ interface ItemList extends Arrayable, ArrayAccess, ItemCollection, JsonSerializa
      * function (<I> $item, int $index): bool {}
      * </code>
      */
-    public function first(?callable $predicate = null, mixed $default = null): mixed;
+    public function first(
+        ?callable $predicate = null,
+        mixed $default = null
+    ): mixed;
 
     /**
      * Retrieves the last value
@@ -117,7 +122,10 @@ interface ItemList extends Arrayable, ArrayAccess, ItemCollection, JsonSerializa
      * function (<I> $item, int $index): bool {}
      * </code>
      */
-    public function last(?callable $predicate = null, mixed $default = null): mixed;
+    public function last(
+        ?callable $predicate = null,
+        mixed $default = null
+    ): mixed;
 
     /**
      * Retrieves the first index of the given item

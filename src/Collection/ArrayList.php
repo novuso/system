@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection;
 
@@ -182,45 +184,45 @@ final class ArrayList implements ItemList
     /**
      * @inheritDoc
      */
-    public function offsetSet(mixed $index, mixed $item): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
-        if ($index === null) {
-            $this->add($item);
+        if ($offset === null) {
+            $this->add($value);
 
             return;
         }
 
-        Assert::isInt($index);
-        $this->set($index, $item);
+        Assert::isInt($offset);
+        $this->set($offset, $value);
     }
 
     /**
      * @inheritDoc
      */
-    public function offsetGet(mixed $index): mixed
+    public function offsetGet(mixed $offset): mixed
     {
-        Assert::isInt($index);
+        Assert::isInt($offset);
 
-        return $this->get($index);
+        return $this->get($offset);
     }
 
     /**
      * @inheritDoc
      */
-    public function offsetExists(mixed $index): bool
+    public function offsetExists(mixed $offset): bool
     {
-        Assert::isInt($index);
+        Assert::isInt($offset);
 
-        return $this->has($index);
+        return $this->has($offset);
     }
 
     /**
      * @inheritDoc
      */
-    public function offsetUnset(mixed $index): void
+    public function offsetUnset(mixed $offset): void
     {
-        Assert::isInt($index);
-        $this->remove($index);
+        Assert::isInt($offset);
+        $this->remove($offset);
     }
 
     /**
@@ -292,8 +294,10 @@ final class ArrayList implements ItemList
     /**
      * @inheritDoc
      */
-    public function first(?callable $predicate = null, mixed $default = null): mixed
-    {
+    public function first(
+        ?callable $predicate = null,
+        mixed $default = null
+    ): mixed {
         if ($predicate === null) {
             if ($this->isEmpty()) {
                 return $default;
@@ -316,8 +320,10 @@ final class ArrayList implements ItemList
     /**
      * @inheritDoc
      */
-    public function last(?callable $predicate = null, mixed $default = null): mixed
-    {
+    public function last(
+        ?callable $predicate = null,
+        mixed $default = null
+    ): mixed {
         if ($predicate === null) {
             if ($this->isEmpty()) {
                 return $default;
