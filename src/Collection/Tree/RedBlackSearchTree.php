@@ -6,7 +6,6 @@ namespace Novuso\System\Collection\Tree;
 
 use Novuso\System\Collection\ArrayList;
 use Novuso\System\Collection\Type\ItemList;
-use Novuso\System\Exception\AssertionException;
 use Novuso\System\Exception\KeyException;
 use Novuso\System\Exception\LookupException;
 use Novuso\System\Exception\UnderflowException;
@@ -302,8 +301,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Inserts a key-value pair in a subtree
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeSet(
         mixed $key,
@@ -331,8 +328,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Retrieves a node by key and subtree
      *
      * Returns null if the node is not found.
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeGet(mixed $key, ?RedBlackNode $node): ?RedBlackNode
     {
@@ -352,8 +347,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Deletes a node by key and subtree
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeRemove(mixed $key, RedBlackNode $node): ?RedBlackNode
     {
@@ -377,8 +370,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Deletes a node to the left by key and subtree
      *
      * @internal Helper for nodeRemove()
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeRemoveLeft(
         mixed $key,
@@ -399,8 +390,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Deletes a node to the right by key and subtree
      *
      * @internal Helper for nodeRemove()
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeRemoveRight(
         mixed $key,
@@ -426,8 +415,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Fills a queue with keys between lo and hi in a subtree
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function fillKeys(
         ItemList $list,
@@ -527,8 +514,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Retrieves the node with the largest key <= to a key in a subtree
      *
      * Returns null if there is not a key less or equal to the given key.
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeFloor(mixed $key, ?RedBlackNode $node): ?RedBlackNode
     {
@@ -556,8 +541,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Retrieves the node with the smallest key >= to a key in a subtree
      *
      * Returns null if there is not a key less or equal to the given key.
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeCeiling(
         mixed $key,
@@ -585,8 +568,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Retrieves the rank for a key in a subtree
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeRank(mixed $key, ?RedBlackNode $node): int
     {
