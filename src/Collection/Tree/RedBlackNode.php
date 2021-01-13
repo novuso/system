@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection\Tree;
 
@@ -16,14 +18,15 @@ final class RedBlackNode
     /**
      * Constructs RedBlackNode
      *
-     * @codeCoverageIgnore
+     * @codeCoverageIgnore coverage bug
      */
     public function __construct(
         protected mixed $key,
         protected mixed $value,
         protected int $size,
         protected bool $color
-    ) {}
+    ) {
+    }
 
     /**
      * Sets the left node

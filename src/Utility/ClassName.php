@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Utility;
 
@@ -32,7 +34,11 @@ final class ClassName
      */
     public static function underscore(object|string $object): string
     {
-        return strtolower(preg_replace('/(?<=\\w)([A-Z])/', '_$1', static::canonical($object)));
+        return strtolower(preg_replace(
+            '/(?<=\\w)([A-Z])/',
+            '_$1',
+            static::canonical($object)
+        ));
     }
 
     /**

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Test\Collection;
 
@@ -191,6 +193,7 @@ class LinkedStackTest extends UnitTestCase
         $stack->push(5356);
         $stack->push(7489);
         $stack->push(8936);
+        $stack->push(2345);
 
         static::assertSame(8936, $stack->max());
     }
@@ -213,8 +216,9 @@ class LinkedStackTest extends UnitTestCase
         $stack->push(5356);
         $stack->push(7489);
         $stack->push(8936);
+        $stack->push(2345);
 
-        static::assertSame(5356, $stack->min());
+        static::assertSame(2345, $stack->min());
     }
 
     public function test_that_min_returns_expected_value_with_callback()

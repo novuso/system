@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection\Chain;
 
@@ -15,8 +17,8 @@ final class TableBucketChain implements Countable
     protected TerminalBucket $head;
     protected TerminalBucket $tail;
     protected Bucket $current;
-    protected int $count;
-    protected int $offset;
+    protected int $count = 0;
+    protected int $offset = -1;
 
     /**
      * Constructs TableBucketChain
@@ -28,8 +30,6 @@ final class TableBucketChain implements Countable
         $this->head->setNext($this->tail);
         $this->tail->setPrev($this->head);
         $this->current = $this->head;
-        $this->count = 0;
-        $this->offset = -1;
     }
 
     /**
@@ -80,7 +80,10 @@ final class TableBucketChain implements Countable
         $bucket = $this->locate($key);
 
         if ($bucket === null) {
-            $message = sprintf('Key not found: %s', VarPrinter::toString($key));
+            $message = sprintf(
+                'Key not found: %s',
+                VarPrinter::toString($key)
+            );
             throw new KeyException($message);
         }
 
@@ -262,8 +265,12 @@ final class TableBucketChain implements Countable
     /**
      * Inserts a key-value pair between two nodes
      */
-    protected function insertBetween(mixed $key, mixed $value, Bucket $prev, Bucket $next): void
-    {
+    protected function insertBetween(
+        mixed $key,
+        mixed $value,
+        Bucket $prev,
+        Bucket $next
+    ): void {
         $bucket = new KeyValueBucket($key, $value);
 
         $prev->setNext($bucket);

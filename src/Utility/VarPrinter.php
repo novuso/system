@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Utility;
 
@@ -58,7 +60,11 @@ final class VarPrinter
         }
 
         if ($object instanceof DateTimeInterface) {
-            return sprintf('%s(%s)', ClassName::short($object), $object->format('Y-m-d\TH:i:sP'));
+            return sprintf(
+                '%s(%s)',
+                ClassName::short($object),
+                $object->format('Y-m-d\TH:i:sP')
+            );
         }
 
         if ($object instanceof Throwable) {

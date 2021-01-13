@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System;
 
@@ -7,5 +9,5 @@ namespace Novuso\System;
  */
 final class SystemLibrary
 {
-    public const VERSION = '2.0.0';
+    public const VERSION = '2.0.1';
 }

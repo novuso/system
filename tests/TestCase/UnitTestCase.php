@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Test\TestCase;
 
@@ -22,7 +24,10 @@ abstract class UnitTestCase extends TestCase
         $reflection = new ReflectionObject($this);
 
         foreach ($reflection->getProperties() as $prop) {
-            if (!$prop->isStatic() && strpos($prop->getDeclaringClass()->getName(), 'PHPUnit') !== 0) {
+            if (
+                !$prop->isStatic()
+                && str_starts_with($prop->getDeclaringClass()->getName(), 'PHPUnit')
+            ) {
                 $prop->setAccessible(true);
                 $prop->setValue($this, null);
             }
@@ -31,7 +36,9 @@ abstract class UnitTestCase extends TestCase
         $container = Mockery::getContainer();
 
         if ($container) {
-            $this->addToAssertionCount($container->mockery_getExpectationCount());
+            $this->addToAssertionCount(
+                $container->mockery_getExpectationCount()
+            );
         }
 
         Mockery::close();

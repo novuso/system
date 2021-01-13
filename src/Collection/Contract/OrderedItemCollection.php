@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection\Contract;
 
@@ -19,7 +21,10 @@ interface OrderedItemCollection extends Collection
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public static function create(Comparator $comparator, ?string $itemType = null): static;
+    public static function create(
+        Comparator $comparator,
+        ?string $itemType = null
+    ): static;
 
     /**
      * Creates collection of comparable items
@@ -50,7 +55,10 @@ interface OrderedItemCollection extends Collection
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public static function callback(callable $callback, ?string $itemType = null): static;
+    public static function callback(
+        callable $callback,
+        ?string $itemType = null
+    ): static;
 
     /**
      * Creates collection of floats
@@ -94,7 +102,11 @@ interface OrderedItemCollection extends Collection
      * function (<I> $item, int $index): mixed {}
      * </code>
      */
-    public function map(callable $callback, Comparator $comparator, ?string $itemType = null): static;
+    public function map(
+        callable $callback,
+        Comparator $comparator,
+        ?string $itemType = null
+    ): static;
 
     /**
      * Retrieves the maximum value in the list

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection\Iterator;
 
@@ -18,24 +20,23 @@ use Throwable;
 final class GeneratorIterator implements Iterator
 {
     protected Closure $function;
-    protected array $args;
-    protected ?Generator $generator;
+    protected ?Generator $generator = null;
 
     /**
      * Constructs GeneratorIterator
      *
+     * @codeCoverageIgnore coverage bug
+     *
      * @throws DomainException When function is not a generator
      * @throws ReflectionException
      */
-    public function __construct(callable $function, array $args = [])
+    public function __construct(callable $function, protected array $args = [])
     {
         $reflection = new ReflectionFunction($function);
         if (!$reflection->isGenerator()) {
             throw new DomainException('Invalid generator function');
         }
         $this->function = Closure::fromCallable($function);
-        $this->args = $args;
-        $this->generator = null;
     }
 
     /**
@@ -103,7 +104,7 @@ final class GeneratorIterator implements Iterator
     public function getReturn(): mixed
     {
         if (!$this->generator) {
-            $message = "Cannot get return value of a generator that hasn't returned";
+            $message = 'Cannot get return value; generator has not returned';
             throw new MethodCallException($message);
         }
 

@@ -2,10 +2,6 @@
 <ruleset name="Coding Standard">
     <description>Coding Standard</description>
     <rule ref="PSR12">
-        <exclude name="PSR12.Files.OpenTag.NotAlone" />
-        <exclude name="PSR12.Files.FileHeader.SpacingAfterBlock" />
-        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine" />
-        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore" />
         <!-- TODO: Below sniffs should be included with PHPCS 3.6 -->
         <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact" />
         <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint" />

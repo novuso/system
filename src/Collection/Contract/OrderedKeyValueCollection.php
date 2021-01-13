@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection\Contract;
 
@@ -19,7 +21,11 @@ interface OrderedKeyValueCollection extends Collection
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public static function create(Comparator $comparator, ?string $keyType = null, ?string $valueType = null): static;
+    public static function create(
+        Comparator $comparator,
+        ?string $keyType = null,
+        ?string $valueType = null
+    ): static;
 
     /**
      * Creates collection with comparable keys
@@ -33,7 +39,10 @@ interface OrderedKeyValueCollection extends Collection
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public static function comparable(?string $keyType = null, ?string $valueType = null): static;
+    public static function comparable(
+        ?string $keyType = null,
+        ?string $valueType = null
+    ): static;
 
     /**
      * Creates collection sorted by callback
@@ -54,7 +63,11 @@ interface OrderedKeyValueCollection extends Collection
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public static function callback(callable $callback, ?string $keyType = null, ?string $valueType = null): static;
+    public static function callback(
+        callable $callback,
+        ?string $keyType = null,
+        ?string $valueType = null
+    ): static;
 
     /**
      * Creates collection with float keys

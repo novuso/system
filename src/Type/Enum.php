@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Type;
 
@@ -18,26 +20,27 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable
     private static array $constants = [];
     private ?string $name = null;
     private ?int $ordinal = null;
-    private mixed $value;
 
     /**
      * Constructs Enum
      *
      * @internal
      *
+     * @codeCoverageIgnore coverage bug
+     *
      * @throws DomainException When the value is invalid
      */
-    final private function __construct(mixed $value)
+    final private function __construct(protected mixed $value)
     {
         $constants = self::getMembers();
-
-        if (!in_array($value, $constants, true)) {
-            $var = VarPrinter::toString($value);
-            $message = sprintf('%s is not a member value of enum %s', $var, static::class);
+        if (!in_array($this->value, $constants, true)) {
+            $message = sprintf(
+                '%s is not a member value of enum %s',
+                VarPrinter::toString($this->value),
+                static::class
+            );
             throw new DomainException($message);
         }
-
-        $this->value = $value;
     }
 
     /**
@@ -48,8 +51,10 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable
      *
      * @throws DomainException When the constant name is not defined
      */
-    final public static function __callStatic(string $name, array $arguments): static
-    {
+    final public static function __callStatic(
+        string $name,
+        array $arguments
+    ): static {
         return self::fromName($name);
     }
 
@@ -85,7 +90,11 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable
         $constName = sprintf('%s::%s', static::class, $name);
 
         if (!defined($constName)) {
-            $message = sprintf('%s is not a member constant of enum %s', $name, static::class);
+            $message = sprintf(
+                '%s is not a member constant of enum %s',
+                $name,
+                static::class
+            );
             throw new DomainException($message);
         }
 
@@ -104,7 +113,11 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable
 
         if (!$item) {
             $end = count($constants) - 1;
-            $message = sprintf('Enum ordinal (%d) out of range [0, %d]', $ordinal, $end);
+            $message = sprintf(
+                'Enum ordinal (%d) out of range [0, %d]',
+                $ordinal,
+                $end
+            );
             throw new DomainException($message);
         }
 
@@ -171,7 +184,11 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable
      */
     final public function toString(): string
     {
-        return sprintf('%s::%s', ClassName::short(static::class), $this->name());
+        return sprintf(
+            '%s::%s',
+            ClassName::short(static::class),
+            $this->name()
+        );
     }
 
     /**
@@ -208,8 +225,11 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable
         $constants = self::getMembers();
 
         if (!in_array($data['value'], $constants, true)) {
-            $var = VarPrinter::toString($data['value']);
-            $message = sprintf('%s is not a member value of enum %s', $var, static::class);
+            $message = sprintf(
+                '%s is not a member value of enum %s',
+                VarPrinter::toString($data['value']),
+                static::class
+            );
             throw new DomainException($message);
         }
 
@@ -272,9 +292,16 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable
 
         if (!empty($duplicates)) {
             $list = array_map(function ($names) use ($constants) {
-                return sprintf('(%s)=%s', implode('|', $names), VarPrinter::toString($constants[$names[0]]));
+                return sprintf(
+                    '(%s)=%s',
+                    implode('|', $names),
+                    VarPrinter::toString($constants[$names[0]])
+                );
             }, $duplicates);
-            $message = sprintf('Duplicate enum values: %s', implode(', ', $list));
+            $message = sprintf(
+                'Duplicate enum values: %s',
+                implode(', ', $list)
+            );
             throw new DomainException($message);
         }
     }

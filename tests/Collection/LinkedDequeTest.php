@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Test\Collection;
 
@@ -216,6 +218,7 @@ class LinkedDequeTest extends UnitTestCase
         $deque->addLast(5356);
         $deque->addLast(7489);
         $deque->addLast(8936);
+        $deque->addLast(2345);
 
         static::assertSame(8936, $deque->max());
     }
@@ -238,8 +241,9 @@ class LinkedDequeTest extends UnitTestCase
         $deque->addLast(5356);
         $deque->addLast(7489);
         $deque->addLast(8936);
+        $deque->addLast(2345);
 
-        static::assertSame(5356, $deque->min());
+        static::assertSame(2345, $deque->min());
     }
 
     public function test_that_min_returns_expected_value_with_callback()

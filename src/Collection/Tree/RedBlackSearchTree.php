@@ -1,14 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection\Tree;
 
 use Novuso\System\Collection\ArrayList;
 use Novuso\System\Collection\Type\ItemList;
-use Novuso\System\Exception\AssertionException;
+use Novuso\System\Exception\KeyException;
 use Novuso\System\Exception\LookupException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Type\Comparator;
-use Novuso\System\Exception\KeyException;
 use Novuso\System\Utility\VarPrinter;
 
 /**
@@ -20,8 +21,12 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Constructs RedBlackSearchTree
+     *
+     * @codeCoverageIgnore coverage bug
      */
-    public function __construct(protected Comparator $comparator) {}
+    public function __construct(protected Comparator $comparator)
+    {
+    }
 
     /**
      * @inheritDoc
@@ -80,7 +85,10 @@ final class RedBlackSearchTree implements BinarySearchTree
             return;
         }
 
-        if (!$this->isRed($this->root->left()) && !$this->isRed($this->root->right())) {
+        if (
+            !$this->isRed($this->root->left())
+            && !$this->isRed($this->root->right())
+        ) {
             $this->root->setColor(RedBlackNode::RED);
         }
 
@@ -164,7 +172,10 @@ final class RedBlackSearchTree implements BinarySearchTree
             throw new UnderflowException('Tree underflow');
         }
 
-        if (!$this->isRed($this->root->left()) && !$this->isRed($this->root->right())) {
+        if (
+            !$this->isRed($this->root->left())
+            && !$this->isRed($this->root->right())
+        ) {
             $this->root->setColor(RedBlackNode::RED);
         }
 
@@ -184,7 +195,10 @@ final class RedBlackSearchTree implements BinarySearchTree
             throw new UnderflowException('Tree underflow');
         }
 
-        if (!$this->isRed($this->root->left()) && !$this->isRed($this->root->right())) {
+        if (
+            !$this->isRed($this->root->left())
+            && !$this->isRed($this->root->right())
+        ) {
             $this->root->setColor(RedBlackNode::RED);
         }
 
@@ -287,11 +301,12 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Inserts a key-value pair in a subtree
-     *
-     * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeSet(mixed $key, mixed $value, ?RedBlackNode $node): RedBlackNode
-    {
+    protected function nodeSet(
+        mixed $key,
+        mixed $value,
+        ?RedBlackNode $node
+    ): RedBlackNode {
         if ($node === null) {
             return new RedBlackNode($key, $value, 1, RedBlackNode::RED);
         }
@@ -313,8 +328,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Retrieves a node by key and subtree
      *
      * Returns null if the node is not found.
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeGet(mixed $key, ?RedBlackNode $node): ?RedBlackNode
     {
@@ -334,8 +347,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Deletes a node by key and subtree
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeRemove(mixed $key, RedBlackNode $node): ?RedBlackNode
     {
@@ -359,12 +370,15 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Deletes a node to the left by key and subtree
      *
      * @internal Helper for nodeRemove()
-     *
-     * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeRemoveLeft(mixed $key, RedBlackNode $node): RedBlackNode
-    {
-        if (!$this->isRed($node->left()) && !$this->isRed($node->left()->left())) {
+    protected function nodeRemoveLeft(
+        mixed $key,
+        RedBlackNode $node
+    ): RedBlackNode {
+        if (
+            !$this->isRed($node->left())
+            && !$this->isRed($node->left()->left())
+        ) {
             $node = $this->moveRedLeft($node);
         }
         $node->setLeft($this->nodeRemove($key, $node->left()));
@@ -376,12 +390,15 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Deletes a node to the right by key and subtree
      *
      * @internal Helper for nodeRemove()
-     *
-     * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeRemoveRight(mixed $key, RedBlackNode $node): RedBlackNode
-    {
-        if (!$this->isRed($node->right()) && !$this->isRed($node->right()->left())) {
+    protected function nodeRemoveRight(
+        mixed $key,
+        RedBlackNode $node
+    ): RedBlackNode {
+        if (
+            !$this->isRed($node->right())
+            && !$this->isRed($node->right()->left())
+        ) {
             $node = $this->moveRedRight($node);
         }
         if ($this->comparator->compare($key, $node->key()) === 0) {
@@ -398,11 +415,13 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Fills a queue with keys between lo and hi in a subtree
-     *
-     * @throws AssertionException When the keys are not compatible
      */
-    protected function fillKeys(ItemList $list, mixed $lo, mixed $hi, ?RedBlackNode $node): void
-    {
+    protected function fillKeys(
+        ItemList $list,
+        mixed $lo,
+        mixed $hi,
+        ?RedBlackNode $node
+    ): void {
         if ($node === null) {
             return;
         }
@@ -454,7 +473,10 @@ final class RedBlackSearchTree implements BinarySearchTree
             return null;
         }
 
-        if (!$this->isRed($node->left()) && !$this->isRed($node->left()->left())) {
+        if (
+            !$this->isRed($node->left())
+            && !$this->isRed($node->left()->left())
+        ) {
             $node = $this->moveRedLeft($node);
         }
 
@@ -476,7 +498,10 @@ final class RedBlackSearchTree implements BinarySearchTree
             return null;
         }
 
-        if (!$this->isRed($node->right()) && !$this->isRed($node->right()->left())) {
+        if (
+            !$this->isRed($node->right())
+            && !$this->isRed($node->right()->left())
+        ) {
             $node = $this->moveRedRight($node);
         }
 
@@ -489,8 +514,6 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Retrieves the node with the largest key <= to a key in a subtree
      *
      * Returns null if there is not a key less or equal to the given key.
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeFloor(mixed $key, ?RedBlackNode $node): ?RedBlackNode
     {
@@ -518,11 +541,11 @@ final class RedBlackSearchTree implements BinarySearchTree
      * Retrieves the node with the smallest key >= to a key in a subtree
      *
      * Returns null if there is not a key less or equal to the given key.
-     *
-     * @throws AssertionException When the keys are not compatible
      */
-    protected function nodeCeiling(mixed $key, ?RedBlackNode $node): ?RedBlackNode
-    {
+    protected function nodeCeiling(
+        mixed $key,
+        ?RedBlackNode $node
+    ): ?RedBlackNode {
         if ($node === null) {
             return null;
         }
@@ -545,8 +568,6 @@ final class RedBlackSearchTree implements BinarySearchTree
 
     /**
      * Retrieves the rank for a key in a subtree
-     *
-     * @throws AssertionException When the keys are not compatible
      */
     protected function nodeRank(mixed $key, ?RedBlackNode $node): int
     {
@@ -560,7 +581,9 @@ final class RedBlackSearchTree implements BinarySearchTree
             return $this->nodeRank($key, $node->left());
         }
         if ($comp > 0) {
-            return 1 + $this->nodeSize($node->left()) + $this->nodeRank($key, $node->right());
+            return 1
+                + $this->nodeSize($node->left())
+                + $this->nodeRank($key, $node->right());
         }
 
         return $this->nodeSize($node->left());
@@ -596,7 +619,10 @@ final class RedBlackSearchTree implements BinarySearchTree
         $link->setColor($node->color());
         $node->setColor(RedBlackNode::RED);
         $link->setSize($node->size());
-        $node->setSize(1 + $this->nodeSize($node->left()) + $this->nodeSize($node->right()));
+        $nodeSize = 1
+            + $this->nodeSize($node->left())
+            + $this->nodeSize($node->right());
+        $node->setSize($nodeSize);
 
         return $link;
     }
@@ -614,7 +640,10 @@ final class RedBlackSearchTree implements BinarySearchTree
         $link->setColor($node->color());
         $node->setColor(RedBlackNode::RED);
         $link->setSize($node->size());
-        $node->setSize(1 + $this->nodeSize($node->left()) + $this->nodeSize($node->right()));
+        $nodeSize = 1
+            + $this->nodeSize($node->left())
+            + $this->nodeSize($node->right());
+        $node->setSize($nodeSize);
 
         return $link;
     }
@@ -679,13 +708,22 @@ final class RedBlackSearchTree implements BinarySearchTree
         if ($this->isRed($node->right())) {
             $node = $this->rotateLeft($node);
         }
-        if ($this->isRed($node->left()) && $this->isRed($node->left()->left())) {
+        if (
+            $this->isRed($node->left())
+            && $this->isRed($node->left()->left())
+        ) {
             $node = $this->rotateRight($node);
         }
-        if ($this->isRed($node->left()) && $this->isRed($node->right())) {
+        if (
+            $this->isRed($node->left())
+            && $this->isRed($node->right())
+        ) {
             $this->flipColors($node);
         }
-        $node->setSize(1 + $this->nodeSize($node->left()) + $this->nodeSize($node->right()));
+        $nodeSize = 1
+            + $this->nodeSize($node->left())
+            + $this->nodeSize($node->right());
+        $node->setSize($nodeSize);
 
         return $node;
     }
@@ -697,16 +735,28 @@ final class RedBlackSearchTree implements BinarySearchTree
      */
     protected function balanceOnInsert(RedBlackNode $node): RedBlackNode
     {
-        if ($this->isRed($node->right()) && !$this->isRed($node->left())) {
+        if (
+            $this->isRed($node->right())
+            && !$this->isRed($node->left())
+        ) {
             $node = $this->rotateLeft($node);
         }
-        if ($this->isRed($node->left()) && $this->isRed($node->left()->left())) {
+        if (
+            $this->isRed($node->left())
+            && $this->isRed($node->left()->left())
+        ) {
             $node = $this->rotateRight($node);
         }
-        if ($this->isRed($node->left()) && $this->isRed($node->right())) {
+        if (
+            $this->isRed($node->left())
+            && $this->isRed($node->right())
+        ) {
             $this->flipColors($node);
         }
-        $node->setSize(1 + $this->nodeSize($node->left()) + $this->nodeSize($node->right()));
+        $nodeSize = 1
+            + $this->nodeSize($node->left())
+            + $this->nodeSize($node->right());
+        $node->setSize($nodeSize);
 
         return $node;
     }

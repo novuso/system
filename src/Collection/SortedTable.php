@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Collection;
 
@@ -26,10 +28,11 @@ final class SortedTable implements OrderedTable
     use KeyValueTypeMethods;
 
     protected BinarySearchTree $tree;
-    protected Comparator $comparator;
 
     /**
      * Constructs SortedTable
+     *
+     * @codeCoverageIgnore coverage bug
      *
      * If types are not provided, the types are dynamic.
      *
@@ -37,11 +40,13 @@ final class SortedTable implements OrderedTable
      * or one of the following type strings:
      * [array, object, bool, int, float, string, callable]
      */
-    public function __construct(Comparator $comparator, ?string $keyType = null, ?string $valueType = null)
-    {
+    public function __construct(
+        protected Comparator $comparator,
+        ?string $keyType = null,
+        ?string $valueType = null
+    ) {
         $this->setKeyType($keyType);
         $this->setValueType($valueType);
-        $this->comparator = $comparator;
         $this->tree = new RedBlackSearchTree($this->comparator);
     }
 
@@ -59,9 +64,12 @@ final class SortedTable implements OrderedTable
     /**
      * @inheritDoc
      */
-    public static function comparable(?string $keyType = null, ?string $valueType = null): static
-    {
-        Assert::isTrue(Validate::isNull($keyType) || Validate::implementsInterface($keyType, Comparable::class));
+    public static function comparable(
+        ?string $keyType = null,
+        ?string $valueType = null
+    ): static {
+        Assert::isTrue(Validate::isNull($keyType)
+            || Validate::implementsInterface($keyType, Comparable::class));
 
         return new static(new ComparableComparator(), $keyType, $valueType);
     }
@@ -69,9 +77,16 @@ final class SortedTable implements OrderedTable
     /**
      * @inheritDoc
      */
-    public static function callback(callable $callback, ?string $keyType = null, ?string $valueType = null): static
-    {
-        return new static(new FunctionComparator($callback), $keyType, $valueType);
+    public static function callback(
+        callable $callback,
+        ?string $keyType = null,
+        ?string $valueType = null
+    ): static {
+        return new static(
+            new FunctionComparator($callback),
+            $keyType,
+            $valueType
+        );
     }
 
     /**
@@ -151,33 +166,33 @@ final class SortedTable implements OrderedTable
     /**
      * @inheritDoc
      */
-    public function offsetSet(mixed $key, mixed $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->set($key, $value);
+        $this->set($offset, $value);
     }
 
     /**
      * @inheritDoc
      */
-    public function offsetGet(mixed $key): mixed
+    public function offsetGet(mixed $offset): mixed
     {
-        return $this->get($key);
+        return $this->get($offset);
     }
 
     /**
      * @inheritDoc
      */
-    public function offsetExists(mixed $key): bool
+    public function offsetExists(mixed $offset): bool
     {
-        return $this->has($key);
+        return $this->has($offset);
     }
 
     /**
      * @inheritDoc
      */
-    public function offsetUnset(mixed $key): void
+    public function offsetUnset(mixed $offset): void
     {
-        $this->remove($key);
+        $this->remove($offset);
     }
 
     /**
@@ -251,7 +266,11 @@ final class SortedTable implements OrderedTable
      */
     public function map(callable $callback, ?string $valueType = null): static
     {
-        $table = static::create($this->comparator, $this->keyType(), $valueType);
+        $table = static::create(
+            $this->comparator,
+            $this->keyType(),
+            $valueType
+        );
 
         foreach ($this->getIterator() as $key => $value) {
             $table->set($key, call_user_func($callback, $value, $key));
@@ -342,7 +361,12 @@ final class SortedTable implements OrderedTable
         $accumulator = $initial;
 
         foreach ($this->getIterator() as $key => $value) {
-            $accumulator = call_user_func($callback, $accumulator, $value, $key);
+            $accumulator = call_user_func(
+                $callback,
+                $accumulator,
+                $value,
+                $key
+            );
         }
 
         return $accumulator;
@@ -401,7 +425,11 @@ final class SortedTable implements OrderedTable
      */
     public function filter(callable $predicate): static
     {
-        $table = static::create($this->comparator, $this->keyType(), $this->valueType());
+        $table = static::create(
+            $this->comparator,
+            $this->keyType(),
+            $this->valueType()
+        );
 
         foreach ($this->getIterator() as $key => $value) {
             if (call_user_func($predicate, $value, $key)) {
@@ -417,7 +445,11 @@ final class SortedTable implements OrderedTable
      */
     public function reject(callable $predicate): static
     {
-        $table = static::create($this->comparator, $this->keyType(), $this->valueType());
+        $table = static::create(
+            $this->comparator,
+            $this->keyType(),
+            $this->valueType()
+        );
 
         foreach ($this->getIterator() as $key => $value) {
             if (!call_user_func($predicate, $value, $key)) {
@@ -461,8 +493,16 @@ final class SortedTable implements OrderedTable
      */
     public function partition(callable $predicate): array
     {
-        $table1 = static::create($this->comparator, $this->keyType(), $this->valueType());
-        $table2 = static::create($this->comparator, $this->keyType(), $this->valueType());
+        $table1 = static::create(
+            $this->comparator,
+            $this->keyType(),
+            $this->valueType()
+        );
+        $table2 = static::create(
+            $this->comparator,
+            $this->keyType(),
+            $this->valueType()
+        );
 
         foreach ($this->getIterator() as $key => $value) {
             if (call_user_func($predicate, $value, $key)) {

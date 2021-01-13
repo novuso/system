@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Novuso\System\Test\TestCase;
 
@@ -15,8 +17,11 @@ trait VirtualFileSystem
     /**
      * Creates a virtual file system
      */
-    protected function createVfs(array $structure, string $baseDir = 'root', int $umask = 0022): vfsStreamDirectory
-    {
+    protected function createVfs(
+        array $structure,
+        string $baseDir = 'root',
+        int $umask = 0022
+    ): vfsStreamDirectory {
         vfsStream::umask($umask);
 
         return vfsStream::setup($baseDir, null, $structure);
