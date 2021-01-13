@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2021-01-13
+
+### Updated
+
+- Updated code styles and minor improvements
+
 ## [2.0.0] - 2020-12-28
 
 ### Added
@@ -29,3 +35,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Unreleased]: https://github.com/novuso/system/compare/master...develop
 [2.0.0]: https://github.com/novuso/system/compare/1.1.0...2.0.0
+[2.0.1]: https://github.com/novuso/system/compare/2.0.0...2.0.1
