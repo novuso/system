@@ -43,10 +43,6 @@ jobs:
     - name: Print PHP version
       run: echo ${{ steps.setup-php.outputs.php-version }}
 
-    - name: Get Project Root Directory
-      id: project-root
-      run: echo "dir=$(pwd)" >> $GITHUB_OUTPUT
-
     - name: Get Composer Cache Directory
       id: composer-cache
       run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
@@ -68,4 +64,4 @@ jobs:
       run: phpunit --configuration etc/build --do-not-cache-result
 
     - name: Run PHP CodeStyle Checks
-      run: phpcs -q --standard ${{ steps.project-root.outputs.dir }}/etc/build/phpcs.xml --report=checkstyle src | cs2pr
+      run: phpcs -q --report=checkstyle --standard=PSR12 src | cs2pr
