@@ -23,9 +23,9 @@ jobs:
       uses: actions/cache@v3
       with:
         path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.json') }}
+        key: ${{ runner.os }}-vendor-${{ hashFiles('**/composer.json') }}
         restore-keys: |
-          ${{ runner.os }}-php-
+          ${{ runner.os }}-vendor-
 
     - name: Install dependencies
       uses: php-actions/composer@v6
