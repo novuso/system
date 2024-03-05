@@ -17,20 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-vendor-${{ hashFiles('**/composer.json') }}
-        restore-keys: |
-          ${{ runner.os }}-vendor-
-
-    - name: Install dependencies
-      uses: php-actions/composer@v6
-      with:
-        args: --optimize-autoloader
+    - uses: php-actions/composer@v6
 
     - name: PHPUnit Tests
       uses: php-actions/phpunit@v3
