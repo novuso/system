@@ -6,24 +6,7 @@ cd $DIR/..
 
 docker build -t novuso-system ./etc/docker/
 
-# add -c to turn on code coverage
-if [[ "$1" == "-c" ]]
-then
-    shift;
-    docker container run \
-        --rm -it \
-        -v $(pwd):/app:delegated \
-        -w /app \
-        novuso-system php vendor/bin/phpunit \
-        --configuration etc/build \
-        "$@"
-else
-    docker container run \
-        --rm -it \
-        -v $(pwd):/app:delegated \
-        -w /app \
-        novuso-system php vendor/bin/phpunit \
-        --configuration etc/build \
-        --no-coverage \
-        "$@"
-fi
+docker container run --rm -it \
+    -v $(pwd):/app:delegated -w /app \
+    novuso-system php vendor/bin/phpunit \
+    --configuration etc/build "$@"

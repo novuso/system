@@ -6,8 +6,6 @@ cd $DIR/..
 
 docker build -t novuso-system ./etc/docker/
 
-docker container run \
-    --rm -it \
-    -v $(pwd):/app:delegated \
-    -w /app \
+docker container run --rm -it \
+    -v $(pwd):/app:delegated -w /app \
     novuso-system php scripts/build.php

@@ -9,4 +9,4 @@ docker container run \
     -v $(pwd):/app:delegated \
     -v ~/.composer:/tmp \
     --user $(id -u):$(id -g) \
-    composer "$@"
+    composer:2 "$@"
