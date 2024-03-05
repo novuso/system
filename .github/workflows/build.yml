@@ -17,7 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: php-actions/composer@v6
+
+    - name: Composer install
+      uses: php-actions/composer@v6
+      with:
+        progress: yes
 
     - name: PHPUnit Tests
       uses: php-actions/phpunit@v3
