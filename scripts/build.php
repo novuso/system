@@ -56,10 +56,9 @@ print_line('green', 'Syntax check completed');
 
 // UNIT TESTS
 passthru(sprintf(
-    'php %s/bin/phpunit --configuration=%s --cache-directory=%s --testsuite=complete',
+    'php %s/bin/phpunit --configuration=%s --testsuite=complete',
     $paths['vendor'],
-    $paths['build'],
-    $paths['cache']
+    $paths['build']
 ), $result);
 
 if ($result !== 0) {

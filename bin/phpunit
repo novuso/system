@@ -9,5 +9,4 @@ docker build -t novuso-system ./etc/docker/
 docker container run --rm -it \
     -v $(pwd):/app:delegated -w /app \
     novuso-system php vendor/bin/phpunit \
-    --cache-directory var/cache \
     --configuration etc/build "$@"
