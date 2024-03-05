@@ -1,6 +1,6 @@
 {
     "name": "novuso/system",
-    "description": "Novuso System Library",
+    "description": "System Library",
     "license": "MIT",
     "require": {
         "php": ">=8.0"
