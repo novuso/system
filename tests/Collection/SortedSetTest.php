@@ -11,10 +11,9 @@ use Novuso\System\Exception\AssertionException;
 use Novuso\System\Test\Resources\TestIntegerObject;
 use Novuso\System\Test\Resources\TestWeekDay;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\SortedSet
- */
+#[CoversClass(SortedSet::class)]
 class SortedSetTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
@@ -827,7 +826,7 @@ class SortedSetTest extends UnitTestCase
 
     public function test_that_comparable_triggers_assert_error_for_non_comparable_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         SortedSet::comparable('string');
     }

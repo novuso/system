@@ -8,10 +8,9 @@ use Novuso\System\Collection\LinkedStack;
 use Novuso\System\Exception\AssertionException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\LinkedStack
- */
+#[CoversClass(LinkedStack::class)]
 class LinkedStackTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
@@ -471,21 +470,21 @@ class LinkedStackTest extends UnitTestCase
 
     public function test_that_push_triggers_assert_error_for_invalid_item_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         LinkedStack::of('int')->push('string');
     }
 
     public function test_that_pop_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         LinkedStack::of('int')->pop();
     }
 
     public function test_that_top_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         LinkedStack::of('int')->top();
     }

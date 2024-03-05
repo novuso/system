@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Novuso\System\Test\Collection;
 
 use Novuso\System\Collection\ArrayStack;
+use Novuso\System\Collection\Iterator\ArrayStackIterator;
 use Novuso\System\Exception\AssertionException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\ArrayStack
- * @covers \Novuso\System\Collection\Iterator\ArrayStackIterator
- */
+#[CoversClass(ArrayStack::class)]
+#[CoversClass(ArrayStackIterator::class)]
 class ArrayStackTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
@@ -495,21 +495,21 @@ class ArrayStackTest extends UnitTestCase
 
     public function test_that_push_triggers_assert_error_for_invalid_item_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         ArrayStack::of('int')->push('string');
     }
 
     public function test_that_pop_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         ArrayStack::of('int')->pop();
     }
 
     public function test_that_top_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         ArrayStack::of('int')->top();
     }

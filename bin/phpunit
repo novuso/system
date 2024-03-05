@@ -16,7 +16,6 @@ then
         -w /app \
         novuso-system php vendor/bin/phpunit \
         --configuration etc/build \
-        --cache-result-file var/cache/.phpunit.result.cache \
         "$@"
 else
     docker container run \
@@ -25,7 +24,6 @@ else
         -w /app \
         novuso-system php vendor/bin/phpunit \
         --configuration etc/build \
-        --cache-result-file var/cache/.phpunit.result.cache \
         --no-coverage \
         "$@"
 fi

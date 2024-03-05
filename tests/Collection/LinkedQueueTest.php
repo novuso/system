@@ -8,10 +8,9 @@ use Novuso\System\Collection\LinkedQueue;
 use Novuso\System\Exception\AssertionException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\LinkedQueue
- */
+#[CoversClass(LinkedQueue::class)]
 class LinkedQueueTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
@@ -472,21 +471,21 @@ class LinkedQueueTest extends UnitTestCase
 
     public function test_that_enqueue_triggers_assert_error_for_invalid_item_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         LinkedQueue::of('int')->enqueue('string');
     }
 
     public function test_that_dequeue_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         LinkedQueue::of('int')->dequeue();
     }
 
     public function test_that_front_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         LinkedQueue::of('int')->front();
     }

@@ -7,10 +7,9 @@ namespace Novuso\System\Test\Utility;
 use Novuso\System\Test\Resources\TestStringObject;
 use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Utility\FastHasher;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Utility\FastHasher
- */
+#[CoversClass(FastHasher::class)]
 class FastHasherTest extends UnitTestCase
 {
     public const HASH_ALGO = 'fnv1a32';

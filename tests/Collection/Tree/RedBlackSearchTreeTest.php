@@ -11,10 +11,9 @@ use Novuso\System\Exception\LookupException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Test\Resources\TestWeekDay;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\Tree\RedBlackSearchTree
- */
+#[CoversClass(RedBlackSearchTree::class)]
 class RedBlackSearchTreeTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
@@ -312,7 +311,7 @@ class RedBlackSearchTreeTest extends UnitTestCase
 
     public function test_that_get_throws_exception_for_undefined_key()
     {
-        $this->expectException(KeyException::class);
+        static::expectException(KeyException::class);
 
         $tree = new RedBlackSearchTree(new ComparableComparator());
         $tree->get(TestWeekDay::SUNDAY());
@@ -320,7 +319,7 @@ class RedBlackSearchTreeTest extends UnitTestCase
 
     public function test_that_min_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         $tree = new RedBlackSearchTree(new ComparableComparator());
         $tree->min();
@@ -328,7 +327,7 @@ class RedBlackSearchTreeTest extends UnitTestCase
 
     public function test_that_max_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         $tree = new RedBlackSearchTree(new ComparableComparator());
         $tree->max();
@@ -336,7 +335,7 @@ class RedBlackSearchTreeTest extends UnitTestCase
 
     public function test_that_remove_min_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         $tree = new RedBlackSearchTree(new ComparableComparator());
         $tree->removeMin();
@@ -344,7 +343,7 @@ class RedBlackSearchTreeTest extends UnitTestCase
 
     public function test_that_remove_max_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         $tree = new RedBlackSearchTree(new ComparableComparator());
         $tree->removeMax();
@@ -352,7 +351,7 @@ class RedBlackSearchTreeTest extends UnitTestCase
 
     public function test_that_floor_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         $tree = new RedBlackSearchTree(new ComparableComparator());
         $tree->floor(TestWeekDay::WEDNESDAY());
@@ -360,7 +359,7 @@ class RedBlackSearchTreeTest extends UnitTestCase
 
     public function test_that_ceiling_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         $tree = new RedBlackSearchTree(new ComparableComparator());
         $tree->ceiling(TestWeekDay::WEDNESDAY());
@@ -368,7 +367,7 @@ class RedBlackSearchTreeTest extends UnitTestCase
 
     public function test_that_select_throws_exception_when_rank_out_of_bounds()
     {
-        $this->expectException(LookupException::class);
+        static::expectException(LookupException::class);
 
         $tree = new RedBlackSearchTree(new ComparableComparator());
         $tree->select(10);

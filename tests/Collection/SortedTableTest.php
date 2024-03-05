@@ -10,10 +10,9 @@ use Novuso\System\Exception\LookupException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Test\Resources\TestWeekDay;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\SortedTable
- */
+#[CoversClass(SortedTable::class)]
 class SortedTableTest extends UnitTestCase
 {
     public function test_that_float_returns_instance_with_float_key_type()
@@ -712,56 +711,56 @@ class SortedTableTest extends UnitTestCase
 
     public function test_that_get_throws_exception_for_undefined_key()
     {
-        $this->expectException(KeyException::class);
+        static::expectException(KeyException::class);
 
         SortedTable::comparable(TestWeekDay::class, 'string')->get(TestWeekDay::SUNDAY());
     }
 
     public function test_that_min_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         SortedTable::comparable(TestWeekDay::class, 'string')->min();
     }
 
     public function test_that_max_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         SortedTable::comparable(TestWeekDay::class, 'string')->max();
     }
 
     public function test_that_remove_min_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         SortedTable::comparable(TestWeekDay::class, 'string')->removeMin();
     }
 
     public function test_that_remove_max_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         SortedTable::comparable(TestWeekDay::class, 'string')->removeMax();
     }
 
     public function test_that_floor_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         SortedTable::comparable(TestWeekDay::class, 'string')->floor(TestWeekDay::WEDNESDAY());
     }
 
     public function test_that_ceiling_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         SortedTable::comparable(TestWeekDay::class, 'string')->ceiling(TestWeekDay::WEDNESDAY());
     }
 
     public function test_that_select_throws_exception_when_rank_out_of_bounds()
     {
-        $this->expectException(LookupException::class);
+        static::expectException(LookupException::class);
 
         SortedTable::comparable(TestWeekDay::class, 'string')->select(10);
     }

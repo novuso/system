@@ -6,10 +6,9 @@ namespace Novuso\System\Test\Collection\Chain;
 
 use Novuso\System\Collection\Chain\ItemBucket;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\Chain\ItemBucket
- */
+#[CoversClass(ItemBucket::class)]
 class ItemBucketTest extends UnitTestCase
 {
     public function test_that_constructor_takes_item_argument()

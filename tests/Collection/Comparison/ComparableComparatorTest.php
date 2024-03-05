@@ -7,10 +7,9 @@ namespace Novuso\System\Test\Collection\Comparison;
 use Novuso\System\Collection\Comparison\ComparableComparator;
 use Novuso\System\Test\Resources\TestIntegerObject;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\Comparison\ComparableComparator
- */
+#[CoversClass(ComparableComparator::class)]
 class ComparableComparatorTest extends UnitTestCase
 {
     public function test_that_compare_returns_zero_when_comparison_is_equal()

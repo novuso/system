@@ -6,10 +6,9 @@ namespace Novuso\System\Test\Utility;
 
 use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Utility\Environment;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Utility\Environment
- */
+#[CoversClass(Environment::class)]
 class EnvironmentTest extends UnitTestCase
 {
     public function test_that_default_value_is_returned_when_env_is_not_present()

@@ -7,17 +7,15 @@ namespace Novuso\System\Test\Utility;
 use Novuso\System\Exception\AssertionException;
 use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Utility\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Novuso\System\Utility\Assert
- */
+#[CoversClass(Assert::class)]
 class AssertTest extends UnitTestCase
 {
     use TestDataProvider;
 
-    /**
-     * @dataProvider validScalarProvider
-     */
+    #[DataProvider('validScalarProvider')]
     public function test_that_is_scalar_passes_for_valid_value($value)
     {
         Assert::isScalar($value);
@@ -25,19 +23,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidScalarProvider
-     */
+    #[DataProvider('invalidScalarProvider')]
     public function test_that_is_scalar_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isScalar($value);
     }
 
-    /**
-     * @dataProvider validBoolProvider
-     */
+    #[DataProvider('validBoolProvider')]
     public function test_that_is_bool_passes_for_valid_value($value)
     {
         Assert::isBool($value);
@@ -45,19 +39,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidBoolProvider
-     */
+    #[DataProvider('invalidBoolProvider')]
     public function test_that_is_bool_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isBool($value);
     }
 
-    /**
-     * @dataProvider validFloatProvider
-     */
+    #[DataProvider('validFloatProvider')]
     public function test_that_is_float_passes_for_valid_value($value)
     {
         Assert::isFloat($value);
@@ -65,19 +55,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidFloatProvider
-     */
+    #[DataProvider('invalidFloatProvider')]
     public function test_that_is_float_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isFloat($value);
     }
 
-    /**
-     * @dataProvider validIntProvider
-     */
+    #[DataProvider('validIntProvider')]
     public function test_that_is_int_passes_for_valid_value($value)
     {
         Assert::isInt($value);
@@ -85,19 +71,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidIntProvider
-     */
+    #[DataProvider('invalidIntProvider')]
     public function test_that_is_int_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isInt($value);
     }
 
-    /**
-     * @dataProvider validStringProvider
-     */
+    #[DataProvider('validStringProvider')]
     public function test_that_is_string_passes_for_valid_value($value)
     {
         Assert::isString($value);
@@ -105,19 +87,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidStringProvider
-     */
+    #[DataProvider('invalidStringProvider')]
     public function test_that_is_string_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isString($value);
     }
 
-    /**
-     * @dataProvider validArrayProvider
-     */
+    #[DataProvider('validArrayProvider')]
     public function test_that_is_array_passes_for_valid_value($value)
     {
         Assert::isArray($value);
@@ -125,19 +103,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidArrayProvider
-     */
+    #[DataProvider('invalidArrayProvider')]
     public function test_that_is_array_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isArray($value);
     }
 
-    /**
-     * @dataProvider validObjectProvider
-     */
+    #[DataProvider('validObjectProvider')]
     public function test_that_is_object_passes_for_valid_value($value)
     {
         Assert::isObject($value);
@@ -145,19 +119,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidObjectProvider
-     */
+    #[DataProvider('invalidObjectProvider')]
     public function test_that_is_object_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isObject($value);
     }
 
-    /**
-     * @dataProvider validCallableProvider
-     */
+    #[DataProvider('validCallableProvider')]
     public function test_that_is_callable_passes_for_valid_value($value)
     {
         Assert::isCallable($value);
@@ -165,19 +135,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidCallableProvider
-     */
+    #[DataProvider('invalidCallableProvider')]
     public function test_that_is_callable_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isCallable($value);
     }
 
-    /**
-     * @dataProvider validNullProvider
-     */
+    #[DataProvider('validNullProvider')]
     public function test_that_is_null_passes_for_valid_value($value)
     {
         Assert::isNull($value);
@@ -185,19 +151,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidNullProvider
-     */
+    #[DataProvider('invalidNullProvider')]
     public function test_that_is_null_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isNull($value);
     }
 
-    /**
-     * @dataProvider validNotNullProvider
-     */
+    #[DataProvider('validNotNullProvider')]
     public function test_that_is_not_null_passes_for_valid_value($value)
     {
         Assert::isNotNull($value);
@@ -205,19 +167,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidNotNullProvider
-     */
+    #[DataProvider('invalidNotNullProvider')]
     public function test_that_is_not_null_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isNotNull($value);
     }
 
-    /**
-     * @dataProvider validTrueProvider
-     */
+    #[DataProvider('validTrueProvider')]
     public function test_that_is_true_passes_for_valid_value($value)
     {
         Assert::isTrue($value);
@@ -225,19 +183,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidTrueProvider
-     */
+    #[DataProvider('invalidTrueProvider')]
     public function test_that_is_true_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isTrue($value);
     }
 
-    /**
-     * @dataProvider validFalseProvider
-     */
+    #[DataProvider('validFalseProvider')]
     public function test_that_is_false_passes_for_valid_value($value)
     {
         Assert::isFalse($value);
@@ -245,19 +199,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidFalseProvider
-     */
+    #[DataProvider('invalidFalseProvider')]
     public function test_that_is_false_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isFalse($value);
     }
 
-    /**
-     * @dataProvider validEmptyProvider
-     */
+    #[DataProvider('validEmptyProvider')]
     public function test_that_is_empty_passes_for_valid_value($value)
     {
         Assert::isEmpty($value);
@@ -265,19 +215,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidEmptyProvider
-     */
+    #[DataProvider('invalidEmptyProvider')]
     public function test_that_is_empty_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isEmpty($value);
     }
 
-    /**
-     * @dataProvider validNotEmptyProvider
-     */
+    #[DataProvider('validNotEmptyProvider')]
     public function test_that_is_not_empty_passes_for_valid_value($value)
     {
         Assert::isNotEmpty($value);
@@ -285,19 +231,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidNotEmptyProvider
-     */
+    #[DataProvider('invalidNotEmptyProvider')]
     public function test_that_is_not_empty_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isNotEmpty($value);
     }
 
-    /**
-     * @dataProvider validBlankProvider
-     */
+    #[DataProvider('validBlankProvider')]
     public function test_that_is_blank_passes_for_valid_value($value)
     {
         Assert::isBlank($value);
@@ -305,19 +247,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidBlankProvider
-     */
+    #[DataProvider('invalidBlankProvider')]
     public function test_that_is_blank_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isBlank($value);
     }
 
-    /**
-     * @dataProvider validNotBlankProvider
-     */
+    #[DataProvider('validNotBlankProvider')]
     public function test_that_is_not_blank_passes_for_valid_value($value)
     {
         Assert::isNotBlank($value);
@@ -325,19 +263,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidNotBlankProvider
-     */
+    #[DataProvider('invalidNotBlankProvider')]
     public function test_that_is_not_blank_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isNotBlank($value);
     }
 
-    /**
-     * @dataProvider validAlphaProvider
-     */
+    #[DataProvider('validAlphaProvider')]
     public function test_that_is_alpha_passes_for_valid_value($value)
     {
         Assert::isAlpha($value);
@@ -345,19 +279,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidAlphaProvider
-     */
+    #[DataProvider('invalidAlphaProvider')]
     public function test_that_is_alpha_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isAlpha($value);
     }
 
-    /**
-     * @dataProvider validAlnumProvider
-     */
+    #[DataProvider('validAlnumProvider')]
     public function test_that_is_alnum_passes_for_valid_value($value)
     {
         Assert::isAlnum($value);
@@ -365,19 +295,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidAlnumProvider
-     */
+    #[DataProvider('invalidAlnumProvider')]
     public function test_that_is_alnum_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isAlnum($value);
     }
 
-    /**
-     * @dataProvider validAlphaDashProvider
-     */
+    #[DataProvider('validAlphaDashProvider')]
     public function test_that_is_alpha_dash_passes_for_valid_value($value)
     {
         Assert::isAlphaDash($value);
@@ -385,19 +311,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidAlphaDashProvider
-     */
+    #[DataProvider('invalidAlphaDashProvider')]
     public function test_that_is_alpha_dash_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isAlphaDash($value);
     }
 
-    /**
-     * @dataProvider validAlnumDashProvider
-     */
+    #[DataProvider('validAlnumDashProvider')]
     public function test_that_is_alnum_dash_passes_for_valid_value($value)
     {
         Assert::isAlnumDash($value);
@@ -405,19 +327,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidAlnumDashProvider
-     */
+    #[DataProvider('invalidAlnumDashProvider')]
     public function test_that_is_alnum_dash_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isAlnumDash($value);
     }
 
-    /**
-     * @dataProvider validDigitsProvider
-     */
+    #[DataProvider('validDigitsProvider')]
     public function test_that_is_digits_passes_for_valid_value($value)
     {
         Assert::isDigits($value);
@@ -425,19 +343,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidDigitsProvider
-     */
+    #[DataProvider('invalidDigitsProvider')]
     public function test_that_is_digits_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isDigits($value);
     }
 
-    /**
-     * @dataProvider validNumericProvider
-     */
+    #[DataProvider('validNumericProvider')]
     public function test_that_is_numeric_passes_for_valid_value($value)
     {
         Assert::isNumeric($value);
@@ -445,19 +359,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidNumericProvider
-     */
+    #[DataProvider('invalidNumericProvider')]
     public function test_that_is_numeric_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isNumeric($value);
     }
 
-    /**
-     * @dataProvider validEmailProvider
-     */
+    #[DataProvider('validEmailProvider')]
     public function test_that_is_email_passes_for_valid_value($value)
     {
         Assert::isEmail($value);
@@ -465,19 +375,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidEmailProvider
-     */
+    #[DataProvider('invalidEmailProvider')]
     public function test_that_is_email_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isEmail($value);
     }
 
-    /**
-     * @dataProvider validIpAddressProvider
-     */
+    #[DataProvider('validIpAddressProvider')]
     public function test_that_is_ip_address_passes_for_valid_value($value)
     {
         Assert::isIpAddress($value);
@@ -485,19 +391,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidIpAddressProvider
-     */
+    #[DataProvider('invalidIpAddressProvider')]
     public function test_that_is_ip_address_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isIpAddress($value);
     }
 
-    /**
-     * @dataProvider validIpV4AddressProvider
-     */
+    #[DataProvider('validIpV4AddressProvider')]
     public function test_that_is_ip_v4_address_passes_for_valid_value($value)
     {
         Assert::isIpV4Address($value);
@@ -505,19 +407,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidIpV4AddressProvider
-     */
+    #[DataProvider('invalidIpV4AddressProvider')]
     public function test_that_is_ip_v4_address_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isIpV4Address($value);
     }
 
-    /**
-     * @dataProvider validIpV6AddressProvider
-     */
+    #[DataProvider('validIpV6AddressProvider')]
     public function test_that_is_ip_v6_address_passes_for_valid_value($value)
     {
         Assert::isIpV6Address($value);
@@ -525,19 +423,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidIpV6AddressProvider
-     */
+    #[DataProvider('invalidIpV6AddressProvider')]
     public function test_that_is_ip_v6_address_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isIpV6Address($value);
     }
 
-    /**
-     * @dataProvider validUriProvider
-     */
+    #[DataProvider('validUriProvider')]
     public function test_that_is_uri_passes_for_valid_value($value)
     {
         Assert::isUri($value);
@@ -545,19 +439,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidUriProvider
-     */
+    #[DataProvider('invalidUriProvider')]
     public function test_that_is_uri_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isUri($value);
     }
 
-    /**
-     * @dataProvider validUrnProvider
-     */
+    #[DataProvider('validUrnProvider')]
     public function test_that_is_urn_passes_for_valid_value($value)
     {
         Assert::isUrn($value);
@@ -565,19 +455,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidUrnProvider
-     */
+    #[DataProvider('invalidUrnProvider')]
     public function test_that_is_urn_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isUrn($value);
     }
 
-    /**
-     * @dataProvider validUuidProvider
-     */
+    #[DataProvider('validUuidProvider')]
     public function test_that_is_uuid_passes_for_valid_value($value)
     {
         Assert::isUuid($value);
@@ -585,19 +471,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidUuidProvider
-     */
+    #[DataProvider('invalidUuidProvider')]
     public function test_that_is_uuid_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isUuid($value);
     }
 
-    /**
-     * @dataProvider validTimezoneProvider
-     */
+    #[DataProvider('validTimezoneProvider')]
     public function test_that_is_timezone_passes_for_valid_value($value)
     {
         Assert::isTimezone($value);
@@ -605,19 +487,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidTimezoneProvider
-     */
+    #[DataProvider('invalidTimezoneProvider')]
     public function test_that_is_timezone_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isTimezone($value);
     }
 
-    /**
-     * @dataProvider validJsonProvider
-     */
+    #[DataProvider('validJsonProvider')]
     public function test_that_is_json_passes_for_valid_value($value)
     {
         Assert::isJson($value);
@@ -625,19 +503,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidJsonProvider
-     */
+    #[DataProvider('invalidJsonProvider')]
     public function test_that_is_json_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isJson($value);
     }
 
-    /**
-     * @dataProvider validMatchProvider
-     */
+    #[DataProvider('validMatchProvider')]
     public function test_that_is_match_passes_for_valid_value($value, $pattern)
     {
         Assert::isMatch($value, $pattern);
@@ -645,19 +519,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidMatchProvider
-     */
+    #[DataProvider('invalidMatchProvider')]
     public function test_that_is_match_throws_exception_for_invalid_value($value, $pattern)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isMatch($value, $pattern);
     }
 
-    /**
-     * @dataProvider validContainsProvider
-     */
+    #[DataProvider('validContainsProvider')]
     public function test_that_contains_passes_for_valid_value($value, $search)
     {
         Assert::contains($value, $search);
@@ -665,19 +535,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidContainsProvider
-     */
+    #[DataProvider('invalidContainsProvider')]
     public function test_that_contains_throws_exception_for_invalid_value($value, $search)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::contains($value, $search);
     }
 
-    /**
-     * @dataProvider validStartsWithProvider
-     */
+    #[DataProvider('validStartsWithProvider')]
     public function test_that_starts_with_passes_for_valid_value($value, $search)
     {
         Assert::startsWith($value, $search);
@@ -685,19 +551,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidStartsWithProvider
-     */
+    #[DataProvider('invalidStartsWithProvider')]
     public function test_that_starts_with_throws_exception_for_invalid_value($value, $search)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::startsWith($value, $search);
     }
 
-    /**
-     * @dataProvider validEndsWithProvider
-     */
+    #[DataProvider('validEndsWithProvider')]
     public function test_that_ends_with_passes_for_valid_value($value, $search)
     {
         Assert::endsWith($value, $search);
@@ -705,19 +567,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidEndsWithProvider
-     */
+    #[DataProvider('invalidEndsWithProvider')]
     public function test_that_ends_with_throws_exception_for_invalid_value($value, $search)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::endsWith($value, $search);
     }
 
-    /**
-     * @dataProvider validExactLengthProvider
-     */
+    #[DataProvider('validExactLengthProvider')]
     public function test_that_exact_length_passes_for_valid_value($value, $length)
     {
         Assert::exactLength($value, $length);
@@ -725,19 +583,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidExactLengthProvider
-     */
+    #[DataProvider('invalidExactLengthProvider')]
     public function test_that_exact_length_throws_exception_for_invalid_value($value, $length)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::exactLength($value, $length);
     }
 
-    /**
-     * @dataProvider validMinLengthProvider
-     */
+    #[DataProvider('validMinLengthProvider')]
     public function test_that_min_length_passes_for_valid_value($value, $minLength)
     {
         Assert::minLength($value, $minLength);
@@ -745,19 +599,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidMinLengthProvider
-     */
+    #[DataProvider('invalidMinLengthProvider')]
     public function test_that_min_length_throws_exception_for_invalid_value($value, $minLength)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::minLength($value, $minLength);
     }
 
-    /**
-     * @dataProvider validMaxLengthProvider
-     */
+    #[DataProvider('validMaxLengthProvider')]
     public function test_that_max_length_passes_for_valid_value($value, $maxLength)
     {
         Assert::maxLength($value, $maxLength);
@@ -765,19 +615,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidMaxLengthProvider
-     */
+    #[DataProvider('invalidMaxLengthProvider')]
     public function test_that_max_length_throws_exception_for_invalid_value($value, $maxLength)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::maxLength($value, $maxLength);
     }
 
-    /**
-     * @dataProvider validRangeLengthProvider
-     */
+    #[DataProvider('validRangeLengthProvider')]
     public function test_that_range_length_passes_for_valid_value($value, $minLength, $maxLength)
     {
         Assert::rangeLength($value, $minLength, $maxLength);
@@ -785,19 +631,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidRangeLengthProvider
-     */
+    #[DataProvider('invalidRangeLengthProvider')]
     public function test_that_range_length_throws_exception_for_invalid_value($value, $minLength, $maxLength)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::rangeLength($value, $minLength, $maxLength);
     }
 
-    /**
-     * @dataProvider validExactNumberProvider
-     */
+    #[DataProvider('validExactNumberProvider')]
     public function test_that_exact_number_passes_for_valid_value($value, $number)
     {
         Assert::exactNumber($value, $number);
@@ -805,19 +647,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidExactNumberProvider
-     */
+    #[DataProvider('invalidExactNumberProvider')]
     public function test_that_exact_number_throws_exception_for_invalid_value($value, $number)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::exactNumber($value, $number);
     }
 
-    /**
-     * @dataProvider validMinNumberProvider
-     */
+    #[DataProvider('validMinNumberProvider')]
     public function test_that_min_number_passes_for_valid_value($value, $minNumber)
     {
         Assert::minNumber($value, $minNumber);
@@ -825,19 +663,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidMinNumberProvider
-     */
+    #[DataProvider('invalidMinNumberProvider')]
     public function test_that_min_number_throws_exception_for_invalid_value($value, $minNumber)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::minNumber($value, $minNumber);
     }
 
-    /**
-     * @dataProvider validMaxNumberProvider
-     */
+    #[DataProvider('validMaxNumberProvider')]
     public function test_that_max_number_passes_for_valid_value($value, $maxNumber)
     {
         Assert::maxNumber($value, $maxNumber);
@@ -845,19 +679,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidMaxNumberProvider
-     */
+    #[DataProvider('invalidMaxNumberProvider')]
     public function test_that_max_number_throws_exception_for_invalid_value($value, $maxNumber)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::maxNumber($value, $maxNumber);
     }
 
-    /**
-     * @dataProvider validRangeNumberProvider
-     */
+    #[DataProvider('validRangeNumberProvider')]
     public function test_that_range_number_passes_for_valid_value($value, $minNumber, $maxNumber)
     {
         Assert::rangeNumber($value, $minNumber, $maxNumber);
@@ -865,19 +695,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidRangeNumberProvider
-     */
+    #[DataProvider('invalidRangeNumberProvider')]
     public function test_that_range_number_throws_exception_for_invalid_value($value, $minNumber, $maxNumber)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::rangeNumber($value, $minNumber, $maxNumber);
     }
 
-    /**
-     * @dataProvider validWholeNumberProvider
-     */
+    #[DataProvider('validWholeNumberProvider')]
     public function test_that_whole_number_passes_for_valid_value($value)
     {
         Assert::wholeNumber($value);
@@ -885,19 +711,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidWholeNumberProvider
-     */
+    #[DataProvider('invalidWholeNumberProvider')]
     public function test_that_whole_number_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::wholeNumber($value);
     }
 
-    /**
-     * @dataProvider validNaturalNumberProvider
-     */
+    #[DataProvider('validNaturalNumberProvider')]
     public function test_that_natural_number_passes_for_valid_value($value)
     {
         Assert::naturalNumber($value);
@@ -905,19 +727,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidNaturalNumberProvider
-     */
+    #[DataProvider('invalidNaturalNumberProvider')]
     public function test_that_natural_number_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::naturalNumber($value);
     }
 
-    /**
-     * @dataProvider validIntValueProvider
-     */
+    #[DataProvider('validIntValueProvider')]
     public function test_that_int_value_passes_for_valid_value($value)
     {
         Assert::intValue($value);
@@ -925,19 +743,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidIntValueProvider
-     */
+    #[DataProvider('invalidIntValueProvider')]
     public function test_that_int_value_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::intValue($value);
     }
 
-    /**
-     * @dataProvider validExactCountProvider
-     */
+    #[DataProvider('validExactCountProvider')]
     public function test_that_exact_count_passes_for_valid_value($value, $count)
     {
         Assert::exactCount($value, $count);
@@ -945,19 +759,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidExactCountProvider
-     */
+    #[DataProvider('invalidExactCountProvider')]
     public function test_that_exact_count_throws_exception_for_invalid_value($value, $count)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::exactCount($value, $count);
     }
 
-    /**
-     * @dataProvider validMinCountProvider
-     */
+    #[DataProvider('validMinCountProvider')]
     public function test_that_min_count_passes_for_valid_value($value, $minCount)
     {
         Assert::minCount($value, $minCount);
@@ -965,19 +775,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidMinCountProvider
-     */
+    #[DataProvider('invalidMinCountProvider')]
     public function test_that_min_count_throws_exception_for_invalid_value($value, $minCount)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::minCount($value, $minCount);
     }
 
-    /**
-     * @dataProvider validMaxCountProvider
-     */
+    #[DataProvider('validMaxCountProvider')]
     public function test_that_max_count_passes_for_valid_value($value, $maxCount)
     {
         Assert::maxCount($value, $maxCount);
@@ -985,19 +791,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidMaxCountProvider
-     */
+    #[DataProvider('invalidMaxCountProvider')]
     public function test_that_max_count_throws_exception_for_invalid_value($value, $maxCount)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::maxCount($value, $maxCount);
     }
 
-    /**
-     * @dataProvider validRangeCountProvider
-     */
+    #[DataProvider('validRangeCountProvider')]
     public function test_that_range_count_passes_for_valid_value($value, $minCount, $maxCount)
     {
         Assert::rangeCount($value, $minCount, $maxCount);
@@ -1005,19 +807,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidRangeCountProvider
-     */
+    #[DataProvider('invalidRangeCountProvider')]
     public function test_that_range_count_throws_exception_for_invalid_value($value, $minCount, $maxCount)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::rangeCount($value, $minCount, $maxCount);
     }
 
-    /**
-     * @dataProvider validOneOfProvider
-     */
+    #[DataProvider('validOneOfProvider')]
     public function test_that_is_one_of_passes_for_valid_value($value, $choices)
     {
         Assert::isOneOf($value, $choices);
@@ -1025,19 +823,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidOneOfProvider
-     */
+    #[DataProvider('invalidOneOfProvider')]
     public function test_that_is_one_of_throws_exception_for_invalid_value($value, $choices)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isOneOf($value, $choices);
     }
 
-    /**
-     * @dataProvider validKeyIssetProvider
-     */
+    #[DataProvider('validKeyIssetProvider')]
     public function test_that_key_isset_passes_for_valid_value($value, $key)
     {
         Assert::keyIsset($value, $key);
@@ -1045,19 +839,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidKeyIssetProvider
-     */
+    #[DataProvider('invalidKeyIssetProvider')]
     public function test_that_key_isset_throws_exception_for_invalid_value($value, $key)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::keyIsset($value, $key);
     }
 
-    /**
-     * @dataProvider validKeyNotEmptyProvider
-     */
+    #[DataProvider('validKeyNotEmptyProvider')]
     public function test_that_key_not_empty_passes_for_valid_value($value, $key)
     {
         Assert::keyNotEmpty($value, $key);
@@ -1065,19 +855,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidKeyNotEmptyProvider
-     */
+    #[DataProvider('invalidKeyNotEmptyProvider')]
     public function test_that_key_not_empty_throws_exception_for_invalid_value($value, $key)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::keyNotEmpty($value, $key);
     }
 
-    /**
-     * @dataProvider validEqualProvider
-     */
+    #[DataProvider('validEqualProvider')]
     public function test_that_are_equal_passes_for_valid_value($value1, $value2)
     {
         Assert::areEqual($value1, $value2);
@@ -1085,19 +871,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidEqualProvider
-     */
+    #[DataProvider('invalidEqualProvider')]
     public function test_that_are_equal_throws_exception_for_invalid_value($value1, $value2)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::areEqual($value1, $value2);
     }
 
-    /**
-     * @dataProvider validNotEqualProvider
-     */
+    #[DataProvider('validNotEqualProvider')]
     public function test_that_are_not_equal_passes_for_valid_value($value1, $value2)
     {
         Assert::areNotEqual($value1, $value2);
@@ -1105,19 +887,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidNotEqualProvider
-     */
+    #[DataProvider('invalidNotEqualProvider')]
     public function test_that_are_not_equal_throws_exception_for_invalid_value($value1, $value2)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::areNotEqual($value1, $value2);
     }
 
-    /**
-     * @dataProvider validSameProvider
-     */
+    #[DataProvider('validSameProvider')]
     public function test_that_are_same_passes_for_valid_value($value1, $value2)
     {
         Assert::areSame($value1, $value2);
@@ -1125,19 +903,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidSameProvider
-     */
+    #[DataProvider('invalidSameProvider')]
     public function test_that_are_same_throws_exception_for_invalid_value($value1, $value2)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::areSame($value1, $value2);
     }
 
-    /**
-     * @dataProvider validNotSameProvider
-     */
+    #[DataProvider('validNotSameProvider')]
     public function test_that_are_not_same_passes_for_valid_value($value1, $value2)
     {
         Assert::areNotSame($value1, $value2);
@@ -1145,19 +919,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidNotSameProvider
-     */
+    #[DataProvider('invalidNotSameProvider')]
     public function test_that_are_not_same_throws_exception_for_invalid_value($value1, $value2)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::areNotSame($value1, $value2);
     }
 
-    /**
-     * @dataProvider validSameTypeProvider
-     */
+    #[DataProvider('validSameTypeProvider')]
     public function test_that_are_same_type_passes_for_valid_value($value1, $value2)
     {
         Assert::areSameType($value1, $value2);
@@ -1165,19 +935,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidSameTypeProvider
-     */
+    #[DataProvider('invalidSameTypeProvider')]
     public function test_that_are_same_type_throws_exception_for_invalid_value($value1, $value2)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::areSameType($value1, $value2);
     }
 
-    /**
-     * @dataProvider validTypeProvider
-     */
+    #[DataProvider('validTypeProvider')]
     public function test_that_is_type_passes_for_valid_value($value, $type)
     {
         Assert::isType($value, $type);
@@ -1185,19 +951,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidTypeProvider
-     */
+    #[DataProvider('invalidTypeProvider')]
     public function test_that_is_type_throws_exception_for_invalid_value($value, $type)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isType($value, $type);
     }
 
-    /**
-     * @dataProvider validListOfProvider
-     */
+    #[DataProvider('validListOfProvider')]
     public function test_that_is_list_of_passes_for_valid_value($value, $type)
     {
         Assert::isListOf($value, $type);
@@ -1205,19 +967,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidListOfProvider
-     */
+    #[DataProvider('invalidListOfProvider')]
     public function test_that_is_list_of_throws_exception_for_invalid_value($value, $type)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isListOf($value, $type);
     }
 
-    /**
-     * @dataProvider validStringCastableProvider
-     */
+    #[DataProvider('validStringCastableProvider')]
     public function test_that_is_string_castable_passes_for_valid_value($value)
     {
         Assert::isStringCastable($value);
@@ -1225,19 +983,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidStringCastableProvider
-     */
+    #[DataProvider('invalidStringCastableProvider')]
     public function test_that_is_string_castable_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isStringCastable($value);
     }
 
-    /**
-     * @dataProvider validJsonEncodableProvider
-     */
+    #[DataProvider('validJsonEncodableProvider')]
     public function test_that_is_json_encodable_passes_for_valid_value($value)
     {
         Assert::isJsonEncodable($value);
@@ -1245,19 +999,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidJsonEncodableProvider
-     */
+    #[DataProvider('invalidJsonEncodableProvider')]
     public function test_that_is_json_encodable_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isJsonEncodable($value);
     }
 
-    /**
-     * @dataProvider validTraversableProvider
-     */
+    #[DataProvider('validTraversableProvider')]
     public function test_that_is_traversable_passes_for_valid_value($value)
     {
         Assert::isTraversable($value);
@@ -1265,19 +1015,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidTraversableProvider
-     */
+    #[DataProvider('invalidTraversableProvider')]
     public function test_that_is_traversable_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isTraversable($value);
     }
 
-    /**
-     * @dataProvider validCountableProvider
-     */
+    #[DataProvider('validCountableProvider')]
     public function test_that_is_countable_passes_for_valid_value($value)
     {
         Assert::isCountable($value);
@@ -1285,19 +1031,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidCountableProvider
-     */
+    #[DataProvider('invalidCountableProvider')]
     public function test_that_is_countable_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isCountable($value);
     }
 
-    /**
-     * @dataProvider validArrayAccessibleProvider
-     */
+    #[DataProvider('validArrayAccessibleProvider')]
     public function test_that_is_array_accessible_passes_for_valid_value($value)
     {
         Assert::isArrayAccessible($value);
@@ -1305,19 +1047,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidArrayAccessibleProvider
-     */
+    #[DataProvider('invalidArrayAccessibleProvider')]
     public function test_that_is_array_accessible_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isArrayAccessible($value);
     }
 
-    /**
-     * @dataProvider validComparableProvider
-     */
+    #[DataProvider('validComparableProvider')]
     public function test_that_is_comparable_passes_for_valid_value($value)
     {
         Assert::isComparable($value);
@@ -1325,19 +1063,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidComparableProvider
-     */
+    #[DataProvider('invalidComparableProvider')]
     public function test_that_is_comparable_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isComparable($value);
     }
 
-    /**
-     * @dataProvider validEquatableProvider
-     */
+    #[DataProvider('validEquatableProvider')]
     public function test_that_is_equatable_passes_for_valid_value($value)
     {
         Assert::isEquatable($value);
@@ -1345,19 +1079,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidEquatableProvider
-     */
+    #[DataProvider('invalidEquatableProvider')]
     public function test_that_is_equatable_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isEquatable($value);
     }
 
-    /**
-     * @dataProvider validImplementsProvider
-     */
+    #[DataProvider('validImplementsProvider')]
     public function test_that_implements_interface_passes_for_valid_value($value, $interface)
     {
         Assert::implementsInterface($value, $interface);
@@ -1365,19 +1095,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidImplementsProvider
-     */
+    #[DataProvider('invalidImplementsProvider')]
     public function test_that_implements_interface_throws_exception_for_invalid_value($value, $interface)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::implementsInterface($value, $interface);
     }
 
-    /**
-     * @dataProvider validInstanceOfProvider
-     */
+    #[DataProvider('validInstanceOfProvider')]
     public function test_that_is_instance_of_passes_for_valid_value($value, $className)
     {
         Assert::isInstanceOf($value, $className);
@@ -1385,19 +1111,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidInstanceOfProvider
-     */
+    #[DataProvider('invalidInstanceOfProvider')]
     public function test_that_is_instance_of_throws_exception_for_invalid_value($value, $className)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isInstanceOf($value, $className);
     }
 
-    /**
-     * @dataProvider validSubclassOfProvider
-     */
+    #[DataProvider('validSubclassOfProvider')]
     public function test_that_is_subclass_of_passes_for_valid_value($value, $className)
     {
         Assert::isSubclassOf($value, $className);
@@ -1405,19 +1127,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidSubclassOfProvider
-     */
+    #[DataProvider('invalidSubclassOfProvider')]
     public function test_that_is_subclass_of_throws_exception_for_invalid_value($value, $className)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::isSubclassOf($value, $className);
     }
 
-    /**
-     * @dataProvider validClassExistsProvider
-     */
+    #[DataProvider('validClassExistsProvider')]
     public function test_that_class_exists_passes_for_valid_value($value)
     {
         Assert::classExists($value);
@@ -1425,19 +1143,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidClassExistsProvider
-     */
+    #[DataProvider('invalidClassExistsProvider')]
     public function test_that_class_exists_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::classExists($value);
     }
 
-    /**
-     * @dataProvider validInterfaceExistsProvider
-     */
+    #[DataProvider('validInterfaceExistsProvider')]
     public function test_that_interface_exists_passes_for_valid_value($value)
     {
         Assert::interfaceExists($value);
@@ -1445,19 +1159,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidInterfaceExistsProvider
-     */
+    #[DataProvider('invalidInterfaceExistsProvider')]
     public function test_that_interface_exists_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::interfaceExists($value);
     }
 
-    /**
-     * @dataProvider validMethodExistsProvider
-     */
+    #[DataProvider('validMethodExistsProvider')]
     public function test_that_method_exists_passes_for_valid_value($value, $object)
     {
         Assert::methodExists($value, $object);
@@ -1465,19 +1175,15 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidMethodExistsProvider
-     */
+    #[DataProvider('invalidMethodExistsProvider')]
     public function test_that_method_exists_throws_exception_for_invalid_value($value, $object)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         Assert::methodExists($value, $object);
     }
 
-    /**
-     * @dataProvider validPathProvider
-     */
+    #[DataProvider('validPathProvider')]
     public function test_that_is_path_passes_for_valid_value($value)
     {
         $this->createFilesystem();
@@ -1487,21 +1193,17 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidPathProvider
-     */
+    #[DataProvider('invalidPathProvider')]
     public function test_that_is_path_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         $this->createFilesystem();
 
         Assert::isPath($value);
     }
 
-    /**
-     * @dataProvider validFileProvider
-     */
+    #[DataProvider('validFileProvider')]
     public function test_that_is_file_passes_for_valid_value($value)
     {
         $this->createFilesystem();
@@ -1511,21 +1213,17 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidFileProvider
-     */
+    #[DataProvider('invalidFileProvider')]
     public function test_that_is_file_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         $this->createFilesystem();
 
         Assert::isFile($value);
     }
 
-    /**
-     * @dataProvider validDirProvider
-     */
+    #[DataProvider('validDirProvider')]
     public function test_that_is_dir_passes_for_valid_value($value)
     {
         $this->createFilesystem();
@@ -1535,21 +1233,17 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidDirProvider
-     */
+    #[DataProvider('invalidDirProvider')]
     public function test_that_is_dir_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         $this->createFilesystem();
 
         Assert::isDir($value);
     }
 
-    /**
-     * @dataProvider validReadableProvider
-     */
+    #[DataProvider('validReadableProvider')]
     public function test_that_is_readable_passes_for_valid_value($value)
     {
         $this->createFilesystem();
@@ -1559,21 +1253,17 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidReadableProvider
-     */
+    #[DataProvider('invalidReadableProvider')]
     public function test_that_is_readable_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         $this->createFilesystem();
 
         Assert::isReadable($value);
     }
 
-    /**
-     * @dataProvider validWritableProvider
-     */
+    #[DataProvider('validWritableProvider')]
     public function test_that_is_writable_passes_for_valid_value($value)
     {
         $this->createFilesystem();
@@ -1583,12 +1273,10 @@ class AssertTest extends UnitTestCase
         static::assertTrue(true);
     }
 
-    /**
-     * @dataProvider invalidWritableProvider
-     */
+    #[DataProvider('invalidWritableProvider')]
     public function test_that_is_writable_throws_exception_for_invalid_value($value)
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         $this->createFilesystem();
 

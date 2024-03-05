@@ -8,10 +8,9 @@ use Exception;
 use Novuso\System\Collection\Iterator\GeneratorIterator;
 use Novuso\System\Exception\DomainException;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\Iterator\GeneratorIterator
- */
+#[CoversClass(GeneratorIterator::class)]
 class GeneratorIteratorTest extends UnitTestCase
 {
     public function test_that_rewind_allows_iteration_more_than_once()
@@ -138,7 +137,7 @@ class GeneratorIteratorTest extends UnitTestCase
 
     public function test_that_get_return_throws_exception_when_has_not_returned()
     {
-        $this->expectException(Exception::class);
+        static::expectException(Exception::class);
 
         $return = 'foo';
         $iterator = new GeneratorIterator(function () use ($return) {
@@ -154,7 +153,7 @@ class GeneratorIteratorTest extends UnitTestCase
 
     public function test_that_constructor_throws_exception_when_function_is_not_generator()
     {
-        $this->expectException(DomainException::class);
+        static::expectException(DomainException::class);
 
         new GeneratorIterator(function () { });
     }

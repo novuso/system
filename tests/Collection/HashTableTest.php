@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Novuso\System\Test\Collection;
 
 use Novuso\System\Collection\HashTable;
+use Novuso\System\Collection\Traits\KeyValueTypeMethods;
 use Novuso\System\Exception\AssertionException;
 use Novuso\System\Exception\KeyException;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\HashTable
- * @covers \Novuso\System\Collection\Traits\KeyValueTypeMethods
- */
+#[CoversClass(HashTable::class)]
+#[CoversClass(KeyValueTypeMethods::class)]
 class HashTableTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
@@ -438,21 +438,21 @@ class HashTableTest extends UnitTestCase
 
     public function test_that_set_triggers_assert_error_for_invalid_key_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         HashTable::of('string', 'string')->set(10, 'foo');
     }
 
     public function test_that_set_triggers_assert_error_for_invalid_value_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         HashTable::of('string', 'string')->set('foo', 10);
     }
 
     public function test_that_get_throws_exception_for_key_not_found()
     {
-        $this->expectException(KeyException::class);
+        static::expectException(KeyException::class);
 
         HashTable::of('string', 'string')->get('foo');
     }

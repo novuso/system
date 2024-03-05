@@ -8,10 +8,9 @@ use Novuso\System\Exception\RuntimeException;
 use Novuso\System\Test\Resources\TestStringObject;
 use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Utility\VarPrinter;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Utility\VarPrinter
- */
+#[CoversClass(VarPrinter::class)]
 class VarPrinterTest extends UnitTestCase
 {
     public function test_that_to_string_returns_expected_string_for_null()

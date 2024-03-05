@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Novuso\System\Test\Collection;
 
 use Novuso\System\Collection\ArrayQueue;
+use Novuso\System\Collection\Iterator\ArrayQueueIterator;
 use Novuso\System\Exception\AssertionException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\ArrayQueue
- * @covers \Novuso\System\Collection\Iterator\ArrayQueueIterator
- */
+#[CoversClass(ArrayQueue::class)]
+#[CoversClass(ArrayQueueIterator::class)]
 class ArrayQueueTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
@@ -494,21 +494,21 @@ class ArrayQueueTest extends UnitTestCase
 
     public function test_that_enqueue_triggers_assert_error_for_invalid_item_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         ArrayQueue::of('int')->enqueue('string');
     }
 
     public function test_that_dequeue_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         ArrayQueue::of('int')->dequeue();
     }
 
     public function test_that_front_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         ArrayQueue::of('int')->front();
     }

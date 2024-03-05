@@ -6,10 +6,9 @@ namespace Novuso\System\Test\Type;
 
 use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Type\Type;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Type\Type
- */
+#[CoversClass(Type::class)]
 class TypeTest extends UnitTestCase
 {
     public function test_that_to_class_name_returns_expected_value()

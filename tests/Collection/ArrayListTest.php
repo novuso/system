@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Novuso\System\Test\Collection;
 
 use Novuso\System\Collection\ArrayList;
+use Novuso\System\Collection\Traits\ItemTypeMethods;
 use Novuso\System\Exception\AssertionException;
 use Novuso\System\Exception\IndexException;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Test\Resources\TestUser;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\ArrayList
- * @covers \Novuso\System\Collection\Traits\ItemTypeMethods
- */
+#[CoversClass(ArrayList::class)]
+#[CoversClass(ItemTypeMethods::class)]
 class ArrayListTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
@@ -906,28 +906,28 @@ class ArrayListTest extends UnitTestCase
 
     public function test_that_head_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         ArrayList::of('string')->head();
     }
 
     public function test_that_tail_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         ArrayList::of('string')->tail();
     }
 
     public function test_that_add_triggers_assert_error_for_invalid_item_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         ArrayList::of('object')->add('string');
     }
 
     public function test_that_set_triggers_assert_error_for_invalid_item_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         $list = ArrayList::of('object');
         $list->add(new \stdClass());
@@ -936,7 +936,7 @@ class ArrayListTest extends UnitTestCase
 
     public function test_that_offset_set_triggers_assert_error_for_invalid_index_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         $list = ArrayList::of('string');
         $list['foo'] = 'bar';
@@ -944,7 +944,7 @@ class ArrayListTest extends UnitTestCase
 
     public function test_that_offset_get_triggers_assert_error_for_invalid_index_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         $list = ArrayList::of('string');
         $list->add('foo');
@@ -953,7 +953,7 @@ class ArrayListTest extends UnitTestCase
 
     public function test_that_offset_exists_triggers_assert_error_for_invalid_index_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         $list = ArrayList::of('string');
         $list->add('foo');
@@ -962,7 +962,7 @@ class ArrayListTest extends UnitTestCase
 
     public function test_that_offset_unset_triggers_assert_error_for_invalid_index_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         $list = ArrayList::of('string');
         $list->add('foo');
@@ -971,7 +971,7 @@ class ArrayListTest extends UnitTestCase
 
     public function test_that_set_throws_exception_for_invalid_index()
     {
-        $this->expectException(IndexException::class);
+        static::expectException(IndexException::class);
 
         $list = ArrayList::of('object');
         $list->add(new \stdClass());
@@ -980,7 +980,7 @@ class ArrayListTest extends UnitTestCase
 
     public function test_that_get_throws_exception_for_invalid_index()
     {
-        $this->expectException(IndexException::class);
+        static::expectException(IndexException::class);
 
         $list = ArrayList::of('object');
         $list->add(new \stdClass());
