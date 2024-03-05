@@ -36,9 +36,9 @@ jobs:
       with:
         php-version: ${{ matrix.php-versions }}
         ini-file: development
-        extensions: mbstring, intl, zip, simplexml, xml, pdo_sqlite, mysql
+        extensions: mbstring, intl, imagick, simplexml, xml, pdo_sqlite, mysql, zip
         coverage: xdebug
-        tools: phpcs, phplint, phpunit:${{ matrix.phpunit-versions }}
+        tools: cs2pr, phpcs, phplint, phpunit:${{ matrix.phpunit-versions }}
 
     - name: Print PHP version
       run: echo ${{ steps.setup-php.outputs.php-version }}
@@ -48,17 +48,20 @@ jobs:
       run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
     - name: Cache Composer Dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
         restore-keys: ${{ runner.os }}-composer-
 
     - name: Install Composer Dependencies
-      run: composer install --no-progress --prefer-dist --optimize-autoloader
+      run: composer install --prefer-dist --optimize-autoloader
 
     - name: Run PHPLint
-      run: php vendor/bin/phplint src --verbose --no-cache --no-configuration
+      run: phplint src --verbose --no-cache --no-configuration
 
     - name: Run PhpUnit Tests
-      run: phpunit --configuration=etc/build
+      run: phpunit --configuration etc/build --do-not-cache-result
+
+    - name: Run PHP CodeStyle Checks
+      run: phpcs -q --standard etc/build/phpcs.xml --report=checkstyle src | cs2pr
