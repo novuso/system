@@ -8,10 +8,9 @@ use Novuso\System\Collection\ArrayList;
 use Novuso\System\Collection\HashSet;
 use Novuso\System\Exception\AssertionException;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\HashSet
- */
+#[CoversClass(HashSet::class)]
 class HashSetTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
@@ -580,7 +579,7 @@ class HashSetTest extends UnitTestCase
 
     public function test_that_add_triggers_assert_error_for_invalid_item_type()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         HashSet::of('int')->add('string');
     }

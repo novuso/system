@@ -1,0 +1,34 @@
+name: System Library Build
+
+on:
+  push:
+    branches:
+    - develop
+    - master
+    - release/*
+  pull_request:
+    branches:
+    - develop
+    - master
+    - release/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Composer install
+      uses: php-actions/composer@v6
+      with:
+        progress: yes
+
+    - name: PHPUnit Tests
+      uses: php-actions/phpunit@v3
+      with:
+        php_extensions: xdebug
+        bootstrap: vendor/autoload.php
+        configuration: etc/build
+        testsuite: complete
+      env:
+        XDEBUG_MODE: coverage

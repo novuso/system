@@ -8,10 +8,9 @@ use Novuso\System\Exception\DomainException;
 use Novuso\System\Serialization\JsonSerializer;
 use Novuso\System\Test\Resources\TestUser;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Serialization\JsonSerializer
- */
+#[CoversClass(JsonSerializer::class)]
 class JsonSerializerTest extends UnitTestCase
 {
     /** @var TestUser */
@@ -55,7 +54,7 @@ class JsonSerializerTest extends UnitTestCase
 
     public function test_that_deserialize_throws_exception_for_invalid_state()
     {
-        $this->expectException(DomainException::class);
+        static::expectException(DomainException::class);
 
         $serializer = new JsonSerializer();
 

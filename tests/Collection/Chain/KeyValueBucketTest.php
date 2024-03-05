@@ -6,10 +6,9 @@ namespace Novuso\System\Test\Collection\Chain;
 
 use Novuso\System\Collection\Chain\KeyValueBucket;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\Chain\KeyValueBucket
- */
+#[CoversClass(KeyValueBucket::class)]
 class KeyValueBucketTest extends UnitTestCase
 {
     public function test_that_constructor_takes_key_argument()

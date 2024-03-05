@@ -6,10 +6,9 @@ namespace Novuso\System\Test\Exception;
 
 use Novuso\System\Exception\ErrorException;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Exception\ErrorException
- */
+#[CoversClass(ErrorException::class)]
 class ErrorExceptionTest extends UnitTestCase
 {
     public function test_that_get_errors_returns_expected_value()

@@ -7,10 +7,9 @@ namespace Novuso\System\Test\Collection\Tree;
 use Novuso\System\Collection\Tree\RedBlackNode;
 use Novuso\System\Test\Resources\TestWeekDay;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\Tree\RedBlackNode
- */
+#[CoversClass(RedBlackNode::class)]
 class RedBlackNodeTest extends UnitTestCase
 {
     public function test_that_constructor_takes_key_arg()

@@ -6,10 +6,9 @@ namespace Novuso\System\Test\Utility;
 
 use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Utility\ClassName;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Utility\ClassName
- */
+#[CoversClass(ClassName::class)]
 class ClassNameTest extends UnitTestCase
 {
     public function test_that_full_returns_fqcn_when_passed_fqcn()

@@ -6,10 +6,9 @@ namespace Novuso\System\Test\Collection\Chain;
 
 use Novuso\System\Collection\Chain\TerminalBucket;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\Chain\TerminalBucket
- */
+#[CoversClass(TerminalBucket::class)]
 class TerminalBucketTest extends UnitTestCase
 {
     public function test_that_next_stores_bucket_instance()

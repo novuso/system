@@ -6,1185 +6,891 @@ namespace Novuso\System\Test\Utility;
 
 use Novuso\System\Test\TestCase\UnitTestCase;
 use Novuso\System\Utility\Validate;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Novuso\System\Utility\Validate
- */
+#[CoversClass(Validate::class)]
 class ValidateTest extends UnitTestCase
 {
     use TestDataProvider;
 
-    /**
-     * @dataProvider validScalarProvider
-     */
+    #[DataProvider('validScalarProvider')]
     public function test_that_is_scalar_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isScalar($value));
     }
 
-    /**
-     * @dataProvider invalidScalarProvider
-     */
+    #[DataProvider('invalidScalarProvider')]
     public function test_that_is_scalar_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isScalar($value));
     }
 
-    /**
-     * @dataProvider validBoolProvider
-     */
+    #[DataProvider('validBoolProvider')]
     public function test_that_is_bool_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isBool($value));
     }
 
-    /**
-     * @dataProvider invalidBoolProvider
-     */
+    #[DataProvider('invalidBoolProvider')]
     public function test_that_is_bool_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isBool($value));
     }
 
-    /**
-     * @dataProvider validFloatProvider
-     */
+    #[DataProvider('validFloatProvider')]
     public function test_that_is_float_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isFloat($value));
     }
 
-    /**
-     * @dataProvider invalidFloatProvider
-     */
+    #[DataProvider('invalidFloatProvider')]
     public function test_that_is_float_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isFloat($value));
     }
 
-    /**
-     * @dataProvider validIntProvider
-     */
+    #[DataProvider('validIntProvider')]
     public function test_that_is_int_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isInt($value));
     }
 
-    /**
-     * @dataProvider invalidIntProvider
-     */
+    #[DataProvider('invalidIntProvider')]
     public function test_that_is_int_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isInt($value));
     }
 
-    /**
-     * @dataProvider validStringProvider
-     */
+    #[DataProvider('validStringProvider')]
     public function test_that_is_string_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isString($value));
     }
 
-    /**
-     * @dataProvider invalidStringProvider
-     */
+    #[DataProvider('invalidStringProvider')]
     public function test_that_is_string_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isString($value));
     }
 
-    /**
-     * @dataProvider validArrayProvider
-     */
+    #[DataProvider('validArrayProvider')]
     public function test_that_is_array_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isArray($value));
     }
 
-    /**
-     * @dataProvider invalidArrayProvider
-     */
+    #[DataProvider('invalidArrayProvider')]
     public function test_that_is_array_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isArray($value));
     }
 
-    /**
-     * @dataProvider validObjectProvider
-     */
+    #[DataProvider('validObjectProvider')]
     public function test_that_is_object_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isObject($value));
     }
 
-    /**
-     * @dataProvider invalidObjectProvider
-     */
+    #[DataProvider('invalidObjectProvider')]
     public function test_that_is_object_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isObject($value));
     }
 
-    /**
-     * @dataProvider validCallableProvider
-     */
+    #[DataProvider('validCallableProvider')]
     public function test_that_is_callable_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isCallable($value));
     }
 
-    /**
-     * @dataProvider invalidCallableProvider
-     */
+    #[DataProvider('invalidCallableProvider')]
     public function test_that_is_callable_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isCallable($value));
     }
 
-    /**
-     * @dataProvider validNullProvider
-     */
+    #[DataProvider('validNullProvider')]
     public function test_that_is_null_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isNull($value));
     }
 
-    /**
-     * @dataProvider invalidNullProvider
-     */
+    #[DataProvider('invalidNullProvider')]
     public function test_that_is_null_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isNull($value));
     }
 
-    /**
-     * @dataProvider validNotNullProvider
-     */
+    #[DataProvider('validNotNullProvider')]
     public function test_that_is_not_null_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isNotNull($value));
     }
 
-    /**
-     * @dataProvider invalidNotNullProvider
-     */
+    #[DataProvider('invalidNotNullProvider')]
     public function test_that_is_not_null_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isNotNull($value));
     }
 
-    /**
-     * @dataProvider validTrueProvider
-     */
+    #[DataProvider('validTrueProvider')]
     public function test_that_is_true_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isTrue($value));
     }
 
-    /**
-     * @dataProvider invalidTrueProvider
-     */
+    #[DataProvider('invalidTrueProvider')]
     public function test_that_is_true_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isTrue($value));
     }
 
-    /**
-     * @dataProvider validFalseProvider
-     */
+    #[DataProvider('validFalseProvider')]
     public function test_that_is_false_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isFalse($value));
     }
 
-    /**
-     * @dataProvider invalidFalseProvider
-     */
+    #[DataProvider('invalidFalseProvider')]
     public function test_that_is_false_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isFalse($value));
     }
 
-    /**
-     * @dataProvider validEmptyProvider
-     */
+    #[DataProvider('validEmptyProvider')]
     public function test_that_is_empty_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isEmpty($value));
     }
 
-    /**
-     * @dataProvider invalidEmptyProvider
-     */
+    #[DataProvider('invalidEmptyProvider')]
     public function test_that_is_empty_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isEmpty($value));
     }
 
-    /**
-     * @dataProvider validNotEmptyProvider
-     */
+    #[DataProvider('validNotEmptyProvider')]
     public function test_that_is_not_empty_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isNotEmpty($value));
     }
 
-    /**
-     * @dataProvider invalidNotEmptyProvider
-     */
+    #[DataProvider('invalidNotEmptyProvider')]
     public function test_that_is_not_empty_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isNotEmpty($value));
     }
 
-    /**
-     * @dataProvider validBlankProvider
-     */
+    #[DataProvider('validBlankProvider')]
     public function test_that_is_blank_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isBlank($value));
     }
 
-    /**
-     * @dataProvider invalidBlankProvider
-     */
+    #[DataProvider('invalidBlankProvider')]
     public function test_that_is_blank_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isBlank($value));
     }
 
-    /**
-     * @dataProvider validNotBlankProvider
-     */
+    #[DataProvider('validNotBlankProvider')]
     public function test_that_is_not_blank_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isNotBlank($value));
     }
 
-    /**
-     * @dataProvider invalidNotBlankProvider
-     */
+    #[DataProvider('invalidNotBlankProvider')]
     public function test_that_is_not_blank_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isNotBlank($value));
     }
 
-    /**
-     * @dataProvider validAlphaProvider
-     */
+    #[DataProvider('validAlphaProvider')]
     public function test_that_is_alpha_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isAlpha($value));
     }
 
-    /**
-     * @dataProvider invalidAlphaProvider
-     */
+    #[DataProvider('invalidAlphaProvider')]
     public function test_that_is_alpha_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isAlpha($value));
     }
 
-    /**
-     * @dataProvider validAlnumProvider
-     */
+    #[DataProvider('validAlnumProvider')]
     public function test_that_is_alnum_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isAlnum($value));
     }
 
-    /**
-     * @dataProvider invalidAlnumProvider
-     */
+    #[DataProvider('invalidAlnumProvider')]
     public function test_that_is_alnum_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isAlnum($value));
     }
 
-    /**
-     * @dataProvider validAlphaDashProvider
-     */
+    #[DataProvider('validAlphaDashProvider')]
     public function test_that_is_alpha_dash_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isAlphaDash($value));
     }
 
-    /**
-     * @dataProvider invalidAlphaDashProvider
-     */
+    #[DataProvider('invalidAlphaDashProvider')]
     public function test_that_is_alpha_dash_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isAlphaDash($value));
     }
 
-    /**
-     * @dataProvider validAlnumDashProvider
-     */
+    #[DataProvider('validAlnumDashProvider')]
     public function test_that_is_alnum_dash_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isAlnumDash($value));
     }
 
-    /**
-     * @dataProvider invalidAlnumDashProvider
-     */
+    #[DataProvider('invalidAlnumDashProvider')]
     public function test_that_is_alnum_dash_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isAlnumDash($value));
     }
 
-    /**
-     * @dataProvider validDigitsProvider
-     */
+    #[DataProvider('validDigitsProvider')]
     public function test_that_is_digits_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isDigits($value));
     }
 
-    /**
-     * @dataProvider invalidDigitsProvider
-     */
+    #[DataProvider('invalidDigitsProvider')]
     public function test_that_is_digits_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isDigits($value));
     }
 
-    /**
-     * @dataProvider validNumericProvider
-     */
+    #[DataProvider('validNumericProvider')]
     public function test_that_is_numeric_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isNumeric($value));
     }
 
-    /**
-     * @dataProvider invalidNumericProvider
-     */
+    #[DataProvider('invalidNumericProvider')]
     public function test_that_is_numeric_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isNumeric($value));
     }
 
-    /**
-     * @dataProvider validEmailProvider
-     */
+    #[DataProvider('validEmailProvider')]
     public function test_that_is_email_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isEmail($value));
     }
 
-    /**
-     * @dataProvider invalidEmailProvider
-     */
+    #[DataProvider('invalidEmailProvider')]
     public function test_that_is_email_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isEmail($value));
     }
 
-    /**
-     * @dataProvider validIpAddressProvider
-     */
+    #[DataProvider('validIpAddressProvider')]
     public function test_that_is_ip_address_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isIpAddress($value));
     }
 
-    /**
-     * @dataProvider invalidIpAddressProvider
-     */
+    #[DataProvider('invalidIpAddressProvider')]
     public function test_that_is_ip_address_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isIpAddress($value));
     }
 
-    /**
-     * @dataProvider validIpV4AddressProvider
-     */
+    #[DataProvider('validIpV4AddressProvider')]
     public function test_that_is_ip_v4_address_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isIpV4Address($value));
     }
 
-    /**
-     * @dataProvider invalidIpV4AddressProvider
-     */
+    #[DataProvider('invalidIpV4AddressProvider')]
     public function test_that_is_ip_v4_address_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isIpV4Address($value));
     }
 
-    /**
-     * @dataProvider validIpV6AddressProvider
-     */
+    #[DataProvider('validIpV6AddressProvider')]
     public function test_that_is_ip_v6_address_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isIpV6Address($value));
     }
 
-    /**
-     * @dataProvider invalidIpV6AddressProvider
-     */
+    #[DataProvider('invalidIpV6AddressProvider')]
     public function test_that_is_ip_v6_address_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isIpV6Address($value));
     }
 
-    /**
-     * @dataProvider validUriProvider
-     */
+    #[DataProvider('validUriProvider')]
     public function test_that_is_uri_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isUri($value));
     }
 
-    /**
-     * @dataProvider invalidUriProvider
-     */
+    #[DataProvider('invalidUriProvider')]
     public function test_that_is_uri_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isUri($value));
     }
 
-    /**
-     * @dataProvider validUrnProvider
-     */
+    #[DataProvider('validUrnProvider')]
     public function test_that_is_urn_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isUrn($value));
     }
 
-    /**
-     * @dataProvider invalidUrnProvider
-     */
+    #[DataProvider('invalidUrnProvider')]
     public function test_that_is_urn_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isUrn($value));
     }
 
-    /**
-     * @dataProvider validUuidProvider
-     */
+    #[DataProvider('validUuidProvider')]
     public function test_that_is_uuid_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isUuid($value));
     }
 
-    /**
-     * @dataProvider invalidUuidProvider
-     */
+    #[DataProvider('invalidUuidProvider')]
     public function test_that_is_uuid_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isUuid($value));
     }
 
-    /**
-     * @dataProvider validTimezoneProvider
-     */
+    #[DataProvider('validTimezoneProvider')]
     public function test_that_is_timezone_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isTimezone($value));
     }
 
-    /**
-     * @dataProvider invalidTimezoneProvider
-     */
+    #[DataProvider('invalidTimezoneProvider')]
     public function test_that_is_timezone_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isTimezone($value));
     }
 
-    /**
-     * @dataProvider validJsonProvider
-     */
+    #[DataProvider('validJsonProvider')]
     public function test_that_is_json_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isJson($value));
     }
 
-    /**
-     * @dataProvider invalidJsonProvider
-     */
+    #[DataProvider('invalidJsonProvider')]
     public function test_that_is_json_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isJson($value));
     }
 
-    /**
-     * @dataProvider validMatchProvider
-     */
+    #[DataProvider('validMatchProvider')]
     public function test_that_is_match_returns_true_for_valid_value($value, $pattern)
     {
         static::assertTrue(Validate::isMatch($value, $pattern));
     }
 
-    /**
-     * @dataProvider invalidMatchProvider
-     */
+    #[DataProvider('invalidMatchProvider')]
     public function test_that_is_match_returns_false_for_invalid_value($value, $pattern)
     {
         static::assertFalse(Validate::isMatch($value, $pattern));
     }
 
-    /**
-     * @dataProvider validContainsProvider
-     */
+    #[DataProvider('validContainsProvider')]
     public function test_that_contains_returns_true_for_valid_value($value, $search)
     {
         static::assertTrue(Validate::contains($value, $search));
     }
 
-    /**
-     * @dataProvider invalidContainsProvider
-     */
+    #[DataProvider('invalidContainsProvider')]
     public function test_that_contains_returns_false_for_invalid_value($value, $search)
     {
         static::assertFalse(Validate::contains($value, $search));
     }
 
-    /**
-     * @dataProvider validStartsWithProvider
-     */
+    #[DataProvider('validStartsWithProvider')]
     public function test_that_starts_with_returns_true_for_valid_value($value, $search)
     {
         static::assertTrue(Validate::startsWith($value, $search));
     }
 
-    /**
-     * @dataProvider invalidStartsWithProvider
-     */
+    #[DataProvider('invalidStartsWithProvider')]
     public function test_that_starts_with_returns_false_for_invalid_value($value, $search)
     {
         static::assertFalse(Validate::startsWith($value, $search));
     }
 
-    /**
-     * @dataProvider validEndsWithProvider
-     */
+    #[DataProvider('validEndsWithProvider')]
     public function test_that_ends_with_returns_true_for_valid_value($value, $search)
     {
         static::assertTrue(Validate::endsWith($value, $search));
     }
 
-    /**
-     * @dataProvider invalidEndsWithProvider
-     */
+    #[DataProvider('invalidEndsWithProvider')]
     public function test_that_ends_with_returns_false_for_invalid_value($value, $search)
     {
         static::assertFalse(Validate::endsWith($value, $search));
     }
 
-    /**
-     * @dataProvider validExactLengthProvider
-     */
+    #[DataProvider('validExactLengthProvider')]
     public function test_that_exact_length_returns_true_for_valid_value($value, $length)
     {
         static::assertTrue(Validate::exactLength($value, $length));
     }
 
-    /**
-     * @dataProvider invalidExactLengthProvider
-     */
+    #[DataProvider('invalidExactLengthProvider')]
     public function test_that_exact_length_returns_false_for_invalid_value($value, $length)
     {
         static::assertFalse(Validate::exactLength($value, $length));
     }
 
-    /**
-     * @dataProvider validMinLengthProvider
-     */
+    #[DataProvider('validMinLengthProvider')]
     public function test_that_min_length_returns_true_for_valid_value($value, $minLength)
     {
         static::assertTrue(Validate::minLength($value, $minLength));
     }
 
-    /**
-     * @dataProvider invalidMinLengthProvider
-     */
+    #[DataProvider('invalidMinLengthProvider')]
     public function test_that_min_length_returns_false_for_invalid_value($value, $minLength)
     {
         static::assertFalse(Validate::minLength($value, $minLength));
     }
 
-    /**
-     * @dataProvider validMaxLengthProvider
-     */
+    #[DataProvider('validMaxLengthProvider')]
     public function test_that_max_length_returns_true_for_valid_value($value, $maxLength)
     {
         static::assertTrue(Validate::maxLength($value, $maxLength));
     }
 
-    /**
-     * @dataProvider invalidMaxLengthProvider
-     */
+    #[DataProvider('invalidMaxLengthProvider')]
     public function test_that_max_length_returns_false_for_invalid_value($value, $maxLength)
     {
         static::assertFalse(Validate::maxLength($value, $maxLength));
     }
 
-    /**
-     * @dataProvider validRangeLengthProvider
-     */
+    #[DataProvider('validRangeLengthProvider')]
     public function test_that_range_length_returns_true_for_valid_value($value, $minLength, $maxLength)
     {
         static::assertTrue(Validate::rangeLength($value, $minLength, $maxLength));
     }
 
-    /**
-     * @dataProvider invalidRangeLengthProvider
-     */
+    #[DataProvider('invalidRangeLengthProvider')]
     public function test_that_range_length_returns_false_for_invalid_value($value, $minLength, $maxLength)
     {
         static::assertFalse(Validate::rangeLength($value, $minLength, $maxLength));
     }
 
-    /**
-     * @dataProvider validExactNumberProvider
-     */
+    #[DataProvider('validExactNumberProvider')]
     public function test_that_exact_number_returns_true_for_valid_value($value, $number)
     {
         static::assertTrue(Validate::exactNumber($value, $number));
     }
 
-    /**
-     * @dataProvider invalidExactNumberProvider
-     */
+    #[DataProvider('invalidExactNumberProvider')]
     public function test_that_exact_number_returns_false_for_invalid_value($value, $number)
     {
         static::assertFalse(Validate::exactNumber($value, $number));
     }
 
-    /**
-     * @dataProvider validMinNumberProvider
-     */
+    #[DataProvider('validMinNumberProvider')]
     public function test_that_min_number_returns_true_for_valid_value($value, $minNumber)
     {
         static::assertTrue(Validate::minNumber($value, $minNumber));
     }
 
-    /**
-     * @dataProvider invalidMinNumberProvider
-     */
+    #[DataProvider('invalidMinNumberProvider')]
     public function test_that_min_number_returns_false_for_invalid_value($value, $minNumber)
     {
         static::assertFalse(Validate::minNumber($value, $minNumber));
     }
 
-    /**
-     * @dataProvider validMaxNumberProvider
-     */
+    #[DataProvider('validMaxNumberProvider')]
     public function test_that_max_number_returns_true_for_valid_value($value, $maxNumber)
     {
         static::assertTrue(Validate::maxNumber($value, $maxNumber));
     }
 
-    /**
-     * @dataProvider invalidMaxNumberProvider
-     */
+    #[DataProvider('invalidMaxNumberProvider')]
     public function test_that_max_number_returns_false_for_invalid_value($value, $maxNumber)
     {
         static::assertFalse(Validate::maxNumber($value, $maxNumber));
     }
 
-    /**
-     * @dataProvider validRangeNumberProvider
-     */
+    #[DataProvider('validRangeNumberProvider')]
     public function test_that_range_number_returns_true_for_valid_value($value, $minNumber, $maxNumber)
     {
         static::assertTrue(Validate::rangeNumber($value, $minNumber, $maxNumber));
     }
 
-    /**
-     * @dataProvider invalidRangeNumberProvider
-     */
+    #[DataProvider('invalidRangeNumberProvider')]
     public function test_that_range_number_returns_false_for_invalid_value($value, $minNumber, $maxNumber)
     {
         static::assertFalse(Validate::rangeNumber($value, $minNumber, $maxNumber));
     }
 
-    /**
-     * @dataProvider validWholeNumberProvider
-     */
+    #[DataProvider('validWholeNumberProvider')]
     public function test_that_whole_number_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::wholeNumber($value));
     }
 
-    /**
-     * @dataProvider invalidWholeNumberProvider
-     */
+    #[DataProvider('invalidWholeNumberProvider')]
     public function test_that_whole_number_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::wholeNumber($value));
     }
 
-    /**
-     * @dataProvider validNaturalNumberProvider
-     */
+    #[DataProvider('validNaturalNumberProvider')]
     public function test_that_natural_number_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::naturalNumber($value));
     }
 
-    /**
-     * @dataProvider invalidNaturalNumberProvider
-     */
+    #[DataProvider('invalidNaturalNumberProvider')]
     public function test_that_natural_number_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::naturalNumber($value));
     }
 
-    /**
-     * @dataProvider validIntValueProvider
-     */
+    #[DataProvider('validIntValueProvider')]
     public function test_that_int_value_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::intValue($value));
     }
 
-    /**
-     * @dataProvider invalidIntValueProvider
-     */
+    #[DataProvider('invalidIntValueProvider')]
     public function test_that_int_value_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::intValue($value));
     }
 
-    /**
-     * @dataProvider validExactCountProvider
-     */
+    #[DataProvider('validExactCountProvider')]
     public function test_that_exact_count_returns_true_for_valid_value($value, $count)
     {
         static::assertTrue(Validate::exactCount($value, $count));
     }
 
-    /**
-     * @dataProvider invalidExactCountProvider
-     */
+    #[DataProvider('invalidExactCountProvider')]
     public function test_that_exact_count_returns_false_for_invalid_value($value, $count)
     {
         static::assertFalse(Validate::exactCount($value, $count));
     }
 
-    /**
-     * @dataProvider validMinCountProvider
-     */
+    #[DataProvider('validMinCountProvider')]
     public function test_that_min_count_returns_true_for_valid_value($value, $minCount)
     {
         static::assertTrue(Validate::minCount($value, $minCount));
     }
 
-    /**
-     * @dataProvider invalidMinCountProvider
-     */
+    #[DataProvider('invalidMinCountProvider')]
     public function test_that_min_count_returns_false_for_invalid_value($value, $minCount)
     {
         static::assertFalse(Validate::minCount($value, $minCount));
     }
 
-    /**
-     * @dataProvider validMaxCountProvider
-     */
+    #[DataProvider('validMaxCountProvider')]
     public function test_that_max_count_returns_true_for_valid_value($value, $maxCount)
     {
         static::assertTrue(Validate::maxCount($value, $maxCount));
     }
 
-    /**
-     * @dataProvider invalidMaxCountProvider
-     */
+    #[DataProvider('invalidMaxCountProvider')]
     public function test_that_max_count_returns_false_for_invalid_value($value, $maxCount)
     {
         static::assertFalse(Validate::maxCount($value, $maxCount));
     }
 
-    /**
-     * @dataProvider validRangeCountProvider
-     */
+    #[DataProvider('validRangeCountProvider')]
     public function test_that_range_count_returns_true_for_valid_value($value, $minCount, $maxCount)
     {
         static::assertTrue(Validate::rangeCount($value, $minCount, $maxCount));
     }
 
-    /**
-     * @dataProvider invalidRangeCountProvider
-     */
+    #[DataProvider('invalidRangeCountProvider')]
     public function test_that_range_count_returns_false_for_invalid_value($value, $minCount, $maxCount)
     {
         static::assertFalse(Validate::rangeCount($value, $minCount, $maxCount));
     }
 
-    /**
-     * @dataProvider validOneOfProvider
-     */
+    #[DataProvider('validOneOfProvider')]
     public function test_that_is_one_of_returns_true_for_valid_value($value, $choices)
     {
         static::assertTrue(Validate::isOneOf($value, $choices));
     }
 
-    /**
-     * @dataProvider invalidOneOfProvider
-     */
+    #[DataProvider('invalidOneOfProvider')]
     public function test_that_is_one_of_returns_false_for_invalid_value($value, $choices)
     {
         static::assertFalse(Validate::isOneOf($value, $choices));
     }
 
-    /**
-     * @dataProvider validKeyIssetProvider
-     */
+    #[DataProvider('validKeyIssetProvider')]
     public function test_that_key_isset_returns_true_for_valid_value($value, $key)
     {
         static::assertTrue(Validate::keyIsset($value, $key));
     }
 
-    /**
-     * @dataProvider invalidKeyIssetProvider
-     */
+    #[DataProvider('invalidKeyIssetProvider')]
     public function test_that_key_isset_returns_false_for_invalid_value($value, $key)
     {
         static::assertFalse(Validate::keyIsset($value, $key));
     }
 
-    /**
-     * @dataProvider validKeyNotEmptyProvider
-     */
+    #[DataProvider('validKeyNotEmptyProvider')]
     public function test_that_key_not_empty_returns_true_for_valid_value($value, $key)
     {
         static::assertTrue(Validate::keyNotEmpty($value, $key));
     }
 
-    /**
-     * @dataProvider invalidKeyNotEmptyProvider
-     */
+    #[DataProvider('invalidKeyNotEmptyProvider')]
     public function test_that_key_not_empty_returns_false_for_invalid_value($value, $key)
     {
         static::assertFalse(Validate::keyNotEmpty($value, $key));
     }
 
-    /**
-     * @dataProvider validEqualProvider
-     */
+    #[DataProvider('validEqualProvider')]
     public function test_that_are_equal_returns_true_for_valid_value($value1, $value2)
     {
         static::assertTrue(Validate::areEqual($value1, $value2));
     }
 
-    /**
-     * @dataProvider invalidEqualProvider
-     */
+    #[DataProvider('invalidEqualProvider')]
     public function test_that_are_equal_returns_false_for_invalid_value($value1, $value2)
     {
         static::assertFalse(Validate::areEqual($value1, $value2));
     }
 
-    /**
-     * @dataProvider validNotEqualProvider
-     */
+    #[DataProvider('validNotEqualProvider')]
     public function test_that_are_not_equal_returns_true_for_valid_value($value1, $value2)
     {
         static::assertTrue(Validate::areNotEqual($value1, $value2));
     }
 
-    /**
-     * @dataProvider invalidNotEqualProvider
-     */
+    #[DataProvider('invalidNotEqualProvider')]
     public function test_that_are_not_equal_returns_false_for_invalid_value($value1, $value2)
     {
         static::assertFalse(Validate::areNotEqual($value1, $value2));
     }
 
-    /**
-     * @dataProvider validSameProvider
-     */
+    #[DataProvider('validSameProvider')]
     public function test_that_are_same_returns_true_for_valid_value($value1, $value2)
     {
         static::assertTrue(Validate::areSame($value1, $value2));
     }
 
-    /**
-     * @dataProvider invalidSameProvider
-     */
+    #[DataProvider('invalidSameProvider')]
     public function test_that_are_same_returns_false_for_invalid_value($value1, $value2)
     {
         static::assertFalse(Validate::areSame($value1, $value2));
     }
 
-    /**
-     * @dataProvider validNotSameProvider
-     */
+    #[DataProvider('validNotSameProvider')]
     public function test_that_are_not_same_returns_true_for_valid_value($value1, $value2)
     {
         static::assertTrue(Validate::areNotSame($value1, $value2));
     }
 
-    /**
-     * @dataProvider invalidNotSameProvider
-     */
+    #[DataProvider('invalidNotSameProvider')]
     public function test_that_are_not_same_returns_false_for_invalid_value($value1, $value2)
     {
         static::assertFalse(Validate::areNotSame($value1, $value2));
     }
 
-    /**
-     * @dataProvider validSameTypeProvider
-     */
+    #[DataProvider('validSameTypeProvider')]
     public function test_that_are_same_type_returns_true_for_valid_value($value1, $value2)
     {
         static::assertTrue(Validate::areSameType($value1, $value2));
     }
 
-    /**
-     * @dataProvider invalidSameTypeProvider
-     */
+    #[DataProvider('invalidSameTypeProvider')]
     public function test_that_are_same_type_returns_false_for_invalid_value($value1, $value2)
     {
         static::assertFalse(Validate::areSameType($value1, $value2));
     }
 
-    /**
-     * @dataProvider validTypeProvider
-     */
+    #[DataProvider('validTypeProvider')]
     public function test_that_is_type_returns_true_for_valid_value($value, $type)
     {
         static::assertTrue(Validate::isType($value, $type));
     }
 
-    /**
-     * @dataProvider invalidTypeProvider
-     */
+    #[DataProvider('invalidTypeProvider')]
     public function test_that_is_type_returns_false_for_invalid_value($value, $type)
     {
         static::assertFalse(Validate::isType($value, $type));
     }
 
-    /**
-     * @dataProvider validListOfProvider
-     */
+    #[DataProvider('validListOfProvider')]
     public function test_that_is_list_of_returns_true_for_valid_value($value, $type)
     {
         static::assertTrue(Validate::isListOf($value, $type));
     }
 
-    /**
-     * @dataProvider invalidListOfProvider
-     */
+    #[DataProvider('invalidListOfProvider')]
     public function test_that_is_list_of_returns_false_for_invalid_value($value, $type)
     {
         static::assertFalse(Validate::isListOf($value, $type));
     }
 
-    /**
-     * @dataProvider validStringCastableProvider
-     */
+    #[DataProvider('validStringCastableProvider')]
     public function test_that_is_string_castable_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isStringCastable($value));
     }
 
-    /**
-     * @dataProvider invalidStringCastableProvider
-     */
+    #[DataProvider('invalidStringCastableProvider')]
     public function test_that_is_string_castable_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isStringCastable($value));
     }
 
-    /**
-     * @dataProvider validJsonEncodableProvider
-     */
+    #[DataProvider('validJsonEncodableProvider')]
     public function test_that_is_json_encodable_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isJsonEncodable($value));
     }
 
-    /**
-     * @dataProvider invalidJsonEncodableProvider
-     */
+    #[DataProvider('invalidJsonEncodableProvider')]
     public function test_that_is_json_encodable_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isJsonEncodable($value));
     }
 
-    /**
-     * @dataProvider validTraversableProvider
-     */
+    #[DataProvider('validTraversableProvider')]
     public function test_that_is_traversable_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isTraversable($value));
     }
 
-    /**
-     * @dataProvider invalidTraversableProvider
-     */
+    #[DataProvider('invalidTraversableProvider')]
     public function test_that_is_traversable_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isTraversable($value));
     }
 
-    /**
-     * @dataProvider validCountableProvider
-     */
+    #[DataProvider('validCountableProvider')]
     public function test_that_is_countable_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isCountable($value));
     }
 
-    /**
-     * @dataProvider invalidCountableProvider
-     */
+    #[DataProvider('invalidCountableProvider')]
     public function test_that_is_countable_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isCountable($value));
     }
 
-    /**
-     * @dataProvider validArrayAccessibleProvider
-     */
+    #[DataProvider('validArrayAccessibleProvider')]
     public function test_that_is_array_accessible_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isArrayAccessible($value));
     }
 
-    /**
-     * @dataProvider invalidArrayAccessibleProvider
-     */
+    #[DataProvider('invalidArrayAccessibleProvider')]
     public function test_that_is_array_accessible_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isArrayAccessible($value));
     }
 
-    /**
-     * @dataProvider validComparableProvider
-     */
+    #[DataProvider('validComparableProvider')]
     public function test_that_is_comparable_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isComparable($value));
     }
 
-    /**
-     * @dataProvider invalidComparableProvider
-     */
+    #[DataProvider('invalidComparableProvider')]
     public function test_that_is_comparable_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isComparable($value));
     }
 
-    /**
-     * @dataProvider validEquatableProvider
-     */
+    #[DataProvider('validEquatableProvider')]
     public function test_that_is_equatable_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::isEquatable($value));
     }
 
-    /**
-     * @dataProvider invalidEquatableProvider
-     */
+    #[DataProvider('invalidEquatableProvider')]
     public function test_that_is_equatable_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::isEquatable($value));
     }
 
-    /**
-     * @dataProvider validImplementsProvider
-     */
+    #[DataProvider('validImplementsProvider')]
     public function test_that_implements_interface_returns_true_for_valid_value($value, $interface)
     {
         static::assertTrue(Validate::implementsInterface($value, $interface));
     }
 
-    /**
-     * @dataProvider invalidImplementsProvider
-     */
+    #[DataProvider('invalidImplementsProvider')]
     public function test_that_implements_interface_returns_false_for_invalid_value($value, $interface)
     {
         static::assertFalse(Validate::implementsInterface($value, $interface));
     }
 
-    /**
-     * @dataProvider validInstanceOfProvider
-     */
+    #[DataProvider('validInstanceOfProvider')]
     public function test_that_is_instance_of_returns_true_for_valid_value($value, $className)
     {
         static::assertTrue(Validate::isInstanceOf($value, $className));
     }
 
-    /**
-     * @dataProvider invalidInstanceOfProvider
-     */
+    #[DataProvider('invalidInstanceOfProvider')]
     public function test_that_is_instance_of_returns_false_for_invalid_value($value, $className)
     {
         static::assertFalse(Validate::isInstanceOf($value, $className));
     }
 
-    /**
-     * @dataProvider validSubclassOfProvider
-     */
+    #[DataProvider('validSubclassOfProvider')]
     public function test_that_is_subclass_of_returns_true_for_valid_value($value, $className)
     {
         static::assertTrue(Validate::isSubclassOf($value, $className));
     }
 
-    /**
-     * @dataProvider invalidSubclassOfProvider
-     */
+    #[DataProvider('invalidSubclassOfProvider')]
     public function test_that_is_subclass_of_returns_false_for_invalid_value($value, $className)
     {
         static::assertFalse(Validate::isSubclassOf($value, $className));
     }
 
-    /**
-     * @dataProvider validClassExistsProvider
-     */
+    #[DataProvider('validClassExistsProvider')]
     public function test_that_class_exists_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::classExists($value));
     }
 
-    /**
-     * @dataProvider invalidClassExistsProvider
-     */
+    #[DataProvider('invalidClassExistsProvider')]
     public function test_that_class_exists_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::classExists($value));
     }
 
-    /**
-     * @dataProvider validInterfaceExistsProvider
-     */
+    #[DataProvider('validInterfaceExistsProvider')]
     public function test_that_interface_exists_returns_true_for_valid_value($value)
     {
         static::assertTrue(Validate::interfaceExists($value));
     }
 
-    /**
-     * @dataProvider invalidInterfaceExistsProvider
-     */
+    #[DataProvider('invalidInterfaceExistsProvider')]
     public function test_that_interface_exists_returns_false_for_invalid_value($value)
     {
         static::assertFalse(Validate::interfaceExists($value));
     }
 
-    /**
-     * @dataProvider validMethodExistsProvider
-     */
+    #[DataProvider('validMethodExistsProvider')]
     public function test_that_method_exists_returns_true_for_valid_value($value, $object)
     {
         static::assertTrue(Validate::methodExists($value, $object));
     }
 
-    /**
-     * @dataProvider invalidMethodExistsProvider
-     */
+    #[DataProvider('invalidMethodExistsProvider')]
     public function test_that_method_exists_returns_false_for_invalid_value($value, $object)
     {
         static::assertFalse(Validate::methodExists($value, $object));
     }
 
-    /**
-     * @dataProvider validPathProvider
-     */
+    #[DataProvider('validPathProvider')]
     public function test_that_is_path_returns_true_for_valid_value($value)
     {
         $this->createFilesystem();
@@ -1192,9 +898,7 @@ class ValidateTest extends UnitTestCase
         static::assertTrue(Validate::isPath($value));
     }
 
-    /**
-     * @dataProvider invalidPathProvider
-     */
+    #[DataProvider('invalidPathProvider')]
     public function test_that_is_path_returns_false_for_invalid_value($value)
     {
         $this->createFilesystem();
@@ -1202,9 +906,7 @@ class ValidateTest extends UnitTestCase
         static::assertFalse(Validate::isPath($value));
     }
 
-    /**
-     * @dataProvider validFileProvider
-     */
+    #[DataProvider('validFileProvider')]
     public function test_that_is_file_returns_true_for_valid_value($value)
     {
         $this->createFilesystem();
@@ -1212,9 +914,7 @@ class ValidateTest extends UnitTestCase
         static::assertTrue(Validate::isFile($value));
     }
 
-    /**
-     * @dataProvider invalidFileProvider
-     */
+    #[DataProvider('invalidFileProvider')]
     public function test_that_is_file_returns_false_for_invalid_value($value)
     {
         $this->createFilesystem();
@@ -1222,9 +922,7 @@ class ValidateTest extends UnitTestCase
         static::assertFalse(Validate::isFile($value));
     }
 
-    /**
-     * @dataProvider validDirProvider
-     */
+    #[DataProvider('validDirProvider')]
     public function test_that_is_dir_returns_true_for_valid_value($value)
     {
         $this->createFilesystem();
@@ -1232,9 +930,7 @@ class ValidateTest extends UnitTestCase
         static::assertTrue(Validate::isDir($value));
     }
 
-    /**
-     * @dataProvider invalidDirProvider
-     */
+    #[DataProvider('invalidDirProvider')]
     public function test_that_is_dir_returns_false_for_invalid_value($value)
     {
         $this->createFilesystem();
@@ -1242,9 +938,7 @@ class ValidateTest extends UnitTestCase
         static::assertFalse(Validate::isDir($value));
     }
 
-    /**
-     * @dataProvider validReadableProvider
-     */
+    #[DataProvider('validReadableProvider')]
     public function test_that_is_readable_returns_true_for_valid_value($value)
     {
         $this->createFilesystem();
@@ -1252,9 +946,7 @@ class ValidateTest extends UnitTestCase
         static::assertTrue(Validate::isReadable($value));
     }
 
-    /**
-     * @dataProvider invalidReadableProvider
-     */
+    #[DataProvider('invalidReadableProvider')]
     public function test_that_is_readable_returns_false_for_invalid_value($value)
     {
         $this->createFilesystem();
@@ -1262,9 +954,7 @@ class ValidateTest extends UnitTestCase
         static::assertFalse(Validate::isReadable($value));
     }
 
-    /**
-     * @dataProvider validWritableProvider
-     */
+    #[DataProvider('validWritableProvider')]
     public function test_that_is_writable_returns_true_for_valid_value($value)
     {
         $this->createFilesystem();
@@ -1272,9 +962,7 @@ class ValidateTest extends UnitTestCase
         static::assertTrue(Validate::isWritable($value));
     }
 
-    /**
-     * @dataProvider invalidWritableProvider
-     */
+    #[DataProvider('invalidWritableProvider')]
     public function test_that_is_writable_returns_false_for_invalid_value($value)
     {
         $this->createFilesystem();

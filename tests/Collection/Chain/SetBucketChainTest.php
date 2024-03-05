@@ -6,10 +6,9 @@ namespace Novuso\System\Test\Collection\Chain;
 
 use Novuso\System\Collection\Chain\SetBucketChain;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\Chain\SetBucketChain
- */
+#[CoversClass(SetBucketChain::class)]
 class SetBucketChainTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()

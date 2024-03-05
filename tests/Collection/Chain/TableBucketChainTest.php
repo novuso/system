@@ -7,10 +7,9 @@ namespace Novuso\System\Test\Collection\Chain;
 use Novuso\System\Collection\Chain\TableBucketChain;
 use Novuso\System\Exception\KeyException;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\Chain\TableBucketChain
- */
+#[CoversClass(TableBucketChain::class)]
 class TableBucketChainTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
@@ -175,7 +174,7 @@ class TableBucketChainTest extends UnitTestCase
 
     public function test_that_get_throws_exception_for_key_not_found()
     {
-        $this->expectException(KeyException::class);
+        static::expectException(KeyException::class);
         $chain = new TableBucketChain();
         $chain->get('foo');
     }
