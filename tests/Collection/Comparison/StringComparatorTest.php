@@ -6,10 +6,9 @@ namespace Novuso\System\Test\Collection\Comparison;
 
 use Novuso\System\Collection\Comparison\StringComparator;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\Comparison\StringComparator
- */
+#[CoversClass(StringComparator::class)]
 class StringComparatorTest extends UnitTestCase
 {
     public function test_that_compare_returns_zero_when_comparison_is_equal()

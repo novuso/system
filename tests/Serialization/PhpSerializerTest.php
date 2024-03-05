@@ -8,10 +8,9 @@ use Novuso\System\Exception\DomainException;
 use Novuso\System\Serialization\PhpSerializer;
 use Novuso\System\Test\Resources\TestUser;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Serialization\PhpSerializer
- */
+#[CoversClass(PhpSerializer::class)]
 class PhpSerializerTest extends UnitTestCase
 {
     /** @var TestUser */
@@ -55,7 +54,7 @@ class PhpSerializerTest extends UnitTestCase
 
     public function test_that_deserialize_throws_exception_for_invalid_state()
     {
-        $this->expectException(DomainException::class);
+        static::expectException(DomainException::class);
 
         $serializer = new PhpSerializer();
 

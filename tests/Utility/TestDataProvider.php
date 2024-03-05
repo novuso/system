@@ -16,7 +16,7 @@ trait TestDataProvider
 {
     use VirtualFileSystem;
 
-    public function validScalarProvider(): array
+    public static function validScalarProvider(): array
     {
         return [
             ['string'],
@@ -26,7 +26,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidScalarProvider(): array
+    public static function invalidScalarProvider(): array
     {
         return [
             [null],
@@ -34,7 +34,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validBoolProvider(): array
+    public static function validBoolProvider(): array
     {
         return [
             [true],
@@ -42,7 +42,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidBoolProvider(): array
+    public static function invalidBoolProvider(): array
     {
         return [
             [1],
@@ -50,7 +50,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validFloatProvider(): array
+    public static function validFloatProvider(): array
     {
         return [
             [3.14],
@@ -59,7 +59,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidFloatProvider(): array
+    public static function invalidFloatProvider(): array
     {
         return [
             ['3.14'],
@@ -67,7 +67,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validIntProvider(): array
+    public static function validIntProvider(): array
     {
         return [
             [0],
@@ -78,7 +78,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidIntProvider(): array
+    public static function invalidIntProvider(): array
     {
         return [
             ['42'],
@@ -87,7 +87,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validStringProvider(): array
+    public static function validStringProvider(): array
     {
         return [
             [''],
@@ -95,14 +95,14 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidStringProvider(): array
+    public static function invalidStringProvider(): array
     {
         return [
             [null]
         ];
     }
 
-    public function validArrayProvider(): array
+    public static function validArrayProvider(): array
     {
         return [
             [['foo', 'bar', 'baz']],
@@ -110,7 +110,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidArrayProvider(): array
+    public static function invalidArrayProvider(): array
     {
         return [
             [null],
@@ -118,14 +118,14 @@ trait TestDataProvider
         ];
     }
 
-    public function validObjectProvider(): array
+    public static function validObjectProvider(): array
     {
         return [
             [new \StdClass()]
         ];
     }
 
-    public function invalidObjectProvider(): array
+    public static function invalidObjectProvider(): array
     {
         return [
             [null],
@@ -133,7 +133,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validCallableProvider(): array
+    public static function validCallableProvider(): array
     {
         return [
             [function () {}],
@@ -142,7 +142,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidCallableProvider(): array
+    public static function invalidCallableProvider(): array
     {
         return [
             [null],
@@ -150,14 +150,14 @@ trait TestDataProvider
         ];
     }
 
-    public function validNullProvider(): array
+    public static function validNullProvider(): array
     {
         return [
             [null]
         ];
     }
 
-    public function invalidNullProvider(): array
+    public static function invalidNullProvider(): array
     {
         return [
             [false],
@@ -165,7 +165,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validNotNullProvider(): array
+    public static function validNotNullProvider(): array
     {
         return [
             [false],
@@ -173,42 +173,42 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidNotNullProvider(): array
+    public static function invalidNotNullProvider(): array
     {
         return [
             [null]
         ];
     }
 
-    public function validTrueProvider(): array
+    public static function validTrueProvider(): array
     {
         return [
             [true]
         ];
     }
 
-    public function invalidTrueProvider(): array
+    public static function invalidTrueProvider(): array
     {
         return [
             [false]
         ];
     }
 
-    public function validFalseProvider(): array
+    public static function validFalseProvider(): array
     {
         return [
             [false]
         ];
     }
 
-    public function invalidFalseProvider(): array
+    public static function invalidFalseProvider(): array
     {
         return [
             [true]
         ];
     }
 
-    public function validEmptyProvider(): array
+    public static function validEmptyProvider(): array
     {
         return [
             [''],
@@ -221,7 +221,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidEmptyProvider(): array
+    public static function invalidEmptyProvider(): array
     {
         return [
             [' '],
@@ -235,7 +235,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validNotEmptyProvider(): array
+    public static function validNotEmptyProvider(): array
     {
         return [
             [' '],
@@ -249,7 +249,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidNotEmptyProvider(): array
+    public static function invalidNotEmptyProvider(): array
     {
         return [
             [''],
@@ -262,7 +262,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validBlankProvider(): array
+    public static function validBlankProvider(): array
     {
         return [
             [null],
@@ -273,7 +273,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidBlankProvider(): array
+    public static function invalidBlankProvider(): array
     {
         return [
             ['value'],
@@ -285,7 +285,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validNotBlankProvider(): array
+    public static function validNotBlankProvider(): array
     {
         return [
             ['value'],
@@ -296,7 +296,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidNotBlankProvider(): array
+    public static function invalidNotBlankProvider(): array
     {
         return [
             [null],
@@ -308,7 +308,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validAlphaProvider(): array
+    public static function validAlphaProvider(): array
     {
         return [
             ['YjsZmHXHSxycLlZc'],
@@ -318,7 +318,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidAlphaProvider(): array
+    public static function invalidAlphaProvider(): array
     {
         return [
             ['gq4XRHPx3zLqiFYj'],
@@ -329,7 +329,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validAlnumProvider(): array
+    public static function validAlnumProvider(): array
     {
         return [
             ['gq4XRHPx3zLqiFYj'],
@@ -339,7 +339,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidAlnumProvider(): array
+    public static function invalidAlnumProvider(): array
     {
         return [
             ['YjzRUhM__Aib_WnQ'],
@@ -350,7 +350,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validAlphaDashProvider(): array
+    public static function validAlphaDashProvider(): array
     {
         return [
             ['YjzRUhM__Aib_WnQ'],
@@ -360,7 +360,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidAlphaDashProvider(): array
+    public static function invalidAlphaDashProvider(): array
     {
         return [
             ['Lx7lDu-9oL0u-dsg'],
@@ -371,7 +371,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validAlnumDashProvider(): array
+    public static function validAlnumDashProvider(): array
     {
         return [
             ['Lx7lDu-9oL0u-dsg'],
@@ -381,7 +381,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidAlnumDashProvider(): array
+    public static function invalidAlnumDashProvider(): array
     {
         return [
             ['U&36wu@@FO$vV7zy'],
@@ -392,7 +392,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validDigitsProvider(): array
+    public static function validDigitsProvider(): array
     {
         return [
             ['0576707396293939'],
@@ -402,7 +402,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidDigitsProvider(): array
+    public static function invalidDigitsProvider(): array
     {
         return [
             ['gq4XRHPx3zLqiFYj'],
@@ -413,7 +413,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validNumericProvider(): array
+    public static function validNumericProvider(): array
     {
         return [
             [42],
@@ -428,7 +428,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidNumericProvider(): array
+    public static function invalidNumericProvider(): array
     {
         return [
             ['U&36wu@@FO$vV7zy'],
@@ -439,7 +439,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validEmailProvider(): array
+    public static function validEmailProvider(): array
     {
         return [
             ['email@example.com'],
@@ -456,7 +456,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidEmailProvider(): array
+    public static function invalidEmailProvider(): array
     {
         return [
             ['plainaddress'],
@@ -478,7 +478,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validIpAddressProvider(): array
+    public static function validIpAddressProvider(): array
     {
         return [
             ['155.217.46.237'],
@@ -492,7 +492,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidIpAddressProvider(): array
+    public static function invalidIpAddressProvider(): array
     {
         return [
             ['155.217.461.237'],
@@ -508,7 +508,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validIpV4AddressProvider(): array
+    public static function validIpV4AddressProvider(): array
     {
         return [
             ['155.217.46.237'],
@@ -518,7 +518,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidIpV4AddressProvider(): array
+    public static function invalidIpV4AddressProvider(): array
     {
         return [
             ['155.217.461.237'],
@@ -530,7 +530,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validIpV6AddressProvider(): array
+    public static function validIpV6AddressProvider(): array
     {
         return [
             ['FEDC:BA98:7654:3210:FEDC:BA98:7654:3210'],
@@ -540,7 +540,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidIpV6AddressProvider(): array
+    public static function invalidIpV6AddressProvider(): array
     {
         return [
             ['02001:0000:1234:0000:0000:C1C0:ABCD:0876'],
@@ -552,7 +552,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validUriProvider(): array
+    public static function validUriProvider(): array
     {
         return [
             ['a:b'],
@@ -581,7 +581,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidUriProvider(): array
+    public static function invalidUriProvider(): array
     {
         return [
             [''],
@@ -597,7 +597,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validUrnProvider(): array
+    public static function validUrnProvider(): array
     {
         return [
             ['urn:cts:greekLit:tlg0012.tlg001.perseus-eng2'],
@@ -607,7 +607,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidUrnProvider(): array
+    public static function invalidUrnProvider(): array
     {
         return [
             ['urn:loc.gov:books'],
@@ -618,7 +618,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validUuidProvider(): array
+    public static function validUuidProvider(): array
     {
         return [
             ['{5dd64499-0193-4753-8b6e-8286eb2d60b1}'],
@@ -630,7 +630,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidUuidProvider(): array
+    public static function invalidUuidProvider(): array
     {
         return [
             ['{5dd64499-0193-4753-8b6e82-86eb2d60b1}'],
@@ -642,7 +642,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validTimezoneProvider(): array
+    public static function validTimezoneProvider(): array
     {
         return [
             ['America/Chicago'],
@@ -652,7 +652,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidTimezoneProvider(): array
+    public static function invalidTimezoneProvider(): array
     {
         return [
             [new \DateTimeZone('+00:00')],
@@ -666,7 +666,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validJsonProvider(): array
+    public static function validJsonProvider(): array
     {
         return [
             ['null'],
@@ -675,7 +675,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidJsonProvider(): array
+    public static function invalidJsonProvider(): array
     {
         return [
             ['["list","of",'],
@@ -683,7 +683,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validMatchProvider(): array
+    public static function validMatchProvider(): array
     {
         return [
             [
@@ -701,7 +701,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidMatchProvider(): array
+    public static function invalidMatchProvider(): array
     {
         return [
             [
@@ -723,7 +723,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validContainsProvider(): array
+    public static function validContainsProvider(): array
     {
         return [
             ['services@example.com', 'example'],
@@ -732,7 +732,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidContainsProvider(): array
+    public static function invalidContainsProvider(): array
     {
         return [
             ['services@example.com', 'google'],
@@ -742,7 +742,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validStartsWithProvider(): array
+    public static function validStartsWithProvider(): array
     {
         return [
             ['services@example.com', 'services'],
@@ -751,7 +751,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidStartsWithProvider(): array
+    public static function invalidStartsWithProvider(): array
     {
         return [
             ['services@example.com', 'admin'],
@@ -761,7 +761,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validEndsWithProvider(): array
+    public static function validEndsWithProvider(): array
     {
         return [
             ['services@example.com', 'example.com'],
@@ -770,7 +770,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidEndsWithProvider(): array
+    public static function invalidEndsWithProvider(): array
     {
         return [
             ['services@example.com', 'example.org'],
@@ -780,14 +780,14 @@ trait TestDataProvider
         ];
     }
 
-    public function validExactLengthProvider(): array
+    public static function validExactLengthProvider(): array
     {
         return [
             ['hello world', 11]
         ];
     }
 
-    public function invalidExactLengthProvider(): array
+    public static function invalidExactLengthProvider(): array
     {
         return [
             ['hello world!', 11],
@@ -796,7 +796,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validMinLengthProvider(): array
+    public static function validMinLengthProvider(): array
     {
         return [
             ['hello', 2],
@@ -804,7 +804,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidMinLengthProvider(): array
+    public static function invalidMinLengthProvider(): array
     {
         return [
             ['hello', 6],
@@ -813,7 +813,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validMaxLengthProvider(): array
+    public static function validMaxLengthProvider(): array
     {
         return [
             ['hello', 10],
@@ -821,7 +821,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidMaxLengthProvider(): array
+    public static function invalidMaxLengthProvider(): array
     {
         return [
             ['hello', 2],
@@ -830,7 +830,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validRangeLengthProvider(): array
+    public static function validRangeLengthProvider(): array
     {
         return [
             ['hello', 5, 10],
@@ -839,7 +839,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidRangeLengthProvider(): array
+    public static function invalidRangeLengthProvider(): array
     {
         return [
             ['hello', 6, 20],
@@ -849,7 +849,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validExactNumberProvider(): array
+    public static function validExactNumberProvider(): array
     {
         return [
             ['42', 42],
@@ -861,7 +861,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidExactNumberProvider(): array
+    public static function invalidExactNumberProvider(): array
     {
         return [
             ['42.1', 42],
@@ -871,7 +871,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validMinNumberProvider(): array
+    public static function validMinNumberProvider(): array
     {
         return [
             ['42', 42],
@@ -883,7 +883,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidMinNumberProvider(): array
+    public static function invalidMinNumberProvider(): array
     {
         return [
             ['42.1', 50],
@@ -893,7 +893,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validMaxNumberProvider(): array
+    public static function validMaxNumberProvider(): array
     {
         return [
             ['42', 42],
@@ -905,7 +905,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidMaxNumberProvider(): array
+    public static function invalidMaxNumberProvider(): array
     {
         return [
             ['42.1', 40],
@@ -915,7 +915,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validRangeNumberProvider(): array
+    public static function validRangeNumberProvider(): array
     {
         return [
             ['42', 40, 42],
@@ -927,7 +927,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidRangeNumberProvider(): array
+    public static function invalidRangeNumberProvider(): array
     {
         return [
             ['42.1', 20, 30],
@@ -938,7 +938,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validWholeNumberProvider(): array
+    public static function validWholeNumberProvider(): array
     {
         return [
             ['42'],
@@ -949,7 +949,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidWholeNumberProvider(): array
+    public static function invalidWholeNumberProvider(): array
     {
         return [
             ['-17'],
@@ -961,7 +961,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validNaturalNumberProvider(): array
+    public static function validNaturalNumberProvider(): array
     {
         return [
             ['42'],
@@ -971,7 +971,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidNaturalNumberProvider(): array
+    public static function invalidNaturalNumberProvider(): array
     {
         return [
             ['-17'],
@@ -983,7 +983,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validIntValueProvider(): array
+    public static function validIntValueProvider(): array
     {
         return [
             ['42'],
@@ -994,7 +994,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidIntValueProvider(): array
+    public static function invalidIntValueProvider(): array
     {
         return [
             ['-17.01'],
@@ -1006,7 +1006,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validExactCountProvider(): array
+    public static function validExactCountProvider(): array
     {
         return [
             [['one', 'two', 'three'], 3],
@@ -1014,7 +1014,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidExactCountProvider(): array
+    public static function invalidExactCountProvider(): array
     {
         return [
             [['one', 'two', 'three'], 2],
@@ -1022,7 +1022,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validMinCountProvider(): array
+    public static function validMinCountProvider(): array
     {
         return [
             [['one', 'two', 'three'], 3],
@@ -1030,7 +1030,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidMinCountProvider(): array
+    public static function invalidMinCountProvider(): array
     {
         return [
             [['one', 'two', 'three'], 4],
@@ -1038,7 +1038,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validMaxCountProvider(): array
+    public static function validMaxCountProvider(): array
     {
         return [
             [['one', 'two', 'three'], 3],
@@ -1046,7 +1046,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidMaxCountProvider(): array
+    public static function invalidMaxCountProvider(): array
     {
         return [
             [['one', 'two', 'three'], 2],
@@ -1054,7 +1054,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validRangeCountProvider(): array
+    public static function validRangeCountProvider(): array
     {
         return [
             [['one', 'two', 'three'], 1, 3],
@@ -1062,7 +1062,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidRangeCountProvider(): array
+    public static function invalidRangeCountProvider(): array
     {
         return [
             [['one', 'two', 'three'], 10, 20],
@@ -1071,21 +1071,21 @@ trait TestDataProvider
         ];
     }
 
-    public function validOneOfProvider(): array
+    public static function validOneOfProvider(): array
     {
         return [
             ['bar', ['foo', 'bar', 'baz']]
         ];
     }
 
-    public function invalidOneOfProvider(): array
+    public static function invalidOneOfProvider(): array
     {
         return [
             ['buz', ['foo', 'bar', 'baz']]
         ];
     }
 
-    public function validKeyIssetProvider(): array
+    public static function validKeyIssetProvider(): array
     {
         return [
             [['foo' => 'bar'], 'foo'],
@@ -1093,7 +1093,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidKeyIssetProvider(): array
+    public static function invalidKeyIssetProvider(): array
     {
         return [
             [['foo' => null], 'foo'],
@@ -1101,7 +1101,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validKeyNotEmptyProvider(): array
+    public static function validKeyNotEmptyProvider(): array
     {
         return [
             [['foo' => 'bar'], 'foo'],
@@ -1109,7 +1109,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidKeyNotEmptyProvider(): array
+    public static function invalidKeyNotEmptyProvider(): array
     {
         return [
             [['foo' => ''], 'foo'],
@@ -1117,7 +1117,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validEqualProvider(): array
+    public static function validEqualProvider(): array
     {
         return [
             [42, '42'],
@@ -1129,7 +1129,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidEqualProvider(): array
+    public static function invalidEqualProvider(): array
     {
         return [
             [41, '42'],
@@ -1141,7 +1141,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validNotEqualProvider(): array
+    public static function validNotEqualProvider(): array
     {
         return [
             [41, '42'],
@@ -1153,7 +1153,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidNotEqualProvider(): array
+    public static function invalidNotEqualProvider(): array
     {
         return [
             [42, '42'],
@@ -1165,7 +1165,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validSameProvider(): array
+    public static function validSameProvider(): array
     {
         $obj = new \StdClass();
 
@@ -1177,7 +1177,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidSameProvider(): array
+    public static function invalidSameProvider(): array
     {
         return [
             [new \StdClass(), new \StdClass()],
@@ -1187,7 +1187,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validNotSameProvider(): array
+    public static function validNotSameProvider(): array
     {
         return [
             [new \StdClass(), new \StdClass()],
@@ -1197,7 +1197,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidNotSameProvider(): array
+    public static function invalidNotSameProvider(): array
     {
         $obj = new \StdClass();
 
@@ -1209,7 +1209,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validSameTypeProvider(): array
+    public static function validSameTypeProvider(): array
     {
         return [
             [new \StdClass(), new \StdClass()],
@@ -1219,7 +1219,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidSameTypeProvider(): array
+    public static function invalidSameTypeProvider(): array
     {
         return [
             [new \StdClass(), new \DateTime()],
@@ -1229,7 +1229,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validTypeProvider(): array
+    public static function validTypeProvider(): array
     {
         return [
             ['hello', 'string'],
@@ -1247,7 +1247,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidTypeProvider(): array
+    public static function invalidTypeProvider(): array
     {
         return [
             ['hello', 'bool'],
@@ -1264,7 +1264,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validListOfProvider(): array
+    public static function validListOfProvider(): array
     {
         return [
             [['foo', 'bar', 'baz'], 'string'],
@@ -1274,7 +1274,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidListOfProvider(): array
+    public static function invalidListOfProvider(): array
     {
         return [
             [['foo', 'bar', 'baz'], 'DateTime'],
@@ -1284,7 +1284,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validStringCastableProvider(): array
+    public static function validStringCastableProvider(): array
     {
         return [
             ['hello'],
@@ -1296,7 +1296,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidStringCastableProvider(): array
+    public static function invalidStringCastableProvider(): array
     {
         return [
             [[]],
@@ -1304,7 +1304,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validJsonEncodableProvider(): array
+    public static function validJsonEncodableProvider(): array
     {
         return [
             [null],
@@ -1314,7 +1314,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidJsonEncodableProvider(): array
+    public static function invalidJsonEncodableProvider(): array
     {
         $string = 'Hello World';
         $stream = fopen('php://memory', 'r+');
@@ -1328,7 +1328,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validTraversableProvider(): array
+    public static function validTraversableProvider(): array
     {
         return [
             [[]],
@@ -1336,7 +1336,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidTraversableProvider(): array
+    public static function invalidTraversableProvider(): array
     {
         return [
             ['foo'],
@@ -1344,7 +1344,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validCountableProvider(): array
+    public static function validCountableProvider(): array
     {
         return [
             [[]],
@@ -1352,7 +1352,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidCountableProvider(): array
+    public static function invalidCountableProvider(): array
     {
         return [
             ['foo'],
@@ -1360,7 +1360,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validArrayAccessibleProvider(): array
+    public static function validArrayAccessibleProvider(): array
     {
         return [
             [[]],
@@ -1368,7 +1368,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidArrayAccessibleProvider(): array
+    public static function invalidArrayAccessibleProvider(): array
     {
         return [
             ['foo'],
@@ -1376,35 +1376,35 @@ trait TestDataProvider
         ];
     }
 
-    public function validComparableProvider(): array
+    public static function validComparableProvider(): array
     {
         return [
             [new TestStringObject('foo')]
         ];
     }
 
-    public function invalidComparableProvider(): array
+    public static function invalidComparableProvider(): array
     {
         return [
             [new \DateTime()]
         ];
     }
 
-    public function validEquatableProvider(): array
+    public static function validEquatableProvider(): array
     {
         return [
             [new TestStringObject('foo')]
         ];
     }
 
-    public function invalidEquatableProvider(): array
+    public static function invalidEquatableProvider(): array
     {
         return [
             [new \DateTime()]
         ];
     }
 
-    public function validImplementsProvider(): array
+    public static function validImplementsProvider(): array
     {
         return [
             [new \DateTime(), 'DateTimeInterface'],
@@ -1413,7 +1413,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidImplementsProvider(): array
+    public static function invalidImplementsProvider(): array
     {
         return [
             [new \ArrayObject(), 'DateTimeInterface'],
@@ -1422,7 +1422,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validInstanceOfProvider(): array
+    public static function validInstanceOfProvider(): array
     {
         return [
             [new \DateTime(), 'DateTime'],
@@ -1430,7 +1430,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidInstanceOfProvider(): array
+    public static function invalidInstanceOfProvider(): array
     {
         return [
             [new \ArrayObject(), 'DateTimeInterface'],
@@ -1438,7 +1438,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validSubclassOfProvider(): array
+    public static function validSubclassOfProvider(): array
     {
         return [
             [new \SplQueue(), 'SplDoublyLinkedList'],
@@ -1447,7 +1447,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidSubclassOfProvider(): array
+    public static function invalidSubclassOfProvider(): array
     {
         return [
             [new \ArrayObject(), 'DateTimeInterface'],
@@ -1455,14 +1455,14 @@ trait TestDataProvider
         ];
     }
 
-    public function validClassExistsProvider(): array
+    public static function validClassExistsProvider(): array
     {
         return [
             ['DateTime']
         ];
     }
 
-    public function invalidClassExistsProvider(): array
+    public static function invalidClassExistsProvider(): array
     {
         return [
             ['Foobarbazbuz'],
@@ -1470,14 +1470,14 @@ trait TestDataProvider
         ];
     }
 
-    public function validInterfaceExistsProvider(): array
+    public static function validInterfaceExistsProvider(): array
     {
         return [
             ['Iterator']
         ];
     }
 
-    public function invalidInterfaceExistsProvider(): array
+    public static function invalidInterfaceExistsProvider(): array
     {
         return [
             ['Foobarbazbuz'],
@@ -1485,7 +1485,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validMethodExistsProvider(): array
+    public static function validMethodExistsProvider(): array
     {
         return [
             ['format', new \DateTime()],
@@ -1493,7 +1493,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidMethodExistsProvider(): array
+    public static function invalidMethodExistsProvider(): array
     {
         return [
             ['foobar', new \DateTime()],
@@ -1501,7 +1501,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validPathProvider(): array
+    public static function validPathProvider(): array
     {
         return [
             ['vfs://root/app/config'],
@@ -1510,7 +1510,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidPathProvider(): array
+    public static function invalidPathProvider(): array
     {
         return [
             ['vfs://root/app/config/local.yml'],
@@ -1519,7 +1519,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validFileProvider(): array
+    public static function validFileProvider(): array
     {
         return [
             ['vfs://root/app/config/config.yml'],
@@ -1528,7 +1528,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidFileProvider(): array
+    public static function invalidFileProvider(): array
     {
         return [
             ['vfs://root/app/config/local.yml'],
@@ -1537,7 +1537,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validDirProvider(): array
+    public static function validDirProvider(): array
     {
         return [
             ['vfs://root/app/config'],
@@ -1545,7 +1545,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidDirProvider(): array
+    public static function invalidDirProvider(): array
     {
         return [
             ['vfs://root/app/storage'],
@@ -1553,7 +1553,7 @@ trait TestDataProvider
         ];
     }
 
-    public function validReadableProvider(): array
+    public static function validReadableProvider(): array
     {
         return [
             ['vfs://root/app/config/config.yml'],
@@ -1561,14 +1561,14 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidReadableProvider(): array
+    public static function invalidReadableProvider(): array
     {
         return [
             [[]]
         ];
     }
 
-    public function validWritableProvider(): array
+    public static function validWritableProvider(): array
     {
         return [
             ['vfs://root/app/cache/container.php'],
@@ -1576,7 +1576,7 @@ trait TestDataProvider
         ];
     }
 
-    public function invalidWritableProvider(): array
+    public static function invalidWritableProvider(): array
     {
         return [
             [[]]

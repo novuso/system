@@ -10,10 +10,10 @@ use Novuso\System\Test\Resources\TestInvalidStatus;
 use Novuso\System\Test\Resources\TestStatus;
 use Novuso\System\Test\Resources\TestWeekDay;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use Novuso\System\Type\Enum;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Type\Enum
- */
+#[CoversClass(Enum::class)]
 class EnumTest extends UnitTestCase
 {
     public function test_that_get_members_returns_expected()
@@ -92,7 +92,7 @@ class EnumTest extends UnitTestCase
 
     public function test_that_unserialize_throws_exception_from_bad_data()
     {
-        $this->expectException(DomainException::class);
+        static::expectException(DomainException::class);
 
         $state = 'O:40:"Novuso\System\Test\Resources\TestWeekDay":1:{s:5:"value";i:10;}';
         unserialize($state);
@@ -166,35 +166,35 @@ class EnumTest extends UnitTestCase
 
     public function test_that_duplicate_constant_values_throws_exception()
     {
-        $this->expectException(DomainException::class);
+        static::expectException(DomainException::class);
 
         TestInvalidStatus::CREATED();
     }
 
     public function test_that_magic_method_throws_exception_for_invalid_name()
     {
-        $this->expectException(DomainException::class);
+        static::expectException(DomainException::class);
 
         TestWeekDay::FOO();
     }
 
     public function test_that_from_value_throws_exception_for_invalid_value()
     {
-        $this->expectException(DomainException::class);
+        static::expectException(DomainException::class);
 
         TestWeekDay::fromValue(10);
     }
 
     public function test_that_from_ordinal_throws_exception_for_invalid_ordinal()
     {
-        $this->expectException(DomainException::class);
+        static::expectException(DomainException::class);
 
         TestWeekDay::fromOrdinal(10);
     }
 
     public function test_that_compare_to_throws_exception_for_invalid_argument()
     {
-        $this->expectException(AssertionException::class);
+        static::expectException(AssertionException::class);
 
         $weekDay1 = TestWeekDay::FRIDAY();
         $weekDay2 = TestWeekDay::SUNDAY;

@@ -7,10 +7,9 @@ namespace Novuso\System\Test\Collection;
 use Novuso\System\Collection\LinkedDeque;
 use Novuso\System\Exception\UnderflowException;
 use Novuso\System\Test\TestCase\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Novuso\System\Collection\LinkedDeque
- */
+#[CoversClass(LinkedDeque::class)]
 class LinkedDequeTest extends UnitTestCase
 {
     public function test_that_it_is_empty_by_default()
@@ -496,28 +495,28 @@ class LinkedDequeTest extends UnitTestCase
 
     public function test_that_remove_first_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         LinkedDeque::of('int')->removeFirst();
     }
 
     public function test_that_remove_last_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         LinkedDeque::of('int')->removeLast();
     }
 
     public function test_that_first_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         LinkedDeque::of('int')->first();
     }
 
     public function test_that_last_throws_exception_when_empty()
     {
-        $this->expectException(UnderflowException::class);
+        static::expectException(UnderflowException::class);
 
         LinkedDeque::of('int')->last();
     }
