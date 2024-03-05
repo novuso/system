@@ -41,18 +41,7 @@ jobs:
         tools: cs2pr, phpcs, phplint, phpunit:${{ matrix.phpunit-versions }}
 
     - name: Print PHP version
-      run: echo ${{ steps.setup-php.outputs.php-version }}
-
-    - name: Get Composer Cache Directory
-      id: composer-cache
-      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-    - name: Cache Composer Dependencies
-      uses: actions/cache@v4
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-        restore-keys: ${{ runner.os }}-composer-
+      run: php -v
 
     - name: Install Composer Dependencies
       run: composer install --prefer-dist --optimize-autoloader
