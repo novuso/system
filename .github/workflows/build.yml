@@ -22,8 +22,6 @@ jobs:
         php-versions:
         - 8.2
         - 8.3
-        phpunit-versions:
-        - 11.0
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -38,7 +36,7 @@ jobs:
         ini-file: development
         extensions: mbstring, intl, imagick, simplexml, xml, pdo_sqlite, mysql, zip
         coverage: xdebug
-        tools: cs2pr, phpcs, phplint, phpunit:${{ matrix.phpunit-versions }}
+        tools: cs2pr, phpcs, phplint, phpunit
 
     - name: Print PHP version
       run: php -v
