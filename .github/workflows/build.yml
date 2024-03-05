@@ -32,7 +32,9 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      uses: php-actions/composer@v6
+      with:
+        args: --optimize-autoloader
 
     - name: PHPUnit Tests
       uses: php-actions/phpunit@v3
