@@ -14,21 +14,48 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system:
+        - ubuntu-latest
+        php-versions:
+        - 8.2
+        - 8.3
+        phpunit-versions:
+        - 11.0
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
 
-    - name: Composer install
-      uses: php-actions/composer@v6
-      with:
-        progress: yes
-
-    - name: PHPUnit Tests
-      uses: php-actions/phpunit@v3
-      with:
-        php_extensions: xdebug
-        bootstrap: vendor/autoload.php
-        configuration: etc/build
-        testsuite: complete
+    - name: Install PHP
+      uses: shivammathur/setup-php@v2
       env:
-        XDEBUG_MODE: coverage
+        debug: true
+        update: true
+      with:
+        php-version: ${{ matrix.php-versions }}
+        ini-file: development
+        extensions: mbstring, intl, zip, simplexml, xml, pdo_sqlite, mysql
+        coverage: xdebug
+        tools: phpcs, phpunit:${{ matrix.phpunit-versions }}
+
+    - name: Print PHP version
+      run: echo ${{ steps.setup-php.outputs.php-version }}
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+    - name: Cache Composer Dependencies
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+        restore-keys: ${{ runner.os }}-composer-
+
+    - name: Install Composer Dependencies
+      run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+    - name: Run PhpUnit Tests
+      run: phpunit --configuration=etc/build
