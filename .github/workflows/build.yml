@@ -58,7 +58,7 @@ jobs:
       run: composer install --no-progress --prefer-dist --optimize-autoloader
 
     - name: Run PHPLint
-      run: php vendor/bin/phplint --verbose
+      run: php vendor/bin/phplint src --verbose --no-cache --no-configuration
 
     - name: Run PhpUnit Tests
       run: phpunit --configuration=etc/build
