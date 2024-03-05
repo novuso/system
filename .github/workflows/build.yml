@@ -38,7 +38,7 @@ jobs:
         ini-file: development
         extensions: mbstring, intl, zip, simplexml, xml, pdo_sqlite, mysql
         coverage: xdebug
-        tools: phpcs, phpunit:${{ matrix.phpunit-versions }}
+        tools: phpcs, phplint, phpunit:${{ matrix.phpunit-versions }}
 
     - name: Print PHP version
       run: echo ${{ steps.setup-php.outputs.php-version }}
@@ -56,6 +56,9 @@ jobs:
 
     - name: Install Composer Dependencies
       run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+    - name: Run PHPLint
+      run: php vendor/bin/phplint --verbose
 
     - name: Run PhpUnit Tests
       run: phpunit --configuration=etc/build
