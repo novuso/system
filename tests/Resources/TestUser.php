@@ -12,7 +12,7 @@ use Novuso\System\Utility\Assert;
 /**
  * Class TestUser
  */
-class TestUser implements Comparable, Serializable
+final class TestUser implements Comparable, Serializable
 {
     protected string $lastName;
     protected string $firstName;
