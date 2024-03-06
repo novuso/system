@@ -1,5 +1,7 @@
 FROM php:8.2-cli
 
+WORKDIR /app
+
 RUN apt-get update \
     && apt-get install -y --allow-downgrades --allow-remove-essential --allow-change-held-packages \
         wget \

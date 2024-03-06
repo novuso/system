@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# change to the project root
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd $DIR/..
+
+docker container run --platform linux/amd64 \
+    --rm -it -v $(pwd):/data phpdoc/phpdoc "$@" --config=etc/build/phpdoc.xml

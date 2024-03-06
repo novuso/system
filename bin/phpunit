@@ -7,6 +7,6 @@ cd $DIR/..
 docker build -t novuso-system ./etc/docker/
 
 docker container run --rm -it \
-    -v $(pwd):/app:delegated -w /app \
+    -v $(pwd):/app:delegated \
     novuso-system php vendor/bin/phpunit \
     --configuration etc/build "$@"
