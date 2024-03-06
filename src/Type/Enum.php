@@ -26,8 +26,6 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable
      *
      * @internal
      *
-     * @codeCoverageIgnore coverage bug
-     *
      * @throws DomainException When the value is invalid
      */
     final private function __construct(protected mixed $value)
@@ -126,6 +124,8 @@ abstract class Enum implements Comparable, Equatable, JsonSerializable
 
     /**
      * Retrieves enum member names and values
+     *
+     * @throws DomainException When enum is invalid
      */
     final public static function getMembers(): array
     {
